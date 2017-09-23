@@ -1,0 +1,400 @@
+// Here you can add other styles
+
+.course {
+}
+
+.course > .course-header {
+  overflow: auto;
+  padding: 10px;
+  border: 1px solid #eeeeee;
+}
+
+.course > .course-info {
+  padding: 20px;
+  border: 1px solid #eeeeee;
+  margin-top: 10px;
+}
+
+.leerdoelen-label {
+  width: 25%;
+  font-size: 13px;
+}
+
+/* Leerplannen */
+
+.leerplannen .cursus {
+  background: #FFFF;
+  border: 1px solid #E7E7E7;
+  border-left: 6px solid #00A1E2;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  box-shadow: 0px 1px 2px 0px rgba(46, 61, 73, 0.2);
+  transition: all 0.2s ease;
+  margin-bottom: 10px;
+  color: #58646d;
+}
+
+.overzicht {
+	display: inline-block;
+	float: left;
+}
+
+.overzicht .samenvatting {
+	width: 300px;
+}
+
+.overzicht .naam {
+  font-weight: 300;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 2px;
+  height: 35px;
+}
+
+.overzicht .ects {
+  margin-top: 20px;
+  display: block;
+  color: #20A8D8;
+  font-size: 17px;
+}
+
+.tooltip-inner {
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #666666;
+}
+
+.tooltip.tooltip-top .tooltip-inner::before, .tooltip.bs-tether-element-attached-bottom .tooltip-inner::before {
+  border-top-color: #666666;
+}
+
+.leerplannen .cursus:hover {
+  box-shadow: 0px 1px 3px 0px rgba(46, 61, 73, 0.2);
+  background: #FaFaFa;
+}
+
+.leerplannen .cursus .cursus-code {
+  margin-top: 10px;
+  display: block;
+}
+
+.leerplannen .cursus .cursus-naam {
+  font-weight: 300;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+
+.leerplannen .cursus .cursus-ec {
+  margin-top: 20px;
+  display: block;
+  color: #20A8D8;
+  font-size: 17px;
+}
+
+.hbo-i-cell {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #deebf7;
+  margin: 1px;
+  width: 15px;
+  height: 15px;
+  float: left;
+  position: relative;
+  display: inline;
+  text-align: center;
+}
+
+.ps-cell {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #deebf7;
+  font-size: 10px;
+  font-weight: normal;
+  margin: 1px;
+  width: 25px;
+  height: 15px;
+  float: left;
+  position: relative;
+  display: inline;
+  text-align: center;
+}
+
+.hbo-i-layer {
+  display: table;
+  width: 110px;
+}
+.ps-layer {
+  display: table;
+  height: 80px;
+}
+
+.hbo-i-layer > .label-top {
+  height: 15px;
+  width: 15px;
+  font-size: 10px;
+  font-weight: normal;
+}
+
+.hbo-i-layer > .label-left {
+  height: 15px;
+  width: 15px;
+  font-size: 10px;
+  font-weight: normal;
+}
+
+.hbo-i-layer > .niveau-1 {
+  background: #daeef3;
+}
+
+.hbo-i-layer > .niveau-2 {
+  background: #92cddc;
+}
+
+.hbo-i-layer > .niveau-3 {
+  background: #366092
+}
+
+.top-layer > .hbo-i-cell{
+  height: 15px;
+  font-size: 10px;
+  font-weight: normal;
+}
+
+.ps-layer > .top-layer > .ps-cell{
+  height: 15px;
+  font-size: 10px;
+  text-align: center;
+  font-weight: normal;
+}
+
+.hbo-i-layer > .hbo-i-cell:first-child {
+  width: 15px;
+  font-size: 10px;
+  font-weight: normal;
+}
+
+
+.ps-cpo {
+  background-color: #dce6f1;
+  height: 100%;
+}
+
+.ps-ai {
+  background-color: #d8e4bc;
+  height: 100%;
+}
+
+.ps-lsc {
+  background-color: #ffffcc;
+  height: 100%;
+}
+
+.ps-poe {
+  background-color: #fcd5b4;
+  height: 100%;
+}
+
+.none {
+  height: 100%;
+}
+
+
+/* Cursussen */
+
+.addModal .table-add{
+  margin-bottom: 0;
+}
+
+.addModal .table-add thead th {
+  border-top: none;
+}
+
+.addModal .selectItem {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.addModal .selectItem tr {
+  cursor: pointer;
+}
+
+.addModal .selectItem .checkbox{
+  border: 1px solid red;
+}
+
+
+/* Page loading */
+
+.page-loading {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 9999;
+  background: #000000;
+  filter:alpha(opacity=20); /* IE */
+  -moz-opacity:0.2; /* Mozilla */
+  opacity: 0.2; /* CSS3 */
+  position: absolute; top: 0; left: 0; height: 100%;
+  width:100%;
+}
+
+.page-loading img {
+  margin-top: 250px;
+}
+.content {
+	width: 100%;
+}
+
+.table-nonfluid {
+  width: auto !important;
+}
+
+.vertical-text {
+	display: inline-block;
+	width: 1.5em;
+}
+.vertical-text__inner {
+	display: inline-block;
+	white-space: nowrap;
+	line-height: 1.5;
+	transform: translate(0, 100%) rotate(-90deg);
+	transform-origin: 0 0;
+}
+/* This element stretches the parent to be square
+   by using the mechanics of vertical margins  */
+.vertical-text__inner:after {
+	content: "";
+	display: block;
+	margin: -1.5em 0 100%;
+}
+
+
+.toetsmatrijs {
+  border: none;
+  border-collapse:collapse;
+  border-spacing:0;
+  table-layout: fixed;
+}
+
+.toetsmatrijs .toetsKopje {
+  border: none;
+  text-align: left;
+  padding: 0;
+  font-weight: bold;
+  width: auto;
+}
+
+.toetsKopje > div {
+  padding-top: 100px;
+  transform-origin:0 0;
+  transform:
+    /* Magic Numbers */
+    translate(-85px, 35px)
+      /* 45 is really 360 - 45 */
+    rotate(315deg);
+}
+
+.toetsKopje > div > span {
+  border-bottom: 1px solid #ccc;
+  padding: 1px 10px;
+}
+
+
+.toetsmatrijs .toetsElementKopje {
+  border: none;
+  width: 0px !important;
+  height: 0px;
+  padding-top: 30px;
+  border-left: 1px solid #ccc;
+/*  max-width: 100px; */
+  margin-left: -5px;
+  margin-bottom: 7px;
+  margin-top: 30px;
+  text-align: left;
+
+}
+
+.toetsmatrijs .toetsElementKopje:last-child {
+  border-right: 1px solid #ccc;
+}
+
+.toetsElementKopje > div {
+  transform-origin:0 0;
+  -moz-transform: rotate(270deg) translateX(-45px);
+  -webkit-transform: rotate(270deg) translateX(-45px) ;
+  -o-transform: rotate(270deg) translateX(-45px) ;
+  -ms-transform: rotate(270deg) translateX(-45px) ;
+  transform: rotate(270deg) translateX(-45px);
+}
+
+.toetsmatrijs .tableInvisible {
+  border: none;
+  padding-top: 100px;
+}
+
+.toetsmatrijs .empty {
+  border: none;
+}
+.toetsmatrijs .ld {
+  width: 100px !important;
+}
+
+.toetsmatrijs .ld:last-child {
+  border-right: 10px solid #ccc;
+}
+
+.toetsmatrijs td {
+  padding: 5px;
+  text-align: left;
+}
+
+.toetsmatrijs .weging {
+//  white-space: nowrap;
+//  position: relative;
+}
+
+.toetsmatrijs .weging div {
+//  display: block;
+//  position:absolute;
+//  top:0;
+//  bottom:0;
+  width:100%;
+  cursor: pointer;
+}
+
+.toetsmatrijs .weging input[type='number'] {
+  width: 70px;
+  display: inline;
+  margin-right: 5px;
+}
+
+
+.toetsmatrijs .total {
+  border: 2px solid #bbbbbb;
+  vertical-align: center;
+  font-weight: bold;
+}
+
+.btn-addToets {
+  background: #ffffff;
+  border: 1px solid #ffffff;
+}
+
+.btn-addToets:hover {
+  cursor: pointer;
+}
+
+.btn-editToets {
+//  margin-left: -5px;
+}
+
+.btn-editToets:hover {
+  background-color: #39b2d5;
+  border: 1px solid #39b2d5;
+  color: #ffffff;
+  font-weight: bold;
+
+}
