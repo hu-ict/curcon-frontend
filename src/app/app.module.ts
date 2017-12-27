@@ -18,7 +18,7 @@ import { AppRoutingModule } from './app.routing';
 // Layouts
 import { FullLayoutComponent } from './layouts/full-layout.component';
 import { SimpleLayoutComponent } from './layouts/simple-layout.component';
-import {OrganisatiesService} from './organisaties/organisaties.service';
+import {OrganisatiesService} from './services/organisaties.service';
 import {HttpModule} from '@angular/http';
 import {FormsModule} from "@angular/forms";
 import {TooltipModule} from 'ng2-bootstrap';

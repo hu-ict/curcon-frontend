@@ -20,21 +20,23 @@ import { TabsComponent } from '../components/tabs.component';
 
 import { HttpModule } from '@angular/http';
 
-import { BeroepstakenService } from '../services/beroepstaken.service';
 //import { BeroepstakenComponent } from '../beroepstaken/beroepstaken.component';
-import { ProfessionalskillsService } from '../services/professionalskills.service';
-import { CursussenService } from '../cursussen/cursussen.service';
 import { OpleidingenComponent } from './opleidingen.component';
-import { OpleidingenService } from './opleidingen.service';
+import { BeroepstakenService } from '../services/beroepstaken.service';
+import { ProfessionalskillsService } from '../services/professionalskills.service';
+import { CursussenService } from '../services/cursussen.service';
+import { OpleidingenService } from '../services/opleidingen.service';
 import { CohortenService } from '../services/cohorten.service';
-import { OpleidingenRoutingModule } from './opleidingen-routing.module';
 import { LeerplannenService } from '../services/leerplannen.service';
 import { BtMatrixModule } from '../bt-overzicht/bt-matrix.module';
 import { PsOverzichtModule } from '../ps-overzicht/ps-overzicht.module';
+import { BoksOverzichtModule } from '../boks-overzicht/boks-overzicht.module';
+import { OpleidingenRoutingModule } from './opleidingen-routing.module';
 
 @NgModule({
 	imports: [
 		PsOverzichtModule,
+		BoksOverzichtModule,
 		BtMatrixModule,
 		OpleidingenRoutingModule,
 	    ChartsModule,

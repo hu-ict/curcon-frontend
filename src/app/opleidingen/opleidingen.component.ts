@@ -1,16 +1,17 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, Directive} from '@angular/core';
 import {Router} from '@angular/router';
 import {OrderByPipe} from './orderby.pipe';
-import {CursussenService} from '../cursussen/cursussen.service';
+import {CursussenService} from '../services/cursussen.service';
 import {BeroepstakenService} from '../services/beroepstaken.service';
 import {ProfessionalskillsService} from '../services/professionalskills.service';
 import {AbstractControl, NG_VALIDATORS} from '@angular/forms';
-import {OpleidingenService} from './opleidingen.service';
+import {OpleidingenService} from '../services/opleidingen.service';
 
 import {CohortenService} from '../services/cohorten.service';
 import {LeerplannenService} from '../services/leerplannen.service';
 import {BtMatrixComponent} from '../bt-overzicht/bt-matrix.component';
-import {PsOverzichtComponent} from '../ps-overzicht/ps/overzicht.component';
+import {PsOverzichtComponent} from '../ps-overzicht/ps-overzicht.component';
+import {BoksOverzichtComponent} from '../boks-overzicht/boks-overzicht.component';
 
 @Component({
 	templateUrl: 'opleidingen.component.html',

@@ -1,16 +1,17 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, Directive} from '@angular/core';
 import {Router} from '@angular/router';
-import {CursussenService} from './cursussen.service';
+import {AbstractControl, NG_VALIDATORS} from '@angular/forms';
+import {CursussenService} from '../services/cursussen.service';
 import {BeroepstakenService} from '../services/beroepstaken.service';
 import {ProfessionalskillsService} from '../services/professionalskills.service';
 import {LeerdoelenService} from '../services/leerdoelen.service';
 import {ToetsenService} from '../services/toetsen.service';
-import {AbstractControl, NG_VALIDATORS} from '@angular/forms';
 import {ToetsmatrijzenService} from "../services/toetsmatrijzen.service";
 import {BloomniveausService} from "../services/bloomniveaus.service";
 import {DocentenService} from "../services/docenten.service";
 import {BtMatrixComponent} from '../bt-overzicht/bt-matrix.component';
 import {PsOverzichtComponent} from '../ps-overzicht/ps-overzicht.component';
+import {ToetsMatrijs} from './toetsmatrijs';
 
 @Component({
 	templateUrl: 'cursussen.component.html',
@@ -29,7 +30,7 @@ export class CursussenComponent implements OnInit {
 	@ViewChild('LeerdoelModal') leerdoelModal: any;
 	@ViewChild('BeoordelingselementModal') beoordelingselementModal: any;
 	beoordelingselementForm = <any>{};
-	
+
 	@ViewChild('CursusModal') cursusModal: any;
 	@ViewChild('ToetsModal') toetsModal: any;
 	@Input() courses: Array<any>;
@@ -47,12 +48,9 @@ export class CursussenComponent implements OnInit {
 	toetsMatrijsAdd = <any>{};
 	toetsMatrijsEditForm = <any>{};
 	toetsMatrijsAddForm = <any>{};
-	
-	totaalGewichtLeerdoelArray: Array<any>;
-	totaalGewichtElementArray: Array<any>;
-	beoordelingselementArray: Array<any>;
-	toetsenArray: Array<any>;
-	
+
+	toetsMatrijsArray: Array<ToetsMatrijs>;
+
 	toetsEdit = <any>{};
 	toetsForm = <any>{};
 	leerdoelForm = <any>{};
@@ -66,17 +64,16 @@ export class CursussenComponent implements OnInit {
 		this.mode = 'view';
 		this.toetsMatrijsEdit = 0;
 		this.toetsMatrijsAdd = [];
+		this.toetsMatrijsArray = Array.apply(null, Array(10));
 		this.cursussenService.getCursussen().subscribe(cursussen => {
 			this.courses = cursussen;
 			this.selectedCursus = this.courses[0];
 			this.cursusForm = this.courses[0];
-			this.totaalGewichtLeerdoelArray = Array.apply(null, Array(this.selectedCursus.leerdoelen.length));
 			this.refreshAll();
 		},
 		error => console.log('Error: ', error),
 		() => {
 			this.loading = false;
-			// console.log(this.selectedCursus);
 		});
 	}
 
@@ -130,15 +127,15 @@ export class CursussenComponent implements OnInit {
 		this.loading = true;
 		console.log(this.cursusForm);
 		this.cursussenService.addCursus(this.cursusForm).subscribe(
-			(res:Response) => {
-				var contentLocation = res.headers.get("Content-Location");
-				console.log("Content-Location: "+contentLocation);
-				this.cursussenService.getDataByHref(contentLocation).subscribe(cursus => {
-					this.onSelect(cursus);
-					this.loading = false;
-					this.cursusModal.hide()
-				})
-			}
+				(res:Response) => {
+					var contentLocation = res.headers.get("Content-Location");
+					console.log("Content-Location: "+contentLocation);
+					this.cursussenService.getDataByHref(contentLocation).subscribe(cursus => {
+						this.onSelect(cursus);
+						this.loading = false;
+						this.cursusModal.hide()
+					})
+				}
 		);
 	}
 
@@ -166,10 +163,10 @@ export class CursussenComponent implements OnInit {
 
 	deleteBeoordelingsElement(el) {
 		this.toetsenService.deleteBeoordelingselement(el['id']).subscribe(
-				result => { this.refreshToetsen(); this.refreshToetsMatrijs() },
-				error => { this.refreshToetsen(); this.refreshToetsMatrijs();});
+				result => { this.refreshToetsen(); this.refreshToetsMatrijzen() },
+				error => { this.refreshToetsen(); this.refreshToetsMatrijzen();});
 	}
-	
+
 	getProfessionalskillTypes() {
 		this.loading = true;
 		this.professionalskillService.getProfessionalskillsTypes().subscribe(result => {
@@ -228,9 +225,9 @@ export class CursussenComponent implements OnInit {
 
 
 
-// ******************
-// Beroepstaak operaties
-// ******************
+//	******************
+//	Beroepstaak operaties
+//	******************
 
 	addBeroepstaak() {
 		this.loading = true;
@@ -268,9 +265,9 @@ export class CursussenComponent implements OnInit {
 		});
 	}
 
-// ******************
-// Leerdoel operaties
-// ******************
+//	******************
+//	Leerdoel operaties
+//	******************
 
 	initializeLeerdoelForm() {
 		this.loading = true;
@@ -325,25 +322,25 @@ export class CursussenComponent implements OnInit {
 		this.loading = true;
 		this.cursussenService.saveLeerdoel(this.selectedCursus.id, this.leerdoelForm).subscribe(x => {
 			this.refreshLeerdoelen();
-			this.refreshToetsMatrijs();
+			this.refreshToetsMatrijzen();
 			this.closeModal(this.leerdoelModal);
 		});
 	}
 
 	deleteLeerdoel(ld: Object) {
 		this.cursussenService.deleteLeerdoel(ld['id']).subscribe(
-				result => { this.refreshLeerdoelen(); this.refreshToetsMatrijs(); },
-				error => { this.refreshLeerdoelen(); this.refreshToetsMatrijs(); });
+				result => { this.refreshLeerdoelen(); this.refreshToetsMatrijzen(); },
+				error => { this.refreshLeerdoelen(); this.refreshToetsMatrijzen(); });
 	}
 
 
-// ******************
-// Toets operaties
-// ******************
+//	******************
+//	Toets operaties
+//	******************
 
 	initializeToetsForm() {
 		this.toetsForm = {
-			osirisResultaatType : 1
+				osirisResultaatType : 1
 		};
 	}
 
@@ -352,21 +349,21 @@ export class CursussenComponent implements OnInit {
 		console.log(toets);
 		this.loading = true;
 		this.toetsForm = {
-			id : toets.id,
-			naam : toets.naam,
-			gewicht : toets.gewicht,
-			osirisResultaatType : 1
+				id : toets.id,
+				naam : toets.naam,
+				gewicht : toets.gewicht,
+				osirisResultaatType : 1
 		};
 		this.toetsModal.show();
 		this.loading = false;
 	}
-	
+
 	saveToets() {
 		this.loading = true;
 		console.log(this.toetsForm);
 		this.cursussenService.saveToets(this.selectedCursus.id, this.toetsForm).subscribe(x => {
 			this.refreshToetsen();
-			this.refreshToetsMatrijs()
+			this.refreshToetsMatrijzen()
 			this.toetsModal.hide();
 			this.loading = false;
 		});
@@ -374,8 +371,8 @@ export class CursussenComponent implements OnInit {
 
 	deleteToets(to: Object) {
 		this.cursussenService.deleteToets(to['id']).subscribe(
-				result => { this.refreshToetsen(); this.refreshToetsMatrijs(); },
-				error => { this.refreshToetsen(); this.refreshToetsMatrijs(); });
+				result => { this.refreshToetsen(); this.refreshToetsMatrijzen(); },
+				error => { this.refreshToetsen(); this.refreshToetsMatrijzen(); });
 	}
 
 	initializeBeoordelingselementModal(beoordelingselement) {
@@ -383,10 +380,10 @@ export class CursussenComponent implements OnInit {
 		this.beoordelingselementModal.show();
 		this.loading = true;
 		this.beoordelingselementForm = {
-			naam : beoordelingselement.naam,
-			id : beoordelingselement.id,
-			gewicht : beoordelingselement.gewicht,
-			omschrijving : beoordelingselement.omschrijving
+				naam : beoordelingselement.naam,
+				id : beoordelingselement.id,
+				gewicht : beoordelingselement.gewicht,
+				omschrijving : beoordelingselement.omschrijving
 		};
 		this.loading = false
 	}
@@ -396,7 +393,7 @@ export class CursussenComponent implements OnInit {
 		console.log(element);
 		this.toetsenService.saveBeoordelingsElement(this.toetsEdit.id, element).subscribe(data => {
 			this.refreshToetsen();
-			this.refreshToetsMatrijs();
+			this.refreshToetsMatrijzen();
 			this.beoordelingselementModal.hide();
 			this.loading = false;
 		});
@@ -432,7 +429,7 @@ export class CursussenComponent implements OnInit {
 		console.log(this.toetsMatrijsAdd);
 		console.log(this.toetsMatrijsAddForm);
 		this.cursussenService.editToetsElement(this.toetsMatrijsEdit, this.toetsMatrijsEditForm).subscribe(x => {
-			this.refreshToetsMatrijs();
+			this.refreshToetsMatrijzen();
 			this.toetsMatrijsEdit = 0;
 			this.loading = false;
 		});
@@ -446,7 +443,7 @@ export class CursussenComponent implements OnInit {
 		console.log("this.toetsMatrijsAddForm");
 		console.log(this.toetsMatrijsAddForm);
 		this.cursussenService.addToetsElement(this.toetsMatrijsAdd.leerdoel.id, this.toetsMatrijsAddForm).subscribe(x => {
-			this.refreshToetsMatrijs();
+			this.refreshToetsMatrijzen();
 			this.toetsMatrijsAdd = {};
 			this.loading = false;
 		});
@@ -455,7 +452,7 @@ export class CursussenComponent implements OnInit {
 	deleteToetsElement() {
 		this.loading = true;
 		this.cursussenService.deleteToetsElement(this.toetsMatrijsEdit).subscribe(x =>{
-			this.refreshToetsMatrijs();
+			this.refreshToetsMatrijzen();
 			this.toetsMatrijsEdit = 0;
 			this.loading = false;
 		});
@@ -512,93 +509,109 @@ export class CursussenComponent implements OnInit {
 		});
 	}
 
-	refreshToetsMatrijs() {
+	refreshToetsMatrijzen() {
 		this.loading = true;
-		this.toetsmatrijzenService.getToetsmatrijzenById(this.selectedCursus.id).subscribe(toetsmatrijs => {
-			var totalCols = 0;
-			console.log('refreshToetsMatrijs toetsmatrijs');
-			console.log(toetsmatrijs);
-			for (let toets of toetsmatrijs.toetsen) {
-				if (toets.beoordelingsElementen != null) {
-					totalCols += toets.beoordelingsElementen.length;
-				}
-			}
-			var totalRows = 0;
-			if (toetsmatrijs.leerdoelen != null) {
-				if (toetsmatrijs.leerdoelen.length > 0) {
-					totalRows = toetsmatrijs.leerdoelen.length; 
-				}
-			}
-			if (totalRows > 0) {
-			this.totaalGewichtElementArray = Array.apply(null, Array(totalCols));
-			this.beoordelingselementArray = Array.apply(null, Array(totalCols)); 
-			this.toetsenArray = Array.apply(null, Array(totalCols)); 
-			var index = 0;
-			for (let toets of toetsmatrijs.toetsen) {
-				this.toetsenArray[index] = toets.naam;
-				for (let element of toets.beoordelingsElementen) {
-					this.beoordelingselementArray[index] = element;
-					this.totaalGewichtElementArray[index] = 0;
-					index++;
-				}
-			}
-			console.log("this.beoordelingselementArray");
-			console.log(this.beoordelingselementArray);
-			}
-			console.log("Total rows:" + totalRows);
-			console.log("Total cols:" + totalCols);
 
-			// grid aanmaken
-			let toetsmatrijsGrid = Array.apply(null, Array(totalRows)); 
-			for(let i = 0; i < toetsmatrijsGrid.length; i++) {
-				toetsmatrijsGrid[i] = Array.apply(null, Array(totalCols)); 
-			}
-				
-			for(let row = 0; row < toetsmatrijs.leerdoelen.length; row++) {
-				this.totaalGewichtLeerdoelArray[row] = 0;
-				for (let col = 0; col < totalCols; col++) {
-					var toetsElement = {
-						beoordelingselement : this.beoordelingselementArray[col],
-						leerdoel : this.selectedCursus.leerdoelenLijst[row],
-						id : 0,
-						gewicht : 0
-					};
-					toetsmatrijsGrid[row][col] = toetsElement;
-					for (let p = 0; p < toetsmatrijs.leerdoelen[row].toetsElementen.length; p++) {
-//						totalGewicht += toetsmatrijs.leerdoelen[row].toetsElementen[p].gewicht;
-						var beoordelingsElementId = toetsmatrijs.leerdoelen[row].toetsElementen[p].beoordelingsElement.id;
-						if (beoordelingsElementId == this.beoordelingselementArray[col].id) {
-							toetsmatrijsGrid[row][col] = toetsmatrijs.leerdoelen[row].toetsElementen[p];
-							this.totaalGewichtLeerdoelArray[row] = this.totaalGewichtLeerdoelArray[row] + toetsmatrijs.leerdoelen[row].toetsElementen[p].gewicht;
-							this.totaalGewichtElementArray[col] = this.totaalGewichtElementArray[col] + toetsmatrijs.leerdoelen[row].toetsElementen[p].gewicht;
-						}
-					}
-					console.log('toetsmatrijsGrid[row][col]');
-					console.log(toetsmatrijsGrid[row][col]);
+		this.toetsmatrijzenService.getToetsmatrijzenById(this.selectedCursus.id).subscribe(toetsmatrijs => {
+			console.log('refreshToetsMatrijzen toetsmatrijs');
+			console.log(toetsmatrijs);
+			if (this.toetsMatrijsArray != undefined) {
+				while (this.toetsMatrijsArray.length > 0) {
+					this.toetsMatrijsArray.splice(0, 1);
+					console.log(this.toetsMatrijsArray.length);
+					console.log('toetsMatrijsArray.length');
 				}
 			}
-			this.selectedCursus.toetsmatrijs = toetsmatrijsGrid;
-			console.log("this.selectedCursus.toetsmatrijs");
-			console.log(this.selectedCursus.toetsmatrijs);
-			console.log(this.totaalGewichtLeerdoelArray);
+			let toetsIndex = 0;
+			for (let toets of toetsmatrijs.toetsen) {
+				console.log(toets);
+				this.toetsMatrijsArray[toetsIndex] = this.buildToetsMatrijs(toets, toetsmatrijs.leerdoelen);
+				toetsIndex++;
+			}
+			console.log("this.toetsMatrijsArray");
+			console.log(this.toetsMatrijsArray);
 			this.loading = false;
 		})
 	}
-	
+
+	buildToetsMatrijs(toets, leerdoelen) {
+		let toetsMatrijs = new ToetsMatrijs();
+		toetsMatrijs.naam = toets.naam;
+		var totalCols = 0;
+		if (toets.beoordelingsElementen != null) {
+			totalCols = toets.beoordelingsElementen.length;
+			toetsMatrijs.beoordelingselementArray = Array.apply(null, Array(totalCols)); 
+			toetsMatrijs.totaalGewichtElementArray = Array.apply(null, Array(totalCols));
+			var index = 0;
+			for (let element of toets.beoordelingsElementen) {
+				toetsMatrijs.beoordelingselementArray[index] = element;
+				toetsMatrijs.totaalGewichtElementArray[index] = 0;
+				index++;
+			}
+		}
+
+		var totalRows = 0;
+		if (leerdoelen != null) {
+			totalRows = leerdoelen.length; 
+			toetsMatrijs.totaalGewichtLeerdoelArray = Array.apply(null, Array(leerdoelen.length))
+		}
+		console.log("toetsMatrijs.beoordelingselementArray");
+		console.log(toetsMatrijs.beoordelingselementArray);
+		console.log("Total rows:" + totalRows);
+		console.log("Total cols:" + totalCols);
+
+		// grid aanmaken
+		toetsMatrijs.grid = Array.apply(null, null);
+		let grid = Array.apply(null, Array(totalRows)); 
+		for(let i = 0; i < grid.length; i++) {
+			grid[i] = Array.apply(null, Array(totalCols)); 
+		}
+		console.log("Grid aangemaakt");
+		for(let row = 0; row < leerdoelen.length; row++) {
+			toetsMatrijs.totaalGewichtLeerdoelArray[row] = 0;
+			for (let col = 0; col < totalCols; col++) {
+				var toetsElement = {
+						beoordelingselement : toetsMatrijs.beoordelingselementArray[col],
+						leerdoel : leerdoelen[row],
+						id : 0,
+						gewicht : 0
+				};
+				grid[row][col] = toetsElement;
+				for (let p = 0; p < leerdoelen[row].toetsElementen.length; p++) {
+					// totalGewicht +=
+					// toetsmatrijs.leerdoelen[row].toetsElementen[p].gewicht;
+					var beoordelingsElementId = leerdoelen[row].toetsElementen[p].beoordelingsElement.id;
+					if (beoordelingsElementId == toetsMatrijs.beoordelingselementArray[col].id) {
+						grid[row][col] = leerdoelen[row].toetsElementen[p];
+						toetsMatrijs.totaalGewichtLeerdoelArray[row] = toetsMatrijs.totaalGewichtLeerdoelArray[row] + leerdoelen[row].toetsElementen[p].gewicht;
+						toetsMatrijs.totaalGewichtElementArray[col] = toetsMatrijs.totaalGewichtElementArray[col] + leerdoelen[row].toetsElementen[p].gewicht;
+					}
+				}
+				console.log('grid[row][col]');
+				console.log(grid[row][col]);
+			}
+		}
+		toetsMatrijs.grid = grid;
+		console.log("toetsMatrijs");
+		console.log(toetsMatrijs);
+		return toetsMatrijs;
+	}
+
+
 	refreshAll() {
 		this.refreshBeroepstaken();
 		this.refreshProfessionalskills();
 		this.refreshLeerdoelen();
 		this.refreshToetsen();
-		this.refreshToetsMatrijs();
+		this.refreshToetsMatrijzen();
 		console.log(this.selectedCursus);
 	}
-	
+
 	closeModal(modal) {
 		this.loading = false;
 		modal.hide()
 	}
-	
+
 	isEmptyObject(obj) {
 		return (Object.keys(obj).length === 0);
 	}

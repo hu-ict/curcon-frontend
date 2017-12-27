@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import * as myGlobals from '../globals';
 
 @Injectable()
 export class LeerdoelenService {
@@ -9,7 +10,7 @@ export class LeerdoelenService {
   }
 
   getLeerdoelen() {
-    return this.http.get('http://curcon-huict.rhcloud.com/rest/leerdoelen/')
+    return this.http.get(myGlobals.baseUrl+'leerdoelen/')
       .map(res => res.json());
   }
 

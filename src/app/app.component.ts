@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {OrganisatiesService} from "./organisaties/organisaties.service";
+import {OrganisatiesService} from "./services/organisaties.service";
 
 @Component({
   // tslint:disable-next-line

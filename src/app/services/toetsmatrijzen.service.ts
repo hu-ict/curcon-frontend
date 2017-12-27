@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import * as myGlobals from '../globals';
 
 @Injectable()
 export class ToetsmatrijzenService {
@@ -9,7 +10,7 @@ export class ToetsmatrijzenService {
   }
 
   getToetsmatrijzen() {
-    return this.http.get('http://curcon-huict.rhcloud.com/rest/toetsen/')
+    return this.http.get(myGlobals.baseUrl+'toetsen/')
       .map(res => res.json());
   }
 
@@ -19,7 +20,7 @@ export class ToetsmatrijzenService {
   }
 
   getToetsmatrijzenById(id) {
-    return this.http.get('http://curcon-huict.rhcloud.com/rest/toetsmatrijzen/' + id)
+    return this.http.get(myGlobals.baseUrl+'toetsmatrijzen/' + id)
       .map(res => res.json());
   }
 

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import * as myGlobals from '../globals';
 
 @Injectable()
 export class ProfessionalskillsService {
@@ -9,7 +10,7 @@ export class ProfessionalskillsService {
 	}
 
 	getProfessionalskills() {
-		return this.http.get('http://curcon-huict.rhcloud.com/rest/professionalskills/')
+		return this.http.get(myGlobals.baseUrl+'professionalskills/')
 		.map(res => res.json());
 	}
 
@@ -19,13 +20,13 @@ export class ProfessionalskillsService {
 	}
 
 	getProfessionalskillsTypes() {
-		return this.http.get('http://curcon-huict.rhcloud.com/rest/professionalskills/types')
+		return this.http.get(myGlobals.baseUrl+'professionalskills/types')
 		.map(res => res.json());
 	}
 
 
 	getProfessionalskillId(skillid, niv) {
-		return this.http.get('http://curcon-huict.rhcloud.com/rest/professionalskills/skill/' + skillid + '/niveaus/' + niv)
+		return this.http.get(myGlobals.baseUrl+'professionalskills/skill/' + skillid + '/niveaus/' + niv)
 		.map(res => res.json());
 	}
 }
