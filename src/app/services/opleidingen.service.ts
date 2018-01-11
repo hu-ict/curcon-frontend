@@ -30,13 +30,15 @@ export class OpleidingenService {
 	}
 
 	getOpleidingByObject(obj) {
-		return this.http.get(obj.href, this.options)
-			.map(res => res.json());
+		return this.http.get(obj.href, this.options).map(res => res.json());
 	}
   
 	saveOpleiding(opleiding) {
 		if (opleiding.id == null) {
 			return this.http.post(myGlobals.baseUrl+'organisaties/' + this.organisation.id + '/opleidingsprofielen', opleiding)
+//				.subscribe(data => {
+//					console.log(data.headers.get('content-location'));
+//				});
 				.catch(this.handleError);	
 		} else {
 			var url = myGlobals.baseUrl+'opleidingsprofielen/'+ opleidingId;

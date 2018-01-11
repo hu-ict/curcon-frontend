@@ -28,6 +28,7 @@ import {LeerdoelenService} from '../services/leerdoelen.service';
 import {ToetsenService} from '../services/toetsen.service';
 import {ToetsmatrijzenService} from '../services/toetsmatrijzen.service';
 import {BloomniveausService} from '../services/bloomniveaus.service';
+import {MillerNiveausService} from '../services/millerniveaus.service';
 import {DocentenService} from "../services/docenten.service";
 import {BtMatrixModule} from '../bt-overzicht/bt-matrix.module';
 import {PsOverzichtModule} from '../ps-overzicht/ps-overzicht.module';
@@ -59,7 +60,8 @@ import {PsOverzichtModule} from '../ps-overzicht/ps-overzicht.module';
 		LeerdoelenService, 
 		ToetsenService, 
 		ToetsmatrijzenService, 
-		BloomniveausService
+		BloomniveausService,
+		MillerNiveausService
 	]
 })
 export class CursussenModule { }

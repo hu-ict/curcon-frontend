@@ -123,6 +123,24 @@ export class OpleidingenComponent implements OnInit {
 		});
 	}
 
+	newOpleidingForm() {
+		this.opleidingForm = {};
+	}
+	
+	addOpleiding() {
+		delete this.opleidingForm.code;
+		this.opleidingenService.saveOpleiding(this.opleidingForm).subscribe(x => {
+			this.selectedCohort = {
+					jaar: "2018"
+			};
+			var opleidingId = 5;
+			this.cohortenService.saveCohort(opleidingId, this.selectedCohort);
+			
+			this.opleidingen.push(this.opleidingForm);
+			this.onSelectOpleiding(this.opleidingForm);
+		});
+	}
+	
 	// ******************
 	// Beroepstaak operaties
 	// ******************
@@ -271,21 +289,6 @@ export class OpleidingenComponent implements OnInit {
 
 	isEmptyObject(obj) {
 		return (Object.keys(obj).length === 0);
-	}
-	
-	initializeOpleidingForm() {
-		this.opleidingForm = {};
-	}
-	
-	addOpleiding() {
-		this.loading = true;
-		delete this.opleidingForm.code;
-// console.log(this.opleidingForm);
-		this.opleidingenService.saveOpleiding(this.opleidingForm).subscribe(x => {
-			this.opleidingen.push(this.opleidingForm);
-			this.onSelectOpleiding(this.opleidingForm);
-			this.closeModal(this.opleidingModal);
-		});
 	}
 	
     addCursusToCohort(form: any) {

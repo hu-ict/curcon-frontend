@@ -20,7 +20,7 @@
 					<h4 class="card-title mb-0">Opleidingsprofielen</h4>
 					<br />
 					<button type="button" class="btn btn-info"
-						(click)="opleidingModal.show(); initializeOpleidingForm();">
+						(click)="opleidingModal.show(); newOpleidingForm();">
 						<i class="fa fa-plus" aria-hidden="true"></i>
 					</button>
 				</div>
@@ -57,7 +57,7 @@
 								<div class="overzicht">
 									<div class="samenvatting">
 										<div class="titel">Gegeven profiel</div>
-										<span class="code">TDC-ERTRB</span>
+										<span class="code">TCIF-VIBAC-14</span>
 										<h5 class="naam">{{selectedOpleiding.naam}}</h5>
 										<h6 class="ects">240 EC</h6>
 									</div>
@@ -72,7 +72,7 @@
 								<div class="overzicht">
 									<div class="samenvatting">
 										<div class="titel">Berekend profiel</div>
-										<span class="code">TDC-ERTRB</span>
+										<span class="code">TCIF-VIBAC-14s</span>
 										<h5 class="naam">{{selectedOpleiding.profiel?.naam}}</h5>
 										<h6 class="ects">{{selectedOpleiding.profiel?.ects}} EC</h6>
 									</div>
@@ -275,7 +275,7 @@
 					<button type="button" class="btn btn-secondary"
 						(click)="opleidngModal.hide()">Sluiten</button>
 					<button type="button" class="btn btn-primary"
-						(click)="addOpleiding()">Toevoegen</button>
+						(click)="addOpleiding(); opleidingModal.hide()">Toevoegen</button>
 				</div>
 			</form>
 		</div>

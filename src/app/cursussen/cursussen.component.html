@@ -65,7 +65,8 @@
 									</div>
 								</div>
 								<bt-matrix [beroepstaken]="selectedCursus.beroepstaken"></bt-matrix>
-								<ps-overzicht [professionalskills]="selectedCursus.professionalskills"></ps-overzicht>
+								<ps-overzicht
+									[professionalskills]="selectedCursus.professionalskills"></ps-overzicht>
 							</div>
 						</div>
 					</div>
@@ -124,8 +125,8 @@
 						</div>
 						{{editCourse.value | json}}
 					</form>
-					</tab> <tab> <template tabHeading> <i
-						class="icon-grid"></i> Beroepstaken</template>
+					</tab> <tab> <template tabHeading> <i class="icon-grid"></i>
+					Beroepstaken</template>
 					<div class="col-12">
 						<div class="row">
 							<div class="table-responsive">
@@ -166,8 +167,8 @@
 						</div>
 					</div>
 
-					</tab> <tab> <template tabHeading> <i
-						class="icon-badge"></i> Professional skills</template>
+					</tab> <tab> <template tabHeading> <i class="icon-badge"></i>
+					Professional skills</template>
 					<div class="col-12">
 						<div class="row">
 							<div class="table-responsive">
@@ -262,6 +263,7 @@
 										<th></th>
 										<th>Naam</th>
 										<th>Gewicht</th>
+										<th>Miller</th>
 										<th>Beoordelingselementen</th>
 									</tr>
 								</thead>
@@ -271,11 +273,12 @@
 											(click)="deleteToets(toets)"><i
 												class="fa fa-minus-circle" aria-hidden="true"
 												style="font-size: 20px;"></i></a> <a href="javascript:void(0)"
-											(click)="initializeToetsModal(toets);"><i
+											(click)="ToetsModal.show(); editToetsForm(toets);"><i
 												class="fa fa-pencil-square" aria-hidden="true"
 												style="font-size: 20px;"></i></a></td>
 										<td>{{toets.naam}}</td>
 										<td>{{toets.gewicht}}%</td>
+										<td>{{toets.millerNiveau.naam}}</td>
 										<td>
 
 											<table class="table table-condensed table-sm">
@@ -311,35 +314,38 @@
 							<div class="col-12">
 								<div class="btn-group pull-right" role="group" aria-label="...">
 									<button type="button" class="btn btn-info"
-										(click)="ToetsModal.show(); initializeToetsForm();">
+										(click)="ToetsModal.show(); newToetsForm();">
 										<i class="fa fa-plus" aria-hidden="true"></i>
 									</button>
 								</div>
 							</div>
 						</div>
 					</div>
-					</tab> 
-					<tab> <template tabHeading> <i
-						class="icon-puzzle"></i> Toetsmatrijs </template>
-					<ng-container *ngFor="let toetsMatrijs of toetsMatrijsArray">
-					<ng-container *ngIf="toetsMatrijs != undefined">
-						<b>{{toetsMatrijs.naam}}</b>
-						<table class="toetsmatrijs table table-bordered table-nonfluid">
-							<tr class="toetsElementen">
-								<td colspan="3" class="tableInvisible"></td>
-								<ng-container *ngFor="let element of toetsMatrijs.beoordelingselementArray; let i = index">
-								<td>
-									<div class="vertical-text">
-										<div class="vertical-text__inner">{{element.naam}}</div>
-									</div>
+					</tab> <tab> <template tabHeading> <i
+						class="icon-puzzle"></i> Toetsmatrijs </template> <ng-container
+						*ngFor="let toetsMatrijs of toetsMatrijsArray"> <ng-container
+						*ngIf="toetsMatrijs != undefined"> <b>{{toetsMatrijs.naam}}</b>
+					<table class="toetsmatrijs table table-bordered table-nonfluid">
+						<tr class="toetsElementen">
+							<td colspan="3" class="tableInvisible"></td>
+							<ng-container
+								*ngFor="let element of toetsMatrijs.beoordelingselementArray; let i = index">
+							<td>
+								<div class="vertical-text">
+									<div class="vertical-text__inner">{{element.naam}}</div>
+								</div>
 
-								</td>
-								</ng-container>
-							</tr>
-							<tr>
-								<td class=""><div><span>Leerdoel</span></div></td>
-								<td class=""><div><span>Bloom</span></div></td>
-								<td>Totaal</td>
+							</td>
+							</ng-container>
+						</tr>
+						<tr>
+							<td class=""><div>
+									<span>Leerdoel</span>
+								</div></td>
+							<td class=""><div>
+									<span>Bloom</span>
+								</div></td>
+							<td>Totaal</td>
 							<ng-container
 								*ngFor="let element of toetsMatrijs.beoordelingselementArray; let elementId = index">
 							<td>
@@ -349,27 +355,28 @@
 								</div>
 							</td>
 							</ng-container>
-							</tr>
-							<ng-container *ngFor="let leerdoel of selectedCursus.leerdoelenLijst; let leerdoelIndex = index">
-							<tr>
-								<td>{{leerdoel.omschrijving}}</td>
-								<td>{{leerdoel.bloomniveau.naam}}</td>
-								<td>{{toetsMatrijs.totaalGewichtLeerdoelArray[leerdoelIndex]}}% ({{leerdoel.gewicht}}%)</td>
-								<ng-container *ngIf="toetsMatrijs.grid != undefined">
-									<ng-container *ngFor="let item of toetsMatrijs.grid[leerdoelIndex]; ">
+						</tr>
+						<ng-container
+							*ngFor="let leerdoel of selectedCursus.leerdoelenLijst; let leerdoelIndex = index">
+						<tr>
+							<td>{{leerdoel.omschrijving}}</td>
+							<td>{{leerdoel.bloomniveau.naam}}</td>
+							<td>{{toetsMatrijs.totaalGewichtLeerdoelArray[leerdoelIndex]}}%
+								({{leerdoel.gewicht}}%)</td>
+							<ng-container *ngIf="toetsMatrijs.grid != undefined">
+							<ng-container
+								*ngFor="let item of toetsMatrijs.grid[leerdoelIndex]; ">
 
-							<!--	Lege cell --> 
-							<ng-container *ngIf="item?.id == 0 && toetsMatrijsAdd != item">
+							<!--	Lege cell --> <ng-container
+								*ngIf="item?.id == 0 && toetsMatrijsAdd != item">
 							<td class="weging">
 								<button class="btn btn-small btn-info btn-addToets"
 									(click)="addCell(item)">
 									<i class="fa fa-plus" aria-hidden="true"></i>
 								</button>
 							</td>
-							</ng-container> 
-
-							<!--  Cell in AddModus  --> 
-							<ng-container *ngIf="item?.id == 0 && toetsMatrijsAdd == item">
+							</ng-container> <!--  Cell in AddModus  --> <ng-container
+								*ngIf="item?.id == 0 && toetsMatrijsAdd == item">
 							<td class="weging">
 								<form #f="ngForm">
 									<input type="number" name="gewicht" class="form-control"
@@ -384,10 +391,8 @@
 									</button>
 								</form>
 							</td>
-							</ng-container> 
-							
-							<!-- Cell gevuld met percentage --> 
-							<ng-container *ngIf="item?.id != 0 && toetsMatrijsEdit != item?.id">
+							</ng-container> <!-- Cell gevuld met percentage --> <ng-container
+								*ngIf="item?.id != 0 && toetsMatrijsEdit != item?.id">
 							<td class="weging">
 								<div (click)="editCell(item?.id, item?.gewicht)"
 									class="btn-editToets" *ngIf="item !== Array">
@@ -395,9 +400,8 @@
 											*ngIf="item?.gewicht != undefined">%</ng-container></span>
 								</div>
 							</td>
-							</ng-container> 
-							<!--  Cell in editModus  --> 
-							<ng-container *ngIf="item?.id != 0 && toetsMatrijsEdit == item?.id">
+							</ng-container> <!--  Cell in editModus  --> <ng-container
+								*ngIf="item?.id != 0 && toetsMatrijsEdit == item?.id">
 							<td class="weging">
 								<form #f="ngForm">
 									<input type="number" name="gewicht" class="form-control"
@@ -419,11 +423,8 @@
 							</ng-container> </ng-container> </ng-container>
 						</tr>
 						</ng-container>
-						</table>
-							</ng-container>
-							</ng-container>		
-						
-					</tab> </tabset>
+					</table>
+					</ng-container> </ng-container> </tab> </tabset>
 				</div>
 			</div>
 		</div>
@@ -720,15 +721,15 @@
 								class="form-control" [(ngModel)]="toetsForm.naam" />
 						</div>
 
-						<!-- 						<div class="form-group"> -->
-						<!-- 							<label for="osirisResultaatType">Osiris Resultaat Type:</label> <select -->
-						<!-- 								class="form-control" id="osirisResultaatType" -->
-						<!-- 								name="osirisResultaatType" -->
-						<!-- 								[(ngModel)]="toetsForm.osirisResultaatType"> -->
-						<!-- 								<option *ngFor="let a of allOsirisResultaatTypen" -->
-						<!-- 									[ngValue]="a.id">{{a.naam}}</option> -->
-						<!-- 							</select> -->
-						<!-- 						</div> -->
+						<div class="form-group">
+							<label for="millerniveau">Miller niveau:</label> <select
+								class="form-control" id="millerNiveau"
+								name="millerNiveau"
+								[(ngModel)]="toetsForm.millerNiveau">
+								<option *ngFor="let mn of allMillerNiveaus"
+									[ngValue]="mn.id">{{mn.niveau}}</option>
+							</select>
+						</div>
 
 						<div class="form-group">
 							<label for="gewicht">Gewicht:</label> <input type="number"

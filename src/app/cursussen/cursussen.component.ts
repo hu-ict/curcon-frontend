@@ -8,6 +8,7 @@ import {LeerdoelenService} from '../services/leerdoelen.service';
 import {ToetsenService} from '../services/toetsen.service';
 import {ToetsmatrijzenService} from "../services/toetsmatrijzen.service";
 import {BloomniveausService} from "../services/bloomniveaus.service";
+import {MillerNiveausService} from "../services/millerniveaus.service";
 import {DocentenService} from "../services/docenten.service";
 import {BtMatrixComponent} from '../bt-overzicht/bt-matrix.component';
 import {PsOverzichtComponent} from '../ps-overzicht/ps-overzicht.component';
@@ -37,7 +38,7 @@ export class CursussenComponent implements OnInit {
 	@Output() onSelectedCourse = new EventEmitter<Object>();
 	allDocenten: Array<any>;
 	allBloomniveaus: Array<any>;
-	allOsirisResultaatTypen: Array<any>;
+	allMillerNiveaus: Array<any>;
 	loading: boolean;
 	naam: string;
 	error: boolean;
@@ -55,7 +56,7 @@ export class CursussenComponent implements OnInit {
 	toetsForm = <any>{};
 	leerdoelForm = <any>{};
 
-	constructor(private cursussenService: CursussenService, private docentenService: DocentenService, private beroepstaakService: BeroepstakenService, private professionalskillService: ProfessionalskillsService, private leerdoelenService: LeerdoelenService, private toetsenService: ToetsenService, private toetsmatrijzenService: ToetsmatrijzenService, private bloomniveauService: BloomniveausService) {
+	constructor(private cursussenService: CursussenService, private docentenService: DocentenService, private beroepstaakService: BeroepstakenService, private professionalskillService: ProfessionalskillsService, private leerdoelenService: LeerdoelenService, private toetsenService: ToetsenService, private toetsmatrijzenService: ToetsmatrijzenService, private bloomniveauService: BloomniveausService, private millerNiveausService: MillerNiveausService) {
 		this.loading = true;
 	}
 
@@ -70,6 +71,13 @@ export class CursussenComponent implements OnInit {
 			this.selectedCursus = this.courses[0];
 			this.cursusForm = this.courses[0];
 			this.refreshAll();
+		},
+		error => console.log('Error: ', error),
+		() => {
+			this.loading = false;
+		});
+		this.millerNiveausService.getMillerNiveaus().subscribe(millerNiveaus => {
+			this.allMillerNiveaus = millerNiveaus;
 		},
 		error => console.log('Error: ', error),
 		() => {
@@ -253,7 +261,7 @@ export class CursussenComponent implements OnInit {
 			this.loading = false;
 		});
 	}
-
+	
 	getAllBeroepstaken() {
 		this.loading = true;
 		this.beroepstaakService.getBeroepstaken().subscribe(result => {
@@ -338,24 +346,25 @@ export class CursussenComponent implements OnInit {
 //	Toets operaties
 //	******************
 
-	initializeToetsForm() {
+	newToetsForm() {
+		console.log("newToetsForm()");
 		this.toetsForm = {
-				osirisResultaatType : 1
+			naam: "",
+			millerNiveau: this.allMillerNiveaus[0].id,
+			gewicht: 50.0,
+			omschrijving: ""
 		};
 	}
 
-	initializeToetsModal(toets) {
-		console.log("initializeToetsModal(toets)");
+	editToetsForm(toets) {
+		console.log("editToetsForm(toets)");
 		console.log(toets);
-		this.loading = true;
 		this.toetsForm = {
-				id : toets.id,
-				naam : toets.naam,
-				gewicht : toets.gewicht,
-				osirisResultaatType : 1
+			id : toets.id,
+			naam : toets.naam,
+			gewicht : toets.gewicht,
+			millerNiveau : toets.millerNiveau.id
 		};
-		this.toetsModal.show();
-		this.loading = false;
 	}
 
 	saveToets() {
