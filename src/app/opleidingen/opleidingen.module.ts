@@ -28,7 +28,9 @@ import { CursussenService } from '../services/cursussen.service';
 import { OpleidingenService } from '../services/opleidingen.service';
 import { CohortenService } from '../services/cohorten.service';
 import { LeerplannenService } from '../services/leerplannen.service';
+import { ToetsProgrammaService } from '../services/toetsprogramma.service';
 import { BtMatrixModule } from '../bt-overzicht/bt-matrix.module';
+import { BtCalculatedModule } from '../bt-calculated/bt-calculated.module';
 import { PsOverzichtModule } from '../ps-overzicht/ps-overzicht.module';
 import { BoksOverzichtModule } from '../boks-overzicht/boks-overzicht.module';
 import { OpleidingenRoutingModule } from './opleidingen-routing.module';
@@ -38,6 +40,7 @@ import { OpleidingenRoutingModule } from './opleidingen-routing.module';
 		PsOverzichtModule,
 		BoksOverzichtModule,
 		BtMatrixModule,
+		BtCalculatedModule,
 		OpleidingenRoutingModule,
 	    ChartsModule,
 	    HttpModule,
@@ -54,6 +57,7 @@ import { OpleidingenRoutingModule } from './opleidingen-routing.module';
 	],
 	providers: [ 
 		LeerplannenService, 
+		ToetsProgrammaService,
 		OpleidingenService, 
 		CohortenService, 
 		CursussenService, 

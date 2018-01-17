@@ -78,9 +78,10 @@
 									</div>
 								</div>
 								<ng-container *ngIf="selectedOpleiding.profiel != undefined">
-								<bt-matrix [beroepstaken]="selectedOpleiding.profiel.eindBT"></bt-matrix>
-								<ps-overzicht
-									[professionalskills]="selectedOpleiding.profiel.eindPS"></ps-overzicht>
+								<bt-calculated [profiel]="selectedOpleiding.profiel.conformiteitBeroepsTaken"></bt-calculated>
+								</ng-container>
+								<ng-container *ngIf="selectedOpleiding.profiel == undefined">
+								selectedOpleiding.profiel == undefined
 								</ng-container>
 
 							</div>

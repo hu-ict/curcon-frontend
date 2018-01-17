@@ -9,7 +9,10 @@ import {OpleidingenService} from '../services/opleidingen.service';
 
 import {CohortenService} from '../services/cohorten.service';
 import {LeerplannenService} from '../services/leerplannen.service';
+import {ToetsProgrammaService} from '../services/toetsprogramma.service';
+
 import {BtMatrixComponent} from '../bt-overzicht/bt-matrix.component';
+import {BtCalculatedComponent} from '../bt-calculated/bt-calculated.component';
 import {PsOverzichtComponent} from '../ps-overzicht/ps-overzicht.component';
 import {BoksOverzichtComponent} from '../boks-overzicht/boks-overzicht.component';
 
@@ -53,6 +56,7 @@ export class OpleidingenComponent implements OnInit {
 			private cohortenService: CohortenService,
 			private cursussenService: CursussenService,
 			private leerplannenService: LeerplannenService,
+			private toetsProgrammaService: ToetsProgrammaService,
 			private professionalskillService: ProfessionalskillsService, 
 			private beroepstakenService: BeroepstakenService) {
 		this.loading = true;
@@ -85,20 +89,22 @@ export class OpleidingenComponent implements OnInit {
 		this.beroepstakenService.getBeroepstakenByObject(this.selectedOpleiding.eindBT).subscribe(beroepstaken => {
 			this.selectedOpleiding.beroepstaken = [];
 			this.selectedOpleiding.beroepstaken = beroepstaken;
-			this.selectedOpleiding.btMatrix = this.generateMatrix();;
-			for (let bt of this.selectedOpleiding.beroepstaken) {
-				this.selectedOpleiding.btMatrix[bt.architectuurlaagId][bt.activiteitId] = bt;
-			}
 			console.log(this.selectedOpleiding.beroepstaken);
 		});
 
-		console.log('this.selectedOpleiding.btProfiel');
-		console.log(this.selectedOpleiding.btProfiel);
+		console.log('this.selectedOpleiding.profiel');
+		console.log(this.selectedOpleiding.profiel);
         this.cohortenService.getCohortenByObject(this.selectedOpleiding['cohorten']).subscribe(cohorten => {
             this.cohorten = cohorten;
             this.selectedCohort = cohorten[0];
-    		this.loadBTPSProfiel();
-    		this.selectedOpleiding.btProfiel = this.generateMatrix();;
+			console.log("Start loading profiel");
+			this.leerplannenService.getLeerplannenProfiel(this.selectedCohort.id).subscribe(data => {
+				console.log("getCalculatedProfile data");
+				console.log(data);
+				this.selectedOpleiding.profiel = data;
+				console.log("this.selectedOpleiding");
+				console.log(this.selectedOpleiding);
+			});
     		this.refreshProfessionalskills();
     		this.refreshCursussen();
     		console.log("---- this.selectedOpleiding ----");
@@ -172,19 +178,6 @@ export class OpleidingenComponent implements OnInit {
 		});
 	}
 
-	loadBTPSProfiel() {
-		this.leerplannenService.getLeerplannenProfiel(this.selectedCohort.id).subscribe(data => {
-			console.log("loadBeroepstakenProfiel data");
-			console.log(data);
-			this.selectedOpleiding.profiel = data;
-			console.log("this.selectedOpleiding");
-			console.log(this.selectedOpleiding);
-			for (let bt of data.eindBT) {
-				this.selectedOpleiding.btProfiel[bt.architectuurlaagId][bt.activiteitId] = bt;
-			}
-		});
-	}
-
 	addBeroepstaak() {
 		this.loading = true;
 		this.beroepstakenService.getBeroepstaakId(this.beroepstakenForm.activiteit,
@@ -249,11 +242,6 @@ export class OpleidingenComponent implements OnInit {
 				this.beroepstakenService.getBeroepstakenByObject(c.eindBT).subscribe(beroepstaken => {
 					c.beroepstaken = [];
 					c.beroepstaken = beroepstaken;
-					let btMatrix = this.generateMatrix();
-					for (let bt of c.beroepstaken) {
-						btMatrix[bt.architectuurlaagId][bt.activiteitId] = bt;
-					}
-					c.btMatrix = btMatrix;
 					this.professionalskillService.getProfessionalskillsByObject(c.eindPS).subscribe(professionalskills => {
 						c.professionalskills = [];
 						c.professionalskills = professionalskills;
@@ -269,23 +257,6 @@ export class OpleidingenComponent implements OnInit {
 		modal.hide()
 	}
 
-	generateMatrix() {
-		let btMatrix = Array.apply(null, Array(6));
-		for(let i = 0; i < btMatrix.length; i++) {
-			btMatrix[i] = Array.apply(null, Array(6));
-		}
-		btMatrix[0][1] = 'B';
-		btMatrix[0][2] = 'A';
-		btMatrix[0][3] = 'A';
-		btMatrix[0][4] = 'O';
-		btMatrix[0][5] = 'R';
-		btMatrix[1][0] = 'G';
-		btMatrix[2][0] = 'B';
-		btMatrix[3][0] = 'I';
-		btMatrix[4][0] = 'S';
-		btMatrix[5][0] = 'H';
-		return btMatrix;
-	}
 
 	isEmptyObject(obj) {
 		return (Object.keys(obj).length === 0);
@@ -377,5 +348,22 @@ export class OpleidingenComponent implements OnInit {
 // });
 // }
 
+//	generateMatrix() {
+//		let btMatrix = Array.apply(null, Array(6));
+//		for(let i = 0; i < btMatrix.length; i++) {
+//			btMatrix[i] = Array.apply(null, Array(6));
+//		}
+//		btMatrix[0][1] = 'B';
+//		btMatrix[0][2] = 'A';
+//		btMatrix[0][3] = 'A';
+//		btMatrix[0][4] = 'O';
+//		btMatrix[0][5] = 'R';
+//		btMatrix[1][0] = 'G';
+//		btMatrix[2][0] = 'B';
+//		btMatrix[3][0] = 'I';
+//		btMatrix[4][0] = 'S';
+//		btMatrix[5][0] = 'H';
+//		return btMatrix;
+//	}
 
 }

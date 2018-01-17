@@ -23,6 +23,7 @@ import {HttpModule} from '@angular/http';
 import {FormsModule} from "@angular/forms";
 import {TooltipModule} from 'ng2-bootstrap';
 import {BtMatrixModule} from './bt-overzicht/bt-matrix.module';
+import {BtCalculatedModule} from './bt-calculated/bt-calculated.module';
 
 @NgModule({
 	imports: [
@@ -36,6 +37,7 @@ import {BtMatrixModule} from './bt-overzicht/bt-matrix.module';
 		TooltipModule.forRoot(),
 		ChartsModule,
 		BtMatrixModule,
+		BtCalculatedModule,
 	],
 	declarations: [
 		AppComponent,
