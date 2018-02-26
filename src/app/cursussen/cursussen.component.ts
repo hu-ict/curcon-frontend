@@ -10,9 +10,10 @@ import {ToetsmatrijzenService} from '../services/toetsmatrijzen.service';
 import {BloomniveausService} from '../services/bloomniveaus.service';
 import {MillerNiveausService} from '../services/millerniveaus.service';
 import {DocentenService} from '../services/docenten.service';
-import {BtMatrixComponent} from '../bt-overzicht/bt-matrix.component';
+import {BtMatrixComponent} from '../bt-matrix/bt-matrix.component';
 import {PsOverzichtComponent} from '../ps-overzicht/ps-overzicht.component';
 import {ToetsMatrijs} from './toetsmatrijs';
+
 
 @Component({
   templateUrl: 'cursussen.component.html',
@@ -213,13 +214,14 @@ export class CursussenComponent implements OnInit {
 
   addProfessionalskill() {
     this.loading = true;
-    this.professionalskillService.getProfessionalskillId(this.professionalskillForm.activiteit, this.professionalskillForm.niveau).subscribe(data => {
-      this.cursussenService.addProfessionalskillToCursus(this.selectedCursus.id, data).subscribe(x => {
-        this.professionalskillModal.hide();
-        this.refreshProfessionalskills();
-        this.loading = false;
+    this.professionalskillService.getProfessionalskillId(this.professionalskillForm.activiteit,
+      this.professionalskillForm.niveau).subscribe(data => {
+        this.cursussenService.addProfessionalskillToCursus(this.selectedCursus.id, data).subscribe(x => {
+          this.professionalskillModal.hide();
+          this.refreshProfessionalskills();
+          this.loading = false;
+        });
       });
-    });
   }
 
 
@@ -602,12 +604,14 @@ export class CursussenComponent implements OnInit {
         for (let p = 0; p < leerdoelen[row].toetsElementen.length; p++) {
           // totalGewicht +=
           // toetsmatrijs.leerdoelen[row].toetsElementen[p].gewicht;
-          let beoordelingsElementId = leerdoelen[row].toetsElementen[p].beoordelingsElement.id;
-          if (beoordelingsElementId == toetsMatrijs.beoordelingselementArray[col].id) {
+          const beoordelingsElementId = leerdoelen[row].toetsElementen[p].beoordelingsElement.id;
+          if (beoordelingsElementId === toetsMatrijs.beoordelingselementArray[col].id) {
             grid[row][col] = leerdoelen[row].toetsElementen[p];
-            toetsMatrijs.totaalGewichtLeerdoelArray[row] = toetsMatrijs.totaalGewichtLeerdoelArray[row] + leerdoelen[row].toetsElementen[p].gewicht;
-            toetsMatrijs.totaalGewichtElementArray[col] = 
-              toetsMatrijs.totaalGewichtElementArray[col] + 
+            toetsMatrijs.totaalGewichtLeerdoelArray[row] =
+              toetsMatrijs.totaalGewichtLeerdoelArray[row] +
+              leerdoelen[row].toetsElementen[p].gewicht;
+            toetsMatrijs.totaalGewichtElementArray[col] =
+              toetsMatrijs.totaalGewichtElementArray[col] +
               leerdoelen[row].toetsElementen[p].gewicht;
           }
         }

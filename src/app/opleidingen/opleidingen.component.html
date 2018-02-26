@@ -62,7 +62,7 @@
 										<h6 class="ects">240 EC</h6>
 									</div>
 								</div>
-								<bt-matrix [beroepstaken]="selectedOpleiding.beroepstaken"></bt-matrix>
+								<app-bt-matrix [beroepstaken]="selectedOpleiding.beroepstaken"></app-bt-matrix>
 								<ps-overzicht
 									[professionalskills]="selectedOpleiding.professionalskills"></ps-overzicht>
 							</div>
@@ -219,9 +219,10 @@
 														class="fa fa-minus-circle" aria-hidden="true"></i></a>
 												</div>
 											</div>
-											<bt-matrix [beroepstaken]="c.beroepstaken"></bt-matrix>
+											<app-bt-matrix [beroepstaken]="c.beroepstaken"></app-bt-matrix>
 											<ps-overzicht [professionalskills]="c.professionalskills"></ps-overzicht>
-											<boks-overzicht [boks]="c.professionalskills"></boks-overzicht>
+<!-- 										<boks-overzicht [boks]="c.professionalskills"></boks-overzicht>								
+										-->
 										</div>
 									</div>
 								</div>
@@ -274,7 +275,7 @@
 				</div>
 				<div *ngIf="!loading" class="modal-footer">
 					<button type="button" class="btn btn-secondary"
-						(click)="opleidngModal.hide()">Sluiten</button>
+						(click)="opleidingModal.hide()">Sluiten</button>
 					<button type="button" class="btn btn-primary"
 						(click)="addOpleiding(); opleidingModal.hide()">Toevoegen</button>
 				</div>

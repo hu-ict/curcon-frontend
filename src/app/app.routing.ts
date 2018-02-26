@@ -5,6 +5,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { FullLayoutComponent } from './layouts/full-layout.component';
 import { SimpleLayoutComponent } from './layouts/simple-layout.component';
 
+import { OpleidingenComponent } from './opleidingen/opleidingen.component';
+import { CursussenComponent } from './cursussen/cursussen.component';
+import { DocentenComponent } from './docenten/docenten.component';
+
 export const routes: Routes = [
   {
     path: '',
@@ -17,54 +21,30 @@ export const routes: Routes = [
     data: {
       title: 'Home'
     },
-    children: [
-      {
-        path: 'dashboard',
-        loadChildren: './dashboard/dashboard.module#DashboardModule'
-      },
-      {
-        path: 'opleidingen',
-        loadChildren: './opleidingen/opleidingen.module#OpleidingenModule',
-      },
-      {
-        path: 'cursussen',
-        loadChildren: './cursussen/cursussen.module#CursussenModule',
-      },
-      {
-        path: 'docenten',
-        loadChildren: './docenten/docenten.module#DocentenModule'
-      },
-      {
-        path: 'components',
-        loadChildren: './components/components.module#ComponentsModule'
-      },
-      {
-        path: 'icons',
-        loadChildren: './icons/icons.module#IconsModule'
-      },
-      {
-        path: 'widgets',
-        loadChildren: './widgets/widgets.module#WidgetsModule'
-      },
-      {
-        path: 'charts',
-        loadChildren: './chartjs/chartjs.module#ChartJSModule'
-      }
-    ]
+
   },
   {
-    path: 'pages',
-    component: SimpleLayoutComponent,
+    path: 'opleidingen',
+    component: OpleidingenComponent,
     data: {
-      title: 'Pages'
+      title: 'Opleidingen'
     },
-    children: [
-      {
-        path: '',
-        loadChildren: './pages/pages.module#PagesModule',
-      }
-    ]
-  }
+
+  },  {
+    path: 'cursussen',
+    component: CursussenComponent,
+    data: {
+      title: 'Cursussen'
+    },
+
+  },  {
+    path: 'docenten',
+    component: DocentenComponent,
+    data: {
+      title: 'Docenten'
+    },
+
+  },
 ];
 
 @NgModule({

@@ -2,12 +2,11 @@ import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, D
 import { Router } from '@angular/router';
 import { DocentenService } from '../services/docenten.service';
 import {AbstractControl, NG_VALIDATORS} from '@angular/forms';
-import {OrderByPipe} from './orderby.pipe';
-import {DocentComponent} from "../test/docent.component"
+import {OrderByPipe} from '../pipes/orderby.pipe';
+import {DocentComponent} from '../test/docent.component';
 
 @Component({
-	templateUrl: 'docenten.component.html',
-//	pipes: [OrderByPipe]
+  templateUrl: 'docenten.component.html',
 })
 
 export class DocentenComponent implements OnInit {

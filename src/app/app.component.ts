@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {OrganisatiesService} from "./services/organisaties.service";
+import {OrganisatiesService} from './services/organisaties.service';
 
 @Component({
   // tslint:disable-next-line
@@ -7,13 +7,13 @@ import {OrganisatiesService} from "./services/organisaties.service";
 	template: '<router-outlet></router-outlet>'
 })
 export class AppComponent implements OnInit {
-	allOrganisaties: Array<any>;
-	selectedOrganisatie: string;
+  allOrganisaties: Array<any>;
+  selectedOrganisatie: string;
 
-	ngOnInit(): void {
+  ngOnInit(): void {
 //    localStorage.setItem("")
-	}
+  }
 
-	constructor(private organisatieService: OrganisatiesService) {
-	}
+  constructor(private organisatieService: OrganisatiesService) {
+  }
 }
