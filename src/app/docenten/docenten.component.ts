@@ -3,33 +3,32 @@ import { Router } from '@angular/router';
 import { DocentenService } from '../services/docenten.service';
 import {AbstractControl, NG_VALIDATORS} from '@angular/forms';
 import {OrderByPipe} from '../pipes/orderby.pipe';
-import {DocentComponent} from '../test/docent.component';
+// import {DocentComponent} from '../test/docent.component';
 
 @Component({
   templateUrl: 'docenten.component.html',
 })
 
 export class DocentenComponent implements OnInit {
-    @ViewChild('docentModal') docentModal: any;
-    @Input() docenten: Array<any>;
-    loading: boolean;
-    currentState: number;
-    mode: string;
-    docentForm = <any>{};
-    docentId: number;
+   @ViewChild('docentModal') docentModal: any;
+   @Input() docenten: Array<any>;
+   loading: boolean;
+   currentState: number;
+   mode: string;
+   docentForm = <any>{};
+   docentId: number;
+   error: String;
 
     constructor(private docentenService: DocentenService) {
         this.loading = true;
     }
 
-    ngOnInit(): void {
-        this.docentenService.getDocenten().subscribe(docenten => {
-          this.docenten = docenten;
-        },
-        error => console.log('Error: ', error),
-        () => {
-          this.loading = false;
-        });
+   ngOnInit(): void {
+      this.docentenService.getDocenten().subscribe(
+         docenten => this.docenten = docenten,
+         error => console.log('Error: ', error),
+         () => this.loading = false
+      );
     }
 
     initializeDocentForm() {

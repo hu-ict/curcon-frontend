@@ -16,8 +16,7 @@ export class DocentenService {
     }
 
     getDocenten() {
-        return this.http.get(myGlobals.baseUrl+'organisaties/1/docenten')
-          .map(res => res.json());
+        return this.http.get(myGlobals.baseUrl + 'organisaties/1/docenten').map(res => res.json());
     }
 
     getDocentenByObject(obj) {
@@ -41,10 +40,10 @@ export class DocentenService {
 		var headers = new Headers();
 		headers.append('Content-Type', 'application/json');
 		if (docentId == null) {
-			return this.http.post(myGlobals.baseUrl+'organisaties/1/docenten/', docentForm)
+			return this.http.post(myGlobals.baseUrl + 'organisaties/1/docenten/', docentForm)
 				.catch(this.handleError);
 		} else {
-			return this.http.put(myGlobals.baseUrl+'docenten/' + docentId, docentForm)
+			return this.http.put(myGlobals.baseUrl + 'docenten/' + docentId, docentForm)
 				.catch(this.handleError);
 		}
 	}

@@ -93,14 +93,14 @@
 					<form #opleidingForm="ngForm" novalidate>
 						<a href="javascript:void(0)" (click)="setMode('edit')"
 							*ngIf="mode == 'view'">Bewerken</a> <a href="javascript:void(0)"
-							(click)="setMode('view')" *ngIf="mode == 'edit'">Annuleren</a> <a
+							(click)="setMode('view')" *ngIf="mode === 'edit'">Annuleren</a> <a
 							href="javascript:void(0)" (click)="saveOpleiding(opleidingForm)"
 							*ngIf="mode == 'edit'">Opslaan</a>
 						<div class="form-group row">
 							<label for="naam" class="col-2 col-form-label">Naam</label>
 							<div class="col-10">
-								<div class="col-form-label" *ngIf="mode == 'view'">{{selectedOpleiding.naam}}</div>
-								<input *ngIf="mode == 'edit'" class="form-control" type="text"
+								<div class="col-form-label" *ngIf="mode === 'view'">{{selectedOpleiding.naam}}</div>
+								<input *ngIf="mode === 'edit'" class="form-control" type="text"
 									id="naam" name="naam" required
 									[(ngModel)]="selectedOpleiding.naam">
 							</div>
@@ -259,7 +259,7 @@
 							<label for="naam" class="col-2 col-form-label">Code</label>
 							<div class="col-10">
 								<input class="form-control" type="text" id="code" name="code"
-									required [(ngModel)]="opleidingForm.code">
+									required [(ngModel)]="opleidingForm?.code">
 							</div>
 						</div>
 						<div class="form-group row">

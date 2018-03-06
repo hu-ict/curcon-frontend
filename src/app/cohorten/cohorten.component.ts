@@ -11,7 +11,7 @@ export class CohortenComponent implements OnInit {
   @Output() onSelectedCourse = new EventEmitter<Object>();
   loading: boolean;
   naam: string;
-  selectedButton : number;
+  selectedButton: number;
   currentCourse = <any>{};
 
   constructor(private cohortService: CohortenService) {

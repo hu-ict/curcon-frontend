@@ -6,34 +6,32 @@ import * as myGlobals from '../globals';
 
 @Injectable()
 export class CursussenService {
-	headers: Headers;
-	options: RequestOptions;
-	organisationId: any;
+   headers: Headers;
+   options: RequestOptions;
+   organisationId: any;
 
-constructor(private http: Http) {
-	console.log('Cursussen Service Initialized...');
-	this.headers = new Headers({ 'Content-Type': 'application/json' });
-	this.headers.append('Access-Control-Allow-Origin', '*');
+   constructor(private http: Http) {
+      console.log('Cursussen Service Initialized...');
+      this.headers = new Headers({ 'Content-Type': 'application/json' });
+      this.headers.append('Access-Control-Allow-Origin', '*');
 //	this.headers.append('Access-Control-Expose-Headers', 'content-disposition');
-	this.options = new RequestOptions({ headers: this.headers });
-	this.organisationId = JSON.parse(localStorage.getItem('selectedOrganisatie'));
-}
+      this.options = new RequestOptions({ headers: this.headers });
+      this.organisationId = JSON.parse(localStorage.getItem('selectedOrganisatie'));
+   }
 
-getCursussen() {
-	var url = myGlobals.baseUrl+'organisaties/' + this.organisationId.id + '/cursussen';
-	console.log("url "+url)
-	return this.http.get(url, this.options).map(res => res.json());
-}
+   getCursussen() {
+      const url = myGlobals.baseUrl + 'organisaties/' + this.organisationId.id + '/cursussen';
+      console.log('url: ' + url)
+      return this.http.get(url, this.options).map(res => res.json());
+   }
 
-getDataByHref(href) {
-	return this.http.get(href, this.options)
-	.map(res => res.json());
-}
+   getDataByHref(href) {
+      return this.http.get(href, this.options).map(res => res.json());
+   }
 
-getCursussenByObject(obj) {
-	console.log(obj.href);
-	return this.http.get(obj.href, this.options)
-	.map(res => res.json());
+   getCursussenByObject(obj) {
+      console.log(obj.href);
+      return this.http.get(obj.href, this.options).map(res => res.json());
 }
 
 addBeroepstakenToCursus(cursusId, beroepstaak) {
@@ -53,7 +51,7 @@ saveLeerdoel(cursusId, leerdoel) {
 		return this.http.post(myGlobals.baseUrl+'cursussen/' + cursusId + '/leerdoelen', leerdoel)
 		.catch(this.handleError);	
 	} else {
-		var leerdoelId = leerdoel.id;
+		let leerdoelId = leerdoel.id;
 		delete leerdoel.id;
 		console.log("leerdoelId "+leerdoelId);
 		console.log("leerdoel "+leerdoel);
@@ -67,7 +65,7 @@ saveToets(cursusId, toets) {
 		return this.http.post(myGlobals.baseUrl+'cursussen/' + cursusId + '/toetsen', toets)
 		.catch(this.handleError);	
 	} else {
-		var toetsId = toets.id;
+		let toetsId = toets.id;
 		delete toets.id;
 		return this.http.put(myGlobals.baseUrl+'toetsen/' + toetsId, toets)
 		.catch(this.handleError);
@@ -90,7 +88,7 @@ deleteLeerdoel(leerdoelId) {
 }
 
 updateCursus(id, form) {
-	var headers = new Headers();
+	let headers = new Headers();
 	headers.append('Content-Type', 'application/json');
 	return this.http.put(myGlobals.baseUrl+'cursussen/' + id, form)
 	.catch(this.handleError);

@@ -18,9 +18,9 @@ import { AppRoutingModule } from './app.routing';
 // Layouts
 import { FullLayoutComponent } from './layouts/full-layout.component';
 import { SimpleLayoutComponent } from './layouts/simple-layout.component';
-import {HttpModule} from '@angular/http';
-import {FormsModule} from '@angular/forms';
-import {TooltipModule} from 'ng2-bootstrap';
+import { HttpModule } from '@angular/http';
+import { FormsModule } from '@angular/forms';
+import { TooltipModule } from 'ng2-bootstrap';
 import { ModalModule } from 'ng2-bootstrap/modal';
 import { ModalsComponent } from './components/modals.component';
 
@@ -45,12 +45,12 @@ import { CohortenService } from './services/cohorten.service';
 import { LeerplannenService } from './services/leerplannen.service';
 import { ToetsProgrammaService } from './services/toetsprogramma.service';
 
-import { PsOverzichtModule } from './ps-overzicht/ps-overzicht.module';
-import { BoksOverzichtModule } from './boks-overzicht/boks-overzicht.module';
 import { OpleidingenRoutingModule } from './opleidingen/opleidingen-routing.module';
 import { CursussenRoutingModule } from './cursussen/cursussen-routing.module';
-import { BtCalculatedModule } from './bt-calculated/bt-calculated.module';
 
+import { BoksOverzichtComponent } from './boks-overzicht/boks-overzicht.component';
+import { PsOverzichtComponent } from './ps-overzicht/ps-overzicht.component';
+import { BtCalculatedComponent } from './bt-calculated/bt-calculated.component';
 import { BtMatrixComponent } from './bt-matrix/bt-matrix.component';
 import { OpleidingenComponent } from './opleidingen/opleidingen.component';
 import { CursussenComponent } from './cursussen/cursussen.component';
@@ -69,8 +69,6 @@ import {OrderByPipe} from './pipes/orderby.pipe';
     TabsModule.forRoot(),
     TooltipModule.forRoot(),
     ChartsModule,
-    BtCalculatedModule,
-    PsOverzichtModule,
     CursussenRoutingModule,
     OpleidingenRoutingModule
   ],
@@ -78,6 +76,8 @@ import {OrderByPipe} from './pipes/orderby.pipe';
     OrderByPipe,
     AppComponent,
     BtMatrixComponent,
+    BtCalculatedComponent,
+    PsOverzichtComponent,
     CursussenComponent,
     OpleidingenComponent,
     ModalsComponent,

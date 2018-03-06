@@ -122,7 +122,6 @@ export class OpleidingenComponent implements OnInit {
   saveOpleiding(form: any) {
     this.loading = true;
     this.selectedOpleiding.naam = form.naam;
-// console.log(this.selectedOpleiding);
     this.opleidingenService.saveOpleiding(this.selectedOpleiding).subscribe(x => {
       this.mode = 'view';
       this.loading = false;
