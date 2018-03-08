@@ -16,7 +16,7 @@ export class NavDropdownDirective {
 * Allows the dropdown to be toggled via click.
 */
 @Directive({
-  selector: '.nav-dropdown-toggle',
+   selector: '.nav-dropdown-toggle',
 })
 export class NavDropdownToggleDirective {
   constructor(private dropdown: NavDropdownDirective) {}

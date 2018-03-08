@@ -24,37 +24,39 @@ import {FormsModule} from "@angular/forms";
 import {TooltipModule} from 'ng2-bootstrap';
 import {BtMatrixModule} from './bt-overzicht/bt-matrix.module';
 import {BtCalculatedModule} from './bt-calculated/bt-calculated.module';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
-	imports: [
-		BrowserModule,
-		AppRoutingModule,
-		HttpModule,
-		FormsModule,
-		CommonModule,
-		DropdownModule.forRoot(),
-		TabsModule.forRoot(),
-		TooltipModule.forRoot(),
-		ChartsModule,
-		BtMatrixModule,
-		BtCalculatedModule,
-	],
-	declarations: [
-		AppComponent,
-		FullLayoutComponent,
-		SimpleLayoutComponent,
-		NAV_DROPDOWN_DIRECTIVES,
-		BreadcrumbsComponent,
-		SIDEBAR_TOGGLE_DIRECTIVES,
-		AsideToggleDirective
-	],
-	providers: [
-		{
-			provide: LocationStrategy,
-			useClass: HashLocationStrategy
-		}, 
-		OrganisatiesService
-	],
-	bootstrap: [ AppComponent ]
+   imports: [
+      BrowserModule,
+      AppRoutingModule,
+      HttpModule,
+      FormsModule,
+      CommonModule,
+      DropdownModule.forRoot(),
+      TabsModule.forRoot(),
+      TooltipModule.forRoot(),
+      ChartsModule,
+      BtMatrixModule,
+      BtCalculatedModule,
+   ],
+   declarations: [
+      AppComponent,
+      FullLayoutComponent,
+      SimpleLayoutComponent,
+      NAV_DROPDOWN_DIRECTIVES,
+      BreadcrumbsComponent,
+      SIDEBAR_TOGGLE_DIRECTIVES,
+      AsideToggleDirective,
+      NavbarComponent
+   ],
+   providers: [
+      {
+         provide: LocationStrategy,
+         useClass: HashLocationStrategy
+      },
+      OrganisatiesService
+   ],
+   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

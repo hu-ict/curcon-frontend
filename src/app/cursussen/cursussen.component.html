@@ -6,6 +6,11 @@
 .table-label {
 	width: 10%;
 }
+
+.modal-dialog-leerdoel.modal-dialog {
+	width: 90% !important;
+	min-width: 1000px !important;
+}
 </style>
 
 <div class="animated fadeIn">
@@ -74,31 +79,31 @@
 					Algemeen</template>
 					<form #editCourse="ngForm" novalidate>
 						<a href="javascript:void(0)" (click)="changeMode('edit')"
-							*ngIf="mode == 'view'">Bewerken</a> <a href="javascript:void(0)"
+							*ngIf="mode === 'view'">Bewerken</a> <a href="javascript:void(0)"
 							(click)="changeMode('view')" *ngIf="mode == 'edit'">Annuleren</a>
 						<a href="javascript:void(0)" (click)="saveCursus(editCourse)"
-							*ngIf="mode == 'edit'">Opslaan</a>
+							*ngIf="mode === 'edit'">Opslaan</a>
 						<div class="form-group row">
 							<label for="code" class="col-2 col-form-label">Code</label>
 							<div class="col-10">
 								<div class="col-form-label" *ngIf="mode == 'view'">{{selectedCursus.code}}</div>
-								<input *ngIf="mode == 'edit'" class="form-control" type="text"
+								<input *ngIf="mode === 'edit'" class="form-control" type="text"
 									id="code" name="code" required [(ngModel)]="cursusForm.code">
 							</div>
 						</div>
 						<div class="form-group row">
 							<label for="naam" class="col-2 col-form-label">Naam</label>
 							<div class="col-10">
-								<div class="col-form-label" *ngIf="mode == 'view'">{{selectedCursus.naam}}</div>
-								<input *ngIf="mode == 'edit'" class="form-control" type="text"
+								<div class="col-form-label" *ngIf="mode === 'view'">{{selectedCursus.naam}}</div>
+								<input *ngIf="mode === 'edit'" class="form-control" type="text"
 									id="naam" name="naam" required [(ngModel)]="cursusForm.naam">
 							</div>
 						</div>
 						<div class="form-group row">
 							<label for="periode" class="col-2 col-form-label">Periode</label>
 							<div class="col-10">
-								<div class="col-form-label" *ngIf="mode == 'view'">{{selectedCursus.periode}}</div>
-								<input *ngIf="mode == 'edit'" class="form-control" type="text"
+								<div class="col-form-label" *ngIf="mode === 'view'">{{selectedCursus.periode}}</div>
+								<input *ngIf="mode === 'edit'" class="form-control" type="text"
 									id="periode" name="periode" required
 									[(ngModel)]="cursusForm.periode">
 							</div>
@@ -106,24 +111,23 @@
 						<div class="form-group row">
 							<label for="europeanCredits" class="col-2 col-form-label">Ects</label>
 							<div class="col-10">
-								<div class="col-form-label" *ngIf="mode == 'view'">{{selectedCursus.europeanCredits}}</div>
-								<input *ngIf="mode == 'edit'" class="form-control" type="text"
+								<div class="col-form-label" *ngIf="mode === 'view'">{{selectedCursus.europeanCredits}}</div>
+								<input *ngIf="mode === 'edit'" class="form-control" type="text"
 									id="europeanCredits" name="europeanCredits" required
 									[(ngModel)]="cursusForm.europeanCredits">
 							</div>
 						</div>
 						<div class="form-group row">
-							<label for="coordinator" class="col-2 col-form-label">CoÃ¶rdinator</label>
+							<label for="coordinator" class="col-2 col-form-label">Coördinator</label>
 							<div class="col-10">
-								<div class="col-form-label" *ngIf="mode == 'view'">{{selectedCursus.coordinator?.naam}}</div>
-								<select *ngIf="mode == 'edit'"
+								<div class="col-form-label" *ngIf="mode === 'view'">{{selectedCursus.coordinator?.naam}}</div>
+								<select *ngIf="mode === 'edit'"
 									[ngModel]="cursusForm.coordinator?.id" type="text"
 									class="form-control" id="coordinator" name="coordinator">
 									<option *ngFor="let a of allDocenten" [ngValue]="a.id">{{a.naam}}</option>
 								</select>
 							</div>
 						</div>
-						{{editCourse.value | json}}
 					</form>
 					</tab> <tab> <template tabHeading> <i class="icon-grid"></i>
 					Beroepstaken</template>
@@ -215,9 +219,9 @@
 									<thead>
 										<tr>
 											<th></th>
-											<th>Bloomniveau</th>
 											<th>Beroepstaak</th>
 											<th>Professional Skill</th>
+											<th>Bloomniveau</th>
 											<th>Gewicht</th>
 											<th>Omschrijving</th>
 										</tr>
@@ -231,9 +235,9 @@
 												(click)="initializeLeerdoelModal(ld);"><i
 													class="fa fa-pencil-square" aria-hidden="true"
 													style="font-size: 20px;"></i></a></td>
-											<td>{{ld.bloomniveau.naam}}</td>
 											<td>{{ld.eindBT.naam}}</td>
 											<td>{{ld.eindPS.naam}}</td>
+											<td>{{ld.bloomniveau.naam}}</td>
 											<td>{{ld.gewicht}}</td>
 											<td>{{ld.omschrijving}}</td>
 										</tr>
@@ -273,7 +277,7 @@
 											(click)="deleteToets(toets)"><i
 												class="fa fa-minus-circle" aria-hidden="true"
 												style="font-size: 20px;"></i></a> <a href="javascript:void(0)"
-											(click)="ToetsModal.show(); editToetsForm(toets);"><i
+											(click)="initializeToetsModal(toets);"><i
 												class="fa fa-pencil-square" aria-hidden="true"
 												style="font-size: 20px;"></i></a></td>
 										<td>{{toets.naam}}</td>
@@ -288,7 +292,7 @@
 															class="fa fa-minus-circle" aria-hidden="true"
 															style="font-size: 20px;"></i></a> <a
 														href="javascript:void(0)"
-														(click)="initializeBeoordelingselementModal(be);"><i
+														(click)="initializeBeoordelingselementModal(toets, be);"><i
 															class="fa fa-pencil-square" aria-hidden="true"
 															style="font-size: 20px;"></i></a></td>
 													<td>{{be.naam}}</td>
@@ -299,7 +303,7 @@
 													<td colspan="4"><div style="overflow: auto;"
 															role="group" aria-label="...">
 															<button class="btn btn-info btn-sm pull-right"
-																(click)="beoordelingselementModal.show(); initializeBeoordelingsForm(toets);">
+																(click)="initializeBeoordelingselementModal(toets, {});">
 																<i class="fa fa-plus" aria-hidden="true"></i>
 															</button>
 														</div></td>
@@ -314,7 +318,7 @@
 							<div class="col-12">
 								<div class="btn-group pull-right" role="group" aria-label="...">
 									<button type="button" class="btn btn-info"
-										(click)="ToetsModal.show(); newToetsForm();">
+										(click)="initializeToetsModal({});">
 										<i class="fa fa-plus" aria-hidden="true"></i>
 									</button>
 								</div>
@@ -324,7 +328,7 @@
 					</tab> <tab> <template tabHeading> <i
 						class="icon-puzzle"></i> Toetsmatrijs </template> <ng-container
 						*ngFor="let toetsMatrijs of toetsMatrijsArray"> <ng-container
-						*ngIf="toetsMatrijs != undefined"> <b>{{toetsMatrijs.naam}}</b>
+						*ngIf="toetsMatrijs !== undefined"> <b>{{toetsMatrijs.naam}}</b>
 					<table class="toetsmatrijs table table-bordered table-nonfluid">
 						<tr class="toetsElementen">
 							<td colspan="3" class="tableInvisible"></td>
@@ -392,16 +396,16 @@
 								</form>
 							</td>
 							</ng-container> <!-- Cell gevuld met percentage --> <ng-container
-								*ngIf="item?.id != 0 && toetsMatrijsEdit != item?.id">
+								*ngIf="item.id !== 0 && toetsMatrijsEdit !== item.id">
 							<td class="weging">
-								<div (click)="editCell(item?.id, item?.gewicht)"
-									class="btn-editToets" *ngIf="item !== Array">
-									<span>{{item?.gewicht}}<ng-container
-											*ngIf="item?.gewicht != undefined">%</ng-container></span>
+								<div (click)="editCell(item.id, item.gewicht)"
+									class="btn-editToets">
+									<span>{{item.gewicht}}<ng-container
+											*ngIf="item.gewicht !== undefined">%</ng-container></span>
 								</div>
 							</td>
 							</ng-container> <!--  Cell in editModus  --> <ng-container
-								*ngIf="item?.id != 0 && toetsMatrijsEdit == item?.id">
+								*ngIf="item?.id !== 0 && toetsMatrijsEdit === item?.id">
 							<td class="weging">
 								<form #f="ngForm">
 									<input type="number" name="gewicht" class="form-control"
@@ -550,8 +554,6 @@
 									[ngValue]="a">{{a}}</option>
 							</select>
 						</div>
-						{{beroepstakenForm | json}}
-
 					</div>
 				</div>
 				<div *ngIf="!loading" class="modal-footer">
@@ -627,7 +629,8 @@
 <div bsModal #LeerdoelModal="bs-modal" class="addModal modal fade"
 	tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 	aria-hidden="true">
-	<div class="modal-dialog modal-primary" role="document">
+	<div class="modal-dialog-leerdoel modal-dialog modal-primary"
+		role="document">
 		<div class="modal-content">
 			<form #f="ngForm">
 				<div class="modal-header">
@@ -642,46 +645,52 @@
 						<br /> <img src="assets/img/ripple.svg" />
 					</div>
 					<div class="form">
-						<div class="form-group">
-							<label for="eindBT">Beroepstaak:</label> <select
-								class="form-control" id="eindBT" name="eindBT"
-								[(ngModel)]="leerdoelForm.eindBT">
-								<option *ngFor="let bt of selectedCursus.beroepstaken"
-									[ngValue]="bt.id">{{bt.activiteit}} -
-									{{bt.architectuurlaag}} - {{bt.niveau}}</option>
-							</select>
-						</div>
+						<div class="row">
+							<div class="col-3">
+								<div class="form-group">
+									<label for="eindBT">Beroepstaak:</label> <select
+										class="form-control" id="eindBT" name="eindBT"
+										[(ngModel)]="leerdoelForm.eindBT">
+										<option *ngFor="let bt of selectedCursus.beroepstaken"
+											[ngValue]="bt.id">{{bt.activiteit}} -
+											{{bt.architectuurlaag}} - {{bt.niveau}}</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-3">
 
-						<div class="form-group">
-							<label for="eindPS">Professionalskill:</label> <select
-								class="form-control" id="eindPS" name="eindPS"
-								[(ngModel)]="leerdoelForm.eindPS">
-								<option *ngFor="let ps of selectedCursus.professionalskills"
-									[ngValue]="ps.id">{{ps.code}} - {{ps.niveau}}</option>
-							</select>
-						</div>
+								<div class="form-group">
+									<label for="eindPS">Professionalskill:</label> <select
+										class="form-control" id="eindPS" name="eindPS"
+										[(ngModel)]="leerdoelForm.eindPS">
+										<option *ngFor="let ps of selectedCursus.professionalskills"
+											[ngValue]="ps.id">{{ps.code}} - {{ps.niveau}}</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-3">
+								<div class="form-group">
+									<label for="bloomniveau">Bloomniveau:</label> <select
+										class="form-control" id="bloomniveau" name="bloomniveau"
+										[(ngModel)]="leerdoelForm.bloomniveau">
+										<option *ngFor="let bn of allBloomniveaus" [ngValue]="bn.id">{{bn.niveau}}</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-3">
 
-						<div class="form-group">
-							<label for="bloomniveau">Bloomniveau:</label> <select
-								class="form-control" id="bloomniveau" name="bloomniveau"
-								[(ngModel)]="leerdoelForm.bloomniveau">
-								<option *ngFor="let bn of allBloomniveaus" [ngValue]="bn.id">{{bn.niveau}}</option>
-							</select>
+								<div class="form-group">
+									<label for="gewicht">Gewicht:</label> <input type="number"
+										name="gewicht" id="gewicht" class="form-control"
+										[(ngModel)]="leerdoelForm.gewicht" />
+								</div>
+							</div>
 						</div>
-
-						<div class="form-group">
-							<label for="gewicht">Gewicht:</label> <input type="number"
-								name="gewicht" id="gewicht" class="form-control"
-								[(ngModel)]="leerdoelForm.gewicht" />
-						</div>
-
 						<div class="form-group">
 							<label for="omschrijving">Omschrijving:</label>
-							<textarea name="omschrijving" id="omschrijving"
+							<textarea name="omschrijving" id="omschrijving" rows="3"
 								class="form-control" [(ngModel)]="leerdoelForm.omschrijving"></textarea>
 						</div>
-						{{leerdoelForm | json}}
-
 					</div>
 				</div>
 				<div *ngIf="!loading" class="modal-footer">
@@ -723,22 +732,17 @@
 
 						<div class="form-group">
 							<label for="millerniveau">Miller niveau:</label> <select
-								class="form-control" id="millerNiveau"
-								name="millerNiveau"
+								class="form-control" id="millerNiveau" name="millerNiveau"
 								[(ngModel)]="toetsForm.millerNiveau">
-								<option *ngFor="let mn of allMillerNiveaus"
-									[ngValue]="mn.id">{{mn.niveau}}</option>
+								<option *ngFor="let mn of allMillerNiveaus" [ngValue]="mn.id">{{mn.niveau}}</option>
 							</select>
 						</div>
 
 						<div class="form-group">
-							<label for="gewicht">Gewicht:</label> <input type="number"
+							<label for="gewicht">Gewicht (% binnen cursus):</label> <input type="number"
 								name="gewicht" class="form-control"
 								[(ngModel)]="toetsForm.gewicht" />
 						</div>
-
-						{{toetsForm | json}}
-
 					</div>
 				</div>
 				<div *ngIf="!loading" class="modal-footer">
@@ -754,8 +758,6 @@
 </div>
 <!-- /.modal -->
 
-
-
 <div bsModal #BeoordelingselementModal="bs-modal"
 	class="addModal modal fade" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
@@ -763,7 +765,7 @@
 		<div class="modal-content">
 			<form #f="ngForm">
 				<div class="modal-header">
-					<h4 class="modal-title">Beoordelings Element</h4>
+					<h4 class="modal-title">Beoordelingselement</h4>
 					<button type="button" class="close"
 						(click)="closeModal(beoordelingselementModal)" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -775,7 +777,7 @@
 					</div>
 					<div class="form">
 						<div class="form-group">
-							<label for="naam"><b>Toets:</b></label><br /> {{toetsEdit.naam}}
+							<label for="naam"><b>Toets {{toetsEdit.naam}}</b></label> 
 							<hr />
 						</div>
 
@@ -792,21 +794,18 @@
 						</div>
 
 						<div class="form-group">
-							<label for="beoordelingGewicht">Gewicht:</label> <input
+							<label for="beoordelingGewicht">Gewicht (% binnen toets):</label> <input
 								type="number" name="beoordelingGewicht" id="beoordelingGewicht"
 								class="form-control"
 								[(ngModel)]="beoordelingselementForm.gewicht" />
 						</div>
-
-						{{beoordelingselementForm | json}}
-
 					</div>
 				</div>
 				<div *ngIf="!loading" class="modal-footer">
 					<button type="button" class="btn btn-secondary"
 						(click)="beoordelingselementModal.hide()">Sluiten</button>
 					<button type="button" class="btn btn-primary"
-						(click)="saveBeoordelingselement(beoordelingselementForm)">Toevoegen</button>
+						(click)="saveBeoordelingselement(beoordelingselementForm)">Opslaan</button>
 				</div>
 			</form>
 		</div>
