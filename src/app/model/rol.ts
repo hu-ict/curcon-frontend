@@ -1,0 +1,7 @@
+export class Rol{
+  id: number;
+  name: string;
+  modules: {
+    href: string;
+  }
+}
