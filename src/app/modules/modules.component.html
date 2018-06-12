@@ -1,4 +1,12 @@
-<h2>{{ module.name }} module Details</h2>
+<!-- <h2>{{ module.name }} module Details</h2>
 <div><span>id: </span>{{module.id}}</div>
 <div><span>name: </span>{{module.name}}</div>
-<div><span>href: </span>{{module.href}}</div>
+<div><span>href: </span>{{module.href}}</div> -->
+
+<h2>Mijn Modules</h2>
+<ul class="modules">
+  <li *ngFor="let module of modules"
+    (click)="onSelect(module)"> 
+    <span class="badge">{{module.id}}</span> {{module.name}}
+  </li>
+</ul>

@@ -1,4 +1,10 @@
-<h2>{{ rolmodule.name }} rolmodule Details</h2>
+<!-- <h2>{{ rolmodule.name }} rolmodule Details</h2>
 <div><span>id: </span>{{rolmodule.id}}</div>
 <div><span>name: </span>{{rolmodule.name}}</div>
-<div><span>functies: </span>{{rolmodule.functies}}</div>
+<div><span>functies: </span>{{rolmodule.functies}}</div> -->
+<h2>Modules van rol 1</h2>
+<ul class="modules">
+  <li *ngFor="let module of modules">
+    <span class="badge">{{module.id}}</span> {{module.name}}//g
+  </li>
+</ul>

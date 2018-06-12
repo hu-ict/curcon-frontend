@@ -9,9 +9,6 @@ import { Observable, Subject } from "rxjs";
   styleUrls: [ './functies.component.css' ]
 })
 export class FunctiesComponent implements OnInit {
-  //@Input() functies: Array<Functie>; is ouwe meuk
-  //error: String; // is dit nodig?
-  //loading: boolean; //
 
   functies: Functie[];
   private searchTerms = new Subject<string>();
@@ -25,35 +22,13 @@ export class FunctiesComponent implements OnInit {
     this.searchTerms.next(term);
   }
 
-  // functie: Functie = {
-  //   id: 1,
-  //   name: "voeg leerdoelen toe",
-  //   href: "GET URI"
-  // }
-
-  // TODO: hoe werkt routing?
-  // getFunctie(): void {
-  //   const id = +this.r
-  // }
-
   getFuncties(): void {
-    this.functieService.getFuncties()
+    this.functieService.getFuncties(1)
     .subscribe(functies => this.functies = functies);
   }
-
-  // gebruik oninit voor functie-details en functie-search
-  // toon de volledige response: [1]
   ngOnInit(): void {
 
   }
-
-    //// ouwe meuk hieronder
-    // this.functieService.getFuncties().subscribe(
-    //   functies => this.functies,
-    //   error => console.log(error),
-    //
-    // );
-  //}
 }
 
 // [1] Observe: https://angular.io/guide/http#getting-json-data

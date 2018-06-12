@@ -12,28 +12,37 @@ export class FunctieService {
   constructor(
     private http: HttpClient
   ) {}
-  functieUrl : 'http://localhost:8080/autorisatie/restservices/function';
-  i
+
   private log(message:string): void{
     console.log( "functieService armeluisdebugger: " + message);
   }
 
   getFunctie(id): Observable<Functie> {
-    const url = `${this.functieUrl}/${id}`;
-    return this.http.get<Functie>(this.functieUrl)
+    let url = `${myGlobals.baseUrl + 'modules'}/${id}/functies`;
+    return this.http.get<Functie>(url)
     .pipe(
       tap(functie => this.log(`fetched function id=${functie.id}`)),
       catchError(ErrorService.prototype.handleError<Functie>('getFunctie id=${id}'))
     );
   }
-
-  getFuncties(): Observable<Functie[]> {
+  //
+  getFuncties(moduleId): Observable<Functie[]> {//g
     // Object.Prototype.function<Class[]>(Object.property);
-    return this.http.get<Functie[]>(this.functieUrl)
+    let url = `${myGlobals.baseUrl + 'modules'}/${moduleId}/functions`;
+    return this.http.get<Functie[]>(url)
       .pipe(
         tap(functies => this.log(`fetched function id=${Functie["id"]}`)),
-        catchError(ErrorService.prototype.handleError<Functie[]>('getFuncties id={id}'))
+        catchError(ErrorService.prototype.handleError<Functie[]>("getFuncties id={functie.id}"))
         // wordt Functie["id"] herkend door interpolated ng?
       );
   }
+  getFunctiesByModule(moduleId): Observable<Functie[]> {
+    return this.http.get<Functie[]>(`${myGlobals.baseUrl + 'modules'}/${moduleId}/functions`)
+      .pipe(
+        tap(functies => this.log(`fetched function id=${Functie["id"]}`)),
+        catchError(ErrorService.prototype.handleError<Functie[]>("getFuncties id={functie.id}"))
+        // wordt Functie["id"] herkend door interpolated ng?
+      );
+    }
+
 }

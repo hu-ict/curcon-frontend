@@ -1,4 +1,11 @@
-<h2>{{ rol.name }} Details</h2>
+<!-- <h2>{{ rol.name }} Details</h2>
 <div><span>id: </span>{{rol.id}}</div>
 <div><span>name: </span>{{rol.name}}</div>
-<div><span>modules: </span>{{rol.modules}}</div>
+<div><span>modules: </span>{{rol.modules}}</div> -->
+
+<h2>Mijn Rollen</h2>
+<ul class="rol">
+  <li *ngFor="let rol of rol">
+    <span class="badge">{{rol.id}}</span> {{rol.name}}
+  </li>
+</ul>

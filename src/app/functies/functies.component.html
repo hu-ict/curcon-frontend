@@ -9,9 +9,7 @@
 
 <h2>Mijn Functies</h2>
 <ul class="functies">
-  <li *ngFor="let functie of functies"
-    [class.selected]="hero === selectedHero"
-    (click)="onSelect(hero)">
+  <li *ngFor="let functie of functies">
     <span class="badge">{{functie.id}}</span> {{functie.name}}
   </li>
 </ul>

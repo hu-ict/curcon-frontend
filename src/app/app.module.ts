@@ -7,9 +7,12 @@ import { RollenComponent } from './rollen/rollen.component';
 import { RolmodulesComponent } from './rolmodules/rolmodules.component';
 import { ModulesComponent } from './modules/modules.component';
 import { FunctiesComponent } from './functies/functies.component';
-import { FunctiemodulesComponent } from './functiemodules/functiemodules.component';
 
 import { FunctieService } from './services/functie.service';
+import { ModuleService } from './services/module.service';
+import { RolService } from './services/rol.service';
+import { UserService } from './services/user.service';
+
 
 import { HttpClientModule } from '@angular/common/http';
 
@@ -21,9 +24,6 @@ import { HttpClientModule } from '@angular/common/http';
     RolmodulesComponent,
     ModulesComponent,
     FunctiesComponent,
-    FunctiemodulesComponent,
-
-
   ],
   imports: [
     BrowserModule,
@@ -31,6 +31,9 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   providers: [
     FunctieService,
+    ModuleService,
+    RolService,
+    UserService,
   ],
   bootstrap: [AppComponent]
 })

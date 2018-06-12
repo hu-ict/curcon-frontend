@@ -1,24 +1,32 @@
-import { Component, OnInit } from '@angular/core';
-import { RolModule } from '../model/rolmodule';
+import { Component, OnInit } from '@angular/core'; // Input niet nodig
+import { Rol } from '../model/rol';
+import { RolService } from '../services/rol.service';
+import { Observable, Subject } from "rxjs";
 
 @Component({
   selector: 'app-rolmodules',
   templateUrl: './rolmodules.component.html',
-  styleUrls: ['./rolmodules.component.css']
+  styleUrls: [ './rolmodules.component.css' ]
 })
 export class RolmodulesComponent implements OnInit {
 
-  rolmodule: RolModule = {
-    id: 1,
-    name: "wat is een docent 'module'?",
-    functies: {
-        href: "GET URI"
-      }
+  rolmodules: Rol[];
+  private searchTerms = new Subject<string>();
+
+  constructor(private rolmoduleService : RolService) {
+    //this.loading = true; // is dit nodig?
+    this.getModulesByRol(1);
   }
 
-  constructor() { }
-
-  ngOnInit() {
+  search(term: string): void {
+    this.searchTerms.next(term);
   }
 
+  getModulesByRol(id): void {
+    this.rolmoduleService.getModulesByRol(1)
+    .subscribe(rolmodules => this.rolmodules = rolmodules);
+  }
+  ngOnInit(): void {
+
+  }
 }

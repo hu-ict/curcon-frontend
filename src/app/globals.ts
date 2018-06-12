@@ -3,4 +3,4 @@
 //
 'use strict';
 
-export const baseUrl = 'http://localhost:8080/autorisatie/restservices/';
+export const baseUrl = 'http://localhost:8080/curcon/rest/';
