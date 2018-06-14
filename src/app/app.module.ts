@@ -31,7 +31,6 @@ import { environment } from '../environments/environment';
     ModulesComponent,
     FunctiesComponent,
     LoginsComponent,
-
     DocentenComponent,
   ],
   imports: [
