@@ -10,6 +10,17 @@ describe('\providers\authService', () => {
   });
 
   it('should be created', inject([\providers\authService], (service: \providers\authService) => {
+
+import { AuthService } from './auth.service';
+
+describe('AuthService', () => {
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [AuthService]
+    });
+  });
+
+  it('should be created', inject([AuthService], (service: AuthService) => {
     expect(service).toBeTruthy();
   }));
 });

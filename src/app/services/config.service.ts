@@ -11,8 +11,6 @@ export class RollenService {
 		console.log('RollenService Initialized...');
 	}
 
-
-
 	// getRolById(id) {
 	// 	return this.http
 	// 	.get(myGlobals.baseUrl+'rol/' + id)

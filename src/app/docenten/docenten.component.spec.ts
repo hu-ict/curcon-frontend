@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BootlegDocentenComponent } from './bootleg-docenten.component';
+import { DocentenComponent } from './docenten.component';
 
-describe('BootlegDocentenComponent', () => {
-  let component: BootlegDocentenComponent;
-  let fixture: ComponentFixture<BootlegDocentenComponent>;
+describe('DocentenComponent', () => {
+  let component: DocentenComponent;
+  let fixture: ComponentFixture<DocentenComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BootlegDocentenComponent ]
+      declarations: [ DocentenComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BootlegDocentenComponent);
+    fixture = TestBed.createComponent(DocentenComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { AngularFireModule } from 'angularfire2';
 import { HttpClientModule } from '@angular/common/http';
 
+import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { AppComponent } from './app.component';
@@ -12,13 +12,13 @@ import { RolmodulesComponent } from './rolmodules/rolmodules.component';
 import { ModulesComponent } from './modules/modules.component';
 import { FunctiesComponent } from './functies/functies.component';
 import { LoginsComponent } from './logins/logins.component';
+import { DocentenComponent } from './docenten/docenten.component';
 
 import { FunctieService } from './services/functie.service';
 import { ModuleService } from './services/module.service';
 import { RolService } from './services/rol.service';
 import { UserService } from './services/user.service';
-
-import { BootlegDocentenComponent } from './bootleg-docenten/bootleg-docenten.component';
+import { DocentenService } from './services/docenten.service';
 
 import { environment } from '../environments/environment';
 
@@ -31,18 +31,22 @@ import { environment } from '../environments/environment';
     ModulesComponent,
     FunctiesComponent,
     LoginsComponent,
+
+    DocentenComponent,
+    //BootlegDocentenComponent,
     BootlegDocentenComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    AngularFireModule.initializeApp(environment.firebase)
+    AngularFireModule.initializeApp(environment.firebase, 'curcon')
   ],
   providers: [
     FunctieService,
     ModuleService,
     RolService,
     UserService,
+    DocentenService,
   ],
   bootstrap: [AppComponent]
 })

@@ -5,16 +5,20 @@ import { Config } from "../model/config";
 
 import { FirebaseUser } from "../model/firebaseuser"
 import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase';
 
 import { ErrorService } from "./error.service";
 import { catchError, map, tap} from 'rxjs/operators';
 
+
+// TODO: klaar om te testen met login component
 // adapted from: https://gist.github.com/codediodeio/5e02b605f2ab015f2fb1e60497bd46bf
 @Injectable()
 export class LoginService {
 
   authState: any = null;
   accesstoken : string;
+  //firebase: string;
 
   constructor(
     private http: HttpClient,
@@ -25,18 +29,38 @@ export class LoginService {
     this.authState = auth
   })
   }
-    // sendToFirebase() : void {
-    //   return this.http.post<FirebaseUser>(this.http.post())
-    // }
-    firebase: string;
-    makeToken(){
-      let httpOptions = {
-        headers: new HttpHeaders({
-          "Content-Type": 'application/json',
-          "Authorization" : this.accesstoken
-        })
-      }
+  // sendToFirebase() : void {
+  //   return this.http.post<FirebaseUser>(this.http.post())
+  // }
+  maakTokenHeadervoorCurcon(){
+    let httpOptions = {
+      headers: new HttpHeaders({
+        "Content-Type": 'application/json',
+        "Authorization" : this.accesstoken
+      })
     }
+  }
+  googleLogin() {
+    const provider = new firebase.auth.GoogleAuthProvider()
+    return this.socialSignIn(provider);
+  }
+  // 2.redirect naar google login
+  // 3. gebruiker logt aan en krijgt een token
+  private socialSignIn(provider) {
+    return this.afAuth.auth.signInWithPopup(provider)
+      .then((credential) =>  {
+          this.authState = credential.user
+      })
+      .catch(error => console.log(error));
+  }
 
-    // TODO:
+  // test(){
+  //   var test = this.afAuth.idToken
+  // }
+
+  //// Sign Out ////
+  signOut(): void {
+    this.afAuth.auth.signOut();
+    // this.router.navigate(['/'])
+  }
 }

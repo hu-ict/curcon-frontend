@@ -36,13 +36,14 @@ export class FunctieService {
         // wordt Functie["id"] herkend door interpolated ng?
       );
   }
+
   getFunctiesByModule(moduleId): Observable<Functie[]> {
     return this.http.get<Functie[]>(`${myGlobals.baseUrl + 'modules'}/${moduleId}/functions`)
       .pipe(
-        tap(functies => this.log(`fetched function id=${Functie["id"]}`)),
-        catchError(ErrorService.prototype.handleError<Functie[]>("getFuncties id={functie.id}"))
-        // wordt Functie["id"] herkend door interpolated ng?
-      );
-    }
+      tap(functies => this.log(`fetched function id=${Functie["id"]}`)),
+      catchError(ErrorService.prototype.handleError<Functie[]>("getFuncties id={functie.id}"))
+      // wordt Functie["id"] herkend door interpolated ng?
+    );
+  }
 
 }
