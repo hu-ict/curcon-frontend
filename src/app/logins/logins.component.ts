@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Router } from '@angular/router';
+import { AuthService } from '../providers/auth.service';
+
 @Component({
   selector: 'app-logins',
   templateUrl: './logins.component.html',
@@ -7,13 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginsComponent implements OnInit {
 
-  constructor() { }
+  constructor(public authService : AuthService, private router: Router) { }
 
-  clickMessage = '';
 
-  onClickMe(){
-    this.clickMessage = 'Hello world';
+  login(){
+    this.authService.googleLogin().then((data) => {
+      this.router.navigate(['logins']);
+    });
+    //return 'Hello world';
   }
+
   ngOnInit() {
   }
 
