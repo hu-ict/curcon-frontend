@@ -6,14 +6,14 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "voegapikeytoeaandezeopeendynamischemanier",
+    apiKey: "AIzaSyDAz-54nADS2Mr0pNOca0zo-DlULwa6lG0",
     authDomain: "curconhu.firebaseapp.com",
     databaseURL: "https://curconhu.firebaseio.com",
     projectId: "curconhu",
     storageBucket: "curconhu.appspot.com",
-    messagingSenderId: "442128035861"
-  }
-};
+    messagingSenderId: "442128035861",
+  },
+ };
 
 /*
  * In development mode, to ignore zone related error stack frames such as

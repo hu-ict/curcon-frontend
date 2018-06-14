@@ -19,8 +19,11 @@ import { ModuleService } from './services/module.service';
 import { RolService } from './services/rol.service';
 import { UserService } from './services/user.service';
 import { DocentenService } from './services/docenten.service';
+import { AuthService } from './providers/auth.service'; 
 
 import { environment } from '../environments/environment';
+import { HomeComponent } from './home/home.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -31,18 +34,18 @@ import { environment } from '../environments/environment';
     ModulesComponent,
     FunctiesComponent,
     LoginsComponent,
-
     DocentenComponent,
-    //BootlegDocentenComponent,
-    BootlegDocentenComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    AngularFireModule.initializeApp(environment.firebase, 'curcon')
+    AngularFireModule.initializeApp(environment.firebase, 'curcon'),
+    AppRoutingModule,
   ],
   providers: [
     FunctieService,
+    AuthService,
     ModuleService,
     RolService,
     UserService,
