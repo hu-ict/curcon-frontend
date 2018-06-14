@@ -24,6 +24,7 @@ import { AuthService } from './providers/auth.service';
 import { environment } from '../environments/environment';
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
+import { AuthorisatiebeheerComponent } from './authorisatiebeheer/authorisatiebeheer.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { AppRoutingModule } from './app-routing.module';
     LoginsComponent,
     DocentenComponent,
     HomeComponent,
+    AuthorisatiebeheerComponent,
   ],
   imports: [
     BrowserModule,
