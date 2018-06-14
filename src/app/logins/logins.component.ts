@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
-import { AuthService } from '../providers/auth.service'; 
+import { AuthService } from '../providers/auth.service';
 
 @Component({
   selector: 'app-logins',
@@ -15,11 +15,11 @@ export class LoginsComponent implements OnInit {
 
   login(){
     this.authService.googleLogin().then((data) => {
-      this.router.navigate(['']);
+      this.router.navigate(['logins']);
     });
     //return 'Hello world';
   }
-  
+
   ngOnInit() {
   }
 

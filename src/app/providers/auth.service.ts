@@ -48,11 +48,11 @@ export class AuthService {
   // 2.redirect naar google login
   // 3. gebruiker logt aan en krijgt een token
   private socialSignIn(provider) {
-    return this.afAuth.auth.signInWithPopup(provider)
-      .then((credential) =>  {
-          this.authState = credential.user
-      })
-      .catch(error => console.log(error));
+    return this.afAuth.auth.signInWithPopup(provider);
+      // .then((credential) =>  {
+      //     this.authState = credential.user
+      // })
+      // .catch(error => console.log(error));
   }
 
   // test(){

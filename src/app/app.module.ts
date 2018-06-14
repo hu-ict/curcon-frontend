@@ -19,7 +19,7 @@ import { ModuleService } from './services/module.service';
 import { RolService } from './services/rol.service';
 import { UserService } from './services/user.service';
 import { DocentenService } from './services/docenten.service';
-import { AuthService } from './providers/auth.service'; 
+import { AuthService } from './providers/auth.service';
 
 import { environment } from '../environments/environment';
 import { HomeComponent } from './home/home.component';
@@ -44,6 +44,7 @@ import { AuthorisatiebeheerComponent } from './authorisatiebeheer/authorisatiebe
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase, 'curcon'),
     AppRoutingModule,
+    AngularFireAuthModule,
   ],
   providers: [
     FunctieService,
