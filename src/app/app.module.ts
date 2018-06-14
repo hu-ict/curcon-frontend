@@ -33,8 +33,6 @@ import { environment } from '../environments/environment';
     LoginsComponent,
 
     DocentenComponent,
-    //BootlegDocentenComponent,
-    BootlegDocentenComponent,
   ],
   imports: [
     BrowserModule,
