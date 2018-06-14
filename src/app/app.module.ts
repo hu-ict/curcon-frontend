@@ -32,7 +32,7 @@ import { environment } from '../environments/environment';
     FunctiesComponent,
     LoginsComponent,
     DocentenComponent,
-
+    //BootlegDocentenComponent,
   ],
   imports: [
     BrowserModule,

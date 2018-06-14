@@ -1,0 +1,8 @@
+@import "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.css";
+@import "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css";
+
+.form-container {
+	max-width: 640px;
+	width: 98%;
+	margin: 0 auto;
+}
