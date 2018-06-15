@@ -24,7 +24,7 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private afAuth: AngularFireAuth,
-    private router:Router
+    private router:Router,
   ) {
     this.afAuth.authState.subscribe((auth) => {
     this.authState = auth
@@ -34,12 +34,19 @@ export class AuthService {
   //   return this.http.post<FirebaseUser>(this.http.post())
   // }
   maakTokenHeadervoorCurcon(){
+  this.afAuth.auth.currentUser.getIdToken().then(function(value){
+    console.log(value);
+    //token=value;
     let httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": 'application/json',
-        "Authorization" : this.accesstoken
+        "Authorization" : value,
       })
     }
+
+   });
+
+
   }
   googleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider()
