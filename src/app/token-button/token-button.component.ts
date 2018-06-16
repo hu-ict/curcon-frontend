@@ -26,9 +26,9 @@ export class TokenButtonComponent implements OnInit {
         self.docentenService.getDocenten(headers).subscribe(docent => {
           console.log('Observer got a next value: ' + docent.naam)
           //TODO Nu alleen nog deze value in de lijst krijgen
-          ,self.docenten= docent;
+          ,self.docenten= docent
           //this.loading = false;
-        });
+        })
 
     });
 

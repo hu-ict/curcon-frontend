@@ -17,7 +17,7 @@ import { catchError, map, tap} from 'rxjs/operators';
 @Injectable()
 export class AuthService {
 
-  authState: any = null;
+  //authState: any;
   accesstoken : string;
   //firebase: string;
 
@@ -27,7 +27,8 @@ export class AuthService {
     private router:Router,
   ) {
     this.afAuth.authState.subscribe((auth) => {
-    this.authState = auth
+      console.log("authstate updated//user changed");
+    //  this.authState = auth;
   })
   }
   // sendToFirebase() : void {
@@ -35,9 +36,10 @@ export class AuthService {
   // }
   maakTokenHeadervoorCurcon(){
 //  var headers=null;
+console.log(this.afAuth.auth.currentUser+"huidige user");
 var headersPromise=  this.afAuth.auth.currentUser.getIdToken().then(function(token){
     //console.log(value); ==Token
-    let headers = 
+    let headers =
    new HttpHeaders({
         "Content-Type": 'application/json',
         "Authorization" : token, //Answer of 1st promise is token

@@ -3,33 +3,40 @@ import { User } from '../model/user';
 import { UserService } from '../services/user.service';
 import { Observable, Subject } from "rxjs";
 import {AuthService} from '../providers/auth.service';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: [ './users.component.css' ]
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit  {
 
   users: User[];
   private searchTerms = new Subject<string>();
 
-  constructor(private userService : UserService, private authService : AuthService) {
+  constructor(private userService : UserService, private authService : AuthService,  private afAuth: AngularFireAuth,) {
     //this.loading = true; // is dit nodig?
+    this.afAuth.authState.subscribe((auth) => {
+      console.log("authstate updated//user changed");
+      this.getUsers();
+    //  this.authState = auth;
+  });
 
-    //TODO Idtoken kan niet gelezen worden van null
-    //this.getUsers(authService.maakTokenHeadervoorCurcon());
   }
 
   search(term: string): void {
     this.searchTerms.next(term);
   }
 
-  getUsers(headersIn): void {
-    this.userService.getUsers(headersIn)
-    .subscribe(users => this.users = users);
+  getUsers(): void {
+    let self = this;
+    self.authService.maakTokenHeadervoorCurcon().then(function(headers){
+      self.userService.getUsers(headers)
+      .subscribe(users => self.users = users)
+    })
   }
-  ngOnInit(): void {
 
+  ngOnInit(): void {
   }
 }
