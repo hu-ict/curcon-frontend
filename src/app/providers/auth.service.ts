@@ -34,18 +34,19 @@ export class AuthService {
   //   return this.http.post<FirebaseUser>(this.http.post())
   // }
   maakTokenHeadervoorCurcon(){
-  this.afAuth.auth.currentUser.getIdToken().then(function(value){
-    console.log(value);
-    //token=value;
-    let httpOptions = {
-      headers: new HttpHeaders({
+//  var headers=null;
+var headersPromise=  this.afAuth.auth.currentUser.getIdToken().then(function(token){
+    //console.log(value); ==Token
+    let headers = 
+   new HttpHeaders({
         "Content-Type": 'application/json',
-        "Authorization" : value,
-      })
-    }
-
-   });
-
+        "Authorization" : token, //Answer of 1st promise is token
+    }  )
+return headers;//Answer of 2nd promise
+  });
+  //Deze functie returnt bovenstaande promise
+  //Check met .then(function(output) voor de Headers
+ return headersPromise;
 
   }
   googleLogin() {
