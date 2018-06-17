@@ -3,8 +3,11 @@
   getdocenten;
 </button>
 
-<h2>Mijn Docenten</h2>
+<h2>Mijn beveilgde Docenten</h2>
 <ul class="docenten">
+ <li *ngFor="let docent of docenten">
+    <span class="badge">{{docent.naam}}</span> {{docent.name}}
+  </li>
   <!-- <li *ngFor="let docent of docenten">
     <span class="badge">{{docent.naam}}</span> {{docent.name}}
   </li> -->

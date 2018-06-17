@@ -12,27 +12,36 @@ import { Docent } from '../model/docent';
   styleUrls: ['./token-button.component.css']
 })
 export class TokenButtonComponent implements OnInit {
-  docenten: Docent;
+  docenten: Docent[]= new Array<Docent>();
   constructor(public authService : AuthService,public docentenService:DocentenService,public functieService:FunctieService
-    ,) {
+    ) {
     }
-
+    
     tokenButtonPrint(){
+
       let self = this;
       this.authService.maakTokenHeadervoorCurcon().then(function(headers){
+        self.docenten= [];
         console.log("Outputtokenbutton"+headers);
         //const observer = {next: x => console.log('Observer got a next value: ' + x) };
         //Na het ophalen van de headers via  promise geef ze door
         self.docentenService.getDocenten(headers).subscribe(docent => {
-          console.log('Observer got a next value: ' + docent.naam)
+          console.log('Observer got a next value: ' + docent)
           //TODO Nu alleen nog deze value in de lijst krijgen
-          ,self.docenten= docent
-          //this.loading = false;
-        })
+          if (docent !=null){
+              self.docenten.push(docent)
+        }
 
+
+          //this.loading = false;
+        }
+
+      )
+
+        //console.log(self.docenten.naam+"dit is nu in het lijstje");
     });
 
-    console.log(this.docenten.naam+"dit is nu in het lijstje");
+
 
   }
 

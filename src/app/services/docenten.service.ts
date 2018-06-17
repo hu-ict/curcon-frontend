@@ -47,7 +47,7 @@ let requestOptions = {
 //    }
 )    .pipe(
            tap(docenten => this.log(`fetched docenten id=${Docent.name}`), ), //["id"]}`), ),
-          catchError(ErrorService.prototype.handleError<Docent>("getDocenten id={docent.id}"))
+          catchError(ErrorService.prototype.handleError<Docent>("getDocenten "))
          )
       //return null;
     }

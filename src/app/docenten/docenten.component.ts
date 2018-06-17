@@ -20,9 +20,9 @@ export class DocentenComponent implements OnInit {
 
   refreshDocenten() {
     //this.loading = true;
-    this.docentenService.getDocenten(this.authService.maakTokenHeadervoorCurcon() ).subscribe(docenten => {
-      this.docenten = docenten;
-      //this.loading = false;
-    });
+    // this.docentenService.getDocenten(this.authService.maakTokenHeadervoorCurcon() ).subscribe(docenten => {
+    //   this.docenten = docenten;
+    //   //this.loading = false;
+    // });
   }
 }
