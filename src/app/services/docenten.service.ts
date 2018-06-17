@@ -5,6 +5,7 @@ import { Docent } from '../model/docent';
 //import {Http, Response, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import { ErrorService } from "./error.service";
 import { catchError, map, tap} from 'rxjs/operators';
+import {AuthService} from '../providers/auth.service';
 import * as myGlobals from '../globals';
 
 @Injectable()
@@ -44,6 +45,21 @@ export class DocentenService {
           catchError(ErrorService.prototype.handleError<Docent[]>("getDocenten id={docent.id}"))
         )
     }
+
+    getDocenten2(headersIn :HttpHeaders ): Observable<Docent> {
+let requestOptions = {
+ headers: headersIn,
+};
+     //let headers = this.generateHeader();//TODO: uitzoeken of een mediator in de frontend van pas komt om auth headers op te vragen en te geven
+     let url = `${myGlobals.baseUrl + "docenten/1/"}`;
+     console.log("Ingetdoccenten");
+     return this.http.get<Docent>(url, requestOptions
+)    .pipe(
+          tap(docenten => this.log(`fetched docenten id=${Docent.name}`), ), //["id"]}`), ),
+         catchError(ErrorService.prototype.handleError<Docent>("getDocenten id={docent.id}"))
+        )
+     //return null;
+   }
 
     // TODO: herzien voor hergebruik
     // getDocentenByObject(obj) {
