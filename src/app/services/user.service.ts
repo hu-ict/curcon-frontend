@@ -10,8 +10,11 @@ import * as myGlobals from '../globals';
 @Injectable()
 export class UserService {
   constructor(
+
     private http: HttpClient
-  ) {}
+  ) {
+        console.log('UserService Initialized...');
+  }
 
   private log(message:string): void{
     console.log( "userService armeluisdebugger: " + message);
@@ -26,10 +29,12 @@ export class UserService {
     );
   }
   //
-  getUsers(): Observable<User[]> {//g
+  getUsers(headersIn): Observable<User[]> {//g
     // Object.Prototype.function<Class[]>(Object.property);
     let url = `${myGlobals.baseUrl + 'users'}`;
-    return this.http.get<User[]>(url)
+    return this.http.get<User[]>(url, {
+    headers: headersIn
+  })
       .pipe(
         tap(users => this.log(`fetched username=${User["id"]}`)),
         catchError(ErrorService.prototype.handleError<User[]>("getUsers id={user.username}"))

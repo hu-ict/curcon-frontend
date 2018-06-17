@@ -17,17 +17,17 @@ import { catchError, map, tap} from 'rxjs/operators';
 @Injectable()
 export class AuthService {
 
-  authState: any = null;
+  //authState: any;
   accesstoken : string;
   //firebase: string;
-
   constructor(
     private http: HttpClient,
     private afAuth: AngularFireAuth,
-    private router:Router
+    private router:Router,
   ) {
     this.afAuth.authState.subscribe((auth) => {
-    this.authState = auth
+      console.log("authstate updated//user changed");
+    //  this.authState = auth;
   })
   }
   // sendToFirebase() : void {
@@ -35,19 +35,19 @@ export class AuthService {
   // }
   maakTokenHeadervoorCurcon(){
 //  var headers=null;
-  console.log(this.afAuth.auth.currentUser+"huidige user");
-  var headersPromise=  this.afAuth.auth.currentUser.getIdToken().then(function(token){
-      //console.log(value); ==Token
-      let headers =
-     new HttpHeaders({
-          "Content-Type": 'application/json',
-          "Authorization" : token, //Answer of 1st promise is token
-      }  )
-  return headers;//Answer of 2nd promise
-    });
-    //Deze functie returnt bovenstaande promise
-    //Check met .then(function(output) voor de Headers
-   return headersPromise;
+console.log(this.afAuth.auth.currentUser+"huidige user");
+var headersPromise=  this.afAuth.auth.currentUser.getIdToken().then(function(token){
+    //console.log(value); ==Token
+    let headers =
+   new HttpHeaders({
+        "Content-Type": 'application/json',
+        "Authorization" : token, //Answer of 1st promise is token
+    }  )
+return headers;//Answer of 2nd promise
+  });
+  //Deze functie returnt bovenstaande promise
+  //Check met .then(function(output) voor de Headers
+ return headersPromise;
 
   }
   googleLogin() {
@@ -67,7 +67,6 @@ export class AuthService {
   // test(){
   //   var test = this.afAuth.idToken
   // }
-
   //// Sign Out ////
   signOut(): void {
     this.afAuth.auth.signOut();

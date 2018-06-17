@@ -25,25 +25,32 @@ export class DocentenService {
       this.organisationId = JSON.parse(localStorage.getItem('selectedOrganisatie'));
     }
 
-    generateHeader(){
-        let headers = new HttpHeaders();
-        headers  = headers.append('header-1', 'value-1');
-        headers  = headers.append('header-2', 'value-2');
+   //  generateHeader(){
+   //      let headers = new HttpHeaders();
+   //      headers  = headers.append('header-1', 'value-1');
+   //      headers  = headers.append('header-2', 'value-2');
+   //
+   //     let params = new HttpParams();
+   //     params = params.append('param-1', 'value-1');
+   //     params = params.append('param-2', 'value-2');
+   //     return headers;
+   // }
 
-       let params = new HttpParams();
-       params = params.append('param-1', 'value-1');
-       params = params.append('param-2', 'value-2');
-       return headers;
-   }
-
-    getDocenten() {
-      let headers = this.generateHeader();//TODO: uitzoeken of een mediator in de frontend van pas komt om auth headers op te vragen en te geven
-      let url = `${myGlobals.baseUrl + "organisaties/1/docenten"}`;
-      return this.http.get<Docent[]>(url)
-        .pipe(
-          tap(docenten => this.log(`fetched docenten id=${Docent["id"]}`)),
-          catchError(ErrorService.prototype.handleError<Docent[]>("getDocenten id={docent.id}"))
-        )
+    getDocenten(headersIn :HttpHeaders ): Observable<Docent> {
+let requestOptions = {
+  headers: headersIn,
+};
+      //let headers = this.generateHeader();//TODO: uitzoeken of een mediator in de frontend van pas komt om auth headers op te vragen en te geven
+      let url = `${myGlobals.baseUrl + "docenten/1/"}`;
+      console.log("Ingetdoccenten");
+      return this.http.get<Docent>(url, requestOptions  // {
+  //    headers: headersIn
+//    }
+)    .pipe(
+           tap(docenten => this.log(`fetched docenten id=${Docent.name}`), ), //["id"]}`), ),
+          catchError(ErrorService.prototype.handleError<Docent>("getDocenten "))
+         )
+      //return null;
     }
 
     getDocenten2(headersIn :HttpHeaders ): Observable<Docent> {

@@ -25,6 +25,7 @@ import { environment } from '../environments/environment';
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthorisatiebeheerComponent } from './authorisatiebeheer/authorisatiebeheer.component';
+import { TokenButtonComponent } from './token-button/token-button.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { AuthorisatiebeheerComponent } from './authorisatiebeheer/authorisatiebe
     DocentenComponent,
     HomeComponent,
     AuthorisatiebeheerComponent,
+    TokenButtonComponent,
   ],
   imports: [
     BrowserModule,
