@@ -64,7 +64,8 @@ export class DocentenComponent implements OnInit {
     }
 
     refreshDocenten() {
-      this.loading = true;
+			
+			this.loading = true;
       this.docentenService.getDocenten().subscribe(docenten => {
         this.docenten = docenten;
         this.loading = false;

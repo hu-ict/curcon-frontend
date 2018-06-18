@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <== add the imports!
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -21,11 +22,15 @@ import { UserService } from './services/user.service';
 import { DocentenService } from './services/docenten.service';
 import { AuthService } from './providers/auth.service';
 
+// Routing Module
+import { AppRoutingModule } from './app.routing';
+
 import { environment } from '../environments/environment';
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthorisatiebeheerComponent } from './authorisatiebeheer/authorisatiebeheer.component';
 import { TokenButtonComponent } from './token-button/token-button.component';
+import { BeroepstaakXComponent } from './beroepstaak-x/beroepstaak-x.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +45,7 @@ import { TokenButtonComponent } from './token-button/token-button.component';
     HomeComponent,
     AuthorisatiebeheerComponent,
     TokenButtonComponent,
+    BeroepstaakXComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,6 +53,8 @@ import { TokenButtonComponent } from './token-button/token-button.component';
     AngularFireModule.initializeApp(environment.firebase, 'curcon'),
     AppRoutingModule,
     AngularFireAuthModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     FunctieService,

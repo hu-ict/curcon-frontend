@@ -58,7 +58,7 @@ docenten works!
 									</tr>
 								</thead>
 								<tbody>
-									<tr *ngFor="let d of docenten | orderBy: 'naam'">
+									<tr>
 										<td style="width: 1%;"><a href="javascript:void(0)"
 											(click)="docentModal.show(); getDocent(d)"><i
 												class="fa fa-pencil-square" aria-hidden="true"
@@ -85,7 +85,7 @@ docenten works!
 	</div>
 </div>
 
-<div bsModal #docentModal="bs-modal" class="modal fade" tabindex="-1"
+<div bsModal class="modal fade" tabindex="-1"
 	role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-primary" role="document">
 		<div class="modal-content">
