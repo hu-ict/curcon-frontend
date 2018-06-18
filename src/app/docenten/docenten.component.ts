@@ -9,20 +9,23 @@ import {AuthService} from '../providers/auth.service';
   styleUrls: ['./docenten.component.css']
 })
 export class DocentenComponent implements OnInit {
-  //loading: boolean;
+  loading: boolean;
   docenten: Array<Docent>;
   constructor(private docentenService: DocentenService, private authService:AuthService) {
-    //this.loading = true;
+    this.loading = true;
   }
 
   ngOnInit() {
   }
 
   refreshDocenten() {
-    //this.loading = true;
-    // this.docentenService.getDocenten(this.authService.maakTokenHeadervoorCurcon() ).subscribe(docenten => {
-    //   this.docenten = docenten;
-    //   //this.loading = false;
-    // });
+    let self = this;
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+      this.loading = true;
+      this.docentenService.getDocenten( token ).subscribe(docent => {
+        this.docenten.push(docent);
+        this.loading = false;
+      });
+    })
   }
 }

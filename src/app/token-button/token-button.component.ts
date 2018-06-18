@@ -16,7 +16,7 @@ export class TokenButtonComponent implements OnInit {
   constructor(public authService : AuthService,public docentenService:DocentenService,public functieService:FunctieService
     ) {
     }
-    
+
     tokenButtonPrint(){
 
       let self = this;

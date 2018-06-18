@@ -7,6 +7,16 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { AppComponent } from './app.component';
+import {LocationStrategy, HashLocationStrategy, CommonModule} from '@angular/common';
+
+import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { SIDEBAR_TOGGLE_DIRECTIVES } from './shared/sidebar.directive';
+import { AsideToggleDirective } from './shared/aside.directive';
+import { BreadcrumbsComponent } from './shared/breadcrumb.component';
+
+import { NAV_DROPDOWN_DIRECTIVES } from './shared/nav-dropdown.directive';
+import { SimpleLayoutComponent } from './layouts/simple-layout.component';
+
 import { UsersComponent } from './users/users.component';
 import { RollenComponent } from './rollen/rollen.component';
 import { RolmodulesComponent } from './rolmodules/rolmodules.component';
@@ -20,17 +30,27 @@ import { ModuleService } from './services/module.service';
 import { RolService } from './services/rol.service';
 import { UserService } from './services/user.service';
 import { DocentenService } from './services/docenten.service';
-import { AuthService } from './providers/auth.service';
+import { AuthService } from './providers/auth.service';//
 
 // Routing Module
 import { AppRoutingModule } from './app.routing';
 
 import { environment } from '../environments/environment';
 import { HomeComponent } from './home/home.component';
-import { AppRoutingModule } from './app-routing.module';
+//import { AppRoutingModule } from './app-routing.module';
 import { AuthorisatiebeheerComponent } from './authorisatiebeheer/authorisatiebeheer.component';
 import { TokenButtonComponent } from './token-button/token-button.component';
 import { BeroepstaakXComponent } from './beroepstaak-x/beroepstaak-x.component';
+
+// Layouts
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { FullLayoutComponent } from './layouts/full-layout.component';
+import {OrganisatiesService} from './services/curcon/organisaties.service';
+import {HttpModule} from '@angular/http';
+import {TooltipModule} from 'ngx-bootstrap';
+import {BtMatrixModule} from './bt-overzicht/bt-matrix.module';
+import {BtCalculatedModule} from './bt-calculated/bt-calculated.module';
 
 @NgModule({
   declarations: [
@@ -46,6 +66,14 @@ import { BeroepstaakXComponent } from './beroepstaak-x/beroepstaak-x.component';
     AuthorisatiebeheerComponent,
     TokenButtonComponent,
     BeroepstaakXComponent,
+    AppComponent,
+    FullLayoutComponent,
+    SimpleLayoutComponent,
+    NAV_DROPDOWN_DIRECTIVES,
+    BreadcrumbsComponent,
+    SIDEBAR_TOGGLE_DIRECTIVES,
+    AsideToggleDirective
+
   ],
   imports: [
     BrowserModule,
@@ -54,15 +82,29 @@ import { BeroepstaakXComponent } from './beroepstaak-x/beroepstaak-x.component';
     AppRoutingModule,
     AngularFireAuthModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpModule,
+    FormsModule,
+    CommonModule,
+    BsDropdownModule.forRoot(),
+    TabsModule.forRoot(),
+    TooltipModule.forRoot(),
+    ChartsModule,
+    BtMatrixModule,
+    BtCalculatedModule,
   ],
   providers: [
+    {
+      provide: LocationStrategy,
+      useClass: HashLocationStrategy,
+    },
     FunctieService,
     AuthService,
     ModuleService,
     RolService,
     UserService,
     DocentenService,
+
   ],
   bootstrap: [AppComponent]
 })

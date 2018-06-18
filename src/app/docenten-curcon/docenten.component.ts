@@ -1,25 +1,16 @@
 //import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, Directive} from '@angular/core';
 import {Component, Input, OnInit, ViewChild, Directive} from '@angular/core';
-/* TODO
-Uitzoeken:
-Input
-ViewChild
-
-Uitgezocht:
-Component
-OnInit
-Directive - kun je aanroepen als decorator in @Component
-
-*/
-//import { Router } from '@angular/router';
+import { Docent } from '../model/docent';
+import {AuthService} from '../providers/auth.service';
+import { Router } from '@angular/router';
 import { DocentenService } from '../services/docenten.service';
-//import {AbstractControl, NG_VALIDATORS} from '@angular/forms';
-import {OrderByPipe} from './orderby.pipe';
+import {AbstractControl, NG_VALIDATORS} from '@angular/forms';
+import { OrderByPipe } from './orderby.pipe';
 import {DocentComponent} from "../test/docent.component"
 
 @Component({
 	templateUrl: 'docenten.component.html',
-//	pipes: [OrderByPipe]
+	//pipes: [OrderByPipe]
 })
 
 export class DocentenComponent implements OnInit {
@@ -31,18 +22,22 @@ export class DocentenComponent implements OnInit {
     docentForm = <any>{};
     docentId: number;
 
-    constructor(private docentenService: DocentenService) {
-        this.loading = true;
-    }
+		constructor(private docentenService: DocentenService, private authService:AuthService) {
+			this.loading = true;
+		}
 
     ngOnInit(): void {
-        this.docentenService.getDocenten().subscribe(docenten => {
-          this.docenten = docenten;
-        },
-        error => console.log('Error: ', error),
-        () => {
-          this.loading = false;
-        });
+			let self = this;
+			this.authService.maakTokenHeadervoorCurcon().then( token => {
+				this.loading = true;
+				this.docentenService.getDocenten( token ).subscribe(docent => {
+					this.docenten.push(docent);
+				},
+				error => console.log('Error: ', error),
+				() => {
+					this.loading = false;
+				});
+			})
     }
 
     initializeDocentForm() {
@@ -63,14 +58,16 @@ export class DocentenComponent implements OnInit {
       this.docentForm.naam = docent.naam;
     }
 
-    refreshDocenten() {
-			
-			this.loading = true;
-      this.docentenService.getDocenten().subscribe(docenten => {
-        this.docenten = docenten;
-        this.loading = false;
-      });
-    }
+		refreshDocenten() {
+	    let self = this;
+	    this.authService.maakTokenHeadervoorCurcon().then( token => {
+	      this.loading = true;
+	      this.docentenService.getDocenten( token ).subscribe(docent => {
+	        this.docenten.push(docent);
+	        this.loading = false;
+	      });
+	    })
+	  }
 
     isEmptyObject(obj) {
       return (Object.keys(obj).length === 0);

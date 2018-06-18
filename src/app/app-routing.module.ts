@@ -9,7 +9,7 @@ import { DocentenComponent } from './docenten/docenten.component';
 import { UsersComponent } from './users/users.component';
 import { FunctiesComponent } from './functies/functies.component';
 
-const routes : Routes = [
+const routes : Routes = [//
   {path: 'home', component: HomeComponent},
   {path: 'logins', component: LoginsComponent},
   {path: 'rollen', component: RollenComponent},

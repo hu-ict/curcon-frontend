@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {OrganisatiesService} from '../services/organisaties.service';
+import {OrganisatiesService} from '../services/curcon/organisaties.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -35,8 +35,8 @@ export class FullLayoutComponent implements OnInit {
   }
 
   constructor(private organisatieService: OrganisatiesService) {
-    organisatieService.getOrganisaties().subscribe(organisaties => {
-      this.allOrganisaties = organisaties;
+    organisatieService.getOrganisaties().subscribe(organisatie => {
+      this.allOrganisaties.push(organisatie);
       if(localStorage.getItem('selectedOrganisatie') == null)
         localStorage.setItem('selectedOrganisatie', JSON.stringify(this.allOrganisaties[0]));
       console.log(this.allOrganisaties);
