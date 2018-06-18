@@ -14,7 +14,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TabsComponent } from '../components/tabs.component';
 
 import {TooltipModule} from 'ngx-bootstrap';
-import {Tooltip} from "ngx-tooltip";
+import {NgbTooltipConfig} from '@ng-bootstrap/ng-bootstrap';
 
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';

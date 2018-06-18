@@ -8,7 +8,7 @@ import { TablesComponent } from '../components/tables.component';
 import {FormsModule} from '@angular/forms';
 
 import {TooltipModule} from 'ngx-bootstrap';
-import {Tooltip} from "ngx-tooltip";
+import {NgbTooltipConfig} from '@ng-bootstrap/ng-bootstrap';
 
 // Modal Component
 import { ModalModule } from 'ngx-bootstrap/modal';

@@ -17,7 +17,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TabsComponent } from '../components/tabs.component';
 
 import {TooltipModule} from 'ngx-bootstrap';
-import {Tooltip} from "ng2-tooltip";
+import {NgbTooltipConfig} from '@ng-bootstrap/ng-bootstrap';
 
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
@@ -62,7 +62,7 @@ import {PsOverzichtModule} from '../ps-overzicht/ps-overzicht.module';
 		ToetsmatrijzenService,
 		BloomniveausService,
 		MillerNiveausService
-		
+
 	]
 })
 export class CursussenModule { }

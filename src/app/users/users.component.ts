@@ -11,7 +11,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
   styleUrls: [ './users.component.css' ]
 })
 export class UsersComponent implements OnInit  {
-
+//  loading: boolean;
   users: User[];
   private searchTerms = new Subject<string>();
 

@@ -13,6 +13,7 @@ import {DocentenService} from '../services/docenten.service';
 import {BtMatrixComponent} from '../bt-overzicht/bt-matrix.component';
 import {PsOverzichtComponent} from '../ps-overzicht/ps-overzicht.component';
 import {ToetsMatrijs} from './toetsmatrijs';
+import { AuthService } from '../providers/auth.service';
 
 @Component({
   templateUrl: 'cursussen.component.html',
@@ -64,7 +65,8 @@ export class CursussenComponent implements OnInit {
               private toetsenService: ToetsenService,
               private toetsmatrijzenService: ToetsmatrijzenService,
               private bloomniveauService: BloomniveausService,
-              private millerNiveausService: MillerNiveausService) {
+              private millerNiveausService: MillerNiveausService,
+              public authService: AuthService) {
     this.loading = true;
   }
 
@@ -158,14 +160,18 @@ export class CursussenComponent implements OnInit {
   initializeCursusForm() {
     this.loading = true;
     this.cursusForm = {};
-    this.docentenService.getDocenten().subscribe(data => {
-      this.allDocenten = data;
-      let selectedDocent = 0;
-      if (data.length > 0) {
-        selectedDocent = data[0].id;
-      }
-      this.cursusForm = {coordinator: selectedDocent};
-      this.loading = false;
+    let self = this;
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+
+      self.docentenService.getDocenten(token).subscribe(data => {
+        self.allDocenten.push(data);
+        let selectedDocent = 0;
+        if (self.allDocenten.length > 0) {
+          selectedDocent = data[0].id;
+        }
+        this.cursusForm = {coordinator: selectedDocent};
+        this.loading = false;
+      });
     });
   }
 
@@ -490,9 +496,14 @@ export class CursussenComponent implements OnInit {
 
   refreshDocenten() {
     this.loading = true;
-    this.docentenService.getDocenten().subscribe(docenten => {
-      this.allDocenten = docenten;
-      this.loading = false;
+    let self = this;
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+
+      this.docentenService.getDocenten(token).subscribe(docent => {
+        this.allDocenten.push(docent);
+        this.loading = false;
+      }
+    );
     });
   }
 
@@ -519,7 +530,8 @@ export class CursussenComponent implements OnInit {
     this.leerdoelenService.getLeerdoelenByObject(this.selectedCursus.leerdoelen).subscribe(leerdoelen => {
       this.selectedCursus.leerdoelenLijst = leerdoelen;
       this.loading = false;
-    });
+    },
+  );
   }
 
 
