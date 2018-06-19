@@ -145,14 +145,16 @@ export class CursussenComponent implements OnInit {
     this.loading = true;
     console.log(this.cursusForm);
     this.cursussenService.addCursus(this.cursusForm).subscribe(
-      (res: Response) => {
-        const contentLocation = res.headers.get('Content-Location');
-        console.log('Content-Location: ' + contentLocation);
-        this.cursussenService.getDataByHref(contentLocation).subscribe(cursus => {
-          this.onSelect(cursus);
-          this.loading = false;
-          this.cursusModal.hide();
-        });
+      //TODO //FIXME FIX Repsonse and DTO type error..
+      //res: Response
+      (res) => {
+        // const contentLocation = res.headers.get('Content-Location');
+        // console.log('Content-Location: ' + contentLocation);
+        // this.cursussenService.getDataByHref(contentLocation).subscribe(cursus => {
+        //   this.onSelect(cursus);
+        //   this.loading = false;
+        //   this.cursusModal.hide();
+        // });
       }
     );
   }
@@ -526,6 +528,7 @@ export class CursussenComponent implements OnInit {
   }
 
   refreshLeerdoelen() {
+  //  TODO header meegeven
     this.loading = true;
     this.leerdoelenService.getLeerdoelenByObject(this.selectedCursus.leerdoelen).subscribe(leerdoelen => {
       this.selectedCursus.leerdoelenLijst = leerdoelen;

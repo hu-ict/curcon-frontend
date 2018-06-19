@@ -14,19 +14,19 @@ export class LeerdoelenService {
   constructor(private http: HttpClient) {
     console.log('LeerdoelenService Initialized...');
   }
-
-  getLeerdoelen(header) {
-    return this.http.get<curconnamespace.CurconNameSpace.LeerdoelOverzichtDto>(myGlobals.baseUrl+'leerdoelen/', header)
+//TODO overal header toevoegen
+  getLeerdoelen() {
+    return this.http.get<curconnamespace.CurconNameSpace.LeerdoelOverzichtDto>(myGlobals.baseUrl+'leerdoelen/')
       .pipe( tap( res => console.log(res)) );
   }
 
-  getLeerdoelenByObject(obj, header) {
+  getLeerdoelenByObject(obj) {
     console.log(obj.href);
     return this.http.get<curconnamespace.CurconNameSpace.LeerdoelOverzichtDto>(obj.href)
       .pipe( tap( res => console.log(res)) );
   }
 
-  getDataByHref(href, header) {
+  getDataByHref(href) {
     return this.http.get<curconnamespace.CurconNameSpace.LeerdoelOverzichtDto>(href)
       .pipe( tap( res => console.log(res)) );
   }

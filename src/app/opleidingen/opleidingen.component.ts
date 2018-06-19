@@ -290,7 +290,10 @@ export class OpleidingenComponent implements OnInit {
     	this.cursussenService.getCursussen().subscribe(data => {
             console.log('2 data');
             console.log(data);
-    		this.allCursussen = data;
+						//changed
+						this.availableCursussen=null;
+    				this.allCursussen.push(data);
+				//End change
             console.log('3 this.allCursussen');
             console.log(this.allCursussen);
     		let selectedCursus = this.cursussen[0];
