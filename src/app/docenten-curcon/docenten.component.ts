@@ -2,11 +2,11 @@
 import {Component, Input, OnInit, ViewChild, Directive} from '@angular/core';
 import { Docent } from '../model/docent';
 import {AuthService} from '../providers/auth.service';
-import { Router } from '@angular/router';
+import { Router } from '@angular/router';		//TODO
 import { DocentenService } from '../services/docenten.service';
-import {AbstractControl, NG_VALIDATORS} from '@angular/forms';
-import { OrderByPipe } from './orderby.pipe';
-import {DocentComponent} from "../test/docent.component"
+import {AbstractControl, NG_VALIDATORS} from '@angular/forms';//TODO
+import { OrderByPipe } from './orderby.pipe';//TODO
+//import {DocentComponent} from "../test/docent.component"
 
 @Component({
 	templateUrl: 'docenten.component.html',

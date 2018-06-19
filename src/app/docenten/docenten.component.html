@@ -48,8 +48,8 @@ docenten works!
 				<div class="card-block">
 					<div class="row">
 						<div class="col-md-12 docenten">
-							<template tabHeading> <i class="icon-calculator"></i>
-							Docenten</template>
+							<ng-template tabDirective> <i class="icon-calculator"></i>
+							Docenten</ng-template>
 							<table class="table table-condensed">
 								<thead>
 									<tr>
@@ -59,11 +59,13 @@ docenten works!
 								</thead>
 								<tbody>
 									<tr>
-										<td style="width: 1%;"><a href="javascript:void(0)"
+										<!--
+										TODO FIX deze .FIXME
+										 <td style="width: 1%;"><a href="javascript:void(0)"
 											(click)="docentModal.show(); getDocent(d)"><i
 												class="fa fa-pencil-square" aria-hidden="true"
 												style="font-size: 20px;"></i></a></td>
-										<td>{{d.naam}}</td>
+										<td>{{d.naam}}</td> -->
 									</tr>
 								</tbody>
 							</table>
