@@ -51,8 +51,8 @@
 				</div>
 				<div class="card-block">
 					<!-- Nav tabs -->
-					<tabset> <tab> <template tabHeading> <i
-						class="icon-list"></i> Overzicht</template>
+					<tabset> <tab> <ng-template tabDirective> <i
+						class="icon-list"></i> Overzicht</ng-template>
 
 					<div class="col-12 leerplannen">
 						<div class="row cursus">
@@ -70,8 +70,8 @@
 							</div>
 						</div>
 					</div>
-					</tab> <tab> <template tabHeading> <i class="icon-list"></i>
-					Algemeen</template>
+					</tab> <tab> <ng-template tabDirective> <i class="icon-list"></i>
+					Algemeen</ng-template>
 					<form #editCourse="ngForm" novalidate>
 						<a href="javascript:void(0)" (click)="changeMode('edit')"
 							*ngIf="mode == 'view'">Bewerken</a> <a href="javascript:void(0)"
@@ -125,8 +125,8 @@
 						</div>
 						{{editCourse.value | json}}
 					</form>
-					</tab> <tab> <template tabHeading> <i class="icon-grid"></i>
-					Beroepstaken</template>
+					</tab> <tab> <ng-template tabDirective> <i class="icon-grid"></i>
+					Beroepstaken</ng-template>
 					<div class="col-12">
 						<div class="row">
 							<div class="table-responsive">
@@ -167,8 +167,8 @@
 						</div>
 					</div>
 
-					</tab> <tab> <template tabHeading> <i class="icon-badge"></i>
-					Professional skills</template>
+					</tab> <tab> <ng-template tabDirective> <i class="icon-badge"></i>
+					Professional skills</ng-template>
 					<div class="col-12">
 						<div class="row">
 							<div class="table-responsive">
@@ -206,8 +206,8 @@
 							</div>
 						</div>
 					</div>
-					</tab> <tab> <template tabHeading> <i
-						class="icon-pie-chart"></i> Leerdoelen</template>
+					</tab> <tab> <ng-template tabDirective> <i
+						class="icon-pie-chart"></i> Leerdoelen</ng-template>
 					<div class="col-12">
 						<div class="row">
 							<div class="table-responsive">
@@ -253,8 +253,8 @@
 						</div>
 					</div>
 
-					</tab> <tab> <template tabHeading> <i
-						class="icon-directions"></i> Toetsen</template>
+					</tab> <tab> <ng-template tabDirective> <i
+						class="icon-directions"></i> Toetsen</ng-template>
 					<div class="col-12">
 						<div class="row">
 							<table class="table preview-table">
@@ -321,8 +321,8 @@
 							</div>
 						</div>
 					</div>
-					</tab> <tab> <template tabHeading> <i
-						class="icon-puzzle"></i> Toetsmatrijs </template> <ng-container
+					</tab> <tab> <ng-template tabDirective> <i
+						class="icon-puzzle"></i> Toetsmatrijs </ng-template> <ng-container
 						*ngFor="let toetsMatrijs of toetsMatrijsArray"> <ng-container
 						*ngIf="toetsMatrijs != undefined"> <b>{{toetsMatrijs.naam}}</b>
 					<table class="toetsmatrijs table table-bordered table-nonfluid">

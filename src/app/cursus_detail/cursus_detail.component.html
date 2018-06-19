@@ -1,7 +1,7 @@
 <div class="col-md-8 course">
 	<!-- Nav tabs -->
-	<tabset> <tab> <template tabHeading>
-	<i class="icon-list"></i>Algemeen</template>
+	<tabset> <tab> <ng-template tabDirective>
+	<i class="icon-list"></i>Algemeen</ng-template>
 	<form #editCourse="ngForm" novalidate>
 		<a href="javascript:void(0)" (click)="changeMode('edit')"
 			*ngIf="mode == 'view'">Bewerken</a> <a href="javascript:void(0)"
@@ -70,8 +70,8 @@
 		</table>
 		{{editCourse.value | json}}
 	</form>
-	</tab> <tab> <template tabHeading> <i
-		class="icon-calculator"></i> Beroepstaken</template>
+	</tab> <tab> <ng-template tabDirective> <i
+		class="icon-calculator"></i> Beroepstaken</ng-template>
 	<table class="table table-condensed">
 		<thead>
 			<tr>
@@ -100,8 +100,8 @@
 			<i class="fa fa-plus" aria-hidden="true"></i>
 		</button>
 	</div>
-	</tab> <tab> <template tabHeading> <i class="icon-pie-chart"></i>
-	Professional skills</template>
+	</tab> <tab> <ng-template tabDirective> <i class="icon-pie-chart"></i>
+	Professional skills</ng-template>
 	<table class="table table-condensed">
 		<thead>
 			<tr>
@@ -128,8 +128,8 @@
 			<i class="fa fa-plus" aria-hidden="true"></i>
 		</button>
 	</div>
-	</tab> <tab> <template tabHeading> <i class="icon-pie-chart"></i>
-	Leerdoelen</template>
+	</tab> <tab> <ng-template tabDirective> <i class="icon-pie-chart"></i>
+	Leerdoelen</ng-template>
 	<table class="table table-condensed">
 		<thead>
 			<tr>
@@ -158,8 +158,8 @@
 			<i class="fa fa-plus" aria-hidden="true"></i>
 		</button>
 	</div>
-	</tab> <tab> <template tabHeading> <i class="icon-pie-chart"></i>
-	Toetsen</template>
+	</tab> <tab> <ng-template tabDirective> <i class="icon-pie-chart"></i>
+	Toetsen</ng-template>
 	<table class="table table-condensed">
 		<thead>
 			<tr>
@@ -208,8 +208,8 @@
 			<i class="fa fa-plus" aria-hidden="true"></i>
 		</button>
 	</div>
-	</tab> <tab> <template tabHeading> <i class="icon-pie-chart"></i>
-	Toetsmatrijzen</template>
+	</tab> <tab> <ng-template tabDirective> <i class="icon-pie-chart"></i>
+	Toetsmatrijzen</ng-template>
 	<table class="toetsmatrijs table table-bordered table-nonfluid">
 		<tr>
 			<td class="tableInvisible"></td>

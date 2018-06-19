@@ -12,18 +12,42 @@ import { FullLayoutComponent } from './layouts/full-layout.component';
 import { SimpleLayoutComponent } from './layouts/simple-layout.component';
 
 const routes : Routes = [//
-  {path: 'home', component: HomeComponent},
-  {path: 'logins', component: LoginsComponent},
-  {path: 'rollen', component: RollenComponent},
-  {path: 'rolmodules', component: RolmodulesComponent},
-  {path: 'modules', component: ModulesComponent},
-  {path: 'docenten', component: DocentenComponent},
-  {path: 'users', component: UsersComponent},
-  {path: 'functies', component: FunctiesComponent},
   {
-  path: '',
-  redirectTo: 'dashboard',
-  pathMatch: 'full',
+    path: 'home',
+    component: HomeComponent
+  },
+  {
+    path: 'logins',
+    component: LoginsComponent
+  },
+  {
+    path: 'rollen',
+    component: RollenComponent
+  },
+  {
+    path: 'rolmodules',
+    component: RolmodulesComponent
+  },
+  {
+    path: 'modules',
+    component: ModulesComponent
+  },
+  {
+    path: 'docenten',
+    component: DocentenComponent
+  },
+  {
+    path: 'users',
+    component: UsersComponent
+  },
+  {
+    path: 'functies',
+    component: FunctiesComponent
+  },
+  {
+    path: '',
+    redirectTo: 'dashboard',
+    pathMatch: 'full',
 },
 {
   path: '',

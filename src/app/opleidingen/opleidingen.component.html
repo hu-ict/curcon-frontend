@@ -49,8 +49,8 @@
 					<h4 class="card-title mb-0">{{selectedOpleiding.naam}}</h4>
 				</div>
 				<div class="card-block">
-					<tabset> <tab> <template tabHeading> <i
-						class="icon-list"></i> Overzicht</template>
+					<tabset> <tab> <ng-template tabHeading> <i
+						class="icon-list"></i> Overzicht</ng-template>
 					<div class="col-12 leerplannen">
 						<div class="row cursus">
 							<div class="col-12">
@@ -88,8 +88,8 @@
 						</div>
 					</div>
 
-					</tab> <tab> <template tabHeading> <i class="icon-list"></i>
-					Algemeen</template>
+					</tab> <tab> <ng-template tabDirective> <i class="icon-list"></i>
+					Algemeen</ng-template>
 					<form #opleidingForm="ngForm" novalidate>
 						<a href="javascript:void(0)" (click)="setMode('edit')"
 							*ngIf="mode == 'view'">Bewerken</a> <a href="javascript:void(0)"
@@ -107,8 +107,8 @@
 						</div>
 						{{opleidingForm.value | json}}
 					</form>
-					</tab> <tab> <template tabHeading> <i
-						class="icon-grid"></i> Beroepstaken</template>
+					</tab> <tab> <ng-template tabDirective> <i
+						class="icon-grid"></i> Beroepstaken</ng-template>
 					<div class="col-12">
 						<div class="row">
 							<div class="table-responsive">
@@ -149,8 +149,8 @@
 						</div>
 					</div>
 
-					</tab> <tab> <template tabHeading> <i
-						class="icon-badge"></i> Professional skills</template>
+					</tab> <tab> <ng-template tabDirective> <i
+						class="icon-badge"></i> Professional skills</ng-template>
 					<div class="col-12">
 						<div class="row">
 							<div class="table-responsive">
@@ -188,8 +188,8 @@
 							</div>
 						</div>
 					</div>
-					</tab> <tab> <template tabHeading> <i
-						class="icon-layers"></i> Toetsprogramma</template>
+					</tab> <tab> <ng-template tabDirective> <i
+						class="icon-layers"></i> Toetsprogramma</ng-template>
 					<div class="col-12 leerplannen">
 						<div *ngIf="selectedCohort != undefined">
 							<div class="row">
@@ -446,6 +446,3 @@
 	<!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-
-
-

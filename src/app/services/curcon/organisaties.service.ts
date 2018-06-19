@@ -23,17 +23,17 @@ export class OrganisatiesService {
 		//this.options = new RequestOptions({ headers: this.headers });
 	}
 
-  getOrganisaties() {
-    return this.http.get<curconnamespace.CurconNameSpace.OrganisatieDto>(myGlobals.baseUrl+'organisaties/',{ headers : this.headers })
+  getOrganisaties(): Observable<curconnamespace.CurconNameSpace.OrganisatieDto[]> {
+    return this.http.get<curconnamespace.CurconNameSpace.OrganisatieDto[]>(myGlobals.baseUrl+'organisaties/',{ headers : this.headers })
       .pipe( tap( res => console.log(res)) );
   }
 
-  getOrganisatieById(id) {
+  getOrganisatieById(id): Observable<curconnamespace.CurconNameSpace.OrganisatieDto> {
     return this.http.get<curconnamespace.CurconNameSpace.OrganisatieDto>(myGlobals.baseUrl+'organisaties/' + id,{ headers : this.headers })
       .pipe( tap( res => console.log(res)) );
   }
 
-  getOrganisatieByObject(obj) {
+  getOrganisatieByObject(obj): Observable<curconnamespace.CurconNameSpace.OrganisatieDto> {
     return this.http.get<curconnamespace.CurconNameSpace.OrganisatieDto>(obj.href,{ headers : this.headers })
       .pipe( tap( res => console.log(res)) );
   }

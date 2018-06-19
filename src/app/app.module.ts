@@ -31,6 +31,21 @@ import { RolService } from './services/rol.service';
 import { UserService } from './services/user.service';
 import { DocentenService } from './services/docenten.service';
 import { AuthService } from './providers/auth.service';//
+import { OrganisatiesService } from './services/curcon/organisaties.service';
+// import {  } from './services/curcon/beroepstaken.service';
+// import {  } from './services/curcon/.service';
+// import {  } from './services/curcon/.service';
+// import {  } from './services/curcon/.service';
+// import {  } from './services/curcon/.service';
+// import {  } from './services/curcon/.service';
+// import {  } from './services/curcon/.service';
+// import {  } from './services/curcon/.service';
+// import {  } from './services/curcon/.service';
+// import {  } from './services/curcon/.service';
+// import {  } from './services/curcon/.service';
+// import {  } from './services/curcon/.service';
+
+
 
 // Routing Module
 import { AppRoutingModule } from './app-routing.module';
@@ -56,7 +71,6 @@ import {  } from '@ng-bootstrap/ng-bootstrap';
 
 
 import { FullLayoutComponent } from './layouts/full-layout.component';
-import {OrganisatiesService} from './services/curcon/organisaties.service';
 import {HttpModule} from '@angular/http';
 
 import {BtMatrixModule} from './bt-overzicht/bt-matrix.module';
@@ -117,6 +131,7 @@ import {BtCalculatedModule} from './bt-calculated/bt-calculated.module';
     RolService,
     UserService,
     DocentenService,
+    OrganisatiesService,
 
   ],
   bootstrap: [AppComponent]

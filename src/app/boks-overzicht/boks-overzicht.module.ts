@@ -32,13 +32,11 @@ import {BoksOverzichtComponent} from '../boks-overzicht/boks-overzicht.component
 		TooltipModule,
 		ModalModule.forRoot()
 		],
-	declarations: [ 
+	declarations: [
 		BoksOverzichtComponent
 	],
-	exports: [ 
-		BoksOverzichtComponent 
+	exports: [
+		BoksOverzichtComponent
 	],
-	providers: [
-	]
 })
 export class BoksOverzichtModule { }

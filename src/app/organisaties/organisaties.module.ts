@@ -17,7 +17,7 @@ import {HttpModule} from '@angular/http';
     BsDropdownModule,
     CommonModule
   ],
-  declarations: [ OrganisatiesComponent ],
-  providers: [OrganisatiesService]
+  declarations: [ OrganisatiesComponent ]//,
+  //providers: [OrganisatiesService]
 })
 export class OrganisatiesModule { }

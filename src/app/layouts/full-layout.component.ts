@@ -35,6 +35,7 @@ export class FullLayoutComponent implements OnInit {
   }
 
   constructor(private organisatieService: OrganisatiesService) {
+    this.allOrganisaties = [];
     organisatieService.getOrganisaties().subscribe(organisatie => {
       this.allOrganisaties.push(organisatie);
       if(localStorage.getItem('selectedOrganisatie') == null)
