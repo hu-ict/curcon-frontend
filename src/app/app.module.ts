@@ -33,7 +33,7 @@ import { DocentenService } from './services/docenten.service';
 import { AuthService } from './providers/auth.service';//
 
 // Routing Module
-import { AppRoutingModule } from './app.routing';
+import { AppRoutingModule } from './app-routing.module';
 
 import { environment } from '../environments/environment';
 import { HomeComponent } from './home/home.component';
@@ -41,6 +41,7 @@ import { HomeComponent } from './home/home.component';
 import { AuthorisatiebeheerComponent } from './authorisatiebeheer/authorisatiebeheer.component';
 import { TokenButtonComponent } from './token-button/token-button.component';
 import { BeroepstaakXComponent } from './beroepstaak-x/beroepstaak-x.component';
+
 
 // Layouts
 import { TabsModule } from 'ngx-bootstrap/tabs';
