@@ -26,16 +26,6 @@ docenten works!
     </tr>
   </tbody>
 </table> -->
-
-<style>
-.selectable:hover {
-	cursor: pointer;
-}
-
-.table-label {
-	width: 10%;
-}
-</style>
 <div class="animated fadeIn">
 	<div class="row">
 	</div>
@@ -48,8 +38,9 @@ docenten works!
 				<div class="card-block">
 					<div class="row">
 						<div class="col-md-12 docenten">
-							<template tabHeading> <i class="icon-calculator"></i>
-							Docenten</template>
+							<!-- TODO: zoeken naar een alternatief -->
+							<!-- <ng-template tabHeading> <i class="icon-calculator"></i>
+							Docenten</ng-template> -->
 							<table class="table table-condensed">
 								<thead>
 									<tr>
@@ -63,7 +54,7 @@ docenten works!
 											(click)="docentModal.show(); getDocent(d)"><i
 												class="fa fa-pencil-square" aria-hidden="true"
 												style="font-size: 20px;"></i></a></td>
-										<td>{{d.naam}}</td>
+										<!-- <td>{{d.naam}}</td> -->
 									</tr>
 								</tbody>
 							</table>
@@ -107,8 +98,9 @@ docenten works!
 						<div class="form-group row">
 							<label for="naam" class="col-2 col-form-label">Naam</label>
 							<div class="col-10">
-								<input class="form-control" type="text" id="naam" name="naam"
-									required [(ngModel)]="docentForm.naam" placeholder="naam">
+								<!-- TODO: _co.docenten is undefined -->
+								<!-- <input class="form-control" type="text" id="naam" name="naam"
+									required [(ngModel)]="docentForm.naam" placeholder="naam"/> -->
 							</div>
 						</div>
 					</form>
@@ -126,4 +118,4 @@ docenten works!
 	</div>
 	<!-- /.modal-dialog -->
 </div>
-<!-- /.modal -->
+<!-- /.modal --> -->

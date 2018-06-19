@@ -8,6 +8,8 @@ import { ModulesComponent } from './modules/modules.component';
 import { DocentenComponent } from './docenten/docenten.component';
 import { UsersComponent } from './users/users.component';
 import { FunctiesComponent } from './functies/functies.component';
+import { FullLayoutComponent } from './layouts/full-layout.component';
+import { SimpleLayoutComponent } from './layouts/simple-layout.component';
 
 const routes : Routes = [//
   {path: 'home', component: HomeComponent},
@@ -18,6 +20,66 @@ const routes : Routes = [//
   {path: 'docenten', component: DocentenComponent},
   {path: 'users', component: UsersComponent},
   {path: 'functies', component: FunctiesComponent},
+  {
+  path: '',
+  redirectTo: 'dashboard',
+  pathMatch: 'full',
+},
+{
+  path: '',
+  component: FullLayoutComponent,
+  data: {
+    title: 'Home'
+  },
+  children: [
+    {
+      path: 'dashboard',
+      loadChildren: './dashboard/dashboard.module#DashboardModule'
+    },
+    {
+      path: 'opleidingen',
+      loadChildren: './opleidingen/opleidingen.module#OpleidingenModule',
+    },
+    {
+      path: 'cursussen',
+      loadChildren: './cursussen/cursussen.module#CursussenModule',
+    },
+    {
+      path: 'docenten',
+      loadChildren: './docenten/docenten.module#DocentenModule'
+    },
+    {
+      path: 'components',
+      loadChildren: './components/components.module#ComponentsModule'
+    },
+    {
+      path: 'icons',
+      loadChildren: './icons/icons.module#IconsModule'
+    },
+    {
+      path: 'widgets',
+      loadChildren: './widgets/widgets.module#WidgetsModule'
+    },
+    {
+      path: 'charts',
+      loadChildren: './chartjs/chartjs.module#ChartJSModule'
+    }
+  ]
+},
+{
+  path: 'pages',
+  component: SimpleLayoutComponent,
+  data: {
+    title: 'Pages'
+  },
+  children: [
+    {
+      path: '',
+      loadChildren: './pages/pages.module#PagesModule',
+    }
+  ]
+}
+
 ]
 
 @NgModule({

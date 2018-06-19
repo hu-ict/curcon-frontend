@@ -45,10 +45,19 @@ import { BeroepstaakXComponent } from './beroepstaak-x/beroepstaak-x.component';
 // Layouts
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import {TooltipModule} from 'ngx-bootstrap';
+
+// Layouts ng-bootstrap/ng-bootstrap
+import { NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule  } from '@ng-bootstrap/ng-bootstrap';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import {  } from '@ng-bootstrap/ng-bootstrap';
+
+
 import { FullLayoutComponent } from './layouts/full-layout.component';
 import {OrganisatiesService} from './services/curcon/organisaties.service';
 import {HttpModule} from '@angular/http';
-import {TooltipModule} from 'ngx-bootstrap';
+
 import {BtMatrixModule} from './bt-overzicht/bt-matrix.module';
 import {BtCalculatedModule} from './bt-calculated/bt-calculated.module';
 
@@ -92,6 +101,9 @@ import {BtCalculatedModule} from './bt-calculated/bt-calculated.module';
     ChartsModule,
     BtMatrixModule,
     BtCalculatedModule,
+    NgbTabsetModule,
+    NgbDropdownModule,
+    NgbTooltipModule,
   ],
   providers: [
     {

@@ -16,6 +16,8 @@ import {ToetsMatrijs} from './toetsmatrijs';
 import { AuthService } from '../providers/auth.service';
 
 @Component({
+  // TODO: routing fixen
+  
   templateUrl: 'cursussen.component.html',
 })
 export class CursussenComponent implements OnInit {
