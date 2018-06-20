@@ -24,7 +24,6 @@ export class DocentenComponent implements OnInit {
 
     this.afAuth.authState.subscribe((auth) => {
       console.log("authstate updated//user changed");
-      //this.getUsers();
       this.refreshDocenten();
     })
   }
@@ -56,9 +55,9 @@ export class DocentenComponent implements OnInit {
     let self = this;
     this.authService.maakTokenHeadervoorCurcon().then( token => {
        self.docenten= [];
-      this.docentenService.getDocenten( token ).subscribe(docent => {
-        this.docenten.push(docent);
-        console.log(docent.naam);
+      this.docentenService.getDocenten( token ).subscribe(docenten => {
+        this.docenten=docenten;
+        //console.log(docent.naam);
         this.loading = false;
       });
     })
