@@ -36,7 +36,7 @@ export class DocentenService {
    //     return headers;
    // }
 
-    getDocenten(headersIn :HttpHeaders ): Observable<Docent> {
+    getDocent(headersIn :HttpHeaders ): Observable<Docent> {
 let requestOptions = {
   headers: headersIn,
 };
@@ -52,6 +52,23 @@ let requestOptions = {
          )
       //return null;
     }
+    getDocenten(headersIn :HttpHeaders ): Observable<Docent[]> {
+let requestOptions = {
+  headers: headersIn,
+};
+      //let headers = this.generateHeader();//TODO: uitzoeken of een mediator in de frontend van pas komt om auth headers op te vragen en te geven
+      let url = `${myGlobals.baseUrl + "organisaties/1/docenten"}`;
+      console.log("Ingetdoccenten");
+      return this.http.get<Docent[]>(url, requestOptions)  // {
+  //    headers: headersIn
+//    }
+// )    .pipe(
+//            tap(docenten => this.log(`fetched docenten id=${Docent.name}`), ), //["id"]}`), ),
+//           catchError(ErrorService.prototype.handleError<Docent>("getDocenten "))
+//          )
+      //return null;
+    }
+
 
 //     getDocenten2(headersIn :HttpHeaders ): Observable<Docent> {
 // let requestOptions = {

@@ -93,7 +93,6 @@ export class OpleidingenComponent implements OnInit {
 		this.onSelectedOpleiding.emit(opleiding);
 		this.selectedOpleiding = opleiding;
 		console.log(this.selectedOpleiding);
-		//FIXME alle opleidingen worde geselecteerd i.p.v 1
 			console.log(this.selectedOpleiding.eindBt);
 		this.beroepstakenService.getBeroepstakenByObject(this.selectedOpleiding.eindBT).subscribe(beroepstaken => {
 			this.selectedOpleiding.beroepstaken = [];
