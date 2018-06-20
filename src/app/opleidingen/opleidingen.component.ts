@@ -65,11 +65,17 @@ export class OpleidingenComponent implements OnInit {
 	ngOnInit(): void {
         this.cursussen = [];
         this.allCursussen = [];
+				//this.opleidingen= [];
+						//this.cohorten= [];
+					//	this.allBeroepstaken=[];
+				//		this.allProfessionalskills=[];
 		this.selectedButton = 1;
 		this.mode = 'view';
-		this.opleidingenService.getOpleidingen().subscribe(opleiding => {
-			this.opleidingen.push(opleiding);
+
+		this.opleidingenService.getOpleidingen().subscribe(opleidingen => {
+			this.opleidingen= opleidingen;
 			console.log(this.opleidingen);
+			console.log(this.opleidingen[0]);
 			this.onSelectOpleiding(this.opleidingen[0]);
 		}, error => console.log('Error: ', error),
 		() => {
@@ -82,10 +88,13 @@ export class OpleidingenComponent implements OnInit {
 	}
 
 	onSelectOpleiding(opleiding : Object) {
+
 		console.log("onSelectOpleiding(opleiding:Object)");
 		this.onSelectedOpleiding.emit(opleiding);
 		this.selectedOpleiding = opleiding;
-
+		console.log(this.selectedOpleiding);
+		//FIXME alle opleidingen worde geselecteerd i.p.v 1
+			console.log(this.selectedOpleiding.eindBt);
 		this.beroepstakenService.getBeroepstakenByObject(this.selectedOpleiding.eindBT).subscribe(beroepstaken => {
 			this.selectedOpleiding.beroepstaken = [];
 			this.selectedOpleiding.beroepstaken = beroepstaken;
@@ -94,8 +103,8 @@ export class OpleidingenComponent implements OnInit {
 
 		console.log('this.selectedOpleiding.profiel');
 		console.log(this.selectedOpleiding.profiel);
-        this.cohortenService.getCohortenByObject(this.selectedOpleiding['cohorten']).subscribe(cohort => {
-            this.cohorten.push(cohort);
+        this.cohortenService.getCohortenByObject(this.selectedOpleiding['cohorten']).subscribe(cohorten => {
+            this.cohorten= cohorten;
             this.selectedCohort = this.cohorten[0];
 			console.log("Start loading profiel");
 			this.leerplannenService.getLeerplannenProfiel(this.selectedCohort.id).subscribe(data => {
@@ -235,8 +244,8 @@ export class OpleidingenComponent implements OnInit {
 	refreshCursussen() {
 		console.log("refreshCursussen")
 		console.log(this.selectedCohort)
-		this.cursussenService.getCursussenByObject(this.selectedCohort.cursussen).subscribe(cur => {
-			this.cursussen.push(cur);
+		this.cursussenService.getCursussenByObject(this.selectedCohort.cursussen).subscribe(cursussen => {
+			this.cursussen= cursussen;;
 			console.log(this.cursussen);
 			for(let c of this.cursussen) {
 				this.beroepstakenService.getBeroepstakenByObject(c.eindBT).subscribe(beroepstaken => {

@@ -28,7 +28,7 @@ constructor(private http: HttpClient) {
 getCursussen() {
 	var url = myGlobals.baseUrl+'organisaties/' + this.organisationId.id + '/cursussen';
 	console.log("url "+url)
-	return this.http.get<curconnamespace.CurconNameSpace.CursusLeerplanSchemaDto>(url,).pipe( tap( res => console.log(res)) );
+	return this.http.get<curconnamespace.CurconNameSpace.CursusLeerplanSchemaDto[]>(url,).pipe( tap( res => console.log(res)) );
 }
 
 getDataByHref(href) {
@@ -38,7 +38,7 @@ getDataByHref(href) {
 
 getCursussenByObject(obj) {
 	console.log(obj.href);
-	return this.http.get<curconnamespace.CurconNameSpace.CursusLeerplanSchemaDto>(obj.href,)
+	return this.http.get<curconnamespace.CurconNameSpace.CursusLeerplanSchemaDto[]>(obj.href,)
 	.pipe( tap( res => console.log(res)) );
 }
 

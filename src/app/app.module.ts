@@ -64,6 +64,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import {TooltipModule} from 'ngx-bootstrap';
 
 // Layouts ng-bootstrap/ng-bootstrap
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDropdownModule  } from '@ng-bootstrap/ng-bootstrap';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
@@ -116,6 +117,7 @@ import {BtCalculatedModule} from './bt-calculated/bt-calculated.module';
     ChartsModule,
     BtMatrixModule,
     BtCalculatedModule,
+    NgbModule.forRoot(),
     NgbTabsetModule,
     NgbDropdownModule,
     NgbTooltipModule,
