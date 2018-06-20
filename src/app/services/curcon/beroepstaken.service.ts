@@ -44,8 +44,9 @@ export class BeroepstakenService {
       )
   }
 
-  getBeroepstakenByObject(obj) : Observable<curconnamespace.CurconNameSpace.BeroepsTaakDto> {
-    return this.http.get<curconnamespace.CurconNameSpace.BeroepsTaakDto>
+  getBeroepstakenByObject(obj) : Observable<curconnamespace.CurconNameSpace.BeroepsTaakDto[]> {
+    console.log("Beroepstaken object"+obj);
+    return this.http.get<curconnamespace.CurconNameSpace.BeroepsTaakDto[]>
     (obj.href);
   }
 

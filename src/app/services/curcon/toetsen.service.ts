@@ -15,19 +15,19 @@ export class ToetsenService {
   constructor(private http: HttpClient) {
     console.log('ToetsenService Initialized...');
   }
-
+//TODO kloppen de dto namen?
   getToetsen() {
-    return this.http.get<curconnamespace.CurconNameSpace.ToetsMatrijsToetsElementDto>('myGlobals.baseUrl'+'toetsen/')
+    return this.http.get<curconnamespace.CurconNameSpace.ToetsMatrijsToetsElementDto[]>('myGlobals.baseUrl'+'toetsen/')
       .pipe( tap( res => console.log(res)) );
   }
 
   getToetsenByObject(obj) {
-    return this.http.get<curconnamespace.CurconNameSpace.ToetsElementPutDto>(obj.href)
+    return this.http.get<curconnamespace.CurconNameSpace.ToetsElementPutDto[]>(obj.href)
       .pipe( tap( res => console.log(res)) );
   }
 
   getOsisrisResultaatTypes() {
-    return this.http.get<curconnamespace.CurconNameSpace.ToetsMatrijsToetsDto>('myGlobals.baseUrl'+'osirisresultaattypen/')
+    return this.http.get<curconnamespace.CurconNameSpace.ToetsMatrijsToetsDto[]>('myGlobals.baseUrl'+'osirisresultaattypen/')
       .pipe( tap( res => console.log(res)) );
   }
 

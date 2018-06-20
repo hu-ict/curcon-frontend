@@ -19,12 +19,12 @@ export class LeerplannenService {
     }
 
     getLeerplannen() {
-        return this.http.get<curconnamespace.CurconNameSpace.LeerplanSchemaDto>(myGlobals.baseUrl+'leerplannen/')
+        return this.http.get<curconnamespace.CurconNameSpace.LeerplanSchemaDto[]>(myGlobals.baseUrl+'leerplannen/')
             .pipe( tap( res => console.log(res)) );
     }
 
     getLeerplannenProfiel(cohortId) {
-        return this.http.get<curconnamespace.CurconNameSpace.LeerplanSchemaDto>(myGlobals.baseUrl+'leerplanschemas/' + cohortId + '/profiel')
+        return this.http.get<curconnamespace.CurconNameSpace.LeerplanSchemaDto[]>(myGlobals.baseUrl+'leerplanschemas/' + cohortId + '/profiel')
             .pipe( tap( res => console.log(res)) );
     }
 
