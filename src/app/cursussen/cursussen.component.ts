@@ -147,18 +147,33 @@ export class CursussenComponent implements OnInit {
   addCursus() {
     this.loading = true;
     console.log(this.cursusForm);
-    this.cursussenService.addCursus(this.cursusForm).subscribe(
-      //TODO //FIXME FIX Repsonse and DTO type error..
-      //res: Response
-      (res) => {
-        // const contentLocation = res.headers.get('Content-Location');
-        // console.log('Content-Location: ' + contentLocation);
-        // this.cursussenService.getDataByHref(contentLocation).subscribe(cursus => {
-        //   this.onSelect(cursus);
-        //   this.loading = false;
-        //   this.cursusModal.hide();
-        // });
-      }
+
+    this.cursussenService.addCursus(this.cursusForm).subscribe(data => {
+      this.mode = 'view';
+      this.refreshCursussen();
+    //  this.selectedCursus= this.courses;
+  //    this.cursussenService.getCursussenByObject(this.selectedCursus).subscribe(cursus => {
+  //      this.onSelect(cursus);
+        this.loading = false;
+        this.cursusModal.hide();
+  //    });
+        }
+      // //TODO //FIXME FIX Repsonse and DTO type error..
+      // //res: Response
+      // res => {
+      //   // const contentLocation = res.get('Content-Location');
+      //   // console.log('Content-Location: ' + contentLocation);
+      //   // this.cursussenService.getDataByHref(contentLocation).subscribe(cursus => {
+      //   //   this.onSelect(cursus);
+      //     //this.loading = false;
+      //    //this.cursusModal.hide();
+      //   //});
+      //   	this.selectedCursus = this.cursusForm;
+      //     this.refreshAll();
+      //   // console.log(res);
+      //   // this.onSelect(res);
+      //  this.cursusModal.hide();
+      // }
     );
   }
 

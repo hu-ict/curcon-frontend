@@ -118,7 +118,7 @@ deleteToets(bt2: any) {
 	.pipe(catchError(this.handleError));
 }
 
-addCursus(cursus) {
+addCursus(cursus ) {
 	let url = myGlobals.baseUrl+'organisaties/' + this.organisationId.id + '/cursussen';
 //	return this.http.post<curconnamespace.CurconNameSpace.CursusPostDto>(url, cursus,).flatMap(
 //		(res:Response) => {
@@ -131,8 +131,9 @@ addCursus(cursus) {
 //			res.json();
 //		}
 //	).pipe(catchError(this.handleError));
-
-	return this.http.post<curconnamespace.CurconNameSpace.CursusPostDto>(url, cursus,).pipe(
+console.log(cursus+"prepostrequest");
+	return this.http.post<curconnamespace.CurconNameSpace.CursusPostDto>(url, cursus).pipe(
+		tap(cursus => console.log("Gepost?"+cursus)),
     catchError(this.handleError)
   )
 

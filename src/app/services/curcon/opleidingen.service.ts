@@ -45,7 +45,9 @@ export class OpleidingenService {
 //				.subscribe(data => {
 //					console.log(data.headers.get<curconnamespace.CurconNameSpace.>('content-location'));
 //				});
-				.pipe(catchError(this.handleError));
+				.pipe(
+        tap(res => console.log(res+"OPleidingsprofielgepost"))
+        ,catchError(this.handleError));
 		} else {
 			var url = myGlobals.baseUrl+'opleidingsprofielen/'+ opleidingId;
 			console.log(url);
