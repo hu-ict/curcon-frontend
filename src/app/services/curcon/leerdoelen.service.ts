@@ -16,13 +16,13 @@ export class LeerdoelenService {
   }
 //TODO overal header toevoegen
   getLeerdoelen() {
-    return this.http.get<curconnamespace.CurconNameSpace.LeerdoelOverzichtDto>(myGlobals.baseUrl+'leerdoelen/')
+    return this.http.get<curconnamespace.CurconNameSpace.LeerdoelOverzichtDto[]>(myGlobals.baseUrl+'leerdoelen/')
       .pipe( tap( res => console.log(res)) );
   }
 
   getLeerdoelenByObject(obj) {
     console.log(obj.href);
-    return this.http.get<curconnamespace.CurconNameSpace.LeerdoelOverzichtDto>(obj.href)
+    return this.http.get<curconnamespace.CurconNameSpace.LeerdoelOverzichtDto[]>(obj.href)
       .pipe( tap( res => console.log(res)) );
   }
 

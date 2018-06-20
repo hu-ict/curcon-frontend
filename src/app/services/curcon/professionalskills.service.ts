@@ -17,23 +17,23 @@ export class ProfessionalskillsService {
 		this.headers = new HttpHeaders();
 
 	}
-
-	handelprofskillzPromiseAf(){
-		AuthService.prototype.maakTokenHeadervoorCurcon().then()
-	}
+//FIXME DELETE ME
+	// handelprofskillzPromiseAf(){
+	// 	AuthService.prototype.maakTokenHeadervoorCurcon().then()
+	// }
 
 	getProfessionalskills() {
-		return this.http.get<curconnamespace.CurconNameSpace.ProfessionalSkillDto>(myGlobals.baseUrl+'professionalskills/', { headers : this.headers })
+		return this.http.get<curconnamespace.CurconNameSpace.ProfessionalSkillDto[]>(myGlobals.baseUrl+'professionalskills/', { headers : this.headers })
 		.pipe( tap( res => console.log(res)) );
 	}
 
 	getProfessionalskillsByObject(obj) {
-		return this.http.get<curconnamespace.CurconNameSpace.ProfessionalSkillDto>(obj.href, { headers : this.headers })
+		return this.http.get<curconnamespace.CurconNameSpace.ProfessionalSkillDto[]>(obj.href, { headers : this.headers })
 		.pipe( tap( res => console.log(res)) );
 	}
 
 	getProfessionalskillsTypes() {
-		return this.http.get<curconnamespace.CurconNameSpace.ProfessionalSkillTypesDto>(myGlobals.baseUrl+'professionalskills/types', { headers : this.headers })
+		return this.http.get<curconnamespace.CurconNameSpace.ProfessionalSkillTypesDto[]>(myGlobals.baseUrl+'professionalskills/types', { headers : this.headers })
 		.pipe( tap( res => console.log(res)) );
 	}
 

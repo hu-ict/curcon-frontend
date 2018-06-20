@@ -15,14 +15,14 @@ export class ToetsmatrijzenService {
   constructor(private http: HttpClient) {
     console.log('ToetsmatrijzenService Initialized...');
   }
-
+//TODO kloppen de dtos ?
   getToetsmatrijzen() {
-    return this.http.get<curconnamespace.CurconNameSpace.ToetsMatrijsToetsDto>(myGlobals.baseUrl+'toetsen/')
+    return this.http.get<curconnamespace.CurconNameSpace.ToetsMatrijsToetsDto[]>(myGlobals.baseUrl+'toetsen/')
       .pipe( tap( res => console.log(res)) );
   }
 
   getToetsmatrijzenByObject(obj) {
-    return this.http.get<curconnamespace.CurconNameSpace.ToetsMatrijsDto>(obj.href)
+    return this.http.get<curconnamespace.CurconNameSpace.ToetsMatrijsDto[]>(obj.href)
       .pipe( tap( res => console.log(res)) );
   }
 

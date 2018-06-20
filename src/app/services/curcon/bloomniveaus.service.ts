@@ -16,12 +16,12 @@ export class BloomniveausService {
   }
 
   getBloomniveaus() {
-    return this.http.get<curconnamespace.CurconNameSpace.BloomNiveauDto>(myGlobals.baseUrl+'bloomniveaus/')
+    return this.http.get<curconnamespace.CurconNameSpace.BloomNiveauDto[]>(myGlobals.baseUrl+'bloomniveaus/')
       .pipe( tap( res => console.log(res)) );
   }
 
   getBloomniveausByObject(obj) {
-    return this.http.get<curconnamespace.CurconNameSpace.BloomNiveauDto>(obj.href)
+    return this.http.get<curconnamespace.CurconNameSpace.BloomNiveauDto[]>(obj.href)
       .pipe( tap( res => console.log(res)) );
   }
 

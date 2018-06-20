@@ -27,7 +27,7 @@ export class OpleidingenService {
 	getOpleidingen() {
 		var url = myGlobals.baseUrl+'organisaties/' + this.organisation.id + '/opleidingsprofielen';
 		console.log(url);
-		return this.http.get<curconnamespace.CurconNameSpace.OpleidingsProfielDto>(url,).pipe( tap( res => console.log(res)) );
+		return this.http.get<curconnamespace.CurconNameSpace.OpleidingsProfielDto[]>(url,).pipe( tap( res => console.log(res)) );
 	}
 
 	getDataByHref(href) {
@@ -36,7 +36,7 @@ export class OpleidingenService {
 	}
 
 	getOpleidingByObject(obj) {
-		return this.http.get<curconnamespace.CurconNameSpace.OpleidingsProfielDto>(obj.href,).pipe( tap( res => console.log(res)) );
+		return this.http.get<curconnamespace.CurconNameSpace.OpleidingsProfielDto[]>(obj.href,).pipe( tap( res => console.log(res)) );
 	}
 
 	saveOpleiding(opleiding) {

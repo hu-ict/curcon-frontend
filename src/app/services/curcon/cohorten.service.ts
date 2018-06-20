@@ -17,12 +17,12 @@ export class CohortenService {
   }
 
   getCohorten() {
-    return this.http.get<curconnamespace.CurconNameSpace.CohortDto>(myGlobals.baseUrl+'cohorten/', { headers: this.headers })
+    return this.http.get<curconnamespace.CurconNameSpace.CohortDto[]>(myGlobals.baseUrl+'cohorten/', { headers: this.headers })
       .pipe( tap( res => console.log(res)) );
   }
 
   getCohortenByObject(obj) {
-    return this.http.get<curconnamespace.CurconNameSpace.CohortDto>(obj.href)
+    return this.http.get<curconnamespace.CurconNameSpace.CohortDto[]>(obj.href)
       .pipe( tap( res => console.log(res)) );
   }
 
