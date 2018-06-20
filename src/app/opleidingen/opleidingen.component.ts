@@ -67,6 +67,7 @@ export class OpleidingenComponent implements OnInit {
         this.allCursussen = [];
 		this.selectedButton = 1;
 		this.mode = 'view';
+			this.opleidingen= [];
 		this.opleidingenService.getOpleidingen().subscribe(opleiding => {
 			this.opleidingen.push(opleiding);
 			console.log(this.opleidingen);

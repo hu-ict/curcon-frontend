@@ -17,7 +17,7 @@ import { AuthService } from '../providers/auth.service';
 
 @Component({
   // TODO: routing fixen
-  
+
   templateUrl: 'cursussen.component.html',
 })
 export class CursussenComponent implements OnInit {
@@ -77,6 +77,9 @@ export class CursussenComponent implements OnInit {
     this.mode = 'view';
     this.toetsMatrijsEdit = 0;
     this.toetsMatrijsAdd = [];
+    //TODO in alle componenten lege arrays initialzen
+    this.courses= [];
+    this.allMillerNiveaus=[]
     this.toetsMatrijsArray = Array.apply(null, Array(10));
     this.cursussenService.getCursussen().subscribe(cursus => {
       this.courses.push(cursus);
