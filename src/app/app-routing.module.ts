@@ -11,6 +11,8 @@ import { FunctiesComponent } from './functies/functies.component';
 import { FullLayoutComponent } from './layouts/full-layout.component';
 import { SimpleLayoutComponent } from './layouts/simple-layout.component';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 const routes : Routes = [//
   {
     path: 'home',
@@ -107,7 +109,7 @@ const routes : Routes = [//
 ]
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
+  imports: [ RouterModule.forRoot(routes), NgbModule.forRoot() ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
