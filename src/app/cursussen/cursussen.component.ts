@@ -77,12 +77,10 @@ export class CursussenComponent implements OnInit {
     this.mode = 'view';
     this.toetsMatrijsEdit = 0;
     this.toetsMatrijsAdd = [];
-    //TODO in alle componenten lege arrays initialzen
-    this.courses= [];
-    this.allMillerNiveaus=[]
+
     this.toetsMatrijsArray = Array.apply(null, Array(10));
-    this.cursussenService.getCursussen().subscribe(cursus => {
-      this.courses.push(cursus);
+    this.cursussenService.getCursussen().subscribe(cursussen => {
+      this.courses= cursussen;
       this.selectedCursus = this.courses[0];
       this.cursusForm = this.courses[0];
       this.refreshAll();
@@ -91,8 +89,8 @@ export class CursussenComponent implements OnInit {
       () => {
         this.loading = false;
       });
-    this.millerNiveausService.getMillerNiveaus().subscribe(millerNiveau => {
-      this.allMillerNiveaus.push(millerNiveau);
+    this.millerNiveausService.getMillerNiveaus().subscribe(millerNiveaus => {
+      this.allMillerNiveaus=millerNiveaus;
     },
       error => console.log('Error: ', error),
       () => {
@@ -121,8 +119,8 @@ export class CursussenComponent implements OnInit {
 
   private refreshCursussen() {
     this.loading = true;
-    this.cursussenService.getCursussen().subscribe(cursus => {
-      this.courses.push(cursus);
+    this.cursussenService.getCursussen().subscribe(cursussen => {
+      this.courses=cursussen;
       this.loading = false;
     },
       error => console.log('Error: ', error),
@@ -149,37 +147,39 @@ export class CursussenComponent implements OnInit {
   addCursus() {
     this.loading = true;
     console.log(this.cursusForm);
-    this.cursussenService.addCursus(this.cursusForm).subscribe(
-      //TODO //FIXME FIX Repsonse and DTO type error..
-      //res: Response
-      (res) => {
-        // const contentLocation = res.headers.get('Content-Location');
-        // console.log('Content-Location: ' + contentLocation);
-        // this.cursussenService.getDataByHref(contentLocation).subscribe(cursus => {
-        //   this.onSelect(cursus);
-        //   this.loading = false;
-        //   this.cursusModal.hide();
-        // });
-      }
+
+    this.cursussenService.addCursus(this.cursusForm).subscribe(data => {
+      this.mode = 'view';
+      this.refreshCursussen();
+    //  this.selectedCursus= this.courses;
+  //    this.cursussenService.getCursussenByObject(this.selectedCursus).subscribe(cursus => {
+  //      this.onSelect(cursus);
+        this.loading = false;
+        this.cursusModal.hide();
+  //    });
+        }
+      // //TODO //FIXME FIX Repsonse and DTO type error..
+      // //res: Response
+      // res => {
+      //   // const contentLocation = res.get('Content-Location');
+      //   // console.log('Content-Location: ' + contentLocation);
+      //   // this.cursussenService.getDataByHref(contentLocation).subscribe(cursus => {
+      //   //   this.onSelect(cursus);
+      //     //this.loading = false;
+      //    //this.cursusModal.hide();
+      //   //});
+      //   	this.selectedCursus = this.cursusForm;
+      //     this.refreshAll();
+      //   // console.log(res);
+      //   // this.onSelect(res);
+      //  this.cursusModal.hide();
+      // }
     );
   }
 
   initializeCursusForm() {
-    this.loading = true;
     this.cursusForm = {};
-    let self = this;
-    this.authService.maakTokenHeadervoorCurcon().then( token => {
-
-      self.docentenService.getDocenten(token).subscribe(data => {
-        self.allDocenten.push(data);
-        let selectedDocent = 0;
-        if (self.allDocenten.length > 0) {
-          selectedDocent = data[0].id;
-        }
-        this.cursusForm = {coordinator: selectedDocent};
-        this.loading = false;
-      });
-    });
+    this.refreshDocenten();
   }
 
   // ******************
@@ -215,8 +215,8 @@ export class CursussenComponent implements OnInit {
 
   getAllProfessionalskills() {
     this.loading = true;
-    this.professionalskillService.getProfessionalskills().subscribe(result => {
-      this.allProfessionalskills.push(result);
+    this.professionalskillService.getProfessionalskills().subscribe(results => {
+      this.allProfessionalskills=results;
       for (let i = 0; i < this.selectedCursus.professionalskills.length; i++) {
         this.allProfessionalskills = this.allProfessionalskills.filter((x) => x.id !== this.selectedCursus.professionalskills[i].id);
       }
@@ -306,7 +306,7 @@ export class CursussenComponent implements OnInit {
     this.loading = true;
     this.leerdoelForm = {};
     this.bloomniveauService.getBloomniveaus().subscribe(data => {
-      this.allBloomniveaus.push(data);
+      this.allBloomniveaus=data;
       let selectedBeroepstaak = 0;
       if (this.selectedCursus.beroepstaken.length > 0) {
         selectedBeroepstaak = this.selectedCursus.beroepstaken[0].id;
@@ -334,8 +334,8 @@ export class CursussenComponent implements OnInit {
     this.leerdoelModal.show();
     this.loading = true;
     if (this.allBloomniveaus == null) {
-      this.bloomniveauService.getBloomniveaus().subscribe(bloomniveau => {
-        this.allBloomniveaus.push(bloomniveau);
+      this.bloomniveauService.getBloomniveaus().subscribe(bloomniveaus => {
+        this.allBloomniveaus=bloomniveaus;
       });
     };
     this.leerdoelForm = {
@@ -505,9 +505,8 @@ export class CursussenComponent implements OnInit {
     this.loading = true;
     let self = this;
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-
-      this.docentenService.getDocenten(token).subscribe(docent => {
-        this.allDocenten.push(docent);
+      this.docentenService.getDocenten(token).subscribe(docenten => {
+        this.allDocenten=docenten;
         this.loading = false;
       }
     );

@@ -25,7 +25,7 @@ export class TokenButtonComponent implements OnInit {
         console.log("Outputtokenbutton"+headers);
         //const observer = {next: x => console.log('Observer got a next value: ' + x) };
         //Na het ophalen van de headers via  promise geef ze door
-        self.docentenService.getDocenten(headers).subscribe(docent => {
+        self.docentenService.getDocent(headers).subscribe(docent => {
           console.log('Observer got a next value: ' + docent)
           //TODO Nu alleen nog deze value in de lijst krijgen
           if (docent !=null){

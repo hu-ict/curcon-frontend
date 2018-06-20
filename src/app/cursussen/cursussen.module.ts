@@ -8,6 +8,9 @@ import { CursussenRoutingModule } from './cursussen-routing.module';
 import { CommonModule } from '@angular/common';
 import { TablesComponent } from '../components/tables.component';
 
+// Ngb
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 // Modal Component
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ModalsComponent } from '../components/modals.component';
@@ -44,7 +47,8 @@ import {PsOverzichtModule} from '../ps-overzicht/ps-overzicht.module';
 		FormsModule,
 		CommonModule,
 		TabsModule,
-		ModalModule.forRoot()
+		ModalModule.forRoot(),
+		NgbModule.forRoot(),
 		],
 	declarations: [
 		CursussenComponent,

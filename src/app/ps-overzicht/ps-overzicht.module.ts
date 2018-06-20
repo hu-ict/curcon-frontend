@@ -1,42 +1,45 @@
 import { NgModule } from '@angular/core';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { CommonModule } from '@angular/common';
 import { TablesComponent } from '../components/tables.component';
 
 // Modal Component
-import { ModalModule } from 'ngx-bootstrap/modal';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalsComponent } from '../components/modals.component';
 
 // Tabs Component
-import { TabsModule } from 'ngx-bootstrap/tabs';
+import { NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
 import { TabsComponent } from '../components/tabs.component';
 
-import {TooltipModule} from 'ngx-bootstrap';
-import {NgbTooltipConfig} from '@ng-bootstrap/ng-bootstrap';
+import { TooltipModule } from 'ngx-bootstrap';
+import { NgbTooltipConfig } from '@ng-bootstrap/ng-bootstrap';
 
-import {FormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
 import {PsOverzichtComponent} from '../ps-overzicht/ps-overzicht.component';
 
 @NgModule({
 	imports: [
+		NgbModule.forRoot(),
 		ChartsModule,
 		HttpModule,
-		BsDropdownModule,
+		NgbDropdownModule,
 		FormsModule,
 		CommonModule,
-		TabsModule,
+		NgbTabsetModule,
 		TooltipModule,
-		ModalModule.forRoot()
+//		ModalModule.forRoot()
 		],
-	declarations: [ 
+	declarations: [
 		PsOverzichtComponent
 	],
-	exports: [ 
-		PsOverzichtComponent 
+	exports: [
+		PsOverzichtComponent
 	],
 	providers: [
 	]
