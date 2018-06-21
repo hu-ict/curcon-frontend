@@ -20,8 +20,8 @@
 				<div class="card-block">
 					<div class="row">
 						<div class="col-md-12 docenten">
-							<template tabHeading> <i class="icon-calculator"></i>
-							Docenten</template>
+							<ng-template tabDirective><i class="icon-calculator"></i>
+							Docenten</ng-template>
 							<table class="table table-condensed">
 								<thead>
 									<tr>
@@ -41,7 +41,7 @@
 							</table>
 							<div class="btn-group pull-right" role="group" aria-label="...">
 								<button type="button" class="btn btn-info"
-									(click)="docentModal.show(); initializeDocentForm(); resetId()">
+									(click)="docentModal.show(); initializeDocentForm()">
 									<i class="fa fa-plus" aria-hidden="true"></i>
 								</button>
 							</div>
