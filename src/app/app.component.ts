@@ -17,6 +17,7 @@ import {OrganisatiesService} from "./services/curcon/organisaties.service";
 	selector: 'body',
 	template: '<router-outlet></router-outlet>'
 })
+
 export class AppComponent implements OnInit {
 	allOrganisaties: Array<any>;
 	selectedOrganisatie: string;
