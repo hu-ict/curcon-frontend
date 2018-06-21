@@ -1,4 +1,4 @@
-<!--
+
 <style>
 .selectable:hover {
 	cursor: pointer;
@@ -7,25 +7,7 @@
 .table-label {
 	width: 10%;
 }
-
 </style>
-<p>
-docenten works!
-</p>
-<table class="table table-condensed">
-  <thead>
-    <tr>
-      <th></th>
-      <th>Naam</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let d of docenten">
-      <td style="width: 1%;"><a href="getDocent(d)"></a></td>
-      <td>{{d.naam}}</td>
-    </tr>
-  </tbody>
-</table> -->
 <div class="animated fadeIn">
 	<div class="row">
 	</div>
@@ -38,9 +20,8 @@ docenten works!
 				<div class="card-block">
 					<div class="row">
 						<div class="col-md-12 docenten">
-
-							<ng-template tabDirective> <i class="icon-calculator"></i>
-							Docenten</ng-template>
+							<template tabHeading> <i class="icon-calculator"></i>
+							Docenten</template>
 							<table class="table table-condensed">
 								<thead>
 									<tr>
@@ -49,20 +30,18 @@ docenten works!
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<!-- TODO: FIX deze -->
-										<!--
-										 <td style="width: 1%;"><a href="javascript:void(0)"
+									<tr *ngFor="let d of docenten | orderBy: 'naam'">
+										<td style="width: 1%;"><a href="javascript:void(0)"
 											(click)="docentModal.show(); getDocent(d)"><i
 												class="fa fa-pencil-square" aria-hidden="true"
-												style="font-size: 20px;"></i></a></td> -->
-										<!-- <td>{{d.naam}}</td> -->
+												style="font-size: 20px;"></i></a></td>
+										<td>{{d.naam}}</td>
 									</tr>
 								</tbody>
 							</table>
 							<div class="btn-group pull-right" role="group" aria-label="...">
 								<button type="button" class="btn btn-info"
-									(click)="docentModal.show(); initializeDocentForm();">
+									(click)="docentModal.show(); initializeDocentForm(); resetId()">
 									<i class="fa fa-plus" aria-hidden="true"></i>
 								</button>
 							</div>
@@ -78,7 +57,7 @@ docenten works!
 	</div>
 </div>
 
-<div bsModal class="modal fade" tabindex="-1"
+<div bsModal #docentModal="bs-modal" class="modal fade" tabindex="-1"
 	role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-primary" role="document">
 		<div class="modal-content">
@@ -100,9 +79,8 @@ docenten works!
 						<div class="form-group row">
 							<label for="naam" class="col-2 col-form-label">Naam</label>
 							<div class="col-10">
-								<!-- TODO: _co.docenten is undefined -->
-								<!-- <input class="form-control" type="text" id="naam" name="naam"
-									required [(ngModel)]="docentForm.naam" placeholder="naam"/> -->
+								<input class="form-control" type="text" id="naam" name="naam"
+									required [(ngModel)]="docentForm.naam" placeholder="naam">
 							</div>
 						</div>
 					</form>
@@ -120,4 +98,4 @@ docenten works!
 	</div>
 	<!-- /.modal-dialog -->
 </div>
-<!-- /.modal --> -->
+<!-- /.modal -->
