@@ -34,22 +34,26 @@ export class DocentenComponent implements OnInit {
 
   initializeDocentForm() {
     this.docentForm = {};
+    this.docentId=null;
+
   }
 
-  // saveDocent() {
-  //     this.loading = false;
-  //     this.docentenService.saveDocent(this.docentId, this.docentForm).subscribe(docent => {
-  //       this.refreshDocenten();
-  //       this.docentModal.hide();
-  //       this.loading = false;
-  //     });
-  //   }
+  saveDocent() {
+      this.loading = false; //FIXME Is dit niet True??
+        this.authService.maakTokenHeadervoorCurcon().then( token => {
+        console.log(token);
+          this.docentenService.saveDocent(this.docentId, this.docentForm,token).subscribe(docent => {
+          this.refreshDocenten();
+          this.docentModal.hide();
+          this.loading = false;
+        })
+      });
+    }
 
   getDocent(docent) {
     this.docentId = docent.id;
     this.docentForm.naam = docent.naam;
   }
-
   refreshDocenten() {
     this.loading = true;
     let self = this;

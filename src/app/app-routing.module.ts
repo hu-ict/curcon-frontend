@@ -5,7 +5,7 @@ import { LoginsComponent } from './logins/logins.component';
 import { RollenComponent } from './rollen/rollen.component';
 import { RolmodulesComponent } from './rolmodules/rolmodules.component';
 import { ModulesComponent } from './modules/modules.component';
-import { DocentenComponent } from './docenten/docenten.component';
+//import { DocentenComponent } from './docenten/docenten.component';
 import { UsersComponent } from './users/users.component';
 import { FunctiesComponent } from './functies/functies.component';
 import { FullLayoutComponent } from './layouts/full-layout.component';
@@ -32,10 +32,10 @@ const routes : Routes = [//
     path: 'modules',
     component: ModulesComponent
   },
-  {
-    path: 'docenten',
-    component: DocentenComponent
-  },
+  // {
+  //   path: 'docenten',
+  //   component: DocentenComponent
+  // },
   {
     path: 'users',
     component: UsersComponent

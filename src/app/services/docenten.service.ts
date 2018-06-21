@@ -106,15 +106,18 @@ let requestOptions = {
     // }
 
     // TODO: herzien voor hergebruik
-	// saveDocent(docentId, docentForm) {
-	// 	var headers = new Headers();
-	// 	headers.append('Content-Type', 'application/json');
-	// 	if (docentId == null) {
-	// 		return this.http.post(myGlobals.baseUrl + 'organisaties/1/docenten/', docentForm)
-	// 			.catch(this.handleError);
-	// 	} else {
-	// 		return this.http.put(myGlobals.baseUrl + 'docenten/' + docentId, docentForm)
-	// 			.catch(this.handleError);
-	// 	}
-	// }
+	saveDocent(docentId, docentForm, headersIn :HttpHeaders){//:  Observable<Docent> {
+  let requestOptions = {
+    headers: headersIn,
+  };
+    //var headers = new Headers();
+		//headers.append('Content-Type', 'application/json');
+		if (docentId == null) {
+			return this.http.post<Docent>(myGlobals.baseUrl + 'organisaties/1/docenten/', docentForm,requestOptions)
+			// .pipe(catchError(this.handleError);
+		} else {
+			return this.http.put<Docent>(myGlobals.baseUrl + 'docenten/' + docentId, docentForm,requestOptions)
+				// .pipe(catchError(this.handleError));
+		}
+	}
 }
