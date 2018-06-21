@@ -23,13 +23,13 @@ import { RolmodulesComponent } from './rolmodules/rolmodules.component';
 import { ModulesComponent } from './modules/modules.component';
 import { FunctiesComponent } from './functies/functies.component';
 import { LoginsComponent } from './logins/logins.component';
-import { DocentenComponent } from './docenten/docenten.component';
+//import { DocentenComponent } from './docenten/docenten.component';
 
 import { FunctieService } from './services/functie.service';
 import { ModuleService } from './services/module.service';
 import { RolService } from './services/rol.service';
 import { UserService } from './services/user.service';
-import { DocentenService } from './services/docenten.service';
+//import { DocentenService } from './services/docenten.service';
 import { AuthService } from './providers/auth.service';//
 import { OrganisatiesService } from './services/curcon/organisaties.service';
 // import {  } from './services/curcon/beroepstaken.service';
@@ -86,7 +86,7 @@ import {BtCalculatedModule} from './bt-calculated/bt-calculated.module';
     ModulesComponent,
     FunctiesComponent,
     LoginsComponent,
-    DocentenComponent,
+//    DocentenComponent,
     HomeComponent,
     AuthorisatiebeheerComponent,
     TokenButtonComponent,
@@ -132,7 +132,7 @@ import {BtCalculatedModule} from './bt-calculated/bt-calculated.module';
     ModuleService,
     RolService,
     UserService,
-    DocentenService,
+//    DocentenService,
     OrganisatiesService,
 
   ],
