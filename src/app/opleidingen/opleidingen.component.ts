@@ -18,6 +18,7 @@ import {BoksOverzichtComponent} from '../boks-overzicht/boks-overzicht.component
 
 @Component({
 	templateUrl: 'opleidingen.component.html',
+  styleUrls: [ './opleidingen.component.css' ]
 })
 
 export class OpleidingenComponent implements OnInit {
