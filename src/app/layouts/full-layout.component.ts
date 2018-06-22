@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {OrganisatiesService} from '../services/curcon/organisaties.service';
 import { AngularFireAuth } from 'angularfire2/auth';
 import {AuthService} from '../providers/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -27,8 +28,11 @@ export class FullLayoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.afAuth.authState.subscribe((auth) => {
-      if (this.afAuth.auth.currentUser.displayName== null){
+      if (this.afAuth.auth.currentUser== null){
         console.log("niet ingelogd noob");
+          //TODO stuur de gebruiker door naar de inlogpagina
+          //..
+            this.router.navigate(['logins']);
       }
       document.getElementById("user").innerHTML=this.afAuth.auth.currentUser.displayName;
     }
@@ -42,7 +46,7 @@ onChange(item) {
   });
 }
 
-constructor(private organisatieService: OrganisatiesService,private afAuth: AngularFireAuth,private authService:AuthService,) {
+constructor(private organisatieService: OrganisatiesService,private afAuth: AngularFireAuth,private authService:AuthService, private router: Router) {
   this.allOrganisaties = [];
   organisatieService.getOrganisaties().subscribe(organisatie => {
     this.allOrganisaties.push(organisatie);
