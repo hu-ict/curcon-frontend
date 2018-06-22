@@ -35,7 +35,7 @@ export class AuthService {
   // }
   maakTokenHeadervoorCurcon(){
 //  var headers=null;
-console.log(this.afAuth.auth.currentUser+"huidige user");
+console.log(this.afAuth.auth.currentUser.email+"huidige user");
 var headersPromise=  this.afAuth.auth.currentUser.getIdToken().then(function(token){
     //console.log(value); ==Token
     let headers =
