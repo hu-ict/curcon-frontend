@@ -17,8 +17,8 @@ import { AuthService } from '../providers/auth.service';
 
 @Component({
   // TODO: routing fixen
-
   templateUrl: 'cursussen.component.html',
+  styleUrls: ['cursussen.component.css']
 })
 export class CursussenComponent implements OnInit {
   @ViewChild('BeroepstaakModal') beroepstaakModal: any;

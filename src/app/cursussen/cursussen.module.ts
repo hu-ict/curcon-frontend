@@ -12,17 +12,14 @@ import { TablesComponent } from '../components/tables.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 // Modal Component
-//import { ModalModule } from 'ngx-bootstrap/modal';
-import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { ModalsComponent } from '../components/modals.component';
 
 // Tabs Component
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
 import { TabsComponent } from '../components/tabs.component';
 
-//import {TooltipModule} from 'ngx-bootstrap';
-import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
+import {TooltipModule} from 'ngx-bootstrap';
 import {NgbTooltipConfig} from '@ng-bootstrap/ng-bootstrap';
 
 import {FormsModule} from '@angular/forms';
@@ -49,14 +46,13 @@ import {PsOverzichtModule} from '../ps-overzicht/ps-overzicht.module';
 		BsDropdownModule,
 		FormsModule,
 		CommonModule,
-		NgbTabsetModule.forRoot(),
-		NgbModalModule.forRoot(),
+		TabsModule,
+		ModalModule.forRoot(),
 		NgbModule.forRoot(),
-		NgbTooltipModule.forRoot(),
 		],
 	declarations: [
 		CursussenComponent,
-		TabsComponent,
+//		TabsComponent,
 //		TablesComponent,
 //		ModalsComponent
 	],
