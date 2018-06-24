@@ -121,31 +121,35 @@ export class CursussenComponent implements OnInit {
     this.mode = mode;
   }
 
-  loadButtons(){
-    var email= this.afAuth.auth.currentUser.email;
-    //this.loading = true;
-    let self = this;
-    this.authService.maakTokenHeadervoorCurcon().then( token => {
-      this.functieService.getFunctiesByUser( email ).subscribe(functies => {
-        var element = <HTMLInputElement> document.getElementById("<!-- button-id -->");
-        if (functies == null) {
-          element.style.display = "none";
-          this.isVisible=false;
-        } else {
-          var userToegang = functies.some(f=> f.name == "docent_put");
-          if (!userToegang) {
-            element.style.display = "none";
-          }
+  loadButtons() {
+      var email= this.afAuth.auth.currentUser.email;
+      //this.loading = true;
+      let self = this;
+      
+      this.authService.maakTokenHeadervoorCurcon().then( token => {
+          this.functieService.getFunctiesByUser(email).subscribe(functies => {
+            var element = <HTMLInputElement> document.getElementById("createbutton");
 
-          userToegang = functies.some(f=> f.name == "organisatiedocent_post");
-          if (!userToegang) {
-            console.log("geen toegang");
-            this.isVisible=false;
-          }
-        }
-        //this.loading = false;
-      });
-    })
+            if (functies == null) {
+                element.style.display = "none";
+                this.isVisible=false;
+            } else {
+                var userToegang = functies.some(f=> f.name == "cursus_put");
+
+                if (!userToegang) {
+                  element.style.display = "none";
+                }
+
+                userToegang = functies.some(f=> f.name == "cursus_post");
+                if (!userToegang) {
+                  console.log("geen toegang");
+                  this.isVisible=false;
+                }
+            }
+
+            //this.loading = false;
+        });
+      })
   }
 
   // ******************

@@ -96,6 +96,37 @@ export class OpleidingenComponent implements OnInit {
 		});
 	}
 
+	loadButtons() {
+    	var email= this.afAuth.auth.currentUser.email;
+	    //this.loading = true;
+	    let self = this;
+	    
+	    this.authService.maakTokenHeadervoorCurcon().then( token => {
+	      	this.functieService.getFunctiesByUser(email).subscribe(functies => {
+	        	var element = <HTMLInputElement> document.getElementById("createbutton");
+
+		        if (functies == null) {
+		          	element.style.display = "none";
+		          	this.isVisible=false;
+		        } else {
+		          	var userToegang = functies.some(f=> f.name == "opleiding_put");
+
+		          	if (!userToegang) {
+		            	element.style.display = "none";
+		          	}
+
+		          	userToegang = functies.some(f=> f.name == "opleiding_post");
+		          	if (!userToegang) {
+		            	console.log("geen toegang");
+		            	this.isVisible=false;
+		          	}
+		        }
+
+	        	//this.loading = false;
+	      });
+	    })
+	}
+
 	setMode(mode) {
 		this.mode = mode;
 	}
@@ -408,7 +439,7 @@ export class OpleidingenComponent implements OnInit {
 				this.availableCursussen=null;
 	    		this.allCursussen.push(data);
 				//End change
-				
+
 	            console.log('3 this.allCursussen');
 	            console.log(this.allCursussen);
 	    		let selectedCursus = this.cursussen[0];
