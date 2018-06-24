@@ -16,7 +16,7 @@ export class FunctieService {
   private log(message:string): void{
     console.log( "functieService armeluisdebugger: " + message);
   }
-
+//FIXME dit is iig niet de goede functienaam
   getFunctie(id): Observable<Functie> {
     let url = `${myGlobals.baseUrl + 'modules'}/${id}/functies`;
     return this.http.get<Functie>(url)
@@ -45,5 +45,12 @@ export class FunctieService {
       // wordt Functie["id"] herkend door interpolated ng?
     );
   }
-
+  getFunctiesByUser(email): Observable<Functie[]> {
+    return this.http.get<Functie[]>(`${myGlobals.baseUrl + 'users'}/${email}/functions`)
+      .pipe(
+      tap(functies => this.log(`fetched function id=${Functie["id"]}`)),
+      catchError(ErrorService.prototype.handleError<Functie[]>("getFuncties id={functie.id}"))
+      // wordt Functie["id"] herkend door interpolated ng?
+    );
+  }
 }
