@@ -8,17 +8,15 @@
     	<li class="nav-item px-1"><a class="nav-link" routerLinkActive="active" [routerLink]="['/cursussen']"><i class="fa fa-ticket"></i> Cursussen</a></li>
     	<li class="nav-item px-1"><a class="nav-link" routerLinkActive="active" [routerLink]="['/docenten']"><i class="fa fa-graduation-cap"></i> Docenten</a></li>
 	</ul>
-	<!-- <div class="navbar navbar-inverse">-->
-   		<ul class="nav navbar-nav ml-auto">
-    		<li class="dropdown">
-				<a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#">Welkom, <label id= "user">gebruiker</label><span class="caret"></span></a>
-		        <ul class="dropdown-menu">
-		      		<li><a class="nav-item hidden-md-down" routerLinkActive="active" [routerLink]="['/']">Profiel</a></li>
-		          	<li><a 	(click)="logout()" class="nav-item hidden-md-down" routerLinkActive="active" [routerLink]="['/logins']">Uitloggen</a></li>
-		        </ul>
-	        </li>
-   		</ul>
-	<!-- </div> -->
+   	<ul class="nav navbar-nav ml-auto">
+    	<li class="dropdown">
+			<a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#">Welkom, <label id= "user">gebruiker</label><span class="caret"></span></a>
+		    <ul class="dropdown-menu">
+		      	<li><a class="nav-item hidden-md-down" routerLinkActive="active" [routerLink]="['/']">Profiel</a></li>
+		        <li><a (click)="logout()" class="nav-item hidden-md-down" routerLinkActive="active" [routerLink]="['/logins']">Uitloggen</a></li>
+		    </ul>
+	    </li>
+  	</ul>
 </header>
 
 <div class="app-body">
