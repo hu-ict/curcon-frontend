@@ -18,18 +18,30 @@ export class LeerplannenService {
         console.log('LeerplanService Initialized...')
     }
 
-    getLeerplannen() {
-        return this.http.get<curconnamespace.CurconNameSpace.LeerplanSchemaDto[]>(myGlobals.baseUrl+'leerplannen/')
+    getLeerplannen(headersIn :HttpHeaders) {
+      let requestOptions = {
+  headers: headersIn,
+};
+
+        return this.http.get<curconnamespace.CurconNameSpace.LeerplanSchemaDto[]>(myGlobals.baseUrl+'leerplannen/' ,requestOptions)
             .pipe( tap( res => console.log(res)) );
     }
 
-    getLeerplannenProfiel(cohortId) {
-        return this.http.get<curconnamespace.CurconNameSpace.LeerplanSchemaDto[]>(myGlobals.baseUrl+'leerplanschemas/' + cohortId + '/profiel')
+    getLeerplannenProfiel(cohortId,headersIn :HttpHeaders) {
+      let requestOptions = {
+  headers: headersIn,
+};
+
+        return this.http.get<curconnamespace.CurconNameSpace.LeerplanSchemaDto[]>(myGlobals.baseUrl+'leerplanschemas/' + cohortId + '/profiel' ,requestOptions)
             .pipe( tap( res => console.log(res)) );
     }
 
-    getDataByHref(href) {
-        return this.http.get<curconnamespace.CurconNameSpace.LeerplanSchemaDto>(href)
+    getDataByHref(href,headersIn :HttpHeaders) {
+      let requestOptions = {
+  headers: headersIn,
+};
+
+        return this.http.get<curconnamespace.CurconNameSpace.LeerplanSchemaDto>(href ,requestOptions)
             .pipe( tap( res => console.log(res)) );
     }
 

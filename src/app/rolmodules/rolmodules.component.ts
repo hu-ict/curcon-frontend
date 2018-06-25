@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'; // Input niet nodig
 import { Rol } from '../model/rol';
 import { RolService } from '../services/rol.service';
 import { Observable, Subject } from "rxjs";
+import { AuthService } from '../providers/auth.service';
 
 @Component({
   selector: 'app-rolmodules',
@@ -13,7 +14,7 @@ export class RolmodulesComponent implements OnInit {
   rolmodules: Rol[];
   private searchTerms = new Subject<string>();
 
-  constructor(private rolmoduleService : RolService) {
+  constructor(private rolmoduleService : RolService, private authService: AuthService) {
     //this.loading = true; // is dit nodig?
     this.getModulesByRol(1);
   }
@@ -23,8 +24,10 @@ export class RolmodulesComponent implements OnInit {
   }
 
   getModulesByRol(id): void {
-    this.rolmoduleService.getModulesByRol(1)
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+    this.rolmoduleService.getModulesByRol(id,token)
     .subscribe(rolmodules => this.rolmodules = rolmodules);
+  });
   }
   ngOnInit(): void {
 

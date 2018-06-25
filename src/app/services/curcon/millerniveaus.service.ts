@@ -15,13 +15,21 @@ export class MillerNiveausService {
     console.log('MillerNiveausService Initialized...');
   }
 
-  getMillerNiveaus() {
-    return this.http.get<curconnamespace.CurconNameSpace.MillerNiveauDto[]>(myGlobals.baseUrl+'millerniveaus/')
-      .pipe( tap( res => console.log(res)) );
+  getMillerNiveaus(headersIn :HttpHeaders) {
+    let requestOptions = {
+      headers : headersIn,
+    };
+
+    return this.http.get<curconnamespace.CurconNameSpace.MillerNiveauDto[]>(myGlobals.baseUrl+'millerniveaus/', requestOptions)
+      .pipe( tap(res => console.log(res)));
   }
 
-  getMillerNiveausByObject(obj) {
-    return this.http.get<curconnamespace.CurconNameSpace.MillerNiveauDto[]>(obj.href)
+  getMillerNiveausByObject(obj, headersIn :HttpHeaders) {
+    let requestOptions = {
+      headers : headersIn,
+    };
+
+    return this.http.get<curconnamespace.CurconNameSpace.MillerNiveauDto[]>(obj.href, requestOptions)
       .pipe( tap( res => console.log(res)) );
   }
 

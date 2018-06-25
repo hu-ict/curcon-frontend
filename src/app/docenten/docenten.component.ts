@@ -1,10 +1,10 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, Directive} from '@angular/core';
 //import { Component, OnInit } from '@angular/core';
-import { DocentenService } from '../services/docenten.service';
-import { Docent } from '../model/docent';
+import {DocentenService} from '../services/docenten.service';
+import {Docent} from '../model/docent';
 import {AuthService} from '../providers/auth.service';
-import { AngularFireAuth } from 'angularfire2/auth';
-import {FunctieService } from '../services/functie.service';
+import {AngularFireAuth} from 'angularfire2/auth';
+import {FunctieService} from '../services/functie.service';
 @Component({
   selector: 'app-docenten',
   templateUrl: './docenten.component.html',
@@ -71,12 +71,12 @@ export class DocentenComponent implements OnInit {
   saveDocent() {
     this.loading = false; //FIXME Is dit niet True??
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-    console.log(token);
-    this.docentenService.saveDocent(this.docentId, this.docentForm,token).subscribe(docent => {
-      this.refreshDocenten();
-      this.docentModal.hide();
-      this.loading = false;
-    })
+      console.log(token);
+      this.docentenService.saveDocent(this.docentId, this.docentForm,token).subscribe(docent => {
+        this.refreshDocenten();
+        this.docentModal.hide();
+        this.loading = false;
+      })
   });
 }
 

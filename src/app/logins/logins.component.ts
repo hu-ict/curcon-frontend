@@ -15,7 +15,7 @@ export class LoginsComponent implements OnInit {
 
   login(){
     this.authService.googleLogin().then((data) => {
-      this.router.navigate(['logins']);
+      this.router.navigate(['']);
     });
     //return 'Hello world';
   }

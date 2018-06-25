@@ -25,7 +25,7 @@ export class FunctieService {
       catchError(ErrorService.prototype.handleError<Functie>('getFunctie id=${id}'))
     );
   }
-  //
+  
   getFuncties(moduleId): Observable<Functie[]> {//g
     // Object.Prototype.function<Class[]>(Object.property);
     let url = `${myGlobals.baseUrl + 'modules'}/${moduleId}/functions`;
@@ -45,6 +45,7 @@ export class FunctieService {
       // wordt Functie["id"] herkend door interpolated ng?
     );
   }
+  
   getFunctiesByUser(email): Observable<Functie[]> {
     return this.http.get<Functie[]>(`${myGlobals.baseUrl + 'users'}/${email}/functions`)
       .pipe(

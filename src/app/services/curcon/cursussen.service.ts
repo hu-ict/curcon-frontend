@@ -39,11 +39,13 @@ getCursussenByObject(obj, headersIn:HttpHeaders) {
 	.pipe( tap( res => console.log(res)) );
 }
 
+
 addBeroepstakenToCursus(cursusId, beroepstaak, headersIn:HttpHeaders) {
 	headersIn.append("Access Control Allow Origin", "*");
 	let newBeroepstaak = {'id': beroepstaak.id};
 	return this.http.post<curconnamespace.CurconNameSpace.BeroepsTaakDto>(myGlobals.baseUrl+'cursussen/' + cursusId + '/beroepstaken', newBeroepstaak,{headers: headersIn})
 	.pipe();
+
 }
 
 addProfessionalskillToCursus(cursusId, professionalskillId, headersIn:HttpHeaders) {

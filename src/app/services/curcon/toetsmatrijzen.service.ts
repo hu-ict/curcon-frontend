@@ -16,8 +16,12 @@ export class ToetsmatrijzenService {
     console.log('ToetsmatrijzenService Initialized...');
   }
 //TODO kloppen de dtos ?
-  getToetsmatrijzen() {
-    return this.http.get<curconnamespace.CurconNameSpace.ToetsMatrijsToetsDto[]>(myGlobals.baseUrl+'toetsen/')
+  getToetsmatrijzen(headersIn :HttpHeaders) {
+  let requestOptions = {
+  headers: headersIn,
+  };
+  let url =`${myGlobals.baseUrl+"toetsen/"}`;
+    return this.http.get<curconnamespace.CurconNameSpace.ToetsMatrijsToetsDto[]>(url, requestOptions)
       .pipe( tap( res => console.log(res)) );
   }
 
@@ -26,8 +30,12 @@ export class ToetsmatrijzenService {
       .pipe( tap( res => console.log(res)) );
   }
 
-  getToetsmatrijzenById(id) {
-    return this.http.get<curconnamespace.CurconNameSpace.ToetsMatrijsDto>(myGlobals.baseUrl+'toetsmatrijzen/' + id)
+  getToetsmatrijzenById(headersIn :HttpHeaders, id) {
+    let requestOptions = {
+    headers: headersIn,
+    };
+    let url =`${myGlobals.baseUrl+"toetsmatrijzen/"+id}`;
+    return this.http.get<curconnamespace.CurconNameSpace.ToetsMatrijsDto>(url, requestOptions)
       .pipe( tap( res => console.log(res)) );
   }
 

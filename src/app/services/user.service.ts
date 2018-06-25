@@ -19,17 +19,21 @@ export class UserService {
   private log(message:string): void{
     console.log( "userService armeluisdebugger: " + message);
   }
+//
+  getUser(id, headersIn :HttpHeaders ): Observable<User> {
+    let requestOptions = {
+      headers: headersIn,
+    };
 
-  getUser(id): Observable<User> {
     let url = `${myGlobals.baseUrl + 'users'}/${id}`;
-    return this.http.get<User>(url)
+    return this.http.get<User>(url, requestOptions)
     .pipe(
       tap(user => this.log(`fetched function id=${user.username}`)),
       catchError(ErrorService.prototype.handleError<User>('getUser id=${id}'))
     );
   }
   //
-  getUsers(headersIn): Observable<User[]> {//g
+  getUsers(headersIn :HttpHeaders ): Observable<User[]> {//g
     // Object.Prototype.function<Class[]>(Object.property);
     let url = `${myGlobals.baseUrl + 'users'}`;
     return this.http.get<User[]>(url, {

@@ -28,7 +28,7 @@
             ],
             "scripts": [
             	"./node_modules/jquery/dist/jquery.slim.min.js",
-              "./node_modules/jquery/dist/jquery.min.js",
+              	"./node_modules/jquery/dist/jquery.min.js",
             	"./node_modules/popper.js/dist/umd/popper.min.js",
             	"./node_modules/bootstrap/dist/js/bootstrap.min.js"
             ]
@@ -78,7 +78,7 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-              "./src/scss/style.scss",
+              "./src/scss/style.scss"
             ],
             "scripts": [],
             "assets": [

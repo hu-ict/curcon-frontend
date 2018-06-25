@@ -107,9 +107,9 @@ let requestOptions = {
 
     // TODO: herzien voor hergebruik
 	saveDocent(docentId, docentForm, headersIn :HttpHeaders){//:  Observable<Docent> {
-  let requestOptions = {
-    headers: headersIn,
-  };
+    let requestOptions = {
+      headers: headersIn,
+    };
     //var headers = new Headers();
 		//headers.append('Content-Type', 'application/json');
 		if (docentId == null) {
