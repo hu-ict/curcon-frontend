@@ -16,6 +16,10 @@ import {BtCalculatedComponent} from '../bt-calculated/bt-calculated.component';
 import {PsOverzichtComponent} from '../ps-overzicht/ps-overzicht.component';
 import {BoksOverzichtComponent} from '../boks-overzicht/boks-overzicht.component';
 
+import {AuthService} from '../providers/auth.service';
+import {AngularFireAuth} from 'angularfire2/auth';
+import {FunctieService} from '../services/functie.service';
+
 @Component({
 	templateUrl: 'opleidingen.component.html',
   styleUrls: [ './opleidingen.component.css' ]
@@ -59,7 +63,10 @@ export class OpleidingenComponent implements OnInit {
 			private leerplannenService: LeerplannenService,
 			private toetsProgrammaService: ToetsProgrammaService,
 			private professionalskillService: ProfessionalskillsService,
-			private beroepstakenService: BeroepstakenService) {
+			private beroepstakenService: BeroepstakenService,
+			private functieService:FunctieService, 
+			private authService:AuthService,
+			private afAuth: AngularFireAuth) {
 		this.loading = true;
 	}
 
@@ -73,15 +80,51 @@ export class OpleidingenComponent implements OnInit {
 		this.selectedButton = 1;
 		this.mode = 'view';
 
-		this.opleidingenService.getOpleidingen().subscribe(opleidingen => {
-			this.opleidingen= opleidingen;
-			console.log(this.opleidingen);
-			console.log(this.opleidingen[0]);
-			this.onSelectOpleiding(this.opleidingen[0]);
-		}, error => console.log('Error: ', error),
-		() => {
-			this.loading = false;
+		this.authService.maakTokenHeadervoorCurcon().then( token => {
+      		//console.log(token);
+		
+			this.opleidingenService.getOpleidingen(token).subscribe(opleidingen => {
+				this.opleidingen= opleidingen;
+				console.log(this.opleidingen);
+				console.log(this.opleidingen[0]);
+				this.onSelectOpleiding(this.opleidingen[0]);
+			}, 
+			error => console.log('Error: ', error),
+			() => {
+				this.loading = false;
+			});
 		});
+	}
+
+	loadButtons() {
+    	var email= this.afAuth.auth.currentUser.email;
+	    //this.loading = true;
+	    let self = this;
+	    
+	    this.authService.maakTokenHeadervoorCurcon().then( token => {
+	      	this.functieService.getFunctiesByUser(email).subscribe(functies => {
+	        	var element = <HTMLInputElement> document.getElementById("createbutton");
+
+		        if (functies == null) {
+		          	element.style.display = "none";
+		          	this.isVisible=false;
+		        } else {
+		          	var userToegang = functies.some(f=> f.name == "opleiding_put");
+
+		          	if (!userToegang) {
+		            	element.style.display = "none";
+		          	}
+
+		          	userToegang = functies.some(f=> f.name == "opleiding_post");
+		          	if (!userToegang) {
+		            	console.log("geen toegang");
+		            	this.isVisible=false;
+		          	}
+		        }
+
+	        	//this.loading = false;
+	      });
+	    })
 	}
 
 	setMode(mode) {
@@ -94,34 +137,49 @@ export class OpleidingenComponent implements OnInit {
 		this.onSelectedOpleiding.emit(opleiding);
 		this.selectedOpleiding = opleiding;
 		console.log(this.selectedOpleiding);
-			console.log(this.selectedOpleiding.eindBt);
-		this.beroepstakenService.getBeroepstakenByObject(this.selectedOpleiding.eindBT).subscribe(beroepstaken => {
-			this.selectedOpleiding.beroepstaken = [];
-			this.selectedOpleiding.beroepstaken = beroepstaken;
-			console.log(this.selectedOpleiding.beroepstaken);
+		console.log(this.selectedOpleiding.eindBt);
+
+		this.authService.maakTokenHeadervoorCurcon().then( token => {
+      		//console.log(token);
+
+			this.beroepstakenService.getBeroepstakenByObject(this.selectedOpleiding.eindBT, token).subscribe(beroepstaken => {
+				this.selectedOpleiding.beroepstaken = [];
+				this.selectedOpleiding.beroepstaken = beroepstaken;
+				console.log(this.selectedOpleiding.beroepstaken);
+			});
 		});
 
 		console.log('this.selectedOpleiding.profiel');
 		console.log(this.selectedOpleiding.profiel);
-        this.cohortenService.getCohortenByObject(this.selectedOpleiding['cohorten']).subscribe(cohorten => {
-            this.cohorten= cohorten;
-            this.selectedCohort = this.cohorten[0];
-			console.log("Start loading profiel");
-			this.leerplannenService.getLeerplannenProfiel(this.selectedCohort.id).subscribe(data => {
-				console.log("getCalculatedProfile data");
-				console.log(data);
-				this.selectedOpleiding.profiel = data;
-				console.log("this.selectedOpleiding");
-				console.log(this.selectedOpleiding);
-			});
-    		this.refreshProfessionalskills();
-    		this.refreshCursussen();
-    		console.log("---- this.selectedOpleiding ----");
-    		console.log(this.selectedOpleiding);
-    		console.log("---- this.selectedCohort ----");
-    		console.log(this.selectedCohort);
-            this.loading = false;
-        });
+
+		this.authService.maakTokenHeadervoorCurcon().then( token => {
+      		//console.log(token);
+
+	        this.cohortenService.getCohortenByObject(this.selectedOpleiding['cohorten'], token).subscribe(cohorten => {
+	            this.cohorten= cohorten;
+	            this.selectedCohort = this.cohorten[0];
+				console.log("Start loading profiel");
+
+				this.authService.maakTokenHeadervoorCurcon().then( token => {
+      				//console.log(token);
+					this.leerplannenService.getLeerplannenProfiel(this.selectedCohort.id, token).subscribe(data => {
+						console.log("getCalculatedProfile data");
+						console.log(data);
+						this.selectedOpleiding.profiel = data;
+						console.log("this.selectedOpleiding");
+						console.log(this.selectedOpleiding);
+					});
+				});
+
+	    		this.refreshProfessionalskills();
+	    		this.refreshCursussen();
+	    		console.log("---- this.selectedOpleiding ----");
+	    		console.log(this.selectedOpleiding);
+	    		console.log("---- this.selectedCohort ----");
+	    		console.log(this.selectedCohort);
+	            this.loading = false;
+	        });
+	    });
 	}
 
 	changeTab(tabnr : number) {
@@ -131,10 +189,15 @@ export class OpleidingenComponent implements OnInit {
 	saveOpleiding(form: any) {
 		this.loading = true;
 		this.selectedOpleiding.naam = form.naam;
-// console.log(this.selectedOpleiding);
-		this.opleidingenService.saveOpleiding(this.selectedOpleiding).subscribe(x => {
-			this.mode = 'view';
-			this.loading = false;
+		// console.log(this.selectedOpleiding);
+
+		this.authService.maakTokenHeadervoorCurcon().then( token => {
+      		//console.log(token);
+
+			this.opleidingenService.saveOpleiding(this.selectedOpleiding, token).subscribe(x => {
+				this.mode = 'view';
+				this.loading = false;
+			});
 		});
 	}
 
@@ -144,15 +207,20 @@ export class OpleidingenComponent implements OnInit {
 
 	addOpleiding() {
 		delete this.opleidingForm.code;
-		this.opleidingenService.saveOpleiding(this.opleidingForm).subscribe(x => {
-			this.selectedCohort = {
-					jaar: "2018"
-			};
-			var opleidingId = 5;
-			this.cohortenService.saveCohort(opleidingId, this.selectedCohort);
 
-			this.opleidingen.push(this.opleidingForm);
-			this.onSelectOpleiding(this.opleidingForm);
+		this.authService.maakTokenHeadervoorCurcon().then( token => {
+      		//console.log(token);
+
+			this.opleidingenService.saveOpleiding(this.opleidingForm, token).subscribe(x => {
+				this.selectedCohort = {
+					jaar: "2018"
+				};
+				var opleidingId = 5;
+				this.cohortenService.saveCohort(opleidingId, this.selectedCohort, token);
+
+				this.opleidingen.push(this.opleidingForm);
+				this.onSelectOpleiding(this.opleidingForm);
+			});
 		});
 	}
 
@@ -162,47 +230,69 @@ export class OpleidingenComponent implements OnInit {
 
 	getBeroepstaakTypes() {
 		this.loading = true;
-		this.beroepstakenService.getBeroepstaakTypes().subscribe(result => {
-			this.beroepstakenTypes = result;
-			this.beroepstakenForm = {architectuurlaag: 1, activiteit: 1, niveau: 1};
-			this.loading = false;
+
+		this.authService.maakTokenHeadervoorCurcon().then( token => {
+      		//console.log(token);
+
+			this.beroepstakenService.getBeroepstaakTypes(token).subscribe(result => {
+				this.beroepstakenTypes = result;
+				this.beroepstakenForm = {architectuurlaag: 1, activiteit: 1, niveau: 1};
+				this.loading = false;
+			});
 		});
 	}
 
 	getAllBeroepstaken() {
 		this.loading = true;
-		this.beroepstakenService.getBeroepstaken().subscribe(result => {
-			this.allBeroepstaken = result;
-			for(let bt of this.selectedOpleiding.beroepstaken) {
-				this.allBeroepstaken = this.allBeroepstaken.filter((x) => x.id !== bt.id);
-			}
-			this.loading = false;
+
+		this.authService.maakTokenHeadervoorCurcon().then( token => {
+      		//console.log(token);
+
+			this.beroepstakenService.getBeroepstaken(token).subscribe(result => {
+				this.allBeroepstaken = result;
+				for(let bt of this.selectedOpleiding.beroepstaken) {
+					this.allBeroepstaken = this.allBeroepstaken.filter((x) => x.id !== bt.id);
+				}
+				this.loading = false;
+			});
 		});
 	}
 
 	loadBeroepstaken() {
-		this.beroepstakenService.getBeroepstakenByObject(this.selectedOpleiding.eindBT).subscribe(beroepstaken => {
-			this.selectedOpleiding.beroepstaken = [];
-			this.selectedOpleiding.beroepstaken = beroepstaken;
+		this.authService.maakTokenHeadervoorCurcon().then( token => {
+      		//console.log(token);
+
+			this.beroepstakenService.getBeroepstakenByObject(this.selectedOpleiding.eindBT, token).subscribe(beroepstaken => {
+				this.selectedOpleiding.beroepstaken = [];
+				this.selectedOpleiding.beroepstaken = beroepstaken;
+			});
 		});
 	}
 
 	addBeroepstaak() {
 		this.loading = true;
-		this.beroepstakenService.getBeroepstaakId(this.beroepstakenForm.activiteit,
-			this.beroepstakenForm.architectuurlaag,
-			this.beroepstakenForm.niveau).subscribe(data => {
-				this.opleidingenService.addBeroepstakenToOpleiding(this.selectedOpleiding.id, data).subscribe(x => {
-					this.loadBeroepstaken();
-					this.loading = false;
-				});
+
+		this.authService.maakTokenHeadervoorCurcon().then( token => {
+      		//console.log(token);
+
+			this.beroepstakenService.getBeroepstaakId(this.beroepstakenForm.activiteit,
+				this.beroepstakenForm.architectuurlaag, this.beroepstakenForm.niveau, token).subscribe(data => {
+					this.opleidingenService.addBeroepstakenToOpleiding(this.selectedOpleiding.id, data).subscribe(x => {
+						this.loadBeroepstaken();
+						this.loading = false;
+					});
 			});
+		});
 	}
 
 	deleteBeroepstaak(bt: Object) {
-		this.opleidingenService.deleteBeroepstaak(this.selectedOpleiding.id, bt['id']).subscribe(
+		this.authService.maakTokenHeadervoorCurcon().then( token => {
+      		//console.log(token);
+			this.opleidingenService.deleteBeroepstaak(this.selectedOpleiding.id, bt['id']).subscribe(
 				result => { this.selectedOpleiding.beroepstaken = this.loadBeroepstaken(); },
-				error => { this.selectedOpleiding.beroepstaken = this.loadBeroepstaken(); });
+				error => { this.selectedOpleiding.beroepstaken = this.loadBeroepstaken(); }
+			);
+		});
 	}
 
 	// ******************
@@ -210,62 +300,92 @@ export class OpleidingenComponent implements OnInit {
 	// ******************
 
 	refreshProfessionalskills() {
-		this.professionalskillService.getProfessionalskillsByObject(this.selectedOpleiding.eindPS).subscribe(professionalskills => {
-			this.selectedOpleiding.professionalskills = professionalskills;
+		this.authService.maakTokenHeadervoorCurcon().then( token => {
+      		//console.log(token);
+
+			this.professionalskillService.getProfessionalskillsByObject(this.selectedOpleiding.eindPS, token).subscribe(professionalskills => {
+				this.selectedOpleiding.professionalskills = professionalskills;
+			});
 		});
 	}
 
 	getProfessionalskillTypes() {
 		this.loading = true;
-		this.professionalskillService.getProfessionalskillsTypes().subscribe(result => {
-			this.professionalskillsTypes = result;
-			this.professionalskillForm = {activiteit: 6, niveau: 'T'};
-			this.loading = false;
-		});
-	}
 
-	addProfessionalskill() {
-		this.loading = true;
-		this.professionalskillService.getProfessionalskillId(this.professionalskillForm.activiteit, this.professionalskillForm.niveau).subscribe(data => {
-			this.opleidingenService.addProfessionalskillToOpleiding(this.selectedOpleiding.id, data).subscribe(x => {
-				this.professionalskillModal.hide();
-				this.refreshProfessionalskills();
+		this.authService.maakTokenHeadervoorCurcon().then( token => {
+      		//console.log(token);
+
+			this.professionalskillService.getProfessionalskillsTypes(token).subscribe(result => {
+				this.professionalskillsTypes = result;
+				this.professionalskillForm = {activiteit: 6, niveau: 'T'};
 				this.loading = false;
 			});
 		});
 	}
 
+	addProfessionalskill() {
+		this.loading = true;
+
+		this.authService.maakTokenHeadervoorCurcon().then( token => {
+      		//console.log(token);
+
+			this.professionalskillService.getProfessionalskillId(this.professionalskillForm.activiteit, this.professionalskillForm.niveau, token).subscribe(data => {
+				this.opleidingenService.addProfessionalskillToOpleiding(this.selectedOpleiding.id, data, token).subscribe(x => {
+					this.professionalskillModal.hide();
+					this.refreshProfessionalskills();
+					this.loading = false;
+				});
+			});
+		});
+	}
+
 	deleteProfessionalskill(ps: Object) {
-		this.opleidingenService.deleteProfessionalskill(this.selectedOpleiding.id, ps['id']).subscribe(
+		this.authService.maakTokenHeadervoorCurcon().then( token => {
+      		//console.log(token);
+
+			this.opleidingenService.deleteProfessionalskill(this.selectedOpleiding.id, ps['id'], token).subscribe(
 				result => { this.refreshProfessionalskills(); },
-				error => { this.refreshProfessionalskills(); });
+				error => { this.refreshProfessionalskills(); }
+			);
+		});
 	}
 
 	refreshCursussen() {
 		console.log("refreshCursussen")
 		console.log(this.selectedCohort)
-		this.cursussenService.getCursussenByObject(this.selectedCohort.cursussen).subscribe(cursussen => {
-			this.cursussen= cursussen;;
-			console.log(this.cursussen);
-			for(let c of this.cursussen) {
-				this.beroepstakenService.getBeroepstakenByObject(c.eindBT).subscribe(beroepstaken => {
-					c.beroepstaken = [];
-					c.beroepstaken = beroepstaken;
-					this.professionalskillService.getProfessionalskillsByObject(c.eindPS).subscribe(professionalskills => {
-						c.professionalskills = [];
-						c.professionalskills = professionalskills;
+
+		this.authService.maakTokenHeadervoorCurcon().then( token => {
+      		//console.log(token);
+
+			this.cursussenService.getCursussenByObject(this.selectedCohort.cursussen, token).subscribe(cursussen => {
+				this.cursussen= cursussen;;
+				console.log(this.cursussen);
+				for(let c of this.cursussen) {
+					this.authService.maakTokenHeadervoorCurcon().then( token => {
+      					//console.log(token);
+
+						this.beroepstakenService.getBeroepstakenByObject(c.eindBT, token).subscribe(beroepstaken => {
+							c.beroepstaken = [];
+							c.beroepstaken = beroepstaken;
+
+							this.authService.maakTokenHeadervoorCurcon().then( token => {
+      							//console.log(token);
+								this.professionalskillService.getProfessionalskillsByObject(c.eindPS, token).subscribe(professionalskills => {
+									c.professionalskills = [];
+									c.professionalskills = professionalskills;
+								});
+							});
+						});
 					});
-				});
-			}
+				}
+			});
 		});
     }
-
 
 	closeModal(modal) {
 		this.loading = false;
 		modal.hide()
 	}
-
 
 	isEmptyObject(obj) {
 		return (Object.keys(obj).length === 0);
@@ -273,22 +393,34 @@ export class OpleidingenComponent implements OnInit {
 
     addCursusToCohort(form: any) {
         this.loading = true;
-// console.log(form)
-// console.log("addCursusToCohort "+this.selectedCohort.id+" "+form)
-        this.cohortenService.addCursusToCohort(this.selectedCohort.id, form).subscribe(data => {
-            this.cursusModal.hide();
-// this.cursusForm = data;
-            this.onSelectOpleiding(this.selectedOpleiding);
-            this.loading = false;
-        });
+		// console.log(form)
+		// console.log("addCursusToCohort "+this.selectedCohort.id+" "+form)
+
+		this.authService.maakTokenHeadervoorCurcon().then( token => {
+      		//console.log(token);
+
+	        this.cohortenService.addCursusToCohort(this.selectedCohort.id, form, token).subscribe(data => {
+	            this.cursusModal.hide();
+				// this.cursusForm = data;
+	            this.onSelectOpleiding(this.selectedOpleiding);
+	            this.loading = false;
+	        });
+	    });
     }
 
     deleteCursusFromCohort(cursus: any) {
     	console.log("deleteCursusFromCohort "+this.selectedCohort.id)
     	console.log(cursus)
-        this.cohortenService.deleteCursus(this.selectedCohort.id, cursus.id).subscribe(result => {
-            this.onSelectOpleiding(this.selectedOpleiding);
-        }, error => { });
+
+    	this.authService.maakTokenHeadervoorCurcon().then( token => {
+      		//console.log(token);
+
+	        this.cohortenService.deleteCursus(this.selectedCohort.id, cursus.id, token).subscribe(result => {
+	            this.onSelectOpleiding(this.selectedOpleiding);
+	        }, 
+	        error => { }
+	        );
+	    });
     }
 
     initializeCursusForm() {
@@ -296,32 +428,38 @@ export class OpleidingenComponent implements OnInit {
    		this.cursusForm = {};
         console.log('1 this.cursussen');
         console.log(this.cursussen);
-    	this.cursussenService.getCursussen().subscribe(data => {
-            console.log('2 data');
-            console.log(data);
-						//changed
-						this.availableCursussen=null;
-    				this.allCursussen.push(data);
+
+        this.authService.maakTokenHeadervoorCurcon().then( token => {
+      		//console.log(token);
+	    	this.cursussenService.getCursussen(token).subscribe(data => {
+	            console.log('2 data');
+	            console.log(data);
+
+				//changed
+				this.availableCursussen=null;
+	    		this.allCursussen.push(data);
 				//End change
-            console.log('3 this.allCursussen');
-            console.log(this.allCursussen);
-    		let selectedCursus = this.cursussen[0];
-    		this.cursusForm = {cursus: selectedCursus};
-            this.availableCursussen = this.allCursussen;
-            console.log('4 this.availableCursussen');
-            console.log(this.availableCursussen);
-            for (let c of this.cursussen) {
-                this.availableCursussen = this.availableCursussen.filter((x) => x.id !== c.id);
-            }
-            console.log('this.availableCursussen');
-            console.log(this.availableCursussen);
-            var id = 0;
-            if (this.availableCursussen.length > 0){
-                id = this.availableCursussen[0].id;
-            }
-            this.cursusForm = {id: id};
-            this.loading = false;
-    	});
+
+	            console.log('3 this.allCursussen');
+	            console.log(this.allCursussen);
+	    		let selectedCursus = this.cursussen[0];
+	    		this.cursusForm = {cursus: selectedCursus};
+	            this.availableCursussen = this.allCursussen;
+	            console.log('4 this.availableCursussen');
+	            console.log(this.availableCursussen);
+	            for (let c of this.cursussen) {
+	                this.availableCursussen = this.availableCursussen.filter((x) => x.id !== c.id);
+	            }
+	            console.log('this.availableCursussen');
+	            console.log(this.availableCursussen);
+	            var id = 0;
+	            if (this.availableCursussen.length > 0){
+	                id = this.availableCursussen[0].id;
+	            }
+	            this.cursusForm = {id: id};
+	            this.loading = false;
+	    	});
+	    });
     }
 
 // onSelectCohort(coh: Object) {

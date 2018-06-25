@@ -13,7 +13,9 @@ import {DocentenService} from '../services/docenten.service';
 import {BtMatrixComponent} from '../bt-overzicht/bt-matrix.component';
 import {PsOverzichtComponent} from '../ps-overzicht/ps-overzicht.component';
 import {ToetsMatrijs} from './toetsmatrijs';
-import { AuthService } from '../providers/auth.service';
+import {AuthService} from '../providers/auth.service';
+import {AngularFireAuth} from 'angularfire2/auth';
+import {FunctieService } from '../services/functie.service';
 
 @Component({
   // TODO: routing fixen
@@ -68,8 +70,17 @@ export class CursussenComponent implements OnInit {
               private toetsmatrijzenService: ToetsmatrijzenService,
               private bloomniveauService: BloomniveausService,
               private millerNiveausService: MillerNiveausService,
-              public authService: AuthService) {
+              public authService: AuthService,
+              private functieService : FunctieService,
+              private afAuth: AngularFireAuth) {
     this.loading = true;
+    //this.isVisible=true;
+
+    this.afAuth.authState.subscribe((auth) => {
+      console.log("authstate updated//user changed");
+      this.refreshDocenten();
+      this.loadButtons();
+    })
   }
 
   ngOnInit(): void {
@@ -79,29 +90,66 @@ export class CursussenComponent implements OnInit {
     this.toetsMatrijsAdd = [];
 
     this.toetsMatrijsArray = Array.apply(null, Array(10));
-    this.cursussenService.getCursussen().subscribe(cursussen => {
-      this.courses= cursussen;
-      this.selectedCursus = this.courses[0];
-      this.cursusForm = this.courses[0];
-      this.refreshAll();
-    },
+
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+      //console.log(token);
+    
+      this.cursussenService.getCursussen(token).subscribe(cursussen => {
+        this.courses= cursussen;
+        this.selectedCursus = this.courses[0];
+        this.cursusForm = this.courses[0];
+        this.refreshAll();
+      },
       error => console.log('Error: ', error),
       () => {
         this.loading = false;
       });
-    this.millerNiveausService.getMillerNiveaus().subscribe(millerNiveaus => {
-      this.allMillerNiveaus=millerNiveaus;
-    },
+
+      this.millerNiveausService.getMillerNiveaus(token).subscribe(millerNiveaus => {
+        this.allMillerNiveaus=millerNiveaus;
+      },
       error => console.log('Error: ', error),
       () => {
         this.loading = false;
       });
+    });
   }
 
 
   changeMode(mode) {
     this.refreshDocenten();
     this.mode = mode;
+  }
+
+  loadButtons() {
+      var email= this.afAuth.auth.currentUser.email;
+      //this.loading = true;
+      let self = this;
+      
+      this.authService.maakTokenHeadervoorCurcon().then( token => {
+          this.functieService.getFunctiesByUser(email).subscribe(functies => {
+            var element = <HTMLInputElement> document.getElementById("createbutton");
+
+            if (functies == null) {
+                element.style.display = "none";
+                this.isVisible=false;
+            } else {
+                var userToegang = functies.some(f=> f.name == "cursus_put");
+
+                if (!userToegang) {
+                  element.style.display = "none";
+                }
+
+                userToegang = functies.some(f=> f.name == "cursus_post");
+                if (!userToegang) {
+                  console.log("geen toegang");
+                  this.isVisible=false;
+                }
+            }
+
+            //this.loading = false;
+        });
+      })
   }
 
   // ******************
@@ -119,27 +167,36 @@ export class CursussenComponent implements OnInit {
 
   private refreshCursussen() {
     this.loading = true;
-    this.cursussenService.getCursussen().subscribe(cursussen => {
-      this.courses=cursussen;
-      this.loading = false;
-    },
+
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+      //console.log(token);
+
+      this.cursussenService.getCursussen(token).subscribe(cursussen => {
+        this.courses=cursussen;
+        this.loading = false;
+      },
       error => console.log('Error: ', error),
       () => {
         this.loading = false;
         console.log(this.selectedCursus);
       });
+    });
   }
 
 
   saveCursus(form: any) {
     this.loading = true;
     const formValues = form.value;
-    this.cursussenService.updateCursus(this.selectedCursus.id, formValues).subscribe(data => {
-      this.mode = 'view';
-      this.cursussenService.getCursussenByObject(this.selectedCursus).subscribe(cursus => {
-        this.onSelect(cursus);
-        this.loading = false;
-        this.cursusModal.hide();
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+      //console.log(token);
+
+      this.cursussenService.updateCursus(this.selectedCursus.id, formValues, token).subscribe(data => {
+        this.mode = 'view';
+        this.cursussenService.getCursussenByObject(this.selectedCursus).subscribe(cursus => {
+          this.onSelect(cursus);
+          this.loading = false;
+          this.cursusModal.hide();
+        });
       });
     });
   }
@@ -148,16 +205,21 @@ export class CursussenComponent implements OnInit {
     this.loading = true;
     console.log(this.cursusForm);
 
-    this.cursussenService.addCursus(this.cursusForm).subscribe(data => {
-      this.mode = 'view';
-      this.refreshCursussen();
-    //  this.selectedCursus= this.courses;
-  //    this.cursussenService.getCursussenByObject(this.selectedCursus).subscribe(cursus => {
-  //      this.onSelect(cursus);
-        this.loading = false;
-        this.cursusModal.hide();
-  //    });
-        }
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+      //console.log(token);
+
+      this.cursussenService.addCursus(this.cursusForm, token).subscribe(data => {
+        this.mode = 'view';
+        this.refreshCursussen();
+        
+        this.selectedCursus= this.courses;
+        this.cursussenService.getCursussenByObject(this.selectedCursus).subscribe(cursus => {
+          this.onSelect(cursus);
+          this.loading = false;
+          this.cursusModal.hide();
+        });
+      }
+
       // //TODO //FIXME FIX Repsonse and DTO type error..
       // //res: Response
       // res => {
@@ -172,9 +234,10 @@ export class CursussenComponent implements OnInit {
       //     this.refreshAll();
       //   // console.log(res);
       //   // this.onSelect(res);
-      //  this.cursusModal.hide();
+      //    this.cursusModal.hide();
       // }
-    );
+      // );
+    });
   }
 
   initializeCursusForm() {
@@ -186,23 +249,38 @@ export class CursussenComponent implements OnInit {
   // Professionalskill operaties
   // ******************
   deleteProfessionalskill(ps: Object) {
-    this.cursussenService.deleteProfessionalskill(this.selectedCursus.id, ps['id']).subscribe(
-      result => {this.refreshProfessionalskills(); },
-      error => {this.refreshProfessionalskills(); });
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+      console.log(token);
+
+      this.cursussenService.deleteProfessionalskill(this.selectedCursus.id, ps['id'], token).subscribe(
+        result => {this.refreshProfessionalskills();},
+        error => {this.refreshProfessionalskills();}
+      );
+    });
   }
 
   deleteBeoordelingsElement(el) {
-    this.toetsenService.deleteBeoordelingselement(el['id']).subscribe(
-      result => {this.refreshToetsen(); this.refreshToetsMatrijzen(); },
-      error => {this.refreshToetsen(); this.refreshToetsMatrijzen(); });
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+      //console.log(token);
+
+      this.toetsenService.deleteBeoordelingselement(el['id'], token).subscribe(
+        result => {this.refreshToetsen(); this.refreshToetsMatrijzen(); },
+        error => {this.refreshToetsen(); this.refreshToetsMatrijzen(); }
+      );
+    });
   }
 
   getProfessionalskillTypes() {
     this.loading = true;
-    this.professionalskillService.getProfessionalskillsTypes().subscribe(result => {
-      this.professionalskillsTypes = result;
-      this.professionalskillForm = {activiteit: 6, niveau: 'T'};
-      this.loading = false;
+
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+      //console.log(token);
+    
+      this.professionalskillService.getProfessionalskillsTypes(token).subscribe(result => {
+        this.professionalskillsTypes = result;
+        this.professionalskillForm = {activiteit: 6, niveau: 'T'};
+        this.loading = false;
+      });
     });
   }
 
@@ -215,26 +293,34 @@ export class CursussenComponent implements OnInit {
 
   getAllProfessionalskills() {
     this.loading = true;
-    this.professionalskillService.getProfessionalskills().subscribe(results => {
-      this.allProfessionalskills=results;
-      for (let i = 0; i < this.selectedCursus.professionalskills.length; i++) {
-        this.allProfessionalskills = this.allProfessionalskills.filter((x) => x.id !== this.selectedCursus.professionalskills[i].id);
-      }
-      this.loading = false;
-    });
-  }
 
-  addProfessionalskill() {
-    this.loading = true;
-    this.professionalskillService.getProfessionalskillId(this.professionalskillForm.activiteit, this.professionalskillForm.niveau).subscribe(data => {
-      this.cursussenService.addProfessionalskillToCursus(this.selectedCursus.id, data).subscribe(x => {
-        this.professionalskillModal.hide();
-        this.refreshProfessionalskills();
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+      //console.log(token);
+    
+      this.professionalskillService.getProfessionalskills(token).subscribe(results => {
+        this.allProfessionalskills=results;
+        for (let i = 0; i < this.selectedCursus.professionalskills.length; i++) {
+          this.allProfessionalskills = this.allProfessionalskills.filter((x) => x.id !== this.selectedCursus.professionalskills[i].id);
+        }
         this.loading = false;
       });
     });
   }
 
+  addProfessionalskill() {
+    this.loading = true;
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+      //console.log(token);
+
+      this.professionalskillService.getProfessionalskillId(this.professionalskillForm.activiteit, this.professionalskillForm.niveau, token).subscribe(data => {
+        this.cursussenService.addProfessionalskillToCursus(this.selectedCursus.id, data, token).subscribe(x => {
+          this.professionalskillModal.hide();
+          this.refreshProfessionalskills();
+          this.loading = false;
+        });
+      });
+    });
+  }
 
   addProfessionalskills() {
     const selected = this.allProfessionalskills.filter((x) => x.selected);
@@ -243,17 +329,20 @@ export class CursussenComponent implements OnInit {
     if (selected.length === 0) {
       this.error = true;
     }
+
     if (!this.error) {
       for (let i = 0; i < selected.length; i++) {
-        this.cursussenService.addProfessionalskillToCursus(this.selectedCursus.id, selected[i]).subscribe(x => {
-          this.professionalskillModal.hide();
-          this.refreshProfessionalskills();
+        this.authService.maakTokenHeadervoorCurcon().then( token => {
+          console.log(token);
+        
+          this.cursussenService.addProfessionalskillToCursus(this.selectedCursus.id, selected[i], token).subscribe(x => {
+            this.professionalskillModal.hide();
+            this.refreshProfessionalskills();
+          });
         });
       }
     }
   }
-
-
 
   // 	******************
   // 	Beroepstaak operaties
@@ -261,40 +350,60 @@ export class CursussenComponent implements OnInit {
 
   addBeroepstaak() {
     this.loading = true;
-    this.beroepstaakService.getBeroepstaakId(
-          this.beroepstakenForm.activiteit,
-          this.beroepstakenForm.architectuurlaag,
-          this.beroepstakenForm.niveau).subscribe(data => {
-      this.cursussenService.addBeroepstakenToCursus(this.selectedCursus.id, data).subscribe(x => {
-        this.beroepstaakModal.hide();
-        this.refreshBeroepstaken();
-        this.loading = false;
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+      //console.log(token);
+
+      this.beroepstaakService.getBeroepstaakId(
+        this.beroepstakenForm.activiteit,
+        this.beroepstakenForm.architectuurlaag,
+        this.beroepstakenForm.niveau).subscribe(data => {
+          this.cursussenService.addBeroepstakenToCursus(this.selectedCursus.id, data, token).subscribe(x => {
+            this.beroepstaakModal.hide();
+            this.refreshBeroepstaken();
+            this.loading = false;
+          });
       });
     });
   }
 
   deleteBeroepstaak(bt: Object) {
-    this.cursussenService.deleteBeroepstaak(this.selectedCursus.id, bt['id']).subscribe(
-      result => {this.refreshBeroepstaken(); },
-      error => {this.refreshBeroepstaken(); });
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+      //console.log(token);
+      
+      this.cursussenService.deleteBeroepstaak(this.selectedCursus.id, bt['id'], token).subscribe(
+        result => {this.refreshBeroepstaken(); },
+        error => {this.refreshBeroepstaken(); }
+      );
+    });
   }
+
   getBeroepstaakTypes() {
     this.loading = true;
-    this.beroepstaakService.getBeroepstaakTypes().subscribe(result => {
-      this.beroepstakenTypes = result;
-      this.beroepstakenForm = {architectuurlaag: 1, activiteit: 1, niveau: 1};
-      this.loading = false;
+
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+      //console.log(token);
+    
+      this.beroepstaakService.getBeroepstaakTypes(token).subscribe(result => {
+        this.beroepstakenTypes = result;
+        this.beroepstakenForm = {architectuurlaag: 1, activiteit: 1, niveau: 1};
+        this.loading = false;
+      });
     });
   }
 
   getAllBeroepstaken() {
     this.loading = true;
-    this.beroepstaakService.getBeroepstaken().subscribe(result => {
-      this.allBeroepstaken = result;
-      for (let i = 0; i < this.selectedCursus.beroepstaken.length; i++) {
-        this.allBeroepstaken = this.allBeroepstaken.filter((x) => x.id !== this.selectedCursus.beroepstaken[i].id);
-      }
-      this.loading = false;
+
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+      //console.log(token);
+    
+      this.beroepstaakService.getBeroepstaken(token).subscribe(result => {
+        this.allBeroepstaken = result;
+        for (let i = 0; i < this.selectedCursus.beroepstaken.length; i++) {
+          this.allBeroepstaken = this.allBeroepstaken.filter((x) => x.id !== this.selectedCursus.beroepstaken[i].id);
+        }
+        this.loading = false;
+      });
     });
   }
 
@@ -305,24 +414,29 @@ export class CursussenComponent implements OnInit {
   initializeLeerdoelForm() {
     this.loading = true;
     this.leerdoelForm = {};
-    this.bloomniveauService.getBloomniveaus().subscribe(data => {
-      this.allBloomniveaus=data;
-      let selectedBeroepstaak = 0;
-      if (this.selectedCursus.beroepstaken.length > 0) {
-        selectedBeroepstaak = this.selectedCursus.beroepstaken[0].id;
-      }
-      let selectedProfessionalSkill = 0;
-      if (this.selectedCursus.professionalskills.length > 0) {
-        selectedProfessionalSkill = this.selectedCursus.professionalskills[0].id;
-      }
-      this.leerdoelForm = {
-        eindBT: selectedBeroepstaak,
-        eindPS: selectedProfessionalSkill,
-        bloomniveau: data[0].id,
-        gewicht: 0.0,
-        omschrijving: ''
-      };
-      this.loading = false;
+
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+      //console.log(token);
+    
+      this.bloomniveauService.getBloomniveaus(token).subscribe(data => {
+        this.allBloomniveaus=data;
+        let selectedBeroepstaak = 0;
+        if (this.selectedCursus.beroepstaken.length > 0) {
+          selectedBeroepstaak = this.selectedCursus.beroepstaken[0].id;
+        }
+        let selectedProfessionalSkill = 0;
+        if (this.selectedCursus.professionalskills.length > 0) {
+          selectedProfessionalSkill = this.selectedCursus.professionalskills[0].id;
+        }
+        this.leerdoelForm = {
+          eindBT: selectedBeroepstaak,
+          eindPS: selectedProfessionalSkill,
+          bloomniveau: data[0].id,
+          gewicht: 0.0,
+          omschrijving: ''
+        };
+        this.loading = false;
+      });
     });
   }
 
@@ -334,8 +448,12 @@ export class CursussenComponent implements OnInit {
     this.leerdoelModal.show();
     this.loading = true;
     if (this.allBloomniveaus == null) {
-      this.bloomniveauService.getBloomniveaus().subscribe(bloomniveaus => {
-        this.allBloomniveaus=bloomniveaus;
+      this.authService.maakTokenHeadervoorCurcon().then( token => {
+        //console.log(token);
+
+        this.bloomniveauService.getBloomniveaus(token).subscribe(bloomniveaus => {
+          this.allBloomniveaus=bloomniveaus;
+        });
       });
     };
     this.leerdoelForm = {
@@ -353,17 +471,27 @@ export class CursussenComponent implements OnInit {
 
   saveLeerdoel() {
     this.loading = true;
-    this.cursussenService.saveLeerdoel(this.selectedCursus.id, this.leerdoelForm).subscribe(x => {
-      this.refreshLeerdoelen();
-      this.refreshToetsMatrijzen();
-      this.closeModal(this.leerdoelModal);
+
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+      //console.log(token);
+
+      this.cursussenService.saveLeerdoel(this.selectedCursus.id, this.leerdoelForm, token).subscribe(x => {
+        this.refreshLeerdoelen();
+        this.refreshToetsMatrijzen();
+        this.closeModal(this.leerdoelModal);
+      });
     });
   }
 
   deleteLeerdoel(ld: Object) {
-    this.cursussenService.deleteLeerdoel(ld['id']).subscribe(
-      result => {this.refreshLeerdoelen(); this.refreshToetsMatrijzen(); },
-      error => {this.refreshLeerdoelen(); this.refreshToetsMatrijzen(); });
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+      //console.log(token);
+
+      this.cursussenService.deleteLeerdoel(ld['id'], token).subscribe(
+        result => {this.refreshLeerdoelen(); this.refreshToetsMatrijzen(); },
+        error => {this.refreshLeerdoelen(); this.refreshToetsMatrijzen(); 
+      });
+    });
   }
 
 
@@ -395,18 +523,27 @@ export class CursussenComponent implements OnInit {
   saveToets() {
     this.loading = true;
     console.log(this.toetsForm);
-    this.cursussenService.saveToets(this.selectedCursus.id, this.toetsForm).subscribe(x => {
-      this.refreshToetsen();
-      this.refreshToetsMatrijzen();
-      this.toetsModal.hide();
-      this.loading = false;
+
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+      console.log(token);
+      this.cursussenService.saveToets(this.selectedCursus.id, this.toetsForm, token).subscribe(x => {
+        this.refreshToetsen();
+        this.refreshToetsMatrijzen();
+        this.toetsModal.hide();
+        this.loading = false;
+      });
     });
   }
 
   deleteToets(to: Object) {
-    this.cursussenService.deleteToets(to['id']).subscribe(
-      result => {this.refreshToetsen(); this.refreshToetsMatrijzen(); },
-      error => {this.refreshToetsen(); this.refreshToetsMatrijzen(); });
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+      console.log(token);
+
+      this.cursussenService.deleteToets(to['id'], token).subscribe(
+        result => {this.refreshToetsen(); this.refreshToetsMatrijzen(); },
+        error => {this.refreshToetsen(); this.refreshToetsMatrijzen(); 
+      });
+    });
   }
 
   initializeBeoordelingselementModal(beoordelingselement) {
@@ -425,11 +562,16 @@ export class CursussenComponent implements OnInit {
   saveBeoordelingselement(element) {
     this.loading = true;
     console.log(element);
-    this.toetsenService.saveBeoordelingsElement(this.toetsEdit.id, element).subscribe(data => {
-      this.refreshToetsen();
-      this.refreshToetsMatrijzen();
-      this.beoordelingselementModal.hide();
-      this.loading = false;
+
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+      console.log(token);
+
+      this.toetsenService.saveBeoordelingsElement(this.toetsEdit.id, element, token).subscribe(data => {
+        this.refreshToetsen();
+        this.refreshToetsMatrijzen();
+        this.beoordelingselementModal.hide();
+        this.loading = false;
+      });
     });
   }
 
@@ -463,10 +605,14 @@ export class CursussenComponent implements OnInit {
     this.loading = true;
     console.log(this.toetsMatrijsAdd);
     console.log(this.toetsMatrijsAddForm);
-    this.cursussenService.editToetsElement(this.toetsMatrijsEdit, this.toetsMatrijsEditForm).subscribe(x => {
-      this.refreshToetsMatrijzen();
-      this.toetsMatrijsEdit = 0;
-      this.loading = false;
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+      console.log(token);
+
+      this.cursussenService.editToetsElement(this.toetsMatrijsEdit, this.toetsMatrijsEditForm, token).subscribe(x => {
+        this.refreshToetsMatrijzen();
+        this.toetsMatrijsEdit = 0;
+        this.loading = false;
+      });
     });
   }
 
@@ -477,19 +623,29 @@ export class CursussenComponent implements OnInit {
     console.log(this.toetsMatrijsAdd);
     console.log('this.toetsMatrijsAddForm');
     console.log(this.toetsMatrijsAddForm);
-    this.cursussenService.addToetsElement(this.toetsMatrijsAdd.leerdoel.id, this.toetsMatrijsAddForm).subscribe(x => {
-      this.refreshToetsMatrijzen();
-      this.toetsMatrijsAdd = {};
-      this.loading = false;
+
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+      console.log(token);
+
+      this.cursussenService.addToetsElement(this.toetsMatrijsAdd.leerdoel.id, this.toetsMatrijsAddForm, token).subscribe(x => {
+        this.refreshToetsMatrijzen();
+        this.toetsMatrijsAdd = {};
+        this.loading = false;
+      });
     });
   }
 
   deleteToetsElement() {
     this.loading = true;
-    this.cursussenService.deleteToetsElement(this.toetsMatrijsEdit).subscribe(x => {
-      this.refreshToetsMatrijzen();
-      this.toetsMatrijsEdit = 0;
-      this.loading = false;
+
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+      console.log(token);
+
+      this.cursussenService.deleteToetsElement(this.toetsMatrijsEdit, token).subscribe(x => {
+        this.refreshToetsMatrijzen();
+        this.toetsMatrijsEdit = 0;
+        this.loading = false;
+      });
     });
   }
 
@@ -525,53 +681,72 @@ export class CursussenComponent implements OnInit {
 
   refreshProfessionalskills() {
     this.loading = true;
-    this.professionalskillService.getProfessionalskillsByObject(this.selectedCursus.eindPS).subscribe(professionalskills => {
-      this.selectedCursus.professionalskills = professionalskills;
-      this.loading = false;
+
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+      console.log(token);
+    
+      this.professionalskillService.getProfessionalskillsByObject(this.selectedCursus.eindPS, token).subscribe(professionalskills => {
+        this.selectedCursus.professionalskills = professionalskills;
+        this.loading = false;
+      });
     });
   }
 
   refreshLeerdoelen() {
-  //  TODO header meegeven
+    // TODO header meegeven
     this.loading = true;
-    this.leerdoelenService.getLeerdoelenByObject(this.selectedCursus.leerdoelen).subscribe(leerdoelen => {
-      this.selectedCursus.leerdoelenLijst = leerdoelen;
-      this.loading = false;
-    },
-  );
+
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+      console.log(token);
+
+      this.leerdoelenService.getLeerdoelenByObject(this.selectedCursus.leerdoelen, token).subscribe(leerdoelen => {
+        this.selectedCursus.leerdoelenLijst = leerdoelen;
+        this.loading = false;
+        },
+      );
+    });
   }
 
 
   refreshToetsen() {
     this.loading = true;
-    this.toetsenService.getToetsenByObject(this.selectedCursus.toetsen).subscribe(toetsen => {
-      this.selectedCursus.toetsenLijst = toetsen;
-      this.loading = false;
+
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+      //console.log(token);
+
+      this.toetsenService.getToetsenByObject(this.selectedCursus.toetsen, token).subscribe(toetsen => {
+        this.selectedCursus.toetsenLijst = toetsen;
+        this.loading = false;
+      });
     });
   }
 
   refreshToetsMatrijzen() {
     this.loading = true;
 
-    this.toetsmatrijzenService.getToetsmatrijzenById(this.selectedCursus.id).subscribe(toetsmatrijs => {
-      console.log('refreshToetsMatrijzen toetsmatrijs');
-      console.log(toetsmatrijs);
-      if (this.toetsMatrijsArray !== undefined) {
-        while (this.toetsMatrijsArray.length > 0) {
-          this.toetsMatrijsArray.splice(0, 1);
-          console.log(this.toetsMatrijsArray.length);
-          console.log('toetsMatrijsArray.length');
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+      //console.log(token);
+
+      this.toetsmatrijzenService.getToetsmatrijzenById(this.selectedCursus.id, token).subscribe(toetsmatrijs => {
+        console.log('refreshToetsMatrijzen toetsmatrijs');
+        console.log(toetsmatrijs);
+        if (this.toetsMatrijsArray !== undefined) {
+          while (this.toetsMatrijsArray.length > 0) {
+            this.toetsMatrijsArray.splice(0, 1);
+            console.log(this.toetsMatrijsArray.length);
+            console.log('toetsMatrijsArray.length');
+          }
         }
-      }
-      let toetsIndex = 0;
-      for (let toets of toetsmatrijs.toetsen) {
-        console.log(toets);
-        this.toetsMatrijsArray[toetsIndex] = this.buildToetsMatrijs(toets, toetsmatrijs.leerdoelen);
-        toetsIndex++;
-      }
-      console.log('this.toetsMatrijsArray');
-      console.log(this.toetsMatrijsArray);
-      this.loading = false;
+        let toetsIndex = 0;
+        for (let toets of toetsmatrijs.toetsen) {
+          console.log(toets);
+          this.toetsMatrijsArray[toetsIndex] = this.buildToetsMatrijs(toets, toetsmatrijs.leerdoelen);
+          toetsIndex++;
+        }
+        console.log('this.toetsMatrijsArray');
+        console.log(this.toetsMatrijsArray);
+        this.loading = false;
+      });
     });
   }
 
@@ -658,6 +833,4 @@ export class CursussenComponent implements OnInit {
   isEmptyObject(obj) {
     return (Object.keys(obj).length === 0);
   }
-
-
 }
