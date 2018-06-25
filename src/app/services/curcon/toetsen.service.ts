@@ -12,12 +12,18 @@ import * as myGlobals from '../../globals';
 
 @Injectable()
 export class ToetsenService {
+  headers: Headers;
   constructor(private http: HttpClient) {
     console.log('ToetsenService Initialized...');
   }
 //TODO kloppen de dto namen?
-  getToetsen() {
-    return this.http.get<curconnamespace.CurconNameSpace.ToetsMatrijsToetsElementDto[]>('myGlobals.baseUrl'+'toetsen/')
+
+  getToetsen(headersIn :HttpHeaders ) {
+    let requestOptions = {
+    headers: headersIn,
+    };
+    let url =`${myGlobals.baseUrl+"toetsen/"}`;
+    return this.http.get<curconnamespace.CurconNameSpace.ToetsMatrijsToetsElementDto[]>(url, requestOptions)
       .pipe( tap( res => console.log(res)) );
   }
 
@@ -26,8 +32,12 @@ export class ToetsenService {
       .pipe( tap( res => console.log(res)) );
   }
 
-  getOsisrisResultaatTypes() {
-    return this.http.get<curconnamespace.CurconNameSpace.ToetsMatrijsToetsDto[]>('myGlobals.baseUrl'+'osirisresultaattypen/')
+  getOsisrisResultaatTypes(headersIn :HttpHeaders) {
+    let requestOptions = {
+    headers: headersIn,
+    };
+    let url =`${myGlobals.baseUrl+"osirisresultaattypen/"}`;
+    return this.http.get<curconnamespace.CurconNameSpace.ToetsMatrijsToetsDto[]>(url, requestOptions)
       .pipe( tap( res => console.log(res)) );
   }
 
@@ -36,20 +46,29 @@ export class ToetsenService {
       .pipe( tap( res => console.log(res)) );
   }
 
-	saveBeoordelingsElement(toetsId, element) {
+	saveBeoordelingsElement(headersIn :HttpHeaders, toetsId, element) {
+    let requestOptions = {
+    headers: headersIn,
+    };
 		if (element.id == null) {
-			return this.http.post<curconnamespace.CurconNameSpace.BeoordelingsElementPostDto>(myGlobals.baseUrl+'toetsen/' + toetsId + '/beoordelingselementen', element)
+      let url =`${myGlobals.baseUrl+"toetsen/"+ toetsId + "/beoordelingselementen"}`;
+			return this.http.post<curconnamespace.CurconNameSpace.BeoordelingsElementPostDto>(url, requestOptions, element)
 			.pipe(catchError(this.handleError));
 		} else {
+      let url =`${myGlobals.baseUrl+"beoordelingselementen/" + elementId}`;
 			var elementId = element.id;
 			delete element.id;
-			return this.http.put<curconnamespace.CurconNameSpace.ToetsMatrijsBeoordelingsElementDto>(myGlobals.baseUrl+'beoordelingselementen/' + elementId, element)
+			return this.http.put<curconnamespace.CurconNameSpace.ToetsMatrijsBeoordelingsElementDto>(url, requestOptions, element)
 			.pipe(catchError(this.handleError));
 		}
 	}
 
-	deleteBeoordelingselement(elementid) {
-		return this.http.delete(myGlobals.baseUrl+'beoordelingselementen/' + elementid)
+	deleteBeoordelingselement(headersIn :HttpHeaders, elementId) {
+    let requestOptions = {
+    headers: headersIn,
+    };
+    let url =`${myGlobals.baseUrl+"beoordelingselementen/" + elementId}`;
+		return this.http.delete(url, requestOptions)
 			.pipe(catchError(this.handleError));
 	}
 

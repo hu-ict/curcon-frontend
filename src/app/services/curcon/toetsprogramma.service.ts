@@ -14,11 +14,14 @@ export class ToetsProgrammaService {
     constructor(private http: HttpClient){
         console.log('ToetsProgrammaService Initialized...')
     }
-    getCalculatedProfile(cohortId) : Observable< curconnamespace.CurconNameSpace.CohortDto> {
+    getCalculatedProfile(headersIn :HttpHeaders, cohortId) : Observable< curconnamespace.CurconNameSpace.CohortDto> {
         console.log('ToetsProgrammaService.getCalculatedProfile called...')
-		var url = myGlobals.baseUrl+'toetsprogrammas/' + cohortId + '/profiel';
-		console.log("url "+url)
-        return this.http.get<curconnamespace.CurconNameSpace.CohortDto>(url)
+        let requestOptions = {
+        headers: headersIn,
+        };
+        let url =`${myGlobals.baseUrl+'toetsprogrammas/' + cohortId + '/profiel'}`;
+		      console.log("url "+url)
+        return this.http.get<curconnamespace.CurconNameSpace.CohortDto>(url, requestOptions)
             .pipe(
               tap( cohort => console.log(cohort))
              );
