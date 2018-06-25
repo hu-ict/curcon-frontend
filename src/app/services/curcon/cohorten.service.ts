@@ -2,49 +2,45 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap} from 'rxjs/operators';
 import {Observable} from "rxjs";
-import { AuthService } from '../../providers/auth.service';
 import * as myGlobals from '../../globals';
 import * as curconnamespace from '../../model/curconnamespace';
 
 @Injectable()
 export class CohortenService {
-  headers : HttpHeaders;
 
   constructor(private http: HttpClient) {
     console.log('CohortenService Initialized...');
-    //this.headers = AuthService.prototype.maakTokenHeadervoorCurcon();
-    this.headers = new HttpHeaders();
   }
 
-  getCohorten() {
-    return this.http.get<curconnamespace.CurconNameSpace.CohortDto[]>(myGlobals.baseUrl+'cohorten/', { headers: this.headers })
+  getCohorten(headersIn: HttpHeaders) {
+    return this.http.get<curconnamespace.CurconNameSpace.CohortDto[]>(myGlobals.baseUrl+'cohorten/', { headers: headersIn })
       .pipe( tap( res => console.log(res)) );
   }
 
-  getCohortenByObject(obj) {
-    return this.http.get<curconnamespace.CurconNameSpace.CohortDto[]>(obj.href)
+  getCohortenByObject(obj, headersIn: HttpHeaders) {
+    return this.http.get<curconnamespace.CurconNameSpace.CohortDto[]>(obj.href, { headers: headersIn })
       .pipe( tap( res => console.log(res)) );
   }
 
-  getDataByHref(href) {
-    return this.http.get<curconnamespace.CurconNameSpace.CohortDto>(href)
+  getDataByHref(href, headersIn: HttpHeaders) {
+    return this.http.get<curconnamespace.CurconNameSpace.CohortDto>(href, { headers: headersIn })
       .pipe( tap( res => console.log(res)) );
   }
 
-	saveCohort(opleidingId, cohort) {
-		return this.http.post<curconnamespace.CurconNameSpace.CohortPostDto>(myGlobals.baseUrl+'opleidingen/' + opleidingId + '/cohorten', cohort)
+	saveCohort(opleidingId, cohort, headersIn: HttpHeaders) {
+		return this.http.post<curconnamespace.CurconNameSpace.CohortPostDto>(myGlobals.baseUrl+'opleidingen/' + opleidingId + '/cohorten', cohort, { headers: headersIn })
 			.pipe(catchError(this.handleError));
 
 	}
 
-    addCursusToCohort(cohortId, cursus){
-        return this.http.post<curconnamespace.CurconNameSpace.CohortPostDto>(myGlobals.baseUrl+'cohorten/' + cohortId + '/cursussen', cursus)
+    addCursusToCohort(cohortId, cursus, headersIn: HttpHeaders){
+        return this.http.post<curconnamespace.CurconNameSpace.CohortPostDto>(myGlobals.baseUrl+'cohorten/' + cohortId + '/cursussen', cursus, { headers: headersIn })
             .pipe(catchError(this.handleError));
     }
 
-    deleteCursus(cohortId, cursusId) {
+    deleteCursus(cohortId, cursusId, headersIn: HttpHeaders) {
         // Verwijdert een cursus uit een cohort (examenprogramma), cursus zelf wordt niet verwijderd.
-        return this.http.delete(myGlobals.baseUrl+'cohorten/' + cohortId + '/cursussen/' + cursusId)
+        return this.http.delete(myGlobals.baseUrl+'cohorten/' + cohortId + '/cursussen/' + cursusId, { headers: headersIn })
             .pipe(catchError(this.handleError));
     }
 

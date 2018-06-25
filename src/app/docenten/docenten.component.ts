@@ -23,7 +23,7 @@ export class DocentenComponent implements OnInit {
 
   constructor(private docentenService: DocentenService,private functieService:FunctieService, private authService:AuthService,private afAuth: AngularFireAuth) {
     this.loading = true;
-    this.isVisible=true;
+    this.isVisible = true;
 
     this.afAuth.authState.subscribe((auth) => {
       console.log("authstate updated//user changed");

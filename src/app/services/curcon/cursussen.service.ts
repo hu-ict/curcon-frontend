@@ -11,114 +11,139 @@ import * as myGlobals from '../../globals';
 
 @Injectable()
 export class CursussenService {
-	headers: HttpHeaders;
-	//options: RequestOptions;
-	// de httpsclient kan HttpHeaders
 	organisationId: any;
 
 constructor(private http: HttpClient) {
 	console.log('Cursussen Service Initialized...');
-	this.headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-	this.headers.append('Access-Control-Allow-Origin', '*');
 //	this.headers.append('Access-Control-Expose-Headers', 'content-disposition');
-	//this.options = new RequestOptions({ headers: this.headers });
 	this.organisationId = JSON.parse(localStorage.getItem('selectedOrganisatie'));
 }
 
-getCursussen() {
+getCursussen(headersIn:HttpHeaders) {
+		headersIn.append('Access-Control-Allow-Origin', '*');
 	var url = myGlobals.baseUrl+'organisaties/' + this.organisationId.id + '/cursussen';
 	console.log("url "+url)
-	return this.http.get<curconnamespace.CurconNameSpace.CursusLeerplanSchemaDto[]>(url,).pipe( tap( res => console.log(res)) );
+	return this.http.get<curconnamespace.CurconNameSpace.CursusLeerplanSchemaDto[]>(url,{headers: headersIn}).pipe( tap( res => console.log(res)) );
 }
 
-getDataByHref(href) {
-	return this.http.get<curconnamespace.CurconNameSpace.CursusLeerplanSchemaDto>(href,)
+getDataByHref(href, headersIn:HttpHeaders) {
+	headersIn.append("Access Control Allow Origin", "*");
+	return this.http.get<curconnamespace.CurconNameSpace.CursusLeerplanSchemaDto>(href,{headers: headersIn})
 	.pipe( tap( res => console.log(res)) );
 }
 
-getCursussenByObject(obj) {
+getCursussenByObject(obj, headersIn:HttpHeaders) {
+	headersIn.append("Access Control Allow Origin", "*");
 	console.log(obj.href);
-	return this.http.get<curconnamespace.CurconNameSpace.CursusLeerplanSchemaDto[]>(obj.href,)
+	return this.http.get<curconnamespace.CurconNameSpace.CursusLeerplanSchemaDto[]>(obj.href,{headers: headersIn})
 	.pipe( tap( res => console.log(res)) );
 }
 
-addBeroepstakenToCursus(cursusId, beroepstaak) {
+addBeroepstakenToCursus(cursusId, beroepstaak, headersIn:HttpHeaders) {
+	headersIn.append("Access Control Allow Origin", "*");
 	let newBeroepstaak = {'id': beroepstaak.id};
-	return this.http.post<curconnamespace.CurconNameSpace.BeroepsTaakDto>(myGlobals.baseUrl+'cursussen/' + cursusId + '/beroepstaken', newBeroepstaak,)
-	.pipe(catchError(this.handleError));
+	return this.http.post<curconnamespace.CurconNameSpace.BeroepsTaakDto>(myGlobals.baseUrl+'cursussen/' + cursusId + '/beroepstaken', newBeroepstaak,{headers: headersIn})
+	.pipe();
 }
 
-addProfessionalskillToCursus(cursusId, professionalskillId) {
+addProfessionalskillToCursus(cursusId, professionalskillId, headersIn:HttpHeaders) {
+	headersIn.append("Access Control Allow Origin", "*");
 	let newProfessionalskill = {'id': professionalskillId.id};
-	return this.http.post<curconnamespace.CurconNameSpace.ProfessionalSkillDto>(myGlobals.baseUrl+'cursussen/' + cursusId + '/professionalskills', newProfessionalskill)
-	.pipe(catchError(this.handleError));
+	return this.http.post<curconnamespace.CurconNameSpace.ProfessionalSkillDto>(myGlobals.baseUrl+'cursussen/' + cursusId + '/professionalskills', newProfessionalskill,{headers: headersIn})
+	.pipe(/* catchError werkt niet met een header erbij */
+);
 }
 
-saveLeerdoel(cursusId, leerdoel) {
+saveLeerdoel(cursusId, leerdoel, headersIn:HttpHeaders) {
+	headersIn.append("Access Control Allow Origin", "*");
 	if (leerdoel.id == null) {
-		return this.http.post<curconnamespace.CurconNameSpace.LeerdoelPostDto>(myGlobals.baseUrl+'cursussen/' + cursusId + '/leerdoelen', leerdoel)
-		.pipe(catchError(this.handleError));
+		return this.http.post<curconnamespace.CurconNameSpace.LeerdoelPostDto>(myGlobals.baseUrl+'cursussen/' + cursusId + '/leerdoelen', leerdoel,{headers: headersIn}
+)
+		.pipe(/* catchError werkt niet met een header erbij */
+);
 	} else {
 		var leerdoelId = leerdoel.id;
 		delete leerdoel.id;
 		console.log("leerdoelId "+leerdoelId);
 		console.log("leerdoel "+leerdoel);
-		return this.http.put<curconnamespace.CurconNameSpace.LeerdoelPostDto>(myGlobals.baseUrl+'leerdoelen/' + leerdoelId, leerdoel)
-		.pipe(catchError(this.handleError));
+		return this.http.put<curconnamespace.CurconNameSpace.LeerdoelPostDto>(myGlobals.baseUrl+'leerdoelen/' + leerdoelId, leerdoel,{headers: headersIn}
+)
+		.pipe(/* catchError werkt niet met een header erbij */
+);
 	}
 }
 
-saveToets(cursusId, toets) {
+saveToets(cursusId, toets, headersIn:HttpHeaders) {
+	headersIn.append("Access Control Allow Origin", "*");
 	if (toets.id == null) {
-		return this.http.post<curconnamespace.CurconNameSpace.ToetsPostDto>(myGlobals.baseUrl+'cursussen/' + cursusId + '/toetsen', toets)
-		.pipe(catchError(this.handleError));
+		return this.http.post<curconnamespace.CurconNameSpace.ToetsPostDto>(myGlobals.baseUrl+'cursussen/' + cursusId + '/toetsen', toets,{headers: headersIn}
+)
+		.pipe(/* catchError werkt niet met een header erbij */
+);
 	} else {
 		var toetsId = toets.id;
 		delete toets.id;
-		return this.http.put<curconnamespace.CurconNameSpace.ToetsPostDto>(myGlobals.baseUrl+'toetsen/' + toetsId, toets, )
-		.pipe(catchError(this.handleError));
+		return this.http.put<curconnamespace.CurconNameSpace.ToetsPostDto>(myGlobals.baseUrl+'toetsen/' + toetsId, toets,{headers: headersIn}
+ )
+		.pipe(/* catchError werkt niet met een header erbij */
+);
 	}
 }
 
-deleteBeroepstaak(cursusId, beroepstaakId) {
+deleteBeroepstaak(cursusId, beroepstaakId, headersIn:HttpHeaders) {
+	headersIn.append("Access Control Allow Origin", "*");
 	return this.http.delete(myGlobals.baseUrl+'cursussen/' + cursusId + '/beroepstaken/' + beroepstaakId)
-	.pipe(catchError(this.handleError));
+	.pipe(/* catchError werkt niet met een header erbij */
+);
 }
 
-deleteProfessionalskill(cursusId, professionalskillId) {
-	return this.http.delete(myGlobals.baseUrl+'cursussen/' + cursusId + '/professionalskills/' + professionalskillId)
-	.pipe(catchError(this.handleError));
+deleteProfessionalskill(cursusId, professionalskillId, headersIn:HttpHeaders) {
+	headersIn.append("Access Control Allow Origin", "*");
+	return this.http.delete(myGlobals.baseUrl+'cursussen/' + cursusId + '/professionalskills/' + professionalskillId,{headers: headersIn})
+	.pipe(/* catchError werkt niet met een header erbij */
+);
 }
 
-deleteLeerdoel(leerdoelId) {
-	return this.http.delete(myGlobals.baseUrl+'leerdoelen/' + leerdoelId)
-	.pipe(catchError(this.handleError));
+deleteLeerdoel(leerdoelId, headersIn:HttpHeaders) {
+	headersIn.append("Access Control Allow Origin", "*");
+	return this.http.delete(myGlobals.baseUrl+'leerdoelen/' + leerdoelId,{headers: headersIn})
+	.pipe(/* catchError werkt niet met een header erbij */
+);
 }
 
-updateCursus(id, form) {
+updateCursus(id, form, headersIn:HttpHeaders) {
+	headersIn.append("Access Control Allow Origin", "*");
 	var headers = new HttpHeaders();
 	headers.append('Content-Type', 'application/json');
-	return this.http.put<curconnamespace.CurconNameSpace.CursusLeerplanSchemaDto>(myGlobals.baseUrl+'cursussen/' + id, form)
-	.pipe(catchError(this.handleError));
+	return this.http.put<curconnamespace.CurconNameSpace.CursusLeerplanSchemaDto>(myGlobals.baseUrl+'cursussen/' + id, form,{headers: headersIn})
+	.pipe(/* catchError werkt niet met een header erbij */
+);
 }
 
-addToetsElement(leerdoelid, form) {
-	return this.http.post<curconnamespace.CurconNameSpace.CursusPostDto>(myGlobals.baseUrl+'leerdoelen/' + leerdoelid + '/toetselementen', form)
-	.pipe(catchError(this.handleError));
+addToetsElement(leerdoelid, form, headersIn:HttpHeaders) {
+	headersIn.append("Access Control Allow Origin", "*");
+	return this.http.post<curconnamespace.CurconNameSpace.CursusPostDto>(myGlobals.baseUrl+'leerdoelen/' + leerdoelid + '/toetselementen', form,{headers: headersIn})
+	.pipe(/* catchError werkt niet met een header erbij */
+);
 }
 
-getToetsElementen(position, url) {
-	return this.http.get<curconnamespace.CurconNameSpace.CursusLeerplanSchemaDto>(url).pipe(
+getToetsElementen(position, url, headersIn:HttpHeaders) {
+	headersIn.append("Access Control Allow Origin", "*");
+	return this.http.get<curconnamespace.CurconNameSpace.CursusLeerplanSchemaDto>(url,{headers: headersIn}).pipe(
     map(res => [position, res])
   )
 }
 
-deleteToets(bt2: any) {
+deleteToets(bt2: any, headersIn:HttpHeaders) {
+	headersIn.append("Access Control Allow Origin", "*");
 	return this.http.delete(myGlobals.baseUrl+'toetsen/' + bt2)
-	.pipe(catchError(this.handleError));
+	.pipe(/* catchError werkt niet met een header erbij */
+);
 }
 
-addCursus(cursus ) {
+addCursus(cursus, headersIn:HttpHeaders )
+{
+	headersIn.append("Access Control Allow Origin", "*");
 	let url = myGlobals.baseUrl+'organisaties/' + this.organisationId.id + '/cursussen';
 //	return this.http.post<curconnamespace.CurconNameSpace.CursusPostDto>(url, cursus,).flatMap(
 //		(res:Response) => {
@@ -130,23 +155,28 @@ addCursus(cursus ) {
 //		(res:Response) => {
 //			res.json();
 //		}
-//	).pipe(catchError(this.handleError));
+//	).pipe(/* catchError werkt niet met een header erbij */);
 console.log(cursus+"prepostrequest");
-	return this.http.post<curconnamespace.CurconNameSpace.CursusPostDto>(url, cursus).pipe(
+	return this.http.post<curconnamespace.CurconNameSpace.CursusPostDto>(url, cursus,{headers: headersIn}).pipe(
 		tap(cursus => console.log("Gepost?"+cursus)),
-    catchError(this.handleError)
+    /* catchError werkt niet met een header erbij */
+
   )
 
 }
 
-editToetsElement(id, element) {
-	return this.http.put<curconnamespace.CurconNameSpace.ToetsElementPostDto>(myGlobals.baseUrl+'toetselementen/' + id, element)
-	.pipe(catchError(this.handleError));
+editToetsElement(id, element, headersIn:HttpHeaders) {
+	headersIn.append("Access Control Allow Origin", "*");
+	return this.http.put<curconnamespace.CurconNameSpace.ToetsElementPostDto>(myGlobals.baseUrl+'toetselementen/' + id, element,{headers: headersIn})
+	.pipe(/* catchError werkt niet met een header erbij */
+);
 }
 
-deleteToetsElement(id) {
-	return this.http.delete(myGlobals.baseUrl+'toetselementen/' + id)
-	.pipe(catchError(this.handleError));
+deleteToetsElement(id, headersIn:HttpHeaders) {
+		headersIn.append("Access Control Allow Origin", "*");
+	return this.http.delete(myGlobals.baseUrl+'toetselementen/' + id,{headers: headersIn})
+	.pipe(/* catchError werkt niet met een header erbij */
+);
 }
 
 private extractData(res: Response) {
@@ -154,7 +184,8 @@ private extractData(res: Response) {
 	return body || {};
 }
 
-private handleError(error: any) {
+private handleError(error: any, headersIn:HttpHeaders) {
+	headersIn.append("Access Control Allow Origin", "*");
 	let errMsg = (error.message) ? error.message :
 		error.status ? `${error.status} - ${error.statusText}` : 'Server error';
 	console.error(errMsg);

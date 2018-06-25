@@ -22,23 +22,23 @@ export class ProfessionalskillsService {
 	// 	AuthService.prototype.maakTokenHeadervoorCurcon().then()
 	// }
 
-	getProfessionalskills() {
+	getProfessionalskills(headersIn: HttpHeaders) {
 		return this.http.get<curconnamespace.CurconNameSpace.ProfessionalSkillDto[]>(myGlobals.baseUrl+'professionalskills/', { headers : this.headers })
 		.pipe( tap( res => console.log(res)) );
 	}
 
-	getProfessionalskillsByObject(obj) {
+	getProfessionalskillsByObject(obj, headersIn: HttpHeaders) {
 		return this.http.get<curconnamespace.CurconNameSpace.ProfessionalSkillDto[]>(obj.href, { headers : this.headers })
 		.pipe( tap( res => console.log(res)) );
 	}
 
-	getProfessionalskillsTypes() {
+	getProfessionalskillsTypes(headersIn: HttpHeaders) {
 		return this.http.get<curconnamespace.CurconNameSpace.ProfessionalSkillTypesDto[]>(myGlobals.baseUrl+'professionalskills/types', { headers : this.headers })
 		.pipe( tap( res => console.log(res)) );
 	}
 
 
-	getProfessionalskillId(skillid, niv) {
+	getProfessionalskillId(skillid, niv, headersIn: HttpHeaders) {
 		return this.http.get<curconnamespace.CurconNameSpace.ProfessionalSkillDto>(myGlobals.baseUrl+'professionalskills/skill/' + skillid + '/niveaus/' + niv, { headers : this.headers })
 		.pipe( tap( res => console.log(res)) );
 	}
