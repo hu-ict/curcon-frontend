@@ -24,8 +24,12 @@ export class BeroepstakenService {
     ////this.options = new RequestOptions({ headers: this.headers });
   }
 
-  getBeroepstaken(): Observable<curconnamespace.CurconNameSpace.BeroepsTaakDto[]>{
-    return this.http.get<curconnamespace.CurconNameSpace.BeroepsTaakDto[]>(myGlobals.baseUrl+'beroepstaken/')
+  getBeroepstaken(headersIn :HttpHeader): Observable<curconnamespace.CurconNameSpace.BeroepsTaakDto[]>{
+    let requestOptions = {
+      headers = headersIn
+    };
+
+    return this.http.get<curconnamespace.CurconNameSpace.BeroepsTaakDto[]>(myGlobals.baseUrl+'beroepstaken/', requestOptions)
     .pipe(
       tap(beroepstaak => console.log(beroepstaak))
       ,
@@ -33,21 +37,26 @@ export class BeroepstakenService {
     )
   }
 
-  getBeroepstaakTypes(): Observable<curconnamespace.CurconNameSpace.BeroepsTaakDto[]> {
+  getBeroepstaakTypes(headersIn :HttpHeaders): Observable<curconnamespace.CurconNameSpace.BeroepsTaakDto[]> {
     // return this.http.get(myGlobals.baseUrl+'beroepstaken/types')
     //   .map(res => res.json());
-    return this.http.get<curconnamespace.CurconNameSpace.BeroepsTaakDto[]>(myGlobals.baseUrl+'beroepstaken/types')
-      .pipe(
-        tap(beroepstaak => console.log(beroepstaak))
-        ,
+    let requestOptions = {
+      headers = headersIn,
+    };
+
+    return this.http.get<curconnamespace.CurconNameSpace.BeroepsTaakDto[]>(myGlobals.baseUrl+'beroepstaken/types', requestOptions)
+      .pipe(tap(beroepstaak => console.log(beroepstaak)) ,
         catchError(ErrorService.prototype.handleError<curconnamespace.CurconNameSpace.BeroepsTaakDto[]>("getBeroepstaken naam={beroesptaak.omschrijving}"))
       )
   }
 
-  getBeroepstakenByObject(obj) : Observable<curconnamespace.CurconNameSpace.BeroepsTaakDto[]> {
+  getBeroepstakenByObject(obj, headersIn :HttpRequest) : Observable<curconnamespace.CurconNameSpace.BeroepsTaakDto[]> {
+    let requestOptions = {
+      headers = headersIn;
+    };
     console.log("Beroepstaken object"+obj);
     return this.http.get<curconnamespace.CurconNameSpace.BeroepsTaakDto[]>
-    (obj.href);
+    (obj.href, requestOptions);
   }
 
   private extractData(res: Response) {
@@ -62,10 +71,13 @@ export class BeroepstakenService {
     return Observable.throw(errMsg);
   }
 
-  getBeroepstaakId(actid, archid, niv): Observable<curconnamespace.CurconNameSpace.BeroepsTaakDto> {
+  getBeroepstaakId(actid, archid, niv, headersIn : HttpHeaders): Observable<curconnamespace.CurconNameSpace.BeroepsTaakDto> {
+    let requestOptions = {
+      headers = headersIn,
+    };
 
     return this.http.get<curconnamespace.CurconNameSpace.BeroepsTaakDto>
-    (myGlobals.baseUrl+'beroepstaken/activiteiten/' + actid + '/architectuurlagen/' + archid + '/niveaus/' + niv)
+    (myGlobals.baseUrl+'beroepstaken/activiteiten/' + actid + '/architectuurlagen/' + archid + '/niveaus/' + niv, requestOptions)
       .pipe(
         tap(beroepstaak => console.log(beroepstaak))
         ,

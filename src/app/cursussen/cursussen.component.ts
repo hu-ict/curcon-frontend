@@ -105,12 +105,16 @@ export class CursussenComponent implements OnInit {
         this.loading = false;
       });
 
-      this.millerNiveausService.getMillerNiveaus(token).subscribe(millerNiveaus => {
-        this.allMillerNiveaus=millerNiveaus;
-      },
-      error => console.log('Error: ', error),
-      () => {
-        this.loading = false;
+      this.authService.maakTokenHeadervoorCurcon().then( token => {
+        //console.log(token);
+
+        this.millerNiveausService.getMillerNiveaus(token).subscribe(millerNiveaus => {
+          this.allMillerNiveaus = millerNiveaus;
+        },
+        error => console.log('Error: ', error),
+        () => {
+          this.loading = false;
+        });
       });
     });
   }
@@ -127,7 +131,7 @@ export class CursussenComponent implements OnInit {
       let self = this;
       
       this.authService.maakTokenHeadervoorCurcon().then( token => {
-          this.functieService.getFunctiesByUser(email).subscribe(functies => {
+          this.functieService.getFunctiesByUser(email, token).subscribe(functies => {
             var element = <HTMLInputElement> document.getElementById("createbutton");
 
             if (functies == null) {
@@ -205,7 +209,7 @@ export class CursussenComponent implements OnInit {
     this.loading = true;
     console.log(this.cursusForm);
 
-    this.authService.maakTokenHeadervoorCurcon().then( token => {
+    this.authService.maakTokenHeadervoorCurcon().then(token => {
       //console.log(token);
 
       this.cursussenService.addCursus(this.cursusForm, token).subscribe(data => {
@@ -213,30 +217,17 @@ export class CursussenComponent implements OnInit {
         this.refreshCursussen();
         
         this.selectedCursus= this.courses;
-        this.cursussenService.getCursussenByObject(this.selectedCursus).subscribe(cursus => {
-          this.onSelect(cursus);
-          this.loading = false;
-          this.cursusModal.hide();
-        });
-      }
 
-      // //TODO //FIXME FIX Repsonse and DTO type error..
-      // //res: Response
-      // res => {
-      //   // const contentLocation = res.get('Content-Location');
-      //   // console.log('Content-Location: ' + contentLocation);
-      //   // this.cursussenService.getDataByHref(contentLocation).subscribe(cursus => {
-      //   //   this.onSelect(cursus);
-      //     //this.loading = false;
-      //    //this.cursusModal.hide();
-      //   //});
-      //   	this.selectedCursus = this.cursusForm;
-      //     this.refreshAll();
-      //   // console.log(res);
-      //   // this.onSelect(res);
-      //    this.cursusModal.hide();
-      // }
-      // );
+        this.authService.maakTokenHeadervoorCurcon().then( token => {
+          //console.log(token);
+
+          this.cursussenService.getCursussenByObject(this.selectedCursus, token).subscribe(cursus => {
+            this.onSelect(cursus);
+            this.loading = false;
+            this.cursusModal.hide();
+          });
+        });
+      },
     });
   }
 
@@ -353,14 +344,15 @@ export class CursussenComponent implements OnInit {
     this.authService.maakTokenHeadervoorCurcon().then( token => {
       //console.log(token);
 
-      this.beroepstaakService.getBeroepstaakId(
-        this.beroepstakenForm.activiteit,
-        this.beroepstakenForm.architectuurlaag,
-        this.beroepstakenForm.niveau).subscribe(data => {
-          this.cursussenService.addBeroepstakenToCursus(this.selectedCursus.id, data, token).subscribe(x => {
-            this.beroepstaakModal.hide();
-            this.refreshBeroepstaken();
-            this.loading = false;
+      this.beroepstaakService.getBeroepstaakId(this.beroepstakenForm.activiteit, this.beroepstakenForm.architectuurlaag,
+        this.beroepstakenForm.niveau, token).subscribe(data => {
+          this.authService.maakTokenHeadervoorCurcon().then( token => {
+            //console.log(token);
+            this.cursussenService.addBeroepstakenToCursus(this.selectedCursus.id, data, token).subscribe(x => {
+              this.beroepstaakModal.hide();
+              this.refreshBeroepstaken();
+              this.loading = false;
+            });
           });
       });
     });
@@ -525,7 +517,7 @@ export class CursussenComponent implements OnInit {
     console.log(this.toetsForm);
 
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      console.log(token);
+      //console.log(token);
       this.cursussenService.saveToets(this.selectedCursus.id, this.toetsForm, token).subscribe(x => {
         this.refreshToetsen();
         this.refreshToetsMatrijzen();
@@ -537,7 +529,7 @@ export class CursussenComponent implements OnInit {
 
   deleteToets(to: Object) {
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      console.log(token);
+      //console.log(token);
 
       this.cursussenService.deleteToets(to['id'], token).subscribe(
         result => {this.refreshToetsen(); this.refreshToetsMatrijzen(); },
@@ -564,7 +556,7 @@ export class CursussenComponent implements OnInit {
     console.log(element);
 
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      console.log(token);
+      //console.log(token);
 
       this.toetsenService.saveBeoordelingsElement(this.toetsEdit.id, element, token).subscribe(data => {
         this.refreshToetsen();
@@ -606,7 +598,7 @@ export class CursussenComponent implements OnInit {
     console.log(this.toetsMatrijsAdd);
     console.log(this.toetsMatrijsAddForm);
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      console.log(token);
+      //console.log(token);
 
       this.cursussenService.editToetsElement(this.toetsMatrijsEdit, this.toetsMatrijsEditForm, token).subscribe(x => {
         this.refreshToetsMatrijzen();
@@ -625,7 +617,7 @@ export class CursussenComponent implements OnInit {
     console.log(this.toetsMatrijsAddForm);
 
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      console.log(token);
+      //console.log(token);
 
       this.cursussenService.addToetsElement(this.toetsMatrijsAdd.leerdoel.id, this.toetsMatrijsAddForm, token).subscribe(x => {
         this.refreshToetsMatrijzen();
@@ -639,7 +631,7 @@ export class CursussenComponent implements OnInit {
     this.loading = true;
 
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      console.log(token);
+      //console.log(token);
 
       this.cursussenService.deleteToetsElement(this.toetsMatrijsEdit, token).subscribe(x => {
         this.refreshToetsMatrijzen();
@@ -671,11 +663,16 @@ export class CursussenComponent implements OnInit {
 
   refreshBeroepstaken() {
     this.loading = true;
-    this.beroepstaakService.getBeroepstakenByObject(this.selectedCursus.eindBT).subscribe(beroepstaken => {
-      this.selectedCursus.beroepstaken = beroepstaken;
-      console.log('selectedCursus.beroepstaken');
-      console.log(this.selectedCursus.beroepstaken);
-      this.loading = false;
+
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+      //console.log(token);
+    
+      this.beroepstaakService.getBeroepstakenByObject(this.selectedCursus.eindBT, token).subscribe(beroepstaken => {
+        this.selectedCursus.beroepstaken = beroepstaken;
+        console.log('selectedCursus.beroepstaken');
+        console.log(this.selectedCursus.beroepstaken);
+        this.loading = false;
+      });
     });
   }
 
@@ -683,7 +680,7 @@ export class CursussenComponent implements OnInit {
     this.loading = true;
 
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      console.log(token);
+      //console.log(token);
     
       this.professionalskillService.getProfessionalskillsByObject(this.selectedCursus.eindPS, token).subscribe(professionalskills => {
         this.selectedCursus.professionalskills = professionalskills;
@@ -697,7 +694,7 @@ export class CursussenComponent implements OnInit {
     this.loading = true;
 
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      console.log(token);
+      //console.log(token);
 
       this.leerdoelenService.getLeerdoelenByObject(this.selectedCursus.leerdoelen, token).subscribe(leerdoelen => {
         this.selectedCursus.leerdoelenLijst = leerdoelen;
@@ -706,7 +703,6 @@ export class CursussenComponent implements OnInit {
       );
     });
   }
-
 
   refreshToetsen() {
     this.loading = true;
