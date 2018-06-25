@@ -17,9 +17,9 @@ export class RolService {
     console.log( "rolService armeluisdebugger: " + message);
   }
 
-  getRol(id, headersIn :httpReaders): Observable<Rol> {
+  getRol(id, headersIn :HttpHeaders ): Observable<Rol> {
     let requestOptions = {
-      headers = headersIn,
+      headers : headersIn,
     };
 
     let url = `${myGlobals.baseUrl + 'roles'}/${id}`;
@@ -30,7 +30,10 @@ export class RolService {
     );
   }
   // TODO: registreer een bootstrap module nadat alle rollen zijn opgehaald
-  getRollen(): Observable<Rol[]> {
+  getRollen(headersIn :HttpHeaders ): Observable<Rol[]> {
+  let requestOptions = {
+  headers: headersIn,
+};
     // Object.Prototype.function<Class[]>(Object.property);
     let url = `${myGlobals.baseUrl + 'roles'}`;
     return this.http.get<Rol[]>(url, requestOptions)
@@ -40,10 +43,10 @@ export class RolService {
       );
   }
   //TODO: roep een bootstrap module aan nadat een rol is geselecteerd
-  getModulesByRol(RolId, headersIn :HttpRequest): Observable<Rol[]> {
-    let requestOption = {
-      headers = headersIn,
-    };
+  getModulesByRol(RolId, headersIn :HttpHeaders ): Observable<Rol[]> {
+  let requestOptions = {
+  headers: headersIn,
+}
 
     return this.http.get<Rol[]>(`${myGlobals.baseUrl + 'roles'}/${RolId}/modules`, requestOptions)
       .pipe(

@@ -42,7 +42,7 @@ getCursussenByObject(obj) {
 	.pipe( tap( res => console.log(res)) );
 }
 
-addBeroepstakenToCursus(cursusId, beroepstaak, headersIn :HttpReaders) {
+addBeroepstakenToCursus(cursusId, beroepstaak, headersIn :HttpHeaders) {
 	let requestOptions = {
 		headers : headersIn,
 	};
@@ -86,7 +86,7 @@ saveToets(cursusId, toets) {
 
 deleteBeroepstaak(cursusId, beroepstaakId, headersIn :HttpHeaders) {
 	let requestOptions = {
-		headers = headersIn
+		headers : headersIn
 	};
 
 	return this.http.delete(myGlobals.baseUrl+'cursussen/' + cursusId + '/beroepstaken/' + beroepstaakId, requestOptions)

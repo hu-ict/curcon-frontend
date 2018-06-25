@@ -20,9 +20,9 @@ export class UserService {
     console.log( "userService armeluisdebugger: " + message);
   }
 
-  getUser(id, headersIn :HttpRequest): Observable<User> {
+  getUser(id, headersIn :HttpHeaders ): Observable<User> {
     let requestOptions = {
-      headers = headersIn,
+      headers: headersIn,
     };
 
     let url = `${myGlobals.baseUrl + 'users'}/${id}`;
@@ -33,7 +33,7 @@ export class UserService {
     );
   }
   //
-  getUsers(headersIn): Observable<User[]> {//g
+  getUsers(headersIn :HttpHeaders ): Observable<User[]> {//g
     // Object.Prototype.function<Class[]>(Object.property);
     let url = `${myGlobals.baseUrl + 'users'}`;
     return this.http.get<User[]>(url, {

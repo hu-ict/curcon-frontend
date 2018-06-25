@@ -14,20 +14,32 @@ export class LeerdoelenService {
   constructor(private http: HttpClient) {
     console.log('LeerdoelenService Initialized...');
   }
-//TODO overal header toevoegen
-  getLeerdoelen() {
-    return this.http.get<curconnamespace.CurconNameSpace.LeerdoelOverzichtDto[]>(myGlobals.baseUrl+'leerdoelen/')
+
+  getLeerdoelen(headersIn :HttpHeaders ) {
+  let requestOptions = {
+  headers: headersIn,
+};
+    return this.http.get<curconnamespace.CurconNameSpace.LeerdoelOverzichtDto[]>(myGlobals.baseUrl+'leerdoelen/'
+ ,requestOptions)
       .pipe( tap( res => console.log(res)) );
   }
 
-  getLeerdoelenByObject(obj) {
+  getLeerdoelenByObject(obj,headersIn :HttpHeaders) {
+    let requestOptions = {
+    headers: headersIn,
+  };
     console.log(obj.href);
-    return this.http.get<curconnamespace.CurconNameSpace.LeerdoelOverzichtDto[]>(obj.href)
+    return this.http.get<curconnamespace.CurconNameSpace.LeerdoelOverzichtDto[]>(obj.href
+ ,requestOptions)
       .pipe( tap( res => console.log(res)) );
   }
 
-  getDataByHref(href) {
-    return this.http.get<curconnamespace.CurconNameSpace.LeerdoelOverzichtDto>(href)
+  getDataByHref(href,headersIn :HttpHeaders ) {
+    let requestOptions = {
+    headers: headersIn,
+  };
+    return this.http.get<curconnamespace.CurconNameSpace.LeerdoelOverzichtDto>(href
+ ,requestOptions)
       .pipe( tap( res => console.log(res)) );
   }
 }

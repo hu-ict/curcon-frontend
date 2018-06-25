@@ -17,16 +17,16 @@ export class BloomniveausService {
 
   getBloomniveaus(headersIn :HttpHeaders) {
     let requestOptions = {
-      headers = headersIn
+      headers : headersIn
     };
-    
+
     return this.http.get<curconnamespace.CurconNameSpace.BloomNiveauDto[]>(myGlobals.baseUrl+'bloomniveaus/', requestOptions)
       .pipe( tap( res => console.log(res)) );
   }
 
   getBloomniveausByObject(obj, headersIn :HttpHeaders) {
     let requestOptions = {
-      headers = headersIn
+      headers : headersIn
     };
 
     return this.http.get<curconnamespace.CurconNameSpace.BloomNiveauDto[]>(obj.href, requestOptions)

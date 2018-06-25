@@ -25,8 +25,8 @@ export class ModuleService {
   }
   /*  */
   getModules(headersIn :HttpHeaders): Observable<Module[]> {
-    requestOptions = {
-      headers = headersIn,
+    let requestOptions = {
+      headers : headersIn,
     };
 
     // Object.Prototype.function<Class[]>(Object.property);
