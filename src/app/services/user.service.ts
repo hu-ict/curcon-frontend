@@ -20,9 +20,13 @@ export class UserService {
     console.log( "userService armeluisdebugger: " + message);
   }
 
-  getUser(id): Observable<User> {
+  getUser(id, headersIn :HttpRequest): Observable<User> {
+    let requestOptions = {
+      headers = headersIn,
+    };
+
     let url = `${myGlobals.baseUrl + 'users'}/${id}`;
-    return this.http.get<User>(url)
+    return this.http.get<User>(url, requestOptions)
     .pipe(
       tap(user => this.log(`fetched function id=${user.username}`)),
       catchError(ErrorService.prototype.handleError<User>('getUser id=${id}'))

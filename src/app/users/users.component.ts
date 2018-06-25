@@ -31,6 +31,7 @@ export class UsersComponent implements OnInit  {
 
   getUsers(): void {
     let self = this;
+    
     self.authService.maakTokenHeadervoorCurcon().then(function(headers){
       self.userService.getUsers(headers)
       .subscribe(users => self.users = users)

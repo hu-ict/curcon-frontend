@@ -24,9 +24,13 @@ export class ModuleService {
     );
   }
   /*  */
-  getModules(): Observable<Module[]> {
+  getModules(headersIn :HttpHeaders): Observable<Module[]> {
+    requestOptions = {
+      headers = headersIn,
+    };
+
     // Object.Prototype.function<Class[]>(Object.property);
-    return this.http.get<Module[]>(myGlobals.baseUrl + 'modules')
+    return this.http.get<Module[]>(myGlobals.baseUrl + 'modules', requestOptions)
       .pipe(
         tap(modules => this.log(`fetched function id=${Module["id"]}`)),
         catchError(ErrorService.prototype.handleError<Module[]>('getModules id={module.id}'))

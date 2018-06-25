@@ -23,8 +23,11 @@ export class RollenComponent implements OnInit {
   }
 
   getRollen(): void {
-    this.rolService.getRollen()
-    .subscribe(rollen => this.rollen = rollen);
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+      //console.log(token);
+      
+      this.rolService.getRollen(token).subscribe(rollen => this.rollen = rollen);
+    });
   }
   ngOnInit(): void {
     console.log(this.getRollen())

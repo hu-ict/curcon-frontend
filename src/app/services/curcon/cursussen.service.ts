@@ -42,9 +42,13 @@ getCursussenByObject(obj) {
 	.pipe( tap( res => console.log(res)) );
 }
 
-addBeroepstakenToCursus(cursusId, beroepstaak) {
+addBeroepstakenToCursus(cursusId, beroepstaak, headersIn :HttpReaders) {
+	let requestOptions = {
+		headers : headersIn,
+	};
+
 	let newBeroepstaak = {'id': beroepstaak.id};
-	return this.http.post<curconnamespace.CurconNameSpace.BeroepsTaakDto>(myGlobals.baseUrl+'cursussen/' + cursusId + '/beroepstaken', newBeroepstaak,)
+	return this.http.post<curconnamespace.CurconNameSpace.BeroepsTaakDto>(myGlobals.baseUrl+'cursussen/' + cursusId + '/beroepstaken', newBeroepstaak, requestOptions)
 	.pipe(catchError(this.handleError));
 }
 
@@ -80,8 +84,12 @@ saveToets(cursusId, toets) {
 	}
 }
 
-deleteBeroepstaak(cursusId, beroepstaakId) {
-	return this.http.delete(myGlobals.baseUrl+'cursussen/' + cursusId + '/beroepstaken/' + beroepstaakId)
+deleteBeroepstaak(cursusId, beroepstaakId, headersIn :HttpHeaders) {
+	let requestOptions = {
+		headers = headersIn
+	};
+
+	return this.http.delete(myGlobals.baseUrl+'cursussen/' + cursusId + '/beroepstaken/' + beroepstaakId, requestOptions)
 	.pipe(catchError(this.handleError));
 }
 

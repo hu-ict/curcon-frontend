@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core'; // Input niet nodig
 import { Module } from '../model/module';
 import { ModuleService } from '../services/module.service';
 import { Observable, Subject } from "rxjs";
+import {AuthService} from '../providers/auth.service';
+import {AngularFireAuth} from 'angularfire2/auth';
+import {FunctieService } from '../services/functie.service';
 
 @Component({
   selector: 'app-modules',
@@ -25,8 +28,11 @@ export class ModulesComponent implements OnInit {
   getModule(){}
 
   getModules(): void {
-    this.moduleService.getModules()
-    .subscribe(modules => this.modules = modules);
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+      //console.log(token);
+      
+      this.moduleService.getModules(token).subscribe(modules => this.modules = modules);
+    });
   }
   ngOnInit(): void {
 
