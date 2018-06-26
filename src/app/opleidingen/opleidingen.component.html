@@ -1,14 +1,11 @@
 <div class="container">
-	<div *ngIf="loading" align="center" class="page-loading">
-		<img src="assets/img/ripple.svg" />
-	</div>
 	<div class="row">
 		<div class="col-3">
 			<div class="card">
 				<div class="card-header">
 					<h4 class="card-title mb-0">Opleidingsprofielen</h4>
 					<br />
-					<button type="button" id="createbutton" class="btn btn-info"
+					<button type="button"  class="btn btn-info" id="createbutton"
 						(click)="opleidingModal.show(); newOpleidingForm();">
 						<i class="fa fa-plus" aria-hidden="true"></i>
 					</button>
@@ -74,7 +71,7 @@
 										</div>
 									</div>
 								</div>
-							</tab> 
+							</tab>
 							<tab tab heading="Algemeen" id="tab1">
 								<form #opleidingForm="ngForm" novalidate>
 									<a href="javascript:void(0)" (click)="setMode('edit')" *ngIf="mode == 'view'">Bewerken</a>
@@ -122,7 +119,7 @@
 									<div class="row">
 										<div class="col-12">
 											<div class="btn-group pull-right" role="group" aria-label="...">
-												<button type="button" class="btn btn-info" (click)="beroepstaakModal.show(); getBeroepstaakTypes();">
+												<button type="button" class="btn btn-info" id="createbutton" (click)="beroepstaakModal.show(); getBeroepstaakTypes();">
 													<i class="fa fa-plus" aria-hidden="true"></i>
 												</button>
 											</div>
@@ -160,7 +157,7 @@
 									<div class="row">
 										<div class="col-12">
 											<div class="btn-group pull-right" role="group" aria-label="...">
-												<button type="button" class="btn btn-info"
+												<button type="button" class="btn btn-info" id="createbutton"
 													(click)="ProfessionalskillModal.show(); getProfessionalskillTypes();">
 													<i class="fa fa-plus" aria-hidden="true"></i>
 												</button>
@@ -175,7 +172,7 @@
 										<div class="row">
 											<div class="col-12">
 												<div class="btn-group pull-right" role="group" aria-label="...">
-													<button type="button" class="btn btn-info"
+													<button type="button" class="btn btn-info" id="createbutton"
 														(click)="cursusModal.show(); initializeCursusForm();">
 														<i class="fa fa-plus" aria-hidden="true"></i>
 													</button>
