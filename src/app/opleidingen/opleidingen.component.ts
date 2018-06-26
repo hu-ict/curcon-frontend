@@ -81,8 +81,9 @@ export class OpleidingenComponent implements OnInit {
 		this.selectedButton = 1;
 		this.mode = 'view';
 		let self = this;
+		    this.afAuth.authState.subscribe((auth) => {
 		this.authService.maakTokenHeadervoorCurcon().then( token => {
-      		//console.log(token);
+      		console.log(token);
 
 			self.opleidingenService.getOpleidingen(token).subscribe(opleidingen => {
 				self.opleidingen= opleidingen;
@@ -95,6 +96,7 @@ export class OpleidingenComponent implements OnInit {
 				self.loading = false;
 			});
 		});
+	})
 	}
 
 	loadButtons() {

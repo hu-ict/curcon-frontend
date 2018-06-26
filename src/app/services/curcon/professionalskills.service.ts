@@ -11,10 +11,10 @@ import * as myGlobals from '../../globals';
 
 @Injectable()
 export class ProfessionalskillsService {
-	headers: HttpHeaders;
+	//headers: HttpHeaders;
 	constructor(private http: HttpClient) {
 		console.log('ProfessionalskillsService Initialized...');
-		this.headers = new HttpHeaders();
+		//this.headers = new HttpHeaders();
 
 	}
 //FIXME DELETE ME
@@ -23,23 +23,35 @@ export class ProfessionalskillsService {
 	// }
 
 	getProfessionalskills(headersIn: HttpHeaders) {
-		return this.http.get<curconnamespace.CurconNameSpace.ProfessionalSkillDto[]>(myGlobals.baseUrl+'professionalskills/', { headers : this.headers })
+		let requestOptions = {
+	headers: headersIn,
+};
+		return this.http.get<curconnamespace.CurconNameSpace.ProfessionalSkillDto[]>(myGlobals.baseUrl+'professionalskills/', requestOptions)
 		.pipe( tap( res => console.log(res)) );
 	}
 
 	getProfessionalskillsByObject(obj, headersIn: HttpHeaders) {
-		return this.http.get<curconnamespace.CurconNameSpace.ProfessionalSkillDto[]>(obj.href, { headers : this.headers })
+		let requestOptions = {
+	headers: headersIn,
+};
+		return this.http.get<curconnamespace.CurconNameSpace.ProfessionalSkillDto[]>(obj.href, requestOptions)
 		.pipe( tap( res => console.log(res)) );
 	}
 
 	getProfessionalskillsTypes(headersIn: HttpHeaders) {
-		return this.http.get<curconnamespace.CurconNameSpace.ProfessionalSkillTypesDto[]>(myGlobals.baseUrl+'professionalskills/types', { headers : this.headers })
+		let requestOptions = {
+	headers: headersIn,
+};
+		return this.http.get<curconnamespace.CurconNameSpace.ProfessionalSkillTypesDto[]>(myGlobals.baseUrl+'professionalskills/types', requestOptions)
 		.pipe( tap( res => console.log(res)) );
 	}
 
 
 	getProfessionalskillId(skillid, niv, headersIn: HttpHeaders) {
-		return this.http.get<curconnamespace.CurconNameSpace.ProfessionalSkillDto>(myGlobals.baseUrl+'professionalskills/skill/' + skillid + '/niveaus/' + niv, { headers : this.headers })
+		let requestOptions = {
+	headers: headersIn,
+};
+		return this.http.get<curconnamespace.CurconNameSpace.ProfessionalSkillDto>(myGlobals.baseUrl+'professionalskills/skill/' + skillid + '/niveaus/' + niv, requestOptions)
 		.pipe( tap( res => console.log(res)) );
 	}
 

@@ -27,7 +27,8 @@ export class OrganisatiesService {
   getOrganisaties(headersIn :HttpHeaders ): Observable<curconnamespace.CurconNameSpace.OrganisatieDto[]> {
     let requestOptions = {
   headers: headersIn,
-  };
+  };    requestOptions.headers.append( 'Content-Type', 'application/json' );
+      requestOptions.headers.append('Access-Control-Allow-Origin', '*');
     return this.http.get<curconnamespace.CurconNameSpace.OrganisatieDto[]>(myGlobals.baseUrl+'organisaties/',requestOptions)
       .pipe( tap( res => console.log(res)) );
   }
@@ -35,7 +36,8 @@ export class OrganisatiesService {
   getOrganisatieById(id,headersIn :HttpHeaders ): Observable<curconnamespace.CurconNameSpace.OrganisatieDto> {
     let requestOptions = {
   headers: headersIn,
-};
+};    requestOptions.headers.append( 'Content-Type', 'application/json' );
+    requestOptions.headers.append('Access-Control-Allow-Origin', '*');
     return this.http.get<curconnamespace.CurconNameSpace.OrganisatieDto>(myGlobals.baseUrl+'organisaties/' + id,requestOptions)
       .pipe( tap( res => console.log(res)) );
   }
@@ -44,6 +46,8 @@ export class OrganisatiesService {
     let requestOptions = {
       headers: headersIn,
     };
+    requestOptions.headers.append( 'Content-Type', 'application/json' );
+    requestOptions.headers.append('Access-Control-Allow-Origin', '*');
     return this.http.get<curconnamespace.CurconNameSpace.OrganisatieDto>(obj.href,requestOptions)
       .pipe( tap( res => console.log(res)) );
   }
@@ -51,8 +55,9 @@ export class OrganisatiesService {
   getDataByHref(href,headersIn :HttpHeaders ) {
     let requestOptions = {
   headers: headersIn,
-};
-    return this.http.get<curconnamespace.CurconNameSpace.OrganisatieDto>(href,requestOptions)
+};    requestOptions.headers.append( 'Content-Type', 'application/json' );
+    requestOptions.headers.append('Access-Control-Allow-Origin', '*');
+    return this.http.get<curconnamespace.CurconNameSpace.OrganisatieDto>(href, { headers : this.headers })
       .pipe( tap( res => console.log(res)) );
   }
 }
