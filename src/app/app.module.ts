@@ -32,6 +32,8 @@ import { UserService } from './services/user.service';
 //import { DocentenService } from './services/docenten.service';
 import { AuthService } from './providers/auth.service';//
 import { OrganisatiesService } from './services/curcon/organisaties.service';
+
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 // import {  } from './services/curcon/beroepstaken.service';
 // import {  } from './services/curcon/.service';
 // import {  } from './services/curcon/.service';
@@ -121,6 +123,7 @@ import {BtCalculatedModule} from './bt-calculated/bt-calculated.module';
     NgbTabsetModule,
     NgbDropdownModule,
     NgbTooltipModule,
+    AngularFontAwesomeModule
   ],
   providers: [
     {
