@@ -56,7 +56,7 @@ export class DocentenComponent implements OnInit {
           if (!userToegang){
               element.style.display = "none";
             console.log("geen toegang voor aanmaken");
-            this.isVisible=false;
+      
           }
         }
         //this.loading = false;

@@ -222,10 +222,10 @@
 												<tbody>
 													<tr *ngFor="let ld of selectedCursus.leerdoelenLijst">
 														<td><a class="text-danger" href="javascript:void(0)"
-															(click)="deleteLeerdoel(ld)"><i
+															(click)="deleteLeerdoel(ld)"><i *ngIf="isVisible"
 																class="fa fa-minus-circle" aria-hidden="true"
 																style="font-size: 20px;"></i></a> <a href="javascript:void(0)"
-															(click)="initializeLeerdoelModal(ld);"><i
+															(click)="initializeLeerdoelModal(ld);"><i *ngIf="isVisible"
 																class="fa fa-pencil-square" aria-hidden="true"
 																style="font-size: 20px;"></i></a></td>
 														<td>{{ld.bloomniveau.naam}}</td>

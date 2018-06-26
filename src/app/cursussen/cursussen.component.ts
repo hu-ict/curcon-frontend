@@ -75,7 +75,7 @@ export class CursussenComponent implements OnInit {
               private functieService : FunctieService,
               private afAuth: AngularFireAuth) {
     this.loading = true;
-    //this.isVisible=true;
+    this.isVisible=true;
 
     this.afAuth.authState.subscribe((auth) => {
       console.log("authstate updated//user changed");
@@ -140,16 +140,15 @@ export class CursussenComponent implements OnInit {
 
             if (functies == null) {
                 element.style.display = "none";
-                this.isVisible=false;
+                this.isVisible =false;
             } else {
-                var userToegang = functies.some(f=> f.name == "cursus_put");
+                //var userToegang = functies.some(f=> f.name == "cursus_put");
 
-                if (!userToegang) {
+                if (!functies.some(f=> f.name == "cursus_put")) {
                   element.style.display = "none";
                 }
 
-                userToegang = functies.some(f=> f.name == "cursus_post");
-                if (!userToegang) {
+                if (!functies.some(f=> f.name == "cursus_post")) {
                   console.log("geen toegang");
                   this.isVisible=false;
                 }
