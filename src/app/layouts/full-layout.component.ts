@@ -40,21 +40,27 @@ export class FullLayoutComponent implements OnInit {
 }
 
 onChange(item) {
-  this.organisatieService.getOrganisatieById(item).subscribe(organisatie => {
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+  this.organisatieService.getOrganisatieById(item,token).subscribe(organisatie => {
     localStorage.setItem('selectedOrganisatie', JSON.stringify(organisatie));
     this.selectedOrganisatie = organisatie.naam;
+
   });
+    })
 }
 
 constructor(private organisatieService: OrganisatiesService,private afAuth: AngularFireAuth,private authService:AuthService, private router: Router) {
   this.allOrganisaties = [];
-  organisatieService.getOrganisaties().subscribe(organisatie => {
+    this.afAuth.authState.subscribe((auth) => {
+  this.authService.maakTokenHeadervoorCurcon().then( token => {
+  organisatieService.getOrganisaties(token).subscribe(organisatie => {
     this.allOrganisaties.push(organisatie);
     if(localStorage.getItem('selectedOrganisatie') == null)
     localStorage.setItem('selectedOrganisatie', JSON.stringify(this.allOrganisaties[0]));
     console.log(this.allOrganisaties);
   });
-
+  })
+})
   this.selectedOrganisatie = JSON.parse(localStorage.getItem('selectedOrganisatie')).naam;
 }
 

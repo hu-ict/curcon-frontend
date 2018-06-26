@@ -17,29 +17,42 @@ export class OrganisatiesService {
 	//options: RequestOptions;
 
 	constructor(private http: HttpClient) {
+    //TODO Deze headers ook gebruiker en meegeven
 		console.log('OrganisatieService Initialized...');
 		this.headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 		this.headers.append('Access-Control-Allow-Origin', '*');
 		//this.options = new RequestOptions({ headers: this.headers });
 	}
 
-  getOrganisaties(): Observable<curconnamespace.CurconNameSpace.OrganisatieDto[]> {
-    return this.http.get<curconnamespace.CurconNameSpace.OrganisatieDto[]>(myGlobals.baseUrl+'organisaties/',{ headers : this.headers })
+  getOrganisaties(headersIn :HttpHeaders ): Observable<curconnamespace.CurconNameSpace.OrganisatieDto[]> {
+    let requestOptions = {
+  headers: headersIn,
+  };
+    return this.http.get<curconnamespace.CurconNameSpace.OrganisatieDto[]>(myGlobals.baseUrl+'organisaties/',requestOptions)
       .pipe( tap( res => console.log(res)) );
   }
 
-  getOrganisatieById(id): Observable<curconnamespace.CurconNameSpace.OrganisatieDto> {
-    return this.http.get<curconnamespace.CurconNameSpace.OrganisatieDto>(myGlobals.baseUrl+'organisaties/' + id,{ headers : this.headers })
+  getOrganisatieById(id,headersIn :HttpHeaders ): Observable<curconnamespace.CurconNameSpace.OrganisatieDto> {
+    let requestOptions = {
+  headers: headersIn,
+};
+    return this.http.get<curconnamespace.CurconNameSpace.OrganisatieDto>(myGlobals.baseUrl+'organisaties/' + id,requestOptions)
       .pipe( tap( res => console.log(res)) );
   }
 
-  getOrganisatieByObject(obj): Observable<curconnamespace.CurconNameSpace.OrganisatieDto> {
-    return this.http.get<curconnamespace.CurconNameSpace.OrganisatieDto>(obj.href,{ headers : this.headers })
+  getOrganisatieByObject(obj,headersIn :HttpHeaders ): Observable<curconnamespace.CurconNameSpace.OrganisatieDto> {
+    let requestOptions = {
+      headers: headersIn,
+    };
+    return this.http.get<curconnamespace.CurconNameSpace.OrganisatieDto>(obj.href,requestOptions)
       .pipe( tap( res => console.log(res)) );
   }
 
-  getDataByHref(href) {
-    return this.http.get<curconnamespace.CurconNameSpace.OrganisatieDto>(href, { headers : this.headers })
+  getDataByHref(href,headersIn :HttpHeaders ) {
+    let requestOptions = {
+  headers: headersIn,
+};
+    return this.http.get<curconnamespace.CurconNameSpace.OrganisatieDto>(href,requestOptions)
       .pipe( tap( res => console.log(res)) );
   }
 }

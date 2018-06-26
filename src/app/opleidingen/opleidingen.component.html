@@ -8,7 +8,7 @@
 				<div class="card-header">
 					<h4 class="card-title mb-0">Opleidingsprofielen</h4>
 					<br />
-					<button type="button" class="btn btn-info"
+					<button type="button" id="createbutton" class="btn btn-info"
 						(click)="opleidingModal.show(); newOpleidingForm();">
 						<i class="fa fa-plus" aria-hidden="true"></i>
 					</button>
@@ -38,8 +38,8 @@
 					<h4 class="card-title mb-0">{{selectedOpleiding.naam}}</h4>
 				</div>
 				<div class="card-block">
-					<tabset> 
-						<tab heading="Overzicht" id="tab1"> 
+					<tabset>
+						<tab heading="Overzicht" id="tab1">
 							<div class="col-12 leerplannen">
 								<div class="row cursus">
 									<div class="col-12">
@@ -75,10 +75,10 @@
 									</div>
 								</div>
 							</tab> 
-							<tab tab heading="Algemeen" id="tab1"> 
+							<tab tab heading="Algemeen" id="tab1">
 								<form #opleidingForm="ngForm" novalidate>
-									<a href="javascript:void(0)" (click)="setMode('edit')" *ngIf="mode == 'view'">Bewerken</a> 
-									<a href="javascript:void(0)"(click)="setMode('view')" *ngIf="mode == 'edit'">Annuleren</a> 
+									<a href="javascript:void(0)" (click)="setMode('edit')" *ngIf="mode == 'view'">Bewerken</a>
+									<a href="javascript:void(0)"(click)="setMode('view')" *ngIf="mode == 'edit'">Annuleren</a>
 									<a href="javascript:void(0)" (click)="saveOpleiding(opleidingForm)" *ngIf="mode == 'edit'">Opslaan</a>
 									<div class="form-group row">
 										<label for="naam" class="col-2 col-form-label">Naam</label>
@@ -89,8 +89,8 @@
 									</div>
 									{{opleidingForm.value | json}}
 								</form>
-							</tab> 
-							<tab heading="Beroeptstaken" id="tab1"> 
+							</tab>
+							<tab heading="Beroeptstaken" id="tab1">
 								<div class="col-12">
 									<div class="row">
 										<div class="table-responsive">
@@ -129,7 +129,7 @@
 										</div>
 									</div>
 								</div>
-							</tab> 
+							</tab>
 							<tab heading="Professional Skills" id="tab1">
 								<div class="col-12">
 									<div class="row">
@@ -168,7 +168,7 @@
 										</div>
 									</div>
 								</div>
-							</tab> 
+							</tab>
 							<tab heading="Toetsprogramma" id="tab1">
 								<div class="col-12 leerplannen">
 									<div *ngIf="selectedCohort != undefined">
