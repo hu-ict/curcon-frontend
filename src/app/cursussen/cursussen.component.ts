@@ -85,7 +85,8 @@ export class CursussenComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.maakTokenHeadervoorCurcon()
+      this.afAuth.authState.subscribe((auth) => {
+
     this.cursusForm = {};
     this.mode = 'view';
     this.toetsMatrijsEdit = 0;
@@ -119,6 +120,7 @@ export class CursussenComponent implements OnInit {
         });
       });
     });
+  })
   }
 
 

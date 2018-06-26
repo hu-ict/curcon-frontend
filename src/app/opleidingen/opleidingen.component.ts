@@ -443,7 +443,7 @@ export class OpleidingenComponent implements OnInit {
 	            console.log(data);
 							//changed
 							this.availableCursussen=null;
-	    				this.allCursussen.push(data);
+	    				this.allCursussen=data;
 					//End change
 // =======
 //    		this.cursusForm = {};
