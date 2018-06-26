@@ -171,16 +171,18 @@ export class OpleidingenComponent implements OnInit {
 						this.selectedOpleiding.profiel = data;
 						console.log("this.selectedOpleiding");
 						console.log(this.selectedOpleiding);
+						this.refreshProfessionalskills();
+						this.refreshCursussen();
+						console.log("---- this.selectedOpleiding ----");
+						console.log(this.selectedOpleiding);
+						console.log("---- this.selectedCohort ----");
+						console.log(this.selectedCohort);
+
+								this.loading = false;
 					});
 				});
 
-	    		this.refreshProfessionalskills();
-	    		this.refreshCursussen();
-	    		console.log("---- this.selectedOpleiding ----");
-	    		console.log(this.selectedOpleiding);
-	    		console.log("---- this.selectedCohort ----");
-	    		console.log(this.selectedCohort);
-	            this.loading = false;
+
 	        });
 	    });
 	}
@@ -354,40 +356,33 @@ export class OpleidingenComponent implements OnInit {
 	}
 
 	refreshCursussen() {
-// <<<<<<< HEAD
-// 		this.authService.maakTokenHeadervoorCurcon().then( token => {
-// 			console.log("refreshCursussen")
-// 			console.log(this.selectedCohort)
-// =======
 		console.log("refreshCursussen")
 		console.log(this.selectedCohort)
 
-		this.authService.maakTokenHeadervoorCurcon().then( token => {
+		//this.authService.maakTokenHeadervoorCurcon().then( token => {
       		//console.log(token);
+	this.authService.maakTokenHeadervoorCurcon().then( token =>
 
-//>>>>>>> d676fe6285d403d3b36a9c05409b8d7d47a23cf2
-//			this.cursussenService.getCursussenByObject(this.selectedCohort.cursussen, token).subscribe(cursussen => {
-//				this.cursussen= cursussen;;
-//				console.log(this.cursussen);
+			this.cursussenService.getCursussenByObject(this.selectedCohort.cursussen, token).subscribe(cursussen => {
+				this.cursussen= cursussen;;
+				console.log(this.cursussen);
 				for(let c of this.cursussen) {
-					this.authService.maakTokenHeadervoorCurcon().then( token => {
+
       					//console.log(token);
 
 						this.beroepstakenService.getBeroepstakenByObject(c.eindBT, token).subscribe(beroepstaken => {
 							c.beroepstaken = [];
 							c.beroepstaken = beroepstaken;
 
-							this.authService.maakTokenHeadervoorCurcon().then( token => {
+						//	this.authService.maakTokenHeadervoorCurcon().then( token => {
       							//console.log(token);
 								this.professionalskillService.getProfessionalskillsByObject(c.eindPS, token).subscribe(professionalskills => {
 									c.professionalskills = [];
 									c.professionalskills = professionalskills;
 								});
 							});
-						});
-					});
 				}
-			});
+			}));
     }
 
 	closeModal(modal) {
@@ -444,24 +439,7 @@ export class OpleidingenComponent implements OnInit {
 							//changed
 							this.availableCursussen=null;
 	    				this.allCursussen=data;
-					//End change
-// =======
-//    		this.cursusForm = {};
-//         console.log('1 this.cursussen');
-//         console.log(this.cursussen);
-//
-//         this.authService.maakTokenHeadervoorCurcon().then( token => {
-//       		//console.log(token);
-// 	    	this.cursussenService.getCursussen(token).subscribe(data => {
-// 	            console.log('2 data');
-// 	            console.log(data);
-//
-// 				//changed
-// 				this.availableCursussen=null;
-// 	    		this.allCursussen.push(data);
-// 				//End change
-//
-// >>>>>>> d676fe6285d403d3b36a9c05409b8d7d47a23cf2
+					// End change
 	            console.log('3 this.allCursussen');
 	            console.log(this.allCursussen);
 	    		let selectedCursus = this.cursussen[0];
@@ -485,58 +463,58 @@ export class OpleidingenComponent implements OnInit {
 
     }
 
-// onSelectCohort(coh: Object) {
-// this.loading = true;
-// this.cursusService.getCursussenByObject(coh['cursussen']).subscribe(cur => {
-// this.cursussen = cur;
-// for(let index = 0; index < this.cursussen.length; index++) {
-// this.beroepstaakService.getBeroepstakenByObject(this.cursussen[index].eindBT).subscribe(beroepstaken
-// => {
-// this.cursussen[index].beroepstaken = [];
-// let btMatrix = this.generateMatrix();
-//
-// //console.log(beroepstaken);
-// for(let btIndex = 0; btIndex < beroepstaken.length; btIndex++) {
-// btMatrix[beroepstaken[btIndex].architectuurlaagId][beroepstaken[btIndex].activiteitId]
-// = beroepstaken[btIndex];
-// //
-// btMatrix[beroepstaken[btIndex].architectuurlaagId][beroepstaken[btIndex].activiteitId]
-// = beroepstaken[btIndex];
-// this.cursussen[index].beroepstaken.push(beroepstaken[btIndex]);
-// }
-// this.cursussen[index].btMatrix = btMatrix;
-// });
-//
-// this.professionalskillService.getProfessionalskillsByObject(this.cursussen[index].eindPS).subscribe(professionalskills
-// => {
-// this.cursussen[index].professionalskills = [];
-// for(let j = 0; j < professionalskills.length; j++) {
-// this.cursussen[index].professionalskills.push(professionalskills[j]);
-// }
-// });
-//
-// }
-// this.selectedCohort = coh;
-// this.loading = false;
-// });
-// }
+onSelectCohort(coh: Object) {
+this.loading = true;
+this.authService.maakTokenHeadervoorCurcon().then( token => {
+this.cursussenService.getCursussenByObject(coh['cursussen'],token).subscribe(cur => {
+this.cursussen = cur;
+for(let index = 0; index < this.cursussen.length; index++) {
+this.beroepstakenService.getBeroepstakenByObject(this.cursussen[index].eindBT,token).subscribe(beroepstaken => {
+this.cursussen[index].beroepstaken = [];
+let btMatrix = this.generateMatrix();
 
-//	generateMatrix() {
-//		let btMatrix = Array.apply(null, Array(6));
-//		for(let i = 0; i < btMatrix.length; i++) {
-//			btMatrix[i] = Array.apply(null, Array(6));
-//		}
-//		btMatrix[0][1] = 'B';
-//		btMatrix[0][2] = 'A';
-//		btMatrix[0][3] = 'A';
-//		btMatrix[0][4] = 'O';
-//		btMatrix[0][5] = 'R';
-//		btMatrix[1][0] = 'G';
-//		btMatrix[2][0] = 'B';
-//		btMatrix[3][0] = 'I';
-//		btMatrix[4][0] = 'S';
-//		btMatrix[5][0] = 'H';
-//		return btMatrix;
-//	}
+//console.log(beroepstaken);
+for(let btIndex = 0; btIndex < beroepstaken.length; btIndex++) {
+btMatrix[beroepstaken[btIndex].architectuurlaagId][beroepstaken[btIndex].activiteitId]
+= beroepstaken[btIndex];
+//
+btMatrix[beroepstaken[btIndex].architectuurlaagId][beroepstaken[btIndex].activiteitId]
+= beroepstaken[btIndex];
+this.cursussen[index].beroepstaken.push(beroepstaken[btIndex]);
+}
+this.cursussen[index].btMatrix = btMatrix;
+});
+
+this.professionalskillService.getProfessionalskillsByObject(this.cursussen[index].eindPS,token).subscribe(professionalskills => {
+this.cursussen[index].professionalskills = [];
+for(let j = 0; j < professionalskills.length; j++) {
+this.cursussen[index].professionalskills.push(professionalskills[j]);
+}
+});
+
+}
+this.selectedCohort = coh;
+this.loading = false;
+});
+})
+}
+
+	generateMatrix() {
+		let btMatrix = Array.apply(null, Array(6));
+		for(let i = 0; i < btMatrix.length; i++) {
+			btMatrix[i] = Array.apply(null, Array(6));
+		}
+		btMatrix[0][1] = 'B';
+		btMatrix[0][2] = 'A';
+		btMatrix[0][3] = 'A';
+		btMatrix[0][4] = 'O';
+		btMatrix[0][5] = 'R';
+		btMatrix[1][0] = 'G';
+		btMatrix[2][0] = 'B';
+		btMatrix[3][0] = 'I';
+		btMatrix[4][0] = 'S';
+		btMatrix[5][0] = 'H';
+		return btMatrix;
+	}
 
 }

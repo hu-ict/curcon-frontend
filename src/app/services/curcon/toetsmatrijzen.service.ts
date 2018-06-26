@@ -30,7 +30,7 @@ export class ToetsmatrijzenService {
       .pipe( tap( res => console.log(res)) );
   }
 
-  getToetsmatrijzenById(headersIn :HttpHeaders, id) {
+  getToetsmatrijzenById(id, headersIn :HttpHeaders) {
     let requestOptions = {
     headers: headersIn,
     };

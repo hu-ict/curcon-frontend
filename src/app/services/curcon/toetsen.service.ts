@@ -46,24 +46,26 @@ export class ToetsenService {
       .pipe( tap( res => console.log(res)) );
   }
 
-	saveBeoordelingsElement(headersIn :HttpHeaders, toetsId, element) {
+	saveBeoordelingsElement( toetsId, element,headersIn :HttpHeaders) {
     let requestOptions = {
     headers: headersIn,
     };
+    // requestOptions.headers.append( 'Content-Type', 'application/json' );
+    // requestOptions.headers.append('Access-Control-Allow-Origin', '*');
 		if (element.id == null) {
       let url =`${myGlobals.baseUrl+"toetsen/"+ toetsId + "/beoordelingselementen"}`;
-			return this.http.post<curconnamespace.CurconNameSpace.BeoordelingsElementPostDto>(url, requestOptions, element)
+			return this.http.post<curconnamespace.CurconNameSpace.BeoordelingsElementPostDto>(url, element, requestOptions)
 			.pipe(catchError(this.handleError));
 		} else {
       let url =`${myGlobals.baseUrl+"beoordelingselementen/" + elementId}`;
 			var elementId = element.id;
 			delete element.id;
-			return this.http.put<curconnamespace.CurconNameSpace.ToetsMatrijsBeoordelingsElementDto>(url, requestOptions, element)
+			return this.http.put<curconnamespace.CurconNameSpace.ToetsMatrijsBeoordelingsElementDto>(url,  element,requestOptions)
 			.pipe(catchError(this.handleError));
 		}
 	}
 
-	deleteBeoordelingselement(headersIn :HttpHeaders, elementId) {
+	deleteBeoordelingselement(elementId,headersIn :HttpHeaders) {
     let requestOptions = {
     headers: headersIn,
     };

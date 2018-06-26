@@ -34,7 +34,10 @@ export class CohortenService {
 	}
 
     addCursusToCohort(cohortId, cursus, headersIn: HttpHeaders){
-        return this.http.post<curconnamespace.CurconNameSpace.CohortPostDto>(myGlobals.baseUrl+'cohorten/' + cohortId + '/cursussen', cursus, { headers: headersIn })
+      let requestOptions = {
+  headers: headersIn,
+};
+        return this.http.post<curconnamespace.CurconNameSpace.CohortPostDto>(myGlobals.baseUrl+'cohorten/' + cohortId + '/cursussen', cursus,requestOptions)
             .pipe(catchError(this.handleError));
     }
 

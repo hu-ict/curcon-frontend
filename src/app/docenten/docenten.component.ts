@@ -49,11 +49,13 @@ export class DocentenComponent implements OnInit {
         }else{
           var userToegang=functies.some(f=> f.name == "docent_put");
           if (!userToegang){
-            element.style.display = "none";
+            console.log("geen toegang voor wijzigen");
+            this.isVisible=false;
           }
           userToegang=functies.some(f=> f.name == "organisatiedocent_post");
           if (!userToegang){
-            console.log("geen toegang");
+              element.style.display = "none";
+            console.log("geen toegang voor aanmaken");
             this.isVisible=false;
           }
         }

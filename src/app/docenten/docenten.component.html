@@ -32,7 +32,7 @@
 								<tbody>
 									<tr *ngFor="let d of docenten | orderBy: 'naam'">
 										<td style="width: 1%;"><a href="javascript:void(0)"
-										(click)="docentModal.show(); getDocent(d)"><!-- *ngIf="isVisible" dit na de i tag--><i
+										(click)="docentModal.show(); getDocent(d)"><i *ngIf="isVisible" 
 												class="fa fa-pencil-square" aria-hidden="true"
 												style="font-size: 20px;"></i></a></td>
 										<td>{{d.naam}}</td>
