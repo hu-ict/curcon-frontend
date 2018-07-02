@@ -19,19 +19,17 @@ export class DocentenComponent implements OnInit {
   mode: string;
   docentForm = <any>{};
   docentId: number;
-  isVisible:boolean;
+  isVisiblePut:boolean;
+  isVisiblePost:boolean;
 
   constructor(private docentenService: DocentenService,private functieService:FunctieService, private authService:AuthService,private afAuth: AngularFireAuth) {
     this.loading = true;
-    this.isVisible = true;
-
     this.afAuth.authState.subscribe((auth) => {
       console.log("authstate updated//user changed");
       this.refreshDocenten();
       this.loadButtons();
     })
   }
-
   ngOnInit(): void {
 
   }
@@ -42,21 +40,16 @@ export class DocentenComponent implements OnInit {
     let self = this;
     this.authService.maakTokenHeadervoorCurcon().then( token => {
       this.functieService.getFunctiesByUser( email ).subscribe(functies => {
-        var element = <HTMLInputElement> document.getElementById("createbutton");
         if (functies ==null){
-          element.style.display = "none";
-          this.isVisible=false;
+          console.log("Je mag niks");
         }else{
-          var userToegang=functies.some(f=> f.name == "docent_put");
-          if (!userToegang){
-            console.log("geen toegang voor wijzigen");
-            this.isVisible=false;
+          if (functies.some(f=> f.name == "docent_put")){
+            console.log(" toegang voor wijzigen");
+            this.isVisiblePut=true;
           }
-          userToegang=functies.some(f=> f.name == "organisatiedocent_post");
-          if (!userToegang){
-              element.style.display = "none";
-            console.log("geen toegang voor aanmaken");
-      
+          if (functies.some(f=> f.name == "organisatiedocent_post")){
+                console.log(" toegang voor aanmaken");
+                this.isVisiblePost=true;
           }
         }
         //this.loading = false;

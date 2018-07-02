@@ -18,7 +18,7 @@
 				<div class="card-header">
 					<h4 class="card-title mb-0">Cursussen</h4>
 					<br />
-					<button type="button" class="btn btn-info" id="createbutton"
+					<button type="button" class="btn btn-info" *ngIf="isVisibleOrganisatieCursus_post"
 						(click)="cursusModal.show(); initializeCursusForm();">
 						<i class="fa fa-plus" aria-hidden="true"></i>
 					</button>
@@ -72,7 +72,7 @@
 							<tab heading="Algemeen" id="tab1">
 								<form #editCourse="ngForm" novalidate>
 									<a href="javascript:void(0)" (click)="changeMode('edit')"
-										*ngIf="mode == 'view'">Bewerken</a> <a href="javascript:void(0)"
+										*ngIf="mode == 'view' && isVisibleCursus_put">Bewerken</a> <a href="javascript:void(0)"
 										(click)="changeMode('view')" *ngIf="mode == 'edit'">Annuleren</a>
 									<a href="javascript:void(0)" (click)="saveCursus(editCourse)"
 										*ngIf="mode == 'edit'">Opslaan</a>
@@ -140,7 +140,7 @@
 												</thead>
 												<tbody>
 													<tr *ngFor="let bt of selectedCursus.beroepstaken">
-														<td><a class="text-danger lead"
+														<td><a class="text-danger lead" *ngIf="isVisibleCursusBeroepstaak_delete"
 															href="javascript:void(0)" (click)="deleteBeroepstaak(bt)"><i
 																class="fa fa-minus-circle" aria-hidden="true"></i></a></td>
 														<td>{{bt.architectuurlaag}}</td>
@@ -156,7 +156,7 @@
 									<div class="row">
 										<div class="col-12">
 											<div class="btn-group pull-right" role="group" aria-label="...">
-												<button type="button" class="btn btn-info" id="createbutton"
+												<button type="button" class="btn btn-info" *ngIf="isVisibleCursusBeroepstaak_post"
 													(click)="BeroepstaakModal.show(); getBeroepstaakTypes();">
 													<i class="fa fa-plus" aria-hidden="true"></i>
 												</button>
@@ -222,10 +222,10 @@
 												<tbody>
 													<tr *ngFor="let ld of selectedCursus.leerdoelenLijst">
 														<td><a class="text-danger" href="javascript:void(0)"
-															(click)="deleteLeerdoel(ld)"><i *ngIf="isVisible"
+															(click)="deleteLeerdoel(ld)"><i
 																class="fa fa-minus-circle" aria-hidden="true"
 																style="font-size: 20px;"></i></a> <a href="javascript:void(0)"
-															(click)="initializeLeerdoelModal(ld);"><i *ngIf="isVisible"
+															(click)="initializeLeerdoelModal(ld);"><i
 																class="fa fa-pencil-square" aria-hidden="true"
 																style="font-size: 20px;"></i></a></td>
 														<td>{{ld.bloomniveau.naam}}</td>
@@ -241,7 +241,7 @@
 									<div class="row">
 										<div class="col-12">
 											<div class="btn-group pull-right" role="group" aria-label="...">
-												<button type="button" class="btn btn-info" id="createbutton"
+												<button type="button" class="btn btn-info"
 													(click)="LeerdoelModal.show(); initializeLeerdoelForm();">
 													<i class="fa fa-plus" aria-hidden="true"></i>
 												</button>

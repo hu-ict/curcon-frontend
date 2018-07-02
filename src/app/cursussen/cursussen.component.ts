@@ -47,7 +47,7 @@ export class CursussenComponent implements OnInit {
   loading: boolean;
   naam: string;
   error: boolean;
-  isVisible: boolean;
+
   selectedCursus = <any>{};
   cursusForm = <any>{};
   mode: string;
@@ -62,6 +62,12 @@ export class CursussenComponent implements OnInit {
   toetsForm = <any>{};
   leerdoelForm = <any>{};
 
+//isVisible: boolean;
+isVisibleOrganisatieCursus_post: boolean;
+isVisibleCursus_put :boolean;
+isVisibleCursusBeroepstaak_post:boolean;
+isVisibleCursusBeroepstaak_delete:boolean;
+
   constructor(private cursussenService: CursussenService,
               private docentenService: DocentenService,
               private beroepstaakService: BeroepstakenService,
@@ -75,8 +81,6 @@ export class CursussenComponent implements OnInit {
               private functieService : FunctieService,
               private afAuth: AngularFireAuth) {
     this.loading = true;
-    this.isVisible=true;
-
     this.afAuth.authState.subscribe((auth) => {
       console.log("authstate updated//user changed");
       this.refreshDocenten();
@@ -132,28 +136,26 @@ export class CursussenComponent implements OnInit {
   loadButtons() {
       var email= this.afAuth.auth.currentUser.email;
       //this.loading = true;
-      let self = this;
-
       this.authService.maakTokenHeadervoorCurcon().then( token => {
           this.functieService.getFunctiesByUser(email).subscribe(functies => {
-            var element = <HTMLInputElement> document.getElementById("createbutton");
-
+              //TODO createbutton weghalen die altijd visible is vervangen door NgIF
             if (functies == null) {
-                element.style.display = "none";
-                this.isVisible =false;
+              console.log("je mag niks:)");
             } else {
-                //var userToegang = functies.some(f=> f.name == "cursus_put");
-
-                if (!functies.some(f=> f.name == "cursus_put")) {
-                  element.style.display = "none";
+                if (functies.some(f=> f.name == "organisatiecursus_post")) {
+                   this.isVisibleOrganisatieCursus_post=true;
+                }
+                if (functies.some(f=> f.name == "cursus_put")) {
+                   this.isVisibleCursus_put=true;
+                }
+                if (functies.some(f=> f.name == "cursusberoepstaak_post")) {
+                   this.isVisibleCursusBeroepstaak_post=true;
+                }
+                if (functies.some(f=> f.name == "cursusberoepstaak_delete")) {
+                   this.isVisibleCursusBeroepstaak_delete=true;
                 }
 
-                if (!functies.some(f=> f.name == "cursus_post")) {
-                  console.log("geen toegang");
-                  this.isVisible=false;
-                }
-            }
-
+}
             //this.loading = false;
         });
       })
@@ -384,8 +386,6 @@ export class CursussenComponent implements OnInit {
 
   deleteBeroepstaak(bt: Object) {
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      //console.log(token);
-
       this.cursussenService.deleteBeroepstaak(this.selectedCursus.id, bt['id'], token).subscribe(
         result => {this.refreshBeroepstaken(); },
         error => {this.refreshBeroepstaken(); }
