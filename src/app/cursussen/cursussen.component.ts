@@ -67,6 +67,17 @@ isVisibleOrganisatieCursus_post: boolean;
 isVisibleCursus_put :boolean;
 isVisibleCursusBeroepstaak_post:boolean;
 isVisibleCursusBeroepstaak_delete:boolean;
+isVisibleCursusProfessionalskill_post:boolean
+isVisibleCursusProfessionalskill_delete:boolean;
+isVisibleCursusLeerdoel_post:boolean;
+isVisibleLeerdoel_delete:boolean;
+isVisibleLeerdoel_put:boolean;
+isVisibleCursusToets_post:boolean;
+isVisibleToets_put:boolean;
+isVisibleToets_delete:boolean;
+isVisibleToetsBeoordelingsElement_post:boolean;
+isVisibleBeoordelingsElement_put:boolean;
+isVisibleBeoordelingsElement_delete:boolean;
 
   constructor(private cursussenService: CursussenService,
               private docentenService: DocentenService,
@@ -154,7 +165,39 @@ isVisibleCursusBeroepstaak_delete:boolean;
                 if (functies.some(f=> f.name == "cursusberoepstaak_delete")) {
                    this.isVisibleCursusBeroepstaak_delete=true;
                 }
-
+                if (functies.some(f=> f.name == "cursusprofessional_post")) {
+                   this.isVisibleCursusProfessionalskill_post=true;
+                }
+                if (functies.some(f=> f.name == "cursusprofessional_delete")) {
+                   this.isVisibleCursusProfessionalskill_delete=true;
+                }
+                if (functies.some(f=> f.name == "cursusleerdoel_post")) {
+                   this.isVisibleCursusLeerdoel_post=true;
+                }
+                if (functies.some(f=> f.name == "leerdoel_put")) {
+                   this.isVisibleLeerdoel_put=true;
+                }
+                if (functies.some(f=> f.name == "leerdoel_delete")) {
+                   this.isVisibleLeerdoel_delete=true;
+                }
+                if (functies.some(f=> f.name == "cursustoets_post")) {
+                   this.isVisibleCursusToets_post=true;
+                }
+                if (functies.some(f=> f.name == "toets_put")) {
+                   this.isVisibleToets_put=true;
+                }
+                if (functies.some(f=> f.name == "toets_delete")) {
+                   this.isVisibleToets_delete=true;
+                }
+                if (functies.some(f=> f.name == "toetsbeoordelingselement_post")) {
+                   this.isVisibleToetsBeoordelingsElement_post=true;
+                }
+                if (functies.some(f=> f.name == "beoordelingselement_put")) {
+                   this.isVisibleBeoordelingsElement_put=true;
+                }
+                if (functies.some(f=> f.name == "beoordelingselement_delete")) {
+                   this.isVisibleBeoordelingsElement_delete=true;
+                }
 }
             //this.loading = false;
         });
