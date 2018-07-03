@@ -32,6 +32,8 @@ export class OpleidingenComponent implements OnInit {
 
 	@ViewChild('OpleidingModal') opleidingModal: any;
 	selectedOpleiding = <any>{};
+	updatedOpleiding = <any>{};
+
 	opleidingForm = <any>{};
 
 	cohorten: Array<any>;
@@ -193,13 +195,15 @@ export class OpleidingenComponent implements OnInit {
 
 	saveOpleiding(form: any) {
 		this.loading = true;
-		this.selectedOpleiding.naam = form.naam;
-		// console.log(this.selectedOpleiding);
 
+  	this.updatedOpleiding = form.value;
+		console.log(this.updatedOpleiding);
+		this.updatedOpleiding.id=	this.selectedOpleiding.id;
+		console.log(this.updatedOpleiding);
 		this.authService.maakTokenHeadervoorCurcon().then( token => {
       		//console.log(token);
 
-			this.opleidingenService.saveOpleiding(this.selectedOpleiding, token).subscribe(x => {
+			this.opleidingenService.saveOpleiding(this.updatedOpleiding, token).subscribe(x => {
 				this.mode = 'view';
 				this.loading = false;
 			});
@@ -264,12 +268,14 @@ export class OpleidingenComponent implements OnInit {
 	}
 
 	loadBeroepstaken() {
+		  this.loading = true;
 		this.authService.maakTokenHeadervoorCurcon().then( token => {
       		//console.log(token);
 
 			this.beroepstakenService.getBeroepstakenByObject(this.selectedOpleiding.eindBT, token).subscribe(beroepstaken => {
 				this.selectedOpleiding.beroepstaken = [];
 				this.selectedOpleiding.beroepstaken = beroepstaken;
+				  this.loading = false;
 			});
 		});
 	}
@@ -283,6 +289,7 @@ export class OpleidingenComponent implements OnInit {
 			this.beroepstakenService.getBeroepstaakId(this.beroepstakenForm.activiteit,
 				this.beroepstakenForm.architectuurlaag, this.beroepstakenForm.niveau, token).subscribe(data => {
 					this.opleidingenService.addBeroepstakenToOpleiding(this.selectedOpleiding.id, data, token).subscribe(x => {
+						//this.beroepstaakModal.hide();
 						this.loadBeroepstaken();
 						this.loading = false;
 					});

@@ -73,7 +73,7 @@
 								<form #editCourse="ngForm" novalidate>
 									<a href="javascript:void(0)" (click)="changeMode('edit')"
 										*ngIf="mode == 'view' && isVisibleCursus_put">Bewerken</a> <a href="javascript:void(0)"
-										(click)="changeMode('view')" *ngIf="mode == 'edit'">Annuleren</a>
+										(click)="changeMode('view');" *ngIf="mode == 'edit'">Annuleren</a>
 									<a href="javascript:void(0)" (click)="saveCursus(editCourse)"
 										*ngIf="mode == 'edit'">Opslaan</a>
 									<div class="form-group row">

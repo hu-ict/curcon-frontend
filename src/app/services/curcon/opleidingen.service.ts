@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Observable} from 'rxjs';
 
@@ -12,14 +12,14 @@ import * as myGlobals from '../../globals';
 
 @Injectable()
 export class OpleidingenService {
-    headers: HttpHeaders;
+    // headers: HttpHeaders;
 	//options: RequestOptions;
 	organisation: any;
 
 	constructor(private http: HttpClient) {
 		console.log('OpleidingenService Initialized...');
-		this.headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-		this.headers.append('Access-Control-Allow-Origin', '*');
+		// this.headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+		// this.headers.append('Access-Control-Allow-Origin', '*');
 		//this.options = new RequestOptions({ headers: this.headers });
 		this.organisation = JSON.parse(localStorage.getItem('selectedOrganisatie'));
 	}
@@ -69,10 +69,9 @@ requestOptions.headers.append('Access-Control-Allow-Origin', '*');
         tap(res => console.log(res+"OPleidingsprofielgepost"))
         ,catchError(this.handleError));
 		} else {
+      var opleidingId = opleiding.id;
+      delete opleiding.id;
 			var url = myGlobals.baseUrl+'opleidingsprofielen/'+ opleidingId;
-			console.log(url);
-			var opleidingId = opleiding.id;
-			delete opleiding.id;
 			return this.http.put<curconnamespace.CurconNameSpace.OpleidingsProfielDto>(url, opleiding,requestOptions)
 				.pipe(catchError(this.handleError));
 		}
@@ -85,19 +84,17 @@ requestOptions.headers.append('Access-Control-Allow-Origin', '*');
 requestOptions.headers.append( 'Content-Type', 'application/json' );
 requestOptions.headers.append('Access-Control-Allow-Origin', '*');
 		let newBeroepstaak = {'id': beroepstaak.id};
-		return this.http.post<curconnamespace.CurconNameSpace.OpleidingsProfielPostDto>(myGlobals.baseUrl + 'opleidingsprofielen/' + opleidingId + '/beroepstaken', newBeroepstaak,requestOptions)
+		return this.http.post<curconnamespace.CurconNameSpace.BeroepsTaakDto>(myGlobals.baseUrl + 'opleidingsprofielen/' + opleidingId + '/beroepstaken', newBeroepstaak,requestOptions)
 			.pipe(catchError(this.handleError));
 	}
 
 	addProfessionalskillToOpleiding(opleidingId, professionalskillId, headersIn: HttpHeaders) {
-    let requestOptions = {
-  headers: headersIn,
-};
-requestOptions.headers.append( 'Content-Type', 'application/json' );
-requestOptions.headers.append('Access-Control-Allow-Origin', '*');
+    headersIn.append("Access Control Allow Origin", "*");
 		let newProfessionalskill = {'id': professionalskillId.id};
-		return this.http.post<curconnamespace.CurconNameSpace.OpleidingsProfielPostDto>(myGlobals.baseUrl + 'opleidingsprofielen/' + opleidingId + '/professionalskills', newProfessionalskill,requestOptions)
-		.pipe(catchError(this.handleError));
+		return this.http.post<curconnamespace.CurconNameSpace.ProfessionalSkillDto>(myGlobals.baseUrl + 'opleidingsprofielen/' + opleidingId + '/professionalskills', newProfessionalskill,{headers: headersIn}
+    )
+		.pipe(//catchError(this.handleError)
+  );
 	}
 
 	deleteBeroepstaak(opleidingId, beroepstaakId, headersIn: HttpHeaders) {

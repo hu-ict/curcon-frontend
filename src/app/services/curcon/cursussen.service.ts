@@ -186,8 +186,8 @@ private extractData(res: Response) {
 	return body || {};
 }
 
-private handleError(error: any, headersIn:HttpHeaders) {
-	headersIn.append("Access Control Allow Origin", "*");
+private handleError(error: any) {
+
 	let errMsg = (error.message) ? error.message :
 		error.status ? `${error.status} - ${error.statusText}` : 'Server error';
 	console.error(errMsg);
