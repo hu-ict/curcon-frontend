@@ -94,7 +94,7 @@ saveToets(cursusId, toets, headersIn:HttpHeaders) {
 
 deleteBeroepstaak(cursusId, beroepstaakId, headersIn:HttpHeaders) {
 	headersIn.append("Access Control Allow Origin", "*");
-	return this.http.delete(myGlobals.baseUrl+'cursussen/' + cursusId + '/beroepstaken/' + beroepstaakId)
+	return this.http.delete(myGlobals.baseUrl+'cursussen/' + cursusId + '/beroepstaken/' + beroepstaakId,{headers: headersIn} )
 	.pipe(/* catchError werkt niet met een header erbij */
 );
 }
@@ -138,7 +138,7 @@ getToetsElementen(position, url, headersIn:HttpHeaders) {
 
 deleteToets(bt2: any, headersIn:HttpHeaders) {
 	headersIn.append("Access Control Allow Origin", "*");
-	return this.http.delete(myGlobals.baseUrl+'toetsen/' + bt2)
+	return this.http.delete(myGlobals.baseUrl+'toetsen/' + bt2,{headers: headersIn})
 	.pipe(/* catchError werkt niet met een header erbij */
 );
 }
