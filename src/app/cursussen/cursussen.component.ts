@@ -296,19 +296,16 @@ isVisibleToetsElement_delete:boolean;
     this.authService.maakTokenHeadervoorCurcon().then(token => {
       this.cursussenService.addCursus(this.cursusForm, token).subscribe(data => {
         this.mode = 'view';
-        this.refreshCursussen();
+        this.cursussenService.getCursussen(token).subscribe(cursussen => {
+          this.courses=cursussen;
+          this.onSelect(this.courses[this.courses.length-1]);
+            this.loading = false;
+            this.cursusModal.hide();
+        });
+      //  this.cursussenService.getCursussenByObject(this.selectedCursus, token).subscribe(cursus => {
 
-        this.selectedCursus= this.courses;
+    //  });
 
-      //   this.authService.maakTokenHeadervoorCurcon().then( token => {
-      //     //console.log(token);
-      //
-      //     this.cursussenService.getCursussenByObject(this.selectedCursus, token).subscribe(cursus => {
-      //       this.onSelect(cursus);
-      //       this.loading = false;
-      //       this.cursusModal.hide();
-      //     });
-      // }
         });
     });
   }

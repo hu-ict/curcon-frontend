@@ -64,7 +64,7 @@ export class DocentenComponent implements OnInit {
   }
 
   saveDocent() {
-    this.loading = false; //FIXME Is dit niet True??
+    this.loading = true; 
     this.authService.maakTokenHeadervoorCurcon().then( token => {
       console.log(token);
       this.docentenService.saveDocent(this.docentId, this.docentForm,token).subscribe(docent => {

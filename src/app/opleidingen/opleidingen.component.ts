@@ -71,34 +71,31 @@ export class OpleidingenComponent implements OnInit {
 			private authService:AuthService,
 			private afAuth: AngularFireAuth) {
 		this.loading = true;
+		this.cursussen = [];
+		this.allCursussen = [];
+this.selectedButton = 1;
+this.mode = 'view';
+let self = this;
+		this.afAuth.authState.subscribe((auth) => {
+this.authService.maakTokenHeadervoorCurcon().then( token => {
+			console.log(token);
+
+	self.opleidingenService.getOpleidingen(token).subscribe(opleidingen => {
+		self.opleidingen= opleidingen;
+		console.log(this.opleidingen);
+		console.log(this.opleidingen[0]);
+		self.onSelectOpleiding(this.opleidingen[0]);
+	},
+	error => console.log('Error: ', error),
+	() => {
+		self.loading = false;
+	});
+});
+})
 	}
 
 	ngOnInit(): void {
-        this.cursussen = [];
-        this.allCursussen = [];
-				//this.opleidingen= [];
-						//this.cohorten= [];
-					//	this.allBeroepstaken=[];
-				//		this.allProfessionalskills=[];
-		this.selectedButton = 1;
-		this.mode = 'view';
-		let self = this;
-		    this.afAuth.authState.subscribe((auth) => {
-		this.authService.maakTokenHeadervoorCurcon().then( token => {
-      		console.log(token);
 
-			self.opleidingenService.getOpleidingen(token).subscribe(opleidingen => {
-				self.opleidingen= opleidingen;
-				console.log(this.opleidingen);
-				console.log(this.opleidingen[0]);
-				self.onSelectOpleiding(this.opleidingen[0]);
-			},
-			error => console.log('Error: ', error),
-			() => {
-				self.loading = false;
-			});
-		});
-	})
 	}
 
 	loadButtons() {
