@@ -79,6 +79,10 @@ isVisibleToetsBeoordelingsElement_post:boolean;
 isVisibleBeoordelingsElement_put:boolean;
 isVisibleBeoordelingsElement_delete:boolean;
 
+isVisibleLeerdoelToetsElement_post:boolean;
+isVisibleToetsElement_put:boolean;
+isVisibleToetsElement_delete:boolean;
+
   constructor(private cursussenService: CursussenService,
               private docentenService: DocentenService,
               private beroepstaakService: BeroepstakenService,
@@ -198,6 +202,18 @@ isVisibleBeoordelingsElement_delete:boolean;
                 if (functies.some(f=> f.name == "beoordelingselement_delete")) {
                    this.isVisibleBeoordelingsElement_delete=true;
                 }
+                if (functies.some(f=> f.name == "leerdoeltoetselement_post")) {
+                   this.isVisibleLeerdoelToetsElement_post=true;
+                }
+                if (functies.some(f=> f.name == "toetselement_put")) {
+                   this.isVisibleToetsElement_put=true;
+                }
+                if (functies.some(f=> f.name == "toetselement_delete")) {
+                   this.isVisibleToetsElement_delete=true;
+                }
+
+
+
 }
             //this.loading = false;
         });
@@ -659,26 +675,21 @@ isVisibleBeoordelingsElement_delete:boolean;
   }
 
   editToetsElement() {
-
     this.loading = true;
-    this.authService.maakTokenHeadervoorCurcon().then( token => {
     console.log(this.toetsMatrijsAdd);
     console.log(this.toetsMatrijsAddForm);
     this.authService.maakTokenHeadervoorCurcon().then( token => {
       //console.log(token);
-
       this.cursussenService.editToetsElement(this.toetsMatrijsEdit, this.toetsMatrijsEditForm, token).subscribe(x => {
         this.refreshToetsMatrijzen();
         this.toetsMatrijsEdit = 0;
         this.loading = false;
       });
-    });
   });
   }
 
   addToetsElement() {
     this.loading = true;
-    this.authService.maakTokenHeadervoorCurcon().then( token => {
     this.toetsMatrijsAddForm.beoordelingsElement = this.toetsMatrijsAdd.beoordelingselement.id;
     console.log('addToetsElement - this.toetsMatrijsAdd');
     console.log(this.toetsMatrijsAdd);
@@ -686,14 +697,11 @@ isVisibleBeoordelingsElement_delete:boolean;
     console.log(this.toetsMatrijsAddForm);
 
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      //console.log(token);
-
       this.cursussenService.addToetsElement(this.toetsMatrijsAdd.leerdoel.id, this.toetsMatrijsAddForm, token).subscribe(x => {
         this.refreshToetsMatrijzen();
         this.toetsMatrijsAdd = {};
         this.loading = false;
       });
-    });
   });
   }
 
@@ -701,8 +709,6 @@ isVisibleBeoordelingsElement_delete:boolean;
     this.loading = true;
 
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      //console.log(token);
-
       this.cursussenService.deleteToetsElement(this.toetsMatrijsEdit, token).subscribe(x => {
         this.refreshToetsMatrijzen();
         this.toetsMatrijsEdit = 0;

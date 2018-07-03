@@ -365,7 +365,7 @@
 												<!--	Lege cell --> <ng-container
 													*ngIf="item?.id == 0 && toetsMatrijsAdd != item">
 												<td class="weging">
-													<button class="btn btn-small btn-info btn-addToets"
+													<button class="btn btn-small btn-info btn-addToets" *ngIf= "isVisibleLeerdoelToetsElement_post"
 														(click)="addCell(item)">
 														<i class="fa fa-plus" aria-hidden="true"></i>
 													</button>
@@ -401,7 +401,7 @@
 													<form #f="ngForm">
 														<input type="number" name="gewicht" class="form-control"
 															[(ngModel)]="toetsMatrijsEditForm.gewicht" max="100" />
-														<button class="btn btn-success btn-sm"
+														<button class="btn btn-success btn-sm"	*ngIf= "isVisibleToetsElement_put"
 															(click)="editToetsElement()">
 															<i class="fa fa-check"></i>
 														</button>
@@ -409,7 +409,7 @@
 															(click)="cancelEditGewicht()">
 															<i class="fa fa-close"></i>
 														</button>
-														<button class="btn btn-danger btn-sm"
+														<button class="btn btn-danger btn-sm"	*ngIf= "isVisibleToetsElement_delete"
 															(click)="deleteToetsElement()">
 															<i class="fa fa-trash"></i>
 														</button>
