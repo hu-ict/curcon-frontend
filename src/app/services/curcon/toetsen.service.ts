@@ -52,13 +52,15 @@ export class ToetsenService {
     };
     // requestOptions.headers.append( 'Content-Type', 'application/json' );
     // requestOptions.headers.append('Access-Control-Allow-Origin', '*');
+    console.log();
+    console.log(element);
+    console.log(element.id);
 		if (element.id == null) {
       let url =`${myGlobals.baseUrl+"toetsen/"+ toetsId + "/beoordelingselementen"}`;
 			return this.http.post<curconnamespace.CurconNameSpace.BeoordelingsElementPostDto>(url, element, requestOptions)
 			.pipe(catchError(this.handleError));
 		} else {
-      let url =`${myGlobals.baseUrl+"beoordelingselementen/" + elementId}`;
-			var elementId = element.id;
+      let url =`${myGlobals.baseUrl+"beoordelingselementen/" + element.id}`;
 			delete element.id;
 			return this.http.put<curconnamespace.CurconNameSpace.ToetsMatrijsBeoordelingsElementDto>(url,  element,requestOptions)
 			.pipe(catchError(this.handleError));
