@@ -5,7 +5,7 @@
 				<div class="card-header">
 					<h4 class="card-title mb-0">Opleidingsprofielen</h4>
 					<br />
-					<button type="button"  class="btn btn-info" id="createbutton"
+					<button type="button"  class="btn btn-info" *ngIf="isVisibleOrganisatieOpleidingsprofiel_post"
 						(click)="opleidingModal.show(); newOpleidingForm();">
 						<i class="fa fa-plus" aria-hidden="true"></i>
 					</button>
@@ -74,7 +74,7 @@
 							</tab>
 							<tab tab heading="Algemeen" id="tab1">
 								<form #opleidingForm="ngForm" novalidate>
-									<a href="javascript:void(0)" (click)="setMode('edit')" *ngIf="mode == 'view'">Bewerken</a>
+									<a href="javascript:void(0)" (click)="setMode('edit')" *ngIf="mode == 'view' && isVisibleOpleidingsprofiel_put">Bewerken</a>
 									<a href="javascript:void(0)"(click)="setMode('view')" *ngIf="mode == 'edit'">Annuleren</a>
 									<a href="javascript:void(0)" (click)="saveOpleiding(opleidingForm)" *ngIf="mode == 'edit'">Opslaan</a>
 									<div class="form-group row">
@@ -103,7 +103,7 @@
 												</thead>
 												<tbody>
 													<tr *ngFor="let bt of selectedOpleiding.beroepstaken">
-														<td><a class="text-danger lead"
+														<td><a class="text-danger lead" *ngIf="isVisibleOpleidingsprofielBeroepstaak_delete"
 															href="javascript:void(0)" (click)="deleteBeroepstaak(bt)"><i
 																class="fa fa-minus-circle" aria-hidden="true"></i></a></td>
 														<td>{{bt.architectuurlaag}}</td>
@@ -119,7 +119,7 @@
 									<div class="row">
 										<div class="col-12">
 											<div class="btn-group pull-right" role="group" aria-label="...">
-												<button type="button" class="btn btn-info" id="createbutton" (click)="beroepstaakModal.show(); getBeroepstaakTypes();">
+												<button type="button" class="btn btn-info" *ngIf="isVisibleOpleidingsprofielBeroepstaak_post" id="createbutton" (click)="beroepstaakModal.show(); getBeroepstaakTypes();">
 													<i class="fa fa-plus" aria-hidden="true"></i>
 												</button>
 											</div>
@@ -143,7 +143,7 @@
 												<tbody>
 													<tr *ngFor="let ps of selectedOpleiding.professionalskills">
 														<td><a class="text-danger lead"
-															href="javascript:void(0)"
+															href="javascript:void(0)" *ngIf="isVisibleOpleidingsprofielProfessional_delete"
 															(click)="deleteProfessionalskill(ps)"><i
 																class="fa fa-minus-circle" aria-hidden="true"></i></a></td>
 														<td>{{ps.code}}</td>
@@ -157,7 +157,7 @@
 									<div class="row">
 										<div class="col-12">
 											<div class="btn-group pull-right" role="group" aria-label="...">
-												<button type="button" class="btn btn-info" id="createbutton"
+												<button type="button" class="btn btn-info" id="createbutton"  *ngIf="isVisibleOpleidingsprofielProfessional_post"
 													(click)="ProfessionalskillModal.show(); getProfessionalskillTypes();">
 													<i class="fa fa-plus" aria-hidden="true"></i>
 												</button>
@@ -172,7 +172,7 @@
 										<div class="row">
 											<div class="col-12">
 												<div class="btn-group pull-right" role="group" aria-label="...">
-													<button type="button" class="btn btn-info" id="createbutton"
+													<button type="button" class="btn btn-info" id="createbutton" *ngIf="isVisibleCohortCursus_post"
 														(click)="cursusModal.show(); initializeCursusForm();">
 														<i class="fa fa-plus" aria-hidden="true"></i>
 													</button>
@@ -191,7 +191,7 @@
 																	[routerLink]="['/cursussen', c.code]">{{c.code}}</a></span>
 																<h5 class="naam">{{c.naam}}</h5>
 																<h6 class="ects">{{c.europeanCredits}} EC</h6>
-																<a class="text-danger lead" href="javascript:void(0)"
+																<a class="text-danger lead" href="javascript:void(0)"  *ngIf="isVisibleCohortCursus_delete"
 																	(click)="deleteCursusFromCohort(c)"><i
 																	class="fa fa-minus-circle" aria-hidden="true"></i></a>
 															</div>
@@ -252,7 +252,7 @@
 				</div>
 				<div *ngIf="!loading" class="modal-footer">
 					<button type="button" class="btn btn-secondary"
-						(click)="opleidngModal.hide()">Sluiten</button>
+						(click)="opleidingModal.hide()">Sluiten</button>
 					<button type="button" class="btn btn-primary"
 						(click)="addOpleiding(); opleidingModal.hide()">Toevoegen</button>
 				</div>

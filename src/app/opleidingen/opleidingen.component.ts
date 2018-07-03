@@ -55,44 +55,55 @@ export class OpleidingenComponent implements OnInit {
 	cursusForm = <any>{};
 
 	loading: boolean;
-	isVisible: boolean;
 	naam: string;
 	selectedButton: number;
 	mode: string;
 
-	constructor(private opleidingenService: OpleidingenService,
-			private cohortenService: CohortenService,
-			private cursussenService: CursussenService,
-			private leerplannenService: LeerplannenService,
-			private toetsProgrammaService: ToetsProgrammaService,
-			private professionalskillService: ProfessionalskillsService,
-			private beroepstakenService: BeroepstakenService,
-			private functieService:FunctieService,
-			private authService:AuthService,
-			private afAuth: AngularFireAuth) {
-		this.loading = true;
-		this.cursussen = [];
-		this.allCursussen = [];
-this.selectedButton = 1;
-this.mode = 'view';
-let self = this;
-		this.afAuth.authState.subscribe((auth) => {
-this.authService.maakTokenHeadervoorCurcon().then( token => {
-			console.log(token);
+	//
+	isVisibleOrganisatieOpleidingsprofiel_post:boolean;
+	isVisibleOpleidingsprofiel_put:boolean;
 
-	self.opleidingenService.getOpleidingen(token).subscribe(opleidingen => {
-		self.opleidingen= opleidingen;
-		console.log(this.opleidingen);
-		console.log(this.opleidingen[0]);
-		self.onSelectOpleiding(this.opleidingen[0]);
-	},
-	error => console.log('Error: ', error),
-	() => {
-		self.loading = false;
-	});
-});
-})
-	}
+	isVisibleOpleidingsprofielBeroepstaak_post:boolean;
+	isVisibleOpleidingsprofielBeroepstaak_delete:boolean;
+	isVisibleOpleidingsprofielProfessional_post:boolean;
+	isVisibleOpleidingsprofielProfessional_delete:boolean;
+	isVisibleCohortCursus_post:boolean;
+	isVisibleCohortCursus_delete:boolean;
+
+	constructor(private opleidingenService: OpleidingenService,
+		private cohortenService: CohortenService,
+		private cursussenService: CursussenService,
+		private leerplannenService: LeerplannenService,
+		private toetsProgrammaService: ToetsProgrammaService,
+		private professionalskillService: ProfessionalskillsService,
+		private beroepstakenService: BeroepstakenService,
+		private functieService:FunctieService,
+		private authService:AuthService,
+		private afAuth: AngularFireAuth) {
+			this.loading = true;
+			this.cursussen = [];
+			this.allCursussen = [];
+			this.selectedButton = 1;
+			this.mode = 'view';
+			let self = this;
+			this.afAuth.authState.subscribe((auth) => {
+				this.authService.maakTokenHeadervoorCurcon().then( token => {
+					console.log(token);
+
+					self.opleidingenService.getOpleidingen(token).subscribe(opleidingen => {
+						self.opleidingen= opleidingen;
+						console.log(this.opleidingen);
+						console.log(this.opleidingen[0]);
+						self.onSelectOpleiding(this.opleidingen[0]);
+						this.loadButtons();
+					},
+
+					() => {
+						self.loading = false;
+					});
+				});
+			})
+		}
 
 	ngOnInit(): void {
 
@@ -105,23 +116,34 @@ this.authService.maakTokenHeadervoorCurcon().then( token => {
 
 	    this.authService.maakTokenHeadervoorCurcon().then( token => {
 	      	this.functieService.getFunctiesByUser(email).subscribe(functies => {
-	        	var element = <HTMLInputElement> document.getElementById("createbutton");
 
 		        if (functies == null) {
-		          	element.style.display = "none";
-		          	this.isVisible=false;
+								console.log("je mag niks:)");
 		        } else {
-		          	var userToegang = functies.some(f=> f.name == "opleiding_put");
-
-		          	if (!userToegang) {
-		            	element.style.display = "none";
-		          	}
-
-		          	userToegang = functies.some(f=> f.name == "opleiding_post");
-		          	if (!userToegang) {
-		            	console.log("geen toegang");
-		            	this.isVisible=false;
-		          	}
+							if (functies.some(f=> f.name == "organisatieopleidingsprofiel_post")) {
+								 this.isVisibleOrganisatieOpleidingsprofiel_post=true;
+							}
+							if (functies.some(f=> f.name == "opleidingsprofiel_put")) {
+								 this.isVisibleOpleidingsprofiel_put=true;
+							}
+							if (functies.some(f=> f.name == "opleidingsprofielberoepstaak_post")) {
+								 this.isVisibleOpleidingsprofielBeroepstaak_post=true;
+							}
+							if (functies.some(f=> f.name == "opleidingsprofielberoepstaak_delete")) {
+								 this.isVisibleOpleidingsprofielBeroepstaak_delete=true;
+							}
+							if (functies.some(f=> f.name == "opleidingsprofielprofessional_post")) {
+								 this.isVisibleOpleidingsprofielProfessional_post=true;
+							}
+							if (functies.some(f=> f.name == "opleidingsprofielprofessional_delete")) {
+								 this.isVisibleOpleidingsprofielProfessional_delete=true;
+							}
+							if (functies.some(f=> f.name == "cohortcursus_post")) {
+								 this.isVisibleCohortCursus_post=true;
+							}
+							if (functies.some(f=> f.name == "cohortcursus_delete")) {
+								 this.isVisibleCohortCursus_delete=true;
+							}
 		        }
 
 	        	//this.loading = false;
