@@ -3,3 +3,6 @@ export class Functie {
   name: string;
   href: string;
 }
+export class FunctiePostDto {
+  name: string;
+}

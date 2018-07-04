@@ -234,6 +234,7 @@ export class OpleidingenComponent implements OnInit {
 	}
 
 	addOpleiding() {
+		//FIXME hardcoded values weg en profiel selecteren na insert
 		delete this.opleidingForm.code;
 
 		this.authService.maakTokenHeadervoorCurcon().then( token => {

@@ -119,6 +119,7 @@ isVisibleToetsElement_delete:boolean;
       this.cursussenService.getCursussen(token).subscribe(cursussen => {
         this.courses= cursussen;
         this.selectedCursus = this.courses[0];
+        console.log(  this.selectedCursus);
         this.cursusForm = this.courses[0];
         this.refreshAll();
       },

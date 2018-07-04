@@ -95,8 +95,6 @@ saveToets(cursusId, toets, headersIn:HttpHeaders) {
 deleteBeroepstaak(cursusId, beroepstaakId, headersIn:HttpHeaders) {
 	headersIn.append("Access Control Allow Origin", "*");
 	return this.http.delete(myGlobals.baseUrl+'cursussen/' + cursusId + '/beroepstaken/' + beroepstaakId,{headers: headersIn} )
-	.pipe(/* catchError werkt niet met een header erbij */
-);
 }
 
 deleteProfessionalskill(cursusId, professionalskillId, headersIn:HttpHeaders) {
@@ -115,8 +113,6 @@ deleteLeerdoel(leerdoelId, headersIn:HttpHeaders) {
 
 updateCursus(id, form, headersIn:HttpHeaders) {
 	headersIn.append("Access Control Allow Origin", "*");
-	var headers = new HttpHeaders();
-	headers.append('Content-Type', 'application/json');
 	return this.http.put<curconnamespace.CurconNameSpace.CursusLeerplanSchemaDto>(myGlobals.baseUrl+'cursussen/' + id, form,{headers: headersIn})
 	.pipe(/* catchError werkt niet met een header erbij */
 );

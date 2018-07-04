@@ -14,22 +14,19 @@ export class ModuleService {
   private log(message:string): void{
     console.log( "moduleService armeluisdebugger: " + message);
   }
-
-  getModule(id): Observable<Module> {
-    const url = `${myGlobals.baseUrl + 'modules'}/${id}`;
-    return this.http.get<Module>(url)
-    .pipe(
-      tap(module => this.log(`fetched function id=${module.id}`)),
-      catchError(ErrorService.prototype.handleError<Module>('getModule id=${module.id}'))
-    );
-  }
+  // getModule(id): Observable<Module> {
+  //   const url = `${myGlobals.baseUrl + 'modules'}/${id}`;
+  //   return this.http.get<Module>(url)
+  //   .pipe(
+  //     tap(module => this.log(`fetched function id=${module.id}`)),
+  //     catchError(ErrorService.prototype.handleError<Module>('getModule id=${module.id}'))
+  //   );
+  // }
   /*  */
   getModules(headersIn :HttpHeaders): Observable<Module[]> {
     let requestOptions = {
       headers : headersIn,
     };
-
-    // Object.Prototype.function<Class[]>(Object.property);
     return this.http.get<Module[]>(myGlobals.baseUrl + 'modules', requestOptions)
       .pipe(
         tap(modules => this.log(`fetched function id=${Module["id"]}`)),
@@ -37,4 +34,9 @@ export class ModuleService {
         // wordt Module["id"] herkend door interpolated ng?
       );
   }
+
+
+
+
+
 }

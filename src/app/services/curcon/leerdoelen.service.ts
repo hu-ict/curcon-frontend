@@ -34,12 +34,12 @@ export class LeerdoelenService {
       .pipe( tap( res => console.log(res)) );
   }
 
-  getDataByHref(href,headersIn :HttpHeaders ) {
-    let requestOptions = {
-    headers: headersIn,
-  };
-    return this.http.get<curconnamespace.CurconNameSpace.LeerdoelOverzichtDto>(href
- ,requestOptions)
-      .pipe( tap( res => console.log(res)) );
-  }
+ //  getDataByHref(href,headersIn :HttpHeaders ) {
+ //    let requestOptions = {
+ //    headers: headersIn,
+ //  };
+ //    return this.http.get<curconnamespace.CurconNameSpace.LeerdoelOverzichtDto>(href
+ // ,requestOptions)
+ //      .pipe( tap( res => console.log(res)) );
+ //  }
 }

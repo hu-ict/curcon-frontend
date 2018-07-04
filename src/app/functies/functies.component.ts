@@ -23,8 +23,9 @@ export class FunctiesComponent implements OnInit {
   }
 
   getFuncties(): void {
-    this.functieService.getFuncties(1)
-    .subscribe(functies => this.functies = functies);
+    //TODO token meegeven
+    // this.functieService.getFuncties()
+    // .subscribe(functies => this.functies = functies);
   }
   ngOnInit(): void {
 
