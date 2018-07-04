@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'; // Input niet nodig
-import { Rol } from '../model/rol';
+// import { Rol } from '../model/rol';
 import { RolService } from '../services/rol.service';
 import { Observable, Subject } from 'rxjs';
 import { AuthService } from '../providers/auth.service';
@@ -10,8 +10,8 @@ import { AuthService } from '../providers/auth.service';
   styleUrls: [ './rollen.component.css' ]
 })
 export class RollenComponent implements OnInit {
-
-  rollen: Rol[];
+  //
+  // rollen: Rol[];
   private searchTerms = new Subject<string>();
 
   constructor(private rolService : RolService, private authService: AuthService) {
@@ -25,11 +25,11 @@ export class RollenComponent implements OnInit {
   }
 
   getRollen(): void {
-    this.authService.maakTokenHeadervoorCurcon().then( token => {
-      //console.log(token);
-
-      this.rolService.getRollen(token).subscribe(rollen => this.rollen = rollen);
-    });
+    // this.authService.maakTokenHeadervoorCurcon().then( token => {
+    //   //console.log(token);
+    //
+    //   this.rolService.getRollen(token).subscribe(rollen => this.rollen = rollen);
+    // });
   }
   ngOnInit(): void {
     console.log(this.getRollen())

@@ -44,16 +44,12 @@ addBeroepstakenToCursus(cursusId, beroepstaak, headersIn:HttpHeaders) {
 	headersIn.append("Access Control Allow Origin", "*");
 	let newBeroepstaak = {'id': beroepstaak.id};
 	return this.http.post<curconnamespace.CurconNameSpace.BeroepsTaakDto>(myGlobals.baseUrl+'cursussen/' + cursusId + '/beroepstaken', newBeroepstaak,{headers: headersIn})
-	.pipe();
-
 }
 
 addProfessionalskillToCursus(cursusId, professionalskillId, headersIn:HttpHeaders) {
 	headersIn.append("Access Control Allow Origin", "*");
 	let newProfessionalskill = {'id': professionalskillId.id};
 	return this.http.post<curconnamespace.CurconNameSpace.ProfessionalSkillDto>(myGlobals.baseUrl+'cursussen/' + cursusId + '/professionalskills', newProfessionalskill,{headers: headersIn})
-	.pipe(/* catchError werkt niet met een header erbij */
-);
 }
 
 saveLeerdoel(cursusId, leerdoel, headersIn:HttpHeaders) {

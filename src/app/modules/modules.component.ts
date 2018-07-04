@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'; // Input niet nodig
-import { Module } from '../model/module';
+// import { Module } from '../model/module';
 import { ModuleService } from '../services/module.service';
 import { Observable, Subject } from "rxjs";
 import {AuthService} from '../providers/auth.service';
@@ -13,7 +13,7 @@ import {FunctieService } from '../services/functie.service';
 })
 export class ModulesComponent implements OnInit {
 
-  modules: Module[];
+  // modules: Module[];
   private searchTerms = new Subject<string>();
 
   constructor(private moduleService : ModuleService, private authService: AuthService) {
@@ -28,11 +28,11 @@ export class ModulesComponent implements OnInit {
   getModule(){}
 
   getModules(): void {
-    this.authService.maakTokenHeadervoorCurcon().then( token => {
-      //console.log(token);
-
-      this.moduleService.getModules(token).subscribe(modules => this.modules = modules);
-    });
+    // this.authService.maakTokenHeadervoorCurcon().then( token => {
+    //   //console.log(token);
+    //
+    //   this.moduleService.getModules(token).subscribe(modules => this.modules = modules);
+    // });
   }
   ngOnInit(): void {
 

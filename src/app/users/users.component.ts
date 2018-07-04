@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'; // Input niet nodig
-import { User } from '../model/user';
+// import { User } from '../model/user';
 import { UserService } from '../services/user.service';
 import { Observable, Subject } from "rxjs";
 import {AuthService} from '../providers/auth.service';
@@ -12,7 +12,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 })
 export class UsersComponent implements OnInit  {
 //  loading: boolean;
-  users: User[];
+  // users: User[];
   private searchTerms = new Subject<string>();
 
   constructor(private userService : UserService, private authService : AuthService,  private afAuth: AngularFireAuth,) {
@@ -30,12 +30,12 @@ export class UsersComponent implements OnInit  {
   }
 
   getUsers(): void {
-    let self = this;
-    
-    self.authService.maakTokenHeadervoorCurcon().then(function(headers){
-      self.userService.getUsers(headers)
-      .subscribe(users => self.users = users)
-    })
+    // let self = this;
+    //
+    // self.authService.maakTokenHeadervoorCurcon().then(function(headers){
+    //   self.userService.getUsers(headers)
+    //   .subscribe(users => self.users = users)
+    // })
   }
 
   ngOnInit(): void {

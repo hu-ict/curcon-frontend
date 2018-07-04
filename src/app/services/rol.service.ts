@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { Rol } from "../model/rol";
+import { AuthNameSpace } from "../model/AuthNameSpace";
 import { ErrorService } from "./error.service";
 import { catchError, map, tap} from 'rxjs/operators';
 // 'rxjs/add/operator/map' is replaced with HttpClient
@@ -16,68 +16,42 @@ export class RolService {
   private log(message:string): void{
     console.log( "rolService armeluisdebugger: " + message);
   }
-
-  getRol(id, headersIn :HttpHeaders ): Observable<Rol> {
-    let requestOptions = {
-      headers : headersIn,
-    };
-
-    let url = `${myGlobals.baseUrl + 'roles'}/${id}`;
-    return this.http.get<Rol>(url, requestOptions)
-    .pipe(
-      tap(rol => this.log(`fetched rollen id=${rol.id}`)),
-      catchError(ErrorService.prototype.handleError<Rol>('getRol id=${id}'))
-    );
-  }
-  // TODO: registreer een bootstrap module nadat alle rollen zijn opgehaald
-  getRollen(headersIn :HttpHeaders ): Observable<Rol[]> {
-    let requestOptions = {
-      headers: headersIn,
-    };
-
-    // Object.Prototype.function<Class[]>(Object.property);
-    let url = `${myGlobals.baseUrl + 'roles'}`;
-    return this.http.get<Rol[]>(url, requestOptions)
-      .pipe(
-        tap(rollen => this.log(`fetched rol id=${Rol["id"]}`)),
-        catchError(ErrorService.prototype.handleError<Rol[]>("getRollen id={rol.id}"))
-      );
-    }
-  //TODO: roep een bootstrap module aan nadat een rol is geselecteerd
-  getModulesByRol(RolId, headersIn :HttpHeaders ): Observable<Rol[]> {
-    let requestOptions = {
-      headers: headersIn,
-    }
-
-    return this.http.get<Rol[]>(`${myGlobals.baseUrl + 'roles'}/${RolId}/modules`, requestOptions)
-      .pipe(
-        tap(rollen => this.log(`fetched role id=${Rol["id"]}`)),
-        catchError(ErrorService.prototype.handleError<Rol[]>("getModulesByRol id={rol.id}"))
-    );
+  getRole(id,headersIn :HttpHeaders){
+    return this.http.get<AuthNameSpace.Rol>(myGlobals.baseUrl+'roles/'+id,{headers: headersIn})
   }
 
-  /* NOG AANVULLEN */
-  saveRole(headersIn :HttpHeaders) {
-    let requestOptions = {
-      headers: headersIn,
-    }
-
-
+  getRoles(headersIn :HttpHeaders): Observable<AuthNameSpace.Rol[]> {
+    return this.http.get<AuthNameSpace.Rol[]>(myGlobals.baseUrl + 'roles',{headers: headersIn})
+  }
+  getRolesByObject(obj,headersIn :HttpHeaders) {
+    console.log(obj.href);
+    return this.http.get<AuthNameSpace.Rol[]>(obj.href,{headers: headersIn})
+      .pipe( tap( res => console.log(res)) );
   }
 
-  saveModulesByRole(rolId, headersIn :HttpHeaders) {
-    let requestOptions = {
-      headers: headersIn,
-    }
-
-    return this.http.get<Rol[]>(`${myGlobals.baseUrl + 'roles'}/${rolId}/modules`, requestOptions);
+  //Creert een nieuwe Role
+  addRole(role, headersIn:HttpHeaders )
+  {
+    headersIn.append("Access Control Allow Origin", "*");
+    return this.http.post<AuthNameSpace.RolPostDto>( myGlobals.baseUrl+'roles/', role,{headers: headersIn})
+  }
+  updateRole(id, form, headersIn:HttpHeaders) {
+    headersIn.append("Access Control Allow Origin", "*");
+    return this.http.put<AuthNameSpace.Rol>(myGlobals.baseUrl+'roles/' + id, form,{headers: headersIn})
+  }
+  deleteRole(id, headersIn:HttpHeaders) {
+    headersIn.append("Access Control Allow Origin", "*");
+  return this.http.delete(myGlobals.baseUrl+'roles/' + id,{headers: headersIn})
   }
 
-  deleteModulesByRole(rolId, moduleId, headersIn :HttpHeaders) {
-    let requestOptions = {
-      headers: headersIn,
-    }
-
-    return this.http.get<Rol[]>(`${myGlobals.baseUrl + 'roles'}/${rolId}/${moduleId}`, requestOptions);
+  addModuleToRole(roleId, module, headersIn:HttpHeaders) {
+  	headersIn.append("Access Control Allow Origin", "*");
+  	let newModule = {'id': module.id};
+  	return this.http.post(myGlobals.baseUrl+'roles/' + roleId + '/modules', newModule,{headers: headersIn})
   }
+  deleteModuleFromRole(roleId, moduleId, headersIn:HttpHeaders) {
+  	headersIn.append("Access Control Allow Origin", "*");
+  	return this.http.delete(myGlobals.baseUrl+'roles/' + roleId + '/modules/' + moduleId,{headers: headersIn} )
+  }
+
 }

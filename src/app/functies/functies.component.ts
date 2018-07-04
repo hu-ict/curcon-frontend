@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'; // Input niet nodig
-import { Functie } from '../model/functie';
+// import { Functie } from '../model/functie';
 import { FunctieService } from '../services/functie.service';
 import { Observable, Subject } from "rxjs";
 
@@ -10,7 +10,7 @@ import { Observable, Subject } from "rxjs";
 })
 export class FunctiesComponent implements OnInit {
 
-  functies: Functie[];
+  // functies: Functie[];
   private searchTerms = new Subject<string>();
 
   constructor(private functieService : FunctieService) {

@@ -2,7 +2,7 @@ import { RequestOptions } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { User } from "../model/user";
+import { AuthNameSpace } from "../model/AuthNameSpace";
 import { ErrorService } from "./error.service";
 import { catchError, map, tap} from 'rxjs/operators';
 // 'rxjs/add/operator/map' is replaced with HttpClient
@@ -10,72 +10,46 @@ import * as myGlobals from '../globals';
 
 @Injectable()
 export class UserService {
-  constructor(
-
-    private http: HttpClient
-  ) {
-        console.log('UserService Initialized...');
+  constructor(private http: HttpClient) {
+    console.log('UserService Initialized...');
   }
-
   private log(message:string): void{
     console.log( "userService armeluisdebugger: " + message);
   }
 //
-  getUser(id, headersIn :HttpHeaders ): Observable<User> {
-    let requestOptions = {
-      headers: headersIn,
-    };
-
-    let url = `${myGlobals.baseUrl + 'users'}/${id}`;
-    return this.http.get<User>(url, requestOptions)
-    .pipe(
-      tap(user => this.log(`fetched function id=${user.username}`)),
-      catchError(ErrorService.prototype.handleError<User>('getUser id=${id}'))
-    );
+  getUser(id, headersIn :HttpHeaders ): Observable<AuthNameSpace.User> {
+    return this.http.get<AuthNameSpace.User>(myGlobals.baseUrl + 'users/'+id, {headers: headersIn})
   }
   //
-  getUsers(headersIn :HttpHeaders ): Observable<User[]> {//g
-    // Object.Prototype.function<Class[]>(Object.property);
-    let url = `${myGlobals.baseUrl + 'users'}`;
-    return this.http.get<User[]>(url, {
-    headers: headersIn
-  })
-      .pipe(
-        tap(users => this.log(`fetched username=${User["id"]}`)),
-        catchError(ErrorService.prototype.handleError<User[]>("getUsers id={user.username}"))
-        // wordt User["id"] herkend door interpolated ng?
-      );
+  getUsers(headersIn :HttpHeaders ): Observable<AuthNameSpace.User[]> {
+    return this.http.get<AuthNameSpace.User[]>(myGlobals.baseUrl + 'users/', {headers: headersIn})
   }
 
-  saveUser(username, userForm, headersIn :HttpHeaders) {
-    let requestOptions = {
-      headers : headersIn,
-    };
+//Creert een nieuwe user
+addUser(user, headersIn:HttpHeaders )
+{
+  headersIn.append("Access Control Allow Origin", "*");
+  return this.http.post<AuthNameSpace.UserPostDto>( myGlobals.baseUrl+'users/', user,{headers: headersIn})
+}
+// updateUser (id, form, headersIn:HttpHeaders) { }
+deleteUser(username, headersIn:HttpHeaders) {
+  headersIn.append("Access Control Allow Origin", "*");
+return this.http.delete(myGlobals.baseUrl+'users/' + username,{headers: headersIn})
+}
 
-    return this.http.post<User>(myGlobals.baseUrl + 'users/' + username, userForm, requestOptions);
-
-  }
-
-  deleteUser(username, headersIn :HttpHeaders) {
-    let requestOptions = {
-      headers : headersIn,
-    };
-    return this.http.delete(myGlobals.baseUrl + 'users/' + username, requestOptions);
-  }
-
+///
   getRoleByUser(username, headersIn :HttpHeaders) {
-    let requestOptions = {
-      headers : headersIn,
-    };
-
-    return this.http.get(myGlobals.baseUrl + 'users/' + username + '/role', requestOptions);
+    return this.http.get(myGlobals.baseUrl + 'users/' + username + '/role', {headers: headersIn});
   }
 
-  getGetFunctionsByUser(username, headersIn :HttpHeaders) {
-    let requestOptions = {
-      headers : headersIn,
-    };
-    
-    return this.http.get(myGlobals.baseUrl + 'users/' + username + '/functions', requestOptions);
+  updateRoleByUser(id, role, headersIn:HttpHeaders) {
+    headersIn.append("Access Control Allow Origin", "*");
+    let newRole = {'id': role.id};
+    return this.http.put<AuthNameSpace.Rol>(myGlobals.baseUrl+'users/' + id+ '/role',newRole,{headers: headersIn})
   }
+
+  getFunctionsByUser(username) {
+    return this.http.get(myGlobals.baseUrl + 'users/' + username + '/functions');
+  }
+
 }
