@@ -15,7 +15,8 @@ export class FullLayoutComponent implements OnInit {
   public status: {isopen: boolean} = {isopen: false};
   public allOrganisaties: Array<any>;
   public selectedOrganisatie: Object;
-
+  beheerToegang:boolean;
+  username :string;
   public toggled(open: boolean): void {
     console.log('Dropdown is now: ', open);
   }
@@ -27,16 +28,6 @@ export class FullLayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.afAuth.authState.subscribe((auth) => {
-      if (this.afAuth.auth.currentUser== null){
-        console.log("niet ingelogd noob");
-        //TODO stuur de gebruiker door naar de inlogpagina
-        //..
-        this.router.navigate(['logins']);
-      }
-      document.getElementById("user").innerHTML=this.afAuth.auth.currentUser.displayName;
-    }
-  )
 }
 
 onChange(item) {
@@ -49,9 +40,15 @@ onChange(item) {
   })
 }
 
-constructor(private organisatieService: OrganisatiesService,private afAuth: AngularFireAuth,private authService:AuthService, private router: Router) {
+constructor(private organisatieService: OrganisatiesService,private afAuth: AngularFireAuth,private authService:AuthService,
+  private router: Router) {
   this.allOrganisaties = [];
   this.afAuth.authState.subscribe((auth) => {
+    if (this.afAuth.auth.currentUser== null){
+      console.log("niet ingelogd noob");
+      this.router.navigate(['logins']);
+    }
+    else{
     this.authService.maakTokenHeadervoorCurcon().then( token => {
       organisatieService.getOrganisaties(token).subscribe(organisatie => {
         this.allOrganisaties.push(organisatie);
@@ -59,7 +56,23 @@ constructor(private organisatieService: OrganisatiesService,private afAuth: Angu
         	localStorage.setItem('selectedOrganisatie', JSON.stringify(this.allOrganisaties[0]));
         console.log(this.allOrganisaties);
       });
-    })
+
+      // this.userService.getUsers(token).subscribe(users => {
+      //   console.log(users);
+      //   console.log(users[0]);
+      //   this.functieService.getFunctiesByObject(users[0].role,token).subscribe(role => {
+      //     console.log(role);
+      //   })
+      // })
+
+
+    });
+    this.username=this.afAuth.auth.currentUser.displayName;
+    //TODO check voor rol=admin
+    this.beheerToegang=true;
+
+    }
+
   })
   this.selectedOrganisatie = JSON.parse(localStorage.getItem('selectedOrganisatie')).naam;
 }
