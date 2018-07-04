@@ -1,3 +1,4 @@
+import { RequestOptions } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
@@ -44,5 +45,37 @@ export class UserService {
         catchError(ErrorService.prototype.handleError<User[]>("getUsers id={user.username}"))
         // wordt User["id"] herkend door interpolated ng?
       );
+  }
+
+  saveUser(username, userForm, headersIn :HttpHeaders) {
+    let requestOptions = {
+      headers : headersIn,
+    };
+
+    return this.http.post<User>(myGlobals.baseUrl + 'users/' + username, userForm, requestOptions);
+
+  }
+
+  deleteUser(username, headersIn :HttpHeaders) {
+    let requestOptions = {
+      headers : headersIn,
+    };
+    return this.http.delete(myGlobals.baseUrl + 'users/' + username, requestOptions);
+  }
+
+  getRoleByUser(username, headersIn :HttpHeaders) {
+    let requestOptions = {
+      headers : headersIn,
+    };
+
+    return this.http.get(myGlobals.baseUrl + 'users/' + username + '/role', requestOptions);
+  }
+
+  getGetFunctionsByUser(username, headersIn :HttpHeaders) {
+    let requestOptions = {
+      headers : headersIn,
+    };
+    
+    return this.http.get(myGlobals.baseUrl + 'users/' + username + '/functions', requestOptions);
   }
 }

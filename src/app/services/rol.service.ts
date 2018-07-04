@@ -31,9 +31,10 @@ export class RolService {
   }
   // TODO: registreer een bootstrap module nadat alle rollen zijn opgehaald
   getRollen(headersIn :HttpHeaders ): Observable<Rol[]> {
-  let requestOptions = {
-  headers: headersIn,
-};
+    let requestOptions = {
+      headers: headersIn,
+    };
+
     // Object.Prototype.function<Class[]>(Object.property);
     let url = `${myGlobals.baseUrl + 'roles'}`;
     return this.http.get<Rol[]>(url, requestOptions)
@@ -41,17 +42,42 @@ export class RolService {
         tap(rollen => this.log(`fetched rol id=${Rol["id"]}`)),
         catchError(ErrorService.prototype.handleError<Rol[]>("getRollen id={rol.id}"))
       );
-  }
+    }
   //TODO: roep een bootstrap module aan nadat een rol is geselecteerd
   getModulesByRol(RolId, headersIn :HttpHeaders ): Observable<Rol[]> {
-  let requestOptions = {
-  headers: headersIn,
-}
+    let requestOptions = {
+      headers: headersIn,
+    }
 
     return this.http.get<Rol[]>(`${myGlobals.baseUrl + 'roles'}/${RolId}/modules`, requestOptions)
       .pipe(
         tap(rollen => this.log(`fetched role id=${Rol["id"]}`)),
         catchError(ErrorService.prototype.handleError<Rol[]>("getModulesByRol id={rol.id}"))
     );
+  }
+
+  /* NOG AANVULLEN */
+  saveRole(headersIn :HttpHeaders) {
+    let requestOptions = {
+      headers: headersIn,
+    }
+
+
+  }
+
+  saveModulesByRole(rolId, headersIn :HttpHeaders) {
+    let requestOptions = {
+      headers: headersIn,
+    }
+
+    return this.http.get<Rol[]>(`${myGlobals.baseUrl + 'roles'}/${rolId}/modules`, requestOptions);
+  }
+
+  deleteModulesByRole(rolId, moduleId, headersIn :HttpHeaders) {
+    let requestOptions = {
+      headers: headersIn,
+    }
+
+    return this.http.get<Rol[]>(`${myGlobals.baseUrl + 'roles'}/${rolId}/${moduleId}`, requestOptions);
   }
 }

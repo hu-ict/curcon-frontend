@@ -56,7 +56,7 @@ constructor(private organisatieService: OrganisatiesService,private afAuth: Angu
       organisatieService.getOrganisaties(token).subscribe(organisatie => {
         this.allOrganisaties.push(organisatie);
         if(localStorage.getItem('selectedOrganisatie') == null)
-        localStorage.setItem('selectedOrganisatie', JSON.stringify(this.allOrganisaties[0]));
+        	localStorage.setItem('selectedOrganisatie', JSON.stringify(this.allOrganisaties[0]));
         console.log(this.allOrganisaties);
       });
     })
