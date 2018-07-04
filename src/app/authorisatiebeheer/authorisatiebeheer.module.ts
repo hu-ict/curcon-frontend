@@ -30,7 +30,7 @@ import {HttpModule} from '@angular/http';
 
 @NgModule({
 	imports: [
-		AuthorisatiebeheerModule,
+		AuthorisatiebeheerRoutingModule,
 		ChartsModule,
 		HttpModule,
 		BsDropdownModule,
@@ -53,4 +53,4 @@ import {HttpModule} from '@angular/http';
 		FunctieService
 	]
 })
-export class AthorisatiebeheerModule { }
+export class AuthorisatiebeheerModule { }

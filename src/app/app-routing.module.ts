@@ -75,8 +75,8 @@ const routes : Routes = [//
       loadChildren: './docenten/docenten.module#DocentenModule'
     },
     {
-    	path: 'autorisatiebeheer',
-    	loadChildren: './autorisatiebeheer.component/'
+    	path: 'authorisatiebeheer',
+    	loadChildren: './authorisatiebeheer/authorisatiebeheer.module#AuthorisatiebeheerModule'
     },
     {
       path: 'components',

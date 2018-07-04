@@ -55,7 +55,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { environment } from '../environments/environment';
 import { HomeComponent } from './home/home.component';
 //import { AppRoutingModule } from './app-routing.module';
-import { AuthorisatiebeheerComponent } from './authorisatiebeheer/authorisatiebeheer.component';
+//import { AuthorisatiebeheerComponent } from './authorisatiebeheer/authorisatiebeheer.component';
 import { TokenButtonComponent } from './token-button/token-button.component';
 import { BeroepstaakXComponent } from './beroepstaak-x/beroepstaak-x.component';
 
@@ -90,7 +90,7 @@ import {BtCalculatedModule} from './bt-calculated/bt-calculated.module';
     LoginsComponent,
 //    DocentenComponent,
     HomeComponent,
-    AuthorisatiebeheerComponent,
+//    AuthorisatiebeheerComponent,
     TokenButtonComponent,
     BeroepstaakXComponent,
     AppComponent,
