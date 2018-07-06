@@ -30,7 +30,6 @@ photo:string;
 
   loadProfile(){
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      //TODO rol ophalen
       this.userService.getRoleByUser(this.afAuth.auth.currentUser.email, token ).subscribe(rol => {
         this.rol=rol.name;
 

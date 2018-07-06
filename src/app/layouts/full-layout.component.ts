@@ -3,6 +3,7 @@ import {OrganisatiesService} from '../services/curcon/organisaties.service';
 import { AngularFireAuth } from 'angularfire2/auth';
 import {AuthService} from '../providers/auth.service';
 import { Router } from '@angular/router';
+import {UserService} from '../services/user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -40,37 +41,26 @@ onChange(item) {
   })
 }
 
-constructor(private organisatieService: OrganisatiesService,private afAuth: AngularFireAuth,private authService:AuthService,
+constructor(private organisatieService: OrganisatiesService,private userService:UserService,private afAuth: AngularFireAuth,private authService:AuthService,
   private router: Router) {
   this.allOrganisaties = [];
   this.afAuth.authState.subscribe((auth) => {
     if (this.afAuth.auth.currentUser== null){
-      console.log("niet ingelogd noob");
+      //Gebruiker is niet ingelogd
       this.router.navigate(['logins']);
     }
+
+    else if(this.afAuth.auth.currentUser.metadata.creationTime==this.afAuth.auth.currentUser.metadata.lastSignInTime){
+      //Gebruiker logt voor de eerse keer in
+          console.log("Eerste keer dat je Inlogt met dit account");
+          this.userService.addUser(this.afAuth.auth.currentUser.email).subscribe(user =>{
+            this.initialize();
+          });
+        }
+
     else{
-    this.authService.maakTokenHeadervoorCurcon().then( token => {
-      organisatieService.getOrganisaties(token).subscribe(organisatie => {
-        this.allOrganisaties.push(organisatie);
-        if(localStorage.getItem('selectedOrganisatie') == null)
-        	localStorage.setItem('selectedOrganisatie', JSON.stringify(this.allOrganisaties[0]));
-        console.log(this.allOrganisaties);
-      });
-
-      // this.userService.getUsers(token).subscribe(users => {
-      //   console.log(users);
-      //   console.log(users[0]);
-      //   this.functieService.getFunctiesByObject(users[0].role,token).subscribe(role => {
-      //     console.log(role);
-      //   })
-      // })
-
-
-    });
-    this.username=this.afAuth.auth.currentUser.displayName;
-    //TODO check voor rol=admin
-    this.beheerToegang=true;
-
+      //Gebruiker bestaat al
+          this.initialize();
     }
 
   })
@@ -80,5 +70,31 @@ constructor(private organisatieService: OrganisatiesService,private afAuth: Angu
 logout(){
   this.authService.signOut();
   console.log("uitgelogd");
+}
+
+initialize(){
+  this.authService.maakTokenHeadervoorCurcon().then( token => {
+    this.organisatieService.getOrganisaties(token).subscribe(organisatie => {
+      this.allOrganisaties.push(organisatie);
+      if(localStorage.getItem('selectedOrganisatie') == null)
+        localStorage.setItem('selectedOrganisatie', JSON.stringify(this.allOrganisaties[0]));
+      console.log(this.allOrganisaties);
+    });
+
+    //TODO check voor rol=admin
+    this.beheerToegang=true;
+    // this.userService.getUsers(token).subscribe(users => {
+    //   console.log(users);
+    //   console.log(users[0]);
+    //   this.functieService.getFunctiesByObject(users[0].role,token).subscribe(role => {
+    //     console.log(role);
+    //   })
+    // })
+
+
+  });
+  this.username=this.afAuth.auth.currentUser.displayName;
+
+
 }
 }

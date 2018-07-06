@@ -26,10 +26,13 @@ export class UserService {
   }
 
 //Creert een nieuwe user
-addUser(user, headersIn:HttpHeaders )
-{
-  headersIn.append("Access Control Allow Origin", "*");
-  return this.http.post<AuthNameSpace.UserPostDto>( myGlobals.baseUrl+'users/', user,{headers: headersIn})
+//NOTE dit mag iedereen doen als hij voor het eerst inlogt!
+addUser(username)
+
+{  console.log("Posting user+"+username);
+  	let newUser:AuthNameSpace.UserPostDto = new AuthNameSpace.UserPostDto ;
+    newUser.username=username;
+  return this.http.post( myGlobals.baseUrl+'users/', newUser)
 }
 // updateUser (id, form, headersIn:HttpHeaders) { }
 deleteUser(username, headersIn:HttpHeaders) {

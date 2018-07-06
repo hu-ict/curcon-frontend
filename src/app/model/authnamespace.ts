@@ -37,6 +37,6 @@ export namespace AuthNameSpace{
     href: string;
   }
   export class UserPostDto {
-    name: string;
+    username: string;
   }
 }
