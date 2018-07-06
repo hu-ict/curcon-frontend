@@ -79,6 +79,10 @@ const routes : Routes = [//
     	loadChildren: './authorisatiebeheer/authorisatiebeheer.module#AuthorisatiebeheerModule'
     },
     {
+      path: 'profile',
+      loadChildren: './profile/profile.module#ProfileModule'
+    },
+    {
       path: 'components',
       loadChildren: './components/components.module#ComponentsModule'
     },

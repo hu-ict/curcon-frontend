@@ -39,7 +39,7 @@ return this.http.delete(myGlobals.baseUrl+'users/' + username,{headers: headersI
 
 ///
   getRoleByUser(username, headersIn :HttpHeaders) {
-    return this.http.get(myGlobals.baseUrl + 'users/' + username + '/role', {headers: headersIn});
+    return this.http.get<AuthNameSpace.Rol>(myGlobals.baseUrl + 'users/' + username + '/role', {headers: headersIn});
   }
 
   updateRoleByUser(id, role, headersIn:HttpHeaders) {
@@ -49,7 +49,7 @@ return this.http.delete(myGlobals.baseUrl+'users/' + username,{headers: headersI
   }
 
   getFunctionsByUser(username) {
-    return this.http.get(myGlobals.baseUrl + 'users/' + username + '/functions');
+    return this.http.get<AuthNameSpace.Functie[]>(myGlobals.baseUrl + 'users/' + username + '/functions');
   }
 
 }

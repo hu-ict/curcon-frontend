@@ -78,6 +78,7 @@ import {HttpModule} from '@angular/http';
 
 import {BtMatrixModule} from './bt-overzicht/bt-matrix.module';
 import {BtCalculatedModule} from './bt-calculated/bt-calculated.module';
+// import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -99,7 +100,8 @@ import {BtCalculatedModule} from './bt-calculated/bt-calculated.module';
     NAV_DROPDOWN_DIRECTIVES,
     BreadcrumbsComponent,
     SIDEBAR_TOGGLE_DIRECTIVES,
-    AsideToggleDirective
+    AsideToggleDirective,
+    // ProfileComponent
 
   ],
   imports: [
