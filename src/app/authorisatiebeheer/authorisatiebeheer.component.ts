@@ -11,5 +11,9 @@ export class AuthorisatiebeheerComponent implements OnInit {
 
   ngOnInit() {
   }
+  
+  addUser(form :any) {
+  	
+  }
 
 }

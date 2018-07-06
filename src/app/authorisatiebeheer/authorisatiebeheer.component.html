@@ -6,11 +6,11 @@
 				<div class="form-group">
 				    <label for="exampleSelect1">Kies domein</label>
 				    <select name="domein" class="form-control">
-				      	<option>1</option>
-				      	<option>2</option>
-				      	<option>3</option>
-				      	<option>4</option>
-				      	<option>5</option>
+				      	<option>User 1</option>
+				      	<option>User 2</option>
+				      	<option>User 3</option>
+				      	<option>User 4</option>
+				      	<option>User 5</option>
 				    </select>
 				  </div>
 			</form>
@@ -20,11 +20,9 @@
 				<div class="form-group">
 				    <label for="exampleSelect1">Kies actie</label>
 				    <select name="firstaction" class="form-control">
-				      	<option>1</option>
-				      	<option>2</option>
-				      	<option>3</option>
-				      	<option>4</option>
-				      	<option>5</option>
+				    	<option>Kies een actie</option>
+				      	<option>Rol Toekennen</option>
+				      	<option>Rol verwijderen</option>
 				    </select>
 				  </div>
 			</form>
@@ -32,13 +30,17 @@
 		<div class="col-lg-2">
 			<form action="" method="post">
 				<div class="form-group">
-				    <label for="exampleSelect1">Kies Actie</label>
+				    <label for="exampleSelect1">Kies rol</label>
 				    <select name="secondaction" class="form-control">
-				      	<option>1</option>
-				      	<option>2</option>
-				      	<option>3</option>
-				      	<option>4</option>
-				      	<option>5</option>
+				    
+				    	<!-- Misschien beter om het uit de database te halen in plaats van hard coded  -->
+				      	<option>Publiek</option>
+				      	<option>Admin</option>
+				      	<option>Cursusleider</option>
+				      	<option>Cursuscommissie</option>
+				      	<option>curriculumcommissie</option>
+				      	<option>Developer</option>
+				      	
 				    </select>
 				  </div>
 			</form>
@@ -115,5 +117,48 @@
 				</tr>
 			</tbody>
 		</table>
+	</div>
+	
+	<button type="button" class="btn btn-info" (click)="authbeheerModal.show()">
+		<i class="fa fa-plus" aria-hidden="true"></i>
+	</button>
+	<br>
+	<br>
+							<br>
+</div>
+
+<div bsModal #authbeheerModal="bs-modal" class="addModal modal fade"
+	tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog modal-primary" role="document">
+		<div class="modal-content">
+			<form #f="ngForm">
+				<div class="modal-header">
+					<h4 class="modal-title">Nieuwe user</h4>
+					<button type="button" class="close" (click)="authbeheerModal.hide()" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div *ngIf="loading" align="center">
+						<br /> <img src="assets/img/ripple.svg" />
+					</div>
+					<div class="form">
+						<div class="form-group row">
+							<label for="naam" class="col-2 col-form-label">E-mail</label>
+							<br>
+							<br>
+							<div class="col-10">
+								<input class="form-control" type="email" id="email" name="email" required>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" (click)="authbeheerModal.hide()">Sluiten</button>
+					<button type="button" class="btn btn-primary" (click)="addUser()">Toevoegen</button>
+				</div>
+			</form>
+		</div>
 	</div>
 </div>
