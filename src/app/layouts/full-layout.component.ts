@@ -18,6 +18,7 @@ export class FullLayoutComponent implements OnInit {
   public selectedOrganisatie: Object;
   beheerToegang:boolean;
   username :string;
+  initialized:boolean;
   public toggled(open: boolean): void {
     console.log('Dropdown is now: ', open);
   }
@@ -49,18 +50,8 @@ constructor(private organisatieService: OrganisatiesService,private userService:
       //Gebruiker is niet ingelogd
       this.router.navigate(['logins']);
     }
-
-    else if(this.afAuth.auth.currentUser.metadata.creationTime==this.afAuth.auth.currentUser.metadata.lastSignInTime){
-      //Gebruiker logt voor de eerse keer in
-          console.log("Eerste keer dat je Inlogt met dit account");
-          this.userService.addUser(this.afAuth.auth.currentUser.email).subscribe(user =>{
-            this.initialize();
-          });
-        }
-
     else{
-      //Gebruiker bestaat al
-          this.initialize();
+      this.initialize();
     }
 
   })
@@ -73,6 +64,22 @@ logout(){
 }
 
 initialize(){
+  if(!this.initialized && this.afAuth.auth.currentUser.metadata.creationTime==this.afAuth.auth.currentUser.metadata.lastSignInTime){
+    //Gebruiker logt voor de eerse keer in
+        console.log("Eerste keer dat je Inlogt met dit account");
+        this.initialized=true;
+        this.userService.addUser(this.afAuth.auth.currentUser.email).subscribe(user =>{
+      //    this.initialize();
+        });
+      }
+
+  else{
+    //Gebruiker bestaat al
+    //    this.initialize();
+  }
+
+
+
   this.authService.maakTokenHeadervoorCurcon().then( token => {
     this.organisatieService.getOrganisaties(token).subscribe(organisatie => {
       this.allOrganisaties.push(organisatie);
