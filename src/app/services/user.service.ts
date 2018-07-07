@@ -16,9 +16,10 @@ export class UserService {
   private log(message:string): void{
     console.log( "userService armeluisdebugger: " + message);
   }
-//
-  getUser(username, headersIn :HttpHeaders ): Observable<AuthNameSpace.User> {
-    return this.http.get<AuthNameSpace.User>(myGlobals.baseUrl + 'users/'+username, {headers: headersIn})
+
+ //Haalt user op Om te kijken of user al bestaat. Mag iedereen
+  getUser(username): Observable<AuthNameSpace.User> {
+    return this.http.get<AuthNameSpace.User>(myGlobals.baseUrl + 'users/'+username, )
   }
   //
   getUsers(headersIn :HttpHeaders ): Observable<AuthNameSpace.User[]> {

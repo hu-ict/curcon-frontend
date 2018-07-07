@@ -46,12 +46,27 @@ constructor(private organisatieService: OrganisatiesService,private userService:
   private router: Router) {
   this.allOrganisaties = [];
   this.afAuth.authState.subscribe((auth) => {
+    console.log("WARNING update state"+auth.email);
     if (this.afAuth.auth.currentUser== null){
       //Gebruiker is niet ingelogd
       this.router.navigate(['logins']);
     }
     else{
-      this.initialize();
+      this.userService.getUser(this.afAuth.auth.currentUser.email).subscribe(user=>{
+        console.log(user);
+        if (user==null){
+          //Gebruiker logt voor de eerse keer in
+              console.log("Eerste keer dat je Inlogt met dit account");
+              this.initialized=true;
+              this.userService.addUser(this.afAuth.auth.currentUser.email).subscribe(user =>{
+              this.initializefurther();
+              });
+        }
+        else{
+            this.initializefurther();
+        }
+      });
+
     }
 
   })
@@ -63,45 +78,35 @@ logout(){
   console.log("uitgelogd");
 }
 
-initialize(){
-  if(!this.initialized && this.afAuth.auth.currentUser.metadata.creationTime==this.afAuth.auth.currentUser.metadata.lastSignInTime){
-    //Gebruiker logt voor de eerse keer in
-        console.log("Eerste keer dat je Inlogt met dit account");
-        this.initialized=true;
-        this.userService.addUser(this.afAuth.auth.currentUser.email).subscribe(user =>{
-      //    this.initialize();
-        });
-      }
 
-  else{
-    //Gebruiker bestaat al
-    //    this.initialize();
-  }
-
-
+initializefurther(){
 
   this.authService.maakTokenHeadervoorCurcon().then( token => {
-    this.organisatieService.getOrganisaties(token).subscribe(organisatie => {
-      this.allOrganisaties.push(organisatie);
+    this.organisatieService.getOrganisaties(token).subscribe(organisaties => {
+      this.allOrganisaties=organisaties;
       if(localStorage.getItem('selectedOrganisatie') == null)
         localStorage.setItem('selectedOrganisatie', JSON.stringify(this.allOrganisaties[0]));
       console.log(this.allOrganisaties);
     });
 
-    //TODO check voor rol=admin
-    this.beheerToegang=true;
-    // this.userService.getUsers(token).subscribe(users => {
-    //   console.log(users);
-    //   console.log(users[0]);
-    //   this.functieService.getFunctiesByObject(users[0].role,token).subscribe(role => {
-    //     console.log(role);
-    //   })
-    // })
+    this.userService.getRoleByUser(this.afAuth.auth.currentUser.email,token).subscribe(rol => {
+    console.log(rol);
+    console.log("Dit is je rolname"+rol.name);
+
+    //hardcoded admin?
+    if(rol.name =="admin" ||rol.name == "developer")
+          this.beheerToegang=true;
+    });
+
+     //TODO Verwijder dit als beheer niet altijd visible moet zijn.
+      // this.beheerToegang=true;
 
 
-  });
-  this.username=this.afAuth.auth.currentUser.displayName;
+
+    });
+    this.username=this.afAuth.auth.currentUser.displayName;
 
 
-}
+  }
+
 }
