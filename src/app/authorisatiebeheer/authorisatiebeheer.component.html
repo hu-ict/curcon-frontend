@@ -32,7 +32,7 @@
 				<div class="form-group">
 				    <label for="exampleSelect1">Kies rol</label>
 				    <select name="secondaction" class="form-control">
-				    
+
 				    	<!-- Misschien beter om het uit de database te halen in plaats van hard coded  -->
 				      	<option>Publiek</option>
 				      	<option>Admin</option>
@@ -40,7 +40,7 @@
 				      	<option>Cursuscommissie</option>
 				      	<option>curriculumcommissie</option>
 				      	<option>Developer</option>
-				      	
+
 				    </select>
 				  </div>
 			</form>
@@ -118,16 +118,16 @@
 			</tbody>
 		</table>
 	</div>
-	
-	<button type="button" class="btn btn-info" (click)="authbeheerModal.show()">
+
+	<button type="button" class="btn btn-info" (click)="AuthorisatiebeheerModal.show(); initializeUserForm();">
 		<i class="fa fa-plus" aria-hidden="true"></i>
 	</button>
 	<br>
 	<br>
-	<br>
+							<br>
 </div>
 
-<div bsModal #AuthbeheerModal="bs-modal" class="addModal modal fade"
+<div bsModal #AuthorisatiebeheerModal="bs-modal" class="addModal modal fade"
 	tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 	aria-hidden="true">
 	<div class="modal-dialog modal-primary" role="document">
@@ -135,7 +135,7 @@
 			<form #f="ngForm">
 				<div class="modal-header">
 					<h4 class="modal-title">Nieuwe user</h4>
-					<button type="button" class="close" (click)="authbeheerModal.hide()" aria-label="Close">
+					<button type="button" class="close" (click)="AuthorisatiebeheerModal.hide()" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
@@ -149,13 +149,13 @@
 							<br>
 							<br>
 							<div class="col-10">
-								<input class="form-control" type="email" id="email" name="email" required>
+								<input class="form-control" type="email" id="email" name="email" 	required [(ngModel)]="userForm.email">
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" (click)="authbeheerModal.hide()">Sluiten</button>
+					<button type="button" class="btn btn-secondary" (click)="AuthorisatiebeheerModal.hide()">Sluiten</button>
 					<button type="button" class="btn btn-primary" (click)="addUser()">Toevoegen</button>
 				</div>
 			</form>

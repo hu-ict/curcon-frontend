@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import {Router} from '@angular/router';
 import {AbstractControl, NG_VALIDATORS} from '@angular/forms';
 import {AuthService} from '../providers/auth.service';
@@ -22,16 +22,18 @@ export class AuthorisatiebeheerComponent implements OnInit {
   	naam: string;
   	error: boolean;
 	mode: string;
-	
-	isVisibleUser_get = boolean;
-	isVisibleUser_post = boolean;
-	isVisibleUser_delete = boolean;
-	
-	isVisibleRole_get = boolean;
-	isVisibleRole_post = boolean;
-	isVisibleRole_delete = boolean;
 
-  	constructor(public authService: AuthService, private userService : UserService, private rolService : RolService, private moduleService : ModuleService, private functieService : FunctieService, private afAuth: AngularFireAuth) { 
+  userForm = <any>{};
+  //FIXME deze boolean zijn nog niet aan html gekoppeld+check
+	isVisibleUser_get : boolean;
+	isVisibleUser_post : boolean;
+	isVisibleUser_delete : boolean;
+
+	isVisibleRole_get : boolean;
+	isVisibleRole_post : boolean;
+	isVisibleRole_delete : boolean;
+
+  	constructor(public authService: AuthService, private userService : UserService, private rolService : RolService, private moduleService : ModuleService, private functieService : FunctieService, private afAuth: AngularFireAuth) {
   		//this.loading = true;
     	this.afAuth.authState.subscribe((auth) => {
       		this.loadButtons();
@@ -39,7 +41,7 @@ export class AuthorisatiebeheerComponent implements OnInit {
   	}
 
   	ngOnInit() { }
-  	
+
   	loadButtons() {
   		var email= this.afAuth.auth.currentUser.email;
       	this.authService.maakTokenHeadervoorCurcon().then( token => {
@@ -50,23 +52,23 @@ export class AuthorisatiebeheerComponent implements OnInit {
                 	if (functies.some(f=> f.name == "user_get")) {
                    		this.isVisibleUser_get = true;
                 	}
-                	
+
                 	if (functies.some(f=> f.name == "user_post")) {
                    		this.isVisibleUser_post=true;
                 	}
-                	
+
                 	if (functies.some(f=> f.name == "user_delete")) {
                    		this.isVisibleUser_delete = true;
                 	}
-                	
+
                 	if (functies.some(f=> f.name == "role_get")) {
                    		this.isVisibleRole_get = true;
                 	}
-                	
+
                 	if (functies.some(f=> f.name == "role_post")) {
                    		this.isVisibleRole_post = true;
                 	}
-                	
+
                 	if (functies.some(f=> f.name == "role_delete")) {
                    		this.isVisibleRole_delete = true;
                 	}
@@ -74,19 +76,24 @@ export class AuthorisatiebeheerComponent implements OnInit {
         	});
       	})
 	}
-   
-  	addUser(form :any) {
+
+initializeUserForm(){
+      this.userForm = {};
+}
+  	addUser() {
   		this.loading = true;
-    	const formValues = form.value;
+    	// const formValues = form.value;
+      console.log(this.userForm);
+      //console.log(formValues);
     	this.authService.maakTokenHeadervoorCurcon().then( token => {
-    		this.mode = 'view';
-    		this.userService.addUser(formValues, token).subscribe(user => {
+    		this.mode = 'view'; //doet nog niks in de html
+    		this.userService.addUser(this.userForm.email).subscribe(user => {
       			this.loading = false;
-      			//this.authorisatieModal.hide();
+      			this.authorisatiebeheerModal.hide();
     		});
       	});
   	}
-  
+
   	/*
   	getRoles() {
   		this.authService.maakTokenHeadervoorCurcon().then( token => {
@@ -96,7 +103,7 @@ export class AuthorisatiebeheerComponent implements OnInit {
 	     	});
 	  	});
 	}
-	
+
 	getRoleByUser() {
     	this.authService.maakTokenHeadervoorCurcon().then( token => {
   			this.userService.getRoleByUser(user, token).subscribe(result => {
