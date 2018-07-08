@@ -1,0 +1,129 @@
+<style>
+.selectable:hover {
+	cursor: pointer;
+}
+
+.table-label {
+	width: 10%;
+}
+</style>
+
+<div class="container">
+	<div *ngIf="loading" align="center" class="page-loading">
+		<img src="assets/img/ripple.svg" />
+	</div>
+	<div class="row">
+		<div class="col-3">
+			<div class="card">
+				<div class="card-header">
+					<h4 class="card-title mb-0">Users</h4>
+					<br />
+					<button type="button" class="btn btn-info"
+						(click)="cursusModal.show(); initializeUserForm();">
+						<i class="fa fa-plus" aria-hidden="true"></i>
+					</button>
+				</div>
+				<div class="card-block">
+					<div class="course-wrapper">
+						<div class="row">
+							<div class="col-md-12">
+								<table class="table table-hover">
+									<tbody>
+										<tr *ngFor="let cursus of courses" (click)="onSelect(cursus)"
+											class="selectable">
+											<td colspan="1">{{ cursus.username }}
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-9 course">
+			<div *ngIf="selectedCursus" class="card">
+				<div class="card-header">
+					<h4 class="card-title mb-0">{{selectedCursus.username}}</h4>
+				</div>
+				<div class="card-block">
+					<!-- Nav tabs -->
+					<tabset>
+							<tab heading="Algemeen" id="tab1">
+								<form #editCourse="ngForm" novalidate>
+									<a href="javascript:void(0)" (click)="changeMode('edit')"
+										*ngIf="mode == 'view'">Bewerken</a> <a href="javascript:void(0)"
+										(click)="changeMode('view');" *ngIf="mode == 'edit'">Annuleren</a>
+									<a href="javascript:void(0)" (click)="saveCursus(editCourse)"
+										*ngIf="mode == 'edit'">Opslaan</a>
+
+									<div class="form-group row">
+										<label for="email" class="col-2 col-form-label">Email</label>
+										<div class="col-10">
+											<div class="col-form-label">{{selectedCursus.username}}</div>
+											<!-- *ngIf="mode == 'view'" <input *ngIf="mode == 'edit'" class="form-control" type="text"
+												id="code" name="code" required [(ngModel)]="userForm.username"> -->
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label for="rol" class="col-2 col-form-label">Rol</label>
+										<div class="col-10">
+											<div class="col-form-label" *ngIf="mode == 'view'">{{selectedCursus.role?.naam}}</div>
+											<select *ngIf="mode == 'edit'"
+												[ngModel]="userForm.role?.id" type="text"
+												class="form-control" id="rol" name="rol">
+												<option *ngFor="let a of allRoles" [ngValue]="a.id">{{a.name}}</option>
+											</select>
+										</div>
+									</div>
+									{{editCourse.value | json}}
+								</form>
+							</tab>
+			</tabset>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div bsModal #cursusModal="bs-modal" class="addModal modal fade"
+	tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog modal-primary" role="document">
+		<div class="modal-content">
+			<form #f="ngForm">
+				<div class="modal-header">
+					<h4 class="modal-title">Nieuwe cursus</h4>
+					<button type="button" class="close"
+						(click)="closeModal(cursusModal)" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div *ngIf="loading" align="center">
+						<br /> <img src="assets/img/ripple.svg" />
+					</div>
+					<div class="form">
+						<div class="form-group row">
+							<label for="email" class="col-2 col-form-label">Email</label>
+							<div class="col-10">
+								<input class="form-control" type="text" id="email" name="email"
+									required [(ngModel)]="userForm.email">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div *ngIf="!loading" class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						(click)="cursusModal.hide()">Sluiten</button>
+					<button type="button" class="btn btn-primary" (click)="addCursus()">Toevoegen</button>
+				</div>
+			</form>
+		</div>
+		<!-- /.modal-content - -->
+	</div>
+	<!-- /.modal-dialog - -->
+</div>
+<!-- /.modal - -->

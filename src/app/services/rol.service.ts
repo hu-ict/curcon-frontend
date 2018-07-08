@@ -32,8 +32,13 @@ export class RolService {
   //Creert een nieuwe Role
   addRole(role, headersIn:HttpHeaders )
   {
+    // let newUser:AuthNameSpace.UserPostDto = new AuthNameSpace.UserPostDto ;
+    let newRole: any= {}; //Object;
+    newRole.name=role;
+    console.log(newRole);
+
     headersIn.append("Access Control Allow Origin", "*");
-    return this.http.post<AuthNameSpace.RolPostDto>( myGlobals.baseUrl+'roles/', role,{headers: headersIn})
+    return this.http.post<AuthNameSpace.RolPostDto>( myGlobals.baseUrl+'roles/', newRole,{headers: headersIn})
   }
   updateRole(id, form, headersIn:HttpHeaders) {
     headersIn.append("Access Control Allow Origin", "*");

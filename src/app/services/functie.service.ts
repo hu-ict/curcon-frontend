@@ -32,17 +32,24 @@ export class FunctieService {
       .pipe( tap( res => console.log(res)) );
   }
 
-//Creert een nieuwe functie
+//WARNING Creert een nieuwe functie, deze staan hardcoded in de front en backend
   addFunctie(functie, headersIn:HttpHeaders )
   {
-  	headersIn.append("Access Control Allow Origin", "*");
-  	return this.http.post<AuthNameSpace.FunctiePostDto>( myGlobals.baseUrl+'functions/', functie,{headers: headersIn})
-}
 
+    let newFunctie: any= {}; //Object;
+    newFunctie.name=functie;
+    console.log(newFunctie);
+
+
+  	headersIn.append("Access Control Allow Origin", "*");
+  	return this.http.post<AuthNameSpace.FunctiePostDto>( myGlobals.baseUrl+'functions/', newFunctie,{headers: headersIn})
+}
+//WARNING update een functie, deze staan hardcoded in de front en backend
   updateFunctie(id, form, headersIn:HttpHeaders) {
   	headersIn.append("Access Control Allow Origin", "*");
   	return this.http.put<AuthNameSpace.Functie>(myGlobals.baseUrl+'functions/' + id, form,{headers: headersIn})
 }
+//WARNING delete een functie, deze staan hardcoded in de front en backend
 //TODO Wil je een functie echt kunnen deleten?cursus,docent,opleiding kunnen nog niet verwijderd worden
 deleteFunctie(id, headersIn:HttpHeaders) {
 		headersIn.append("Access Control Allow Origin", "*");

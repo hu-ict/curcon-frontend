@@ -78,6 +78,11 @@ import {HttpModule} from '@angular/http';
 
 import {BtMatrixModule} from './bt-overzicht/bt-matrix.module';
 import {BtCalculatedModule} from './bt-calculated/bt-calculated.module';
+
+// import { BUserComponent } from './b-user/b-user.component';
+// import { BRolComponent } from './b-rol/b-rol.component';
+// import { BFunctionComponent } from './b-function/b-function.component';
+// import { BModuleComponent } from './b-module/b-module.component';
 // import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
@@ -101,6 +106,10 @@ import {BtCalculatedModule} from './bt-calculated/bt-calculated.module';
     BreadcrumbsComponent,
     SIDEBAR_TOGGLE_DIRECTIVES,
     AsideToggleDirective,
+    // BUserComponent,
+    // BRolComponent,
+    // BFunctionComponent,
+    // BModuleComponent,
     // ProfileComponent
 
   ],

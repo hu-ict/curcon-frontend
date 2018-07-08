@@ -74,10 +74,10 @@ const routes : Routes = [//
       path: 'docenten',
       loadChildren: './docenten/docenten.module#DocentenModule'
     },
-    {
-    	path: 'authorisatiebeheer',
-    	loadChildren: './authorisatiebeheer/authorisatiebeheer.module#AuthorisatiebeheerModule'
-    },
+    // {
+    // 	path: 'authorisatiebeheer',
+    // 	loadChildren: './authorisatiebeheer/authorisatiebeheer.module#AuthorisatiebeheerModule'
+    // },
     {
       path: 'profile',
       loadChildren: './profile/profile.module#ProfileModule'
@@ -111,6 +111,20 @@ const routes : Routes = [//
       path: '',
       loadChildren: './pages/pages.module#PagesModule',
     }
+  ]
+},
+
+{
+  path: 'authorisatiebeheer',
+  component: FullLayoutComponent,
+  data: {
+    title: 'authorisatiebeheer'
+  },
+  children: [
+    {
+    	path: '',
+    	loadChildren: './authorisatiebeheer/authorisatiebeheer.module#AuthorisatiebeheerModule'
+    },
   ]
 }
 

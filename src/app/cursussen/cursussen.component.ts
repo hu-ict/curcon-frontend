@@ -234,23 +234,23 @@ isVisibleToetsElement_delete:boolean;
     console.log(this.selectedCursus);
   }
 
-  private refreshCursussen() {
-    this.loading = true;
-
-    this.authService.maakTokenHeadervoorCurcon().then( token => {
-      //console.log(token);
-
-      this.cursussenService.getCursussen(token).subscribe(cursussen => {
-        this.courses=cursussen;
-        this.loading = false;
-      },
-      error => console.log('Error: ', error),
-      () => {
-        this.loading = false;
-        console.log(this.selectedCursus);
-      });
-    });
-  }
+  // private refreshCursussen() {
+  //   this.loading = true;
+  //
+  //   this.authService.maakTokenHeadervoorCurcon().then( token => {
+  //     //console.log(token);
+  //
+  //     this.cursussenService.getCursussen(token).subscribe(cursussen => {
+  //       this.courses=cursussen;
+  //       this.loading = false;
+  //     },
+  //     error => console.log('Error: ', error),
+  //     () => {
+  //       this.loading = false;
+  //       console.log(this.selectedCursus);
+  //     });
+  //   });
+  // }
 
   // this.authService.maakTokenHeadervoorCurcon().then( token => {
   //   self.docenten= [];

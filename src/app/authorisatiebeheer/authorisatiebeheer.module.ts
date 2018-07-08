@@ -3,6 +3,11 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 import { AuthorisatiebeheerComponent } from './authorisatiebeheer.component';
+import { BFunctionComponent } from './b-function.component';
+import { BModuleComponent } from './b-module.component';
+import { BRolComponent } from './b-rol.component';
+import { BUserComponent } from './b-user.component';
+
 import { UserService } from '../services/user.service';
 import { FunctieService } from '../services/functie.service';
 import { ModuleService } from '../services/module.service';
@@ -42,9 +47,10 @@ import {HttpModule} from '@angular/http';
 		],
 	declarations: [
 		AuthorisatiebeheerComponent,
-//		TabsComponent,
-//		TablesComponent,
-//		ModalsComponent
+		BFunctionComponent,
+		BModuleComponent,
+		BRolComponent,
+		BUserComponent,
 	],
 	providers: [
 		UserService,

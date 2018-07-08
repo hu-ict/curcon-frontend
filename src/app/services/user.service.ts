@@ -25,6 +25,12 @@ export class UserService {
   getUsers(headersIn :HttpHeaders ): Observable<AuthNameSpace.User[]> {
     return this.http.get<AuthNameSpace.User[]>(myGlobals.baseUrl + 'users/', {headers: headersIn})
   }
+  getUsersByObject(obj, headersIn:HttpHeaders) {
+  	headersIn.append("Access Control Allow Origin", "*");
+  	console.log(obj.href);
+  	return this.http.get<AuthNameSpace.User[]>(obj.href,{headers: headersIn})
+  	.pipe( tap( res => console.log(res)) );
+  }
 
 //Creert een nieuwe user
 //NOTE dit mag iedereen doen als hij voor het eerst inlogt!
@@ -48,7 +54,7 @@ return this.http.delete(myGlobals.baseUrl+'users/' + username,{headers: headersI
 
   updateRoleByUser(id, role, headersIn:HttpHeaders) {
     headersIn.append("Access Control Allow Origin", "*");
-    let newRole = {'id': role.id};
+    let newRole = {'id': role.rol};
     return this.http.put<AuthNameSpace.Rol>(myGlobals.baseUrl+'users/' + id+ '/role',newRole,{headers: headersIn})
   }
 

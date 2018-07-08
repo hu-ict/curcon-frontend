@@ -30,8 +30,12 @@ export class ModuleService {
   //Creert een nieuwe Module
   addModule(module, headersIn:HttpHeaders )
   {
+    let newModule: any= {}; //Object;
+    newModule.name=module;
+    console.log(newModule);
+
   	headersIn.append("Access Control Allow Origin", "*");
-  	return this.http.post<AuthNameSpace.ModulePostDto>( myGlobals.baseUrl+'modules/', module,{headers: headersIn})
+  	return this.http.post<AuthNameSpace.ModulePostDto>( myGlobals.baseUrl+'modules/', newModule,{headers: headersIn})
   }
   updateModule(id, form, headersIn:HttpHeaders) {
     headersIn.append("Access Control Allow Origin", "*");
