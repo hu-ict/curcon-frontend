@@ -29,9 +29,9 @@
 							<div class="col-md-12">
 								<table class="table table-hover">
 									<tbody>
-										<tr *ngFor="let cursus of courses" (click)="onSelect(cursus)"
+										<tr *ngFor="let cursus of courses" (click)="user"
 											class="selectable">
-											<td colspan="1">{{ cursus.username }}
+											<td colspan="1">{{ user.username }}
 											</td>
 										</tr>
 									</tbody>
@@ -61,7 +61,7 @@
 									<div class="form-group row">
 										<label for="email" class="col-2 col-form-label">Email</label>
 										<div class="col-10">
-											<div class="col-form-label">{{selectedCursus.username}}</div>
+											<div class="col-form-label">{{selectedUser.username}}</div>
 											<!-- *ngIf="mode == 'view'" <input *ngIf="mode == 'edit'" class="form-control" type="text"
 												id="code" name="code" required [(ngModel)]="userForm.username"> -->
 										</div>
@@ -70,7 +70,7 @@
 									<div class="form-group row">
 										<label for="rol" class="col-2 col-form-label">Rol</label>
 										<div class="col-10">
-											<div class="col-form-label" *ngIf="mode == 'view'">{{selectedCursus.role?.naam}}</div>
+											<div class="col-form-label" *ngIf="mode == 'view'">{{selectedUser.role?.name}}</div>
 											<select *ngIf="mode == 'edit'"
 												[ngModel]="userForm.role?.id" type="text"
 												class="form-control" id="rol" name="rol">
@@ -118,7 +118,7 @@
 				<div *ngIf="!loading" class="modal-footer">
 					<button type="button" class="btn btn-secondary"
 						(click)="cursusModal.hide()">Sluiten</button>
-					<button type="button" class="btn btn-primary" (click)="addCursus()">Toevoegen</button>
+					<button type="button" class="btn btn-primary" (click)="addUser()">Toevoegen</button>
 				</div>
 			</form>
 		</div>

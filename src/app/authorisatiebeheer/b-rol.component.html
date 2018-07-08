@@ -45,7 +45,7 @@
 		<div class="col-9 course">
 			<div *ngIf="selectedCursus" class="card">
 				<div class="card-header">
-					<h4 class="card-title mb-0">{{selectedCursus.name}}</h4>
+					<h4 class="card-title mb-0">{{selectedRole.name}}</h4>
 				</div>
 				<div class="card-block">
 					<!-- Nav tabs -->
@@ -55,13 +55,13 @@
 									<a href="javascript:void(0)" (click)="changeMode('edit')"
 										*ngIf="mode == 'view'">Bewerken</a> <a href="javascript:void(0)"
 										(click)="changeMode('view');" *ngIf="mode == 'edit'">Annuleren</a>
-									<a href="javascript:void(0)" (click)="saveCursus(editCourse)"
+									<a href="javascript:void(0)" (click)="saveRole(editCourse)"
 										*ngIf="mode == 'edit'">Opslaan</a>
 
 									<div class="form-group row">
-										<label for="email" class="col-2 col-form-label">Email</label>
+										<label for="email" class="col-2 col-form-label">Rol</label>
 										<div class="col-10">
-											<div class="col-form-label" *ngIf="mode == 'view'">{{selectedCursus.name}}</div>
+											<div class="col-form-label" *ngIf="mode == 'view'">{{selectedRole.name}}</div>
 									   <input *ngIf="mode == 'edit'" class="form-control" type="text"
 												id="name" name="name" required [(ngModel)]="userForm.name">
 										</div>
@@ -69,43 +69,42 @@
 									{{editCourse.value | json}}
 								</form>
 							</tab>
-
-														<tab heading="Modules" id="tab1">
-															<div class="col-12">
-																<div class="row">
-																	<div class="table-responsive">
-																		<table class="table preview-table">
-																			<thead>
-																				<tr>
-																					<th></th>
-																					<th>Naam</th>
-																				</tr>
-																			</thead>
-																			<tbody>
-																				<tr *ngFor="let md of selectedCursus.moduleArr">
-																					<td><a class="text-danger lead"
-																						href="javascript:void(0)" (click)="deleteBeroepstaak(md)"><i
-																							class="fa fa-minus-circle" aria-hidden="true"></i></a></td>
-																					<td>{{md.name}}</td>
-																				</tr>
-																			</tbody>
-																			<!-- preview content goes here-->
-																		</table>
-																	</div>
-																</div>
-																<div class="row">
-																	<div class="col-12">
-																		<div class="btn-group pull-right" role="group" aria-label="...">
-																			<button type="button" class="btn btn-info"
-																				(click)="ModuleModal.show(); initializeCursusForm();">
-																				<i class="fa fa-plus" aria-hidden="true"></i>
-																			</button>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</tab>
-			</tabset>
+							<tab heading="Modules" id="tab1">
+								<div class="col-12">
+									<div class="row">
+										<div class="table-responsive">
+											<table class="table preview-table">
+												<thead>
+													<tr>
+														<th></th>
+														<th>Naam</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr *ngFor="let md of selectedCursus.moduleArr">
+														<td><a class="text-danger lead"
+															href="javascript:void(0)" (click)="deleteRole(md)"><i
+																class="fa fa-minus-circle" aria-hidden="true"></i></a></td>
+														<td>{{md.name}}</td>
+													</tr>
+												</tbody>
+												<!-- preview content goes here-->
+											</table>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-12">
+											<div class="btn-group pull-right" role="group" aria-label="...">
+												<button type="button" class="btn btn-info"
+													(click)="ModuleModal.show(); initializeCursusForm();">
+													<i class="fa fa-plus" aria-hidden="true"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</tab>
+					</tabset>
 				</div>
 			</div>
 		</div>
@@ -142,7 +141,7 @@
 				<div *ngIf="!loading" class="modal-footer">
 					<button type="button" class="btn btn-secondary"
 						(click)="cursusModal.hide()">Sluiten</button>
-					<button type="button" class="btn btn-primary" (click)="addCursus()">Toevoegen</button>
+					<button type="button" class="btn btn-primary" (click)="addRole()">Toevoegen</button>
 				</div>
 			</form>
 		</div>

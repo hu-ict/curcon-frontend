@@ -35,8 +35,8 @@ export class BUserComponent implements OnInit {
   isVisibleRole_post : boolean;
   isVisibleRole_delete : boolean;
   //Cursuscopy
-  @Input() courses: Array<any>;
-  @Output() onSelectedCourse = new EventEmitter<Object>();
+  @Input() users: Array<any>;
+  @Output() onSelectedUser = new EventEmitter<Object>();
   //Allroles
   selectedCursus = <any>{};
 
@@ -101,42 +101,42 @@ closeModal(modal) {
   this.loading = false;
   modal.hide();
 }
-onSelect(cursus: Object) {
-  this.onSelectedCourse.emit(cursus);
-  this.selectedCursus = cursus;
-  this.userForm = cursus;
+onSelect(user: Object) {
+  this.onSelectedCourse.emit(user);
+  this.selectedCursus = user;
+  this.userForm = user;
   // this.refreshModules();
-  console.log('onSelect(this.selectedCursus)');
-  console.log(this.selectedCursus);
+  console.log('onSelect(this.onSelectedUser)');
+  console.log(this.onSelectedUser);
 }
 
-addCursus() {
+addUser() {
   this.loading = true;
   console.log(this.userForm);
   this.authService.maakTokenHeadervoorCurcon().then( token => {
       this.userService.addUser(this.userForm.email).subscribe(user => {
         this.mode = 'view';
-        this.userService.getUsers(token).subscribe(cursussen => {
-          this.courses=cursussen;
-          // this.onSelect(this.courses[this.courses.length-1]);
+        this.userService.getUsers(token).subscribe(users => {
+          this.courses=users;
+          // this.onSelect(this.users[this.users.length-1]);
             this.loading = false;
             this.cursusModal.hide();
           });
     });
   });
 }
-saveCursus(form: any) {
+saveUser(form: any) {
   this.loading = true;
   // const formValues = form.value;
   this.authService.maakTokenHeadervoorCurcon().then( token => {
     //console.log(token);
     console.log(form.value.rol);
-    this.userService.updateRoleByUser(this.selectedCursus.username, form.value, token).subscribe(data => {
+    this.userService.updateRoleByUser(this.onSelectedUser.username, form.value, token).subscribe(data => {
       this.mode = 'view';
-      this.loadcursussen();
-      this.userService.getUsersByObject(this.selectedCursus,token).subscribe(cursus => {
-        console.log(cursus);
-        this.onSelect(cursus);
+      this.loadUsers();
+      this.userService.getUsersByObject(this.onSelectedUser,token).subscribe(user => {
+        console.log(user);
+        this.onSelect(user);
         this.loading = false;
         this.cursusModal.hide();
       });
@@ -144,15 +144,15 @@ saveCursus(form: any) {
   });
 }
 
-loadcursussen(){
+loadUsers(){
   this.authService.maakTokenHeadervoorCurcon().then( token => {
     //console.log(token);
 
-    this.userService.getUsers(token).subscribe(cursussen => {
-      console.log(cursussen);
-      this.courses= cursussen;
-      this.selectedCursus = this.courses[0];
-        this.userForm = this.courses[0];
+    this.userService.getUsers(token).subscribe(users => {
+      console.log(users);
+      this.courses= users;
+      this.onSelectedUser = this.users[0];
+        this.userForm = this.users[0];
 
     });
   });
@@ -170,48 +170,27 @@ refreshRollen() {
 });
 }
 
-// refreshModules() {
-//   this.loading = true;
-//
-//   this.authService.maakTokenHeadervoorCurcon().then( token => {
-//     //console.log(token);
-//
-//     this.moduleService.getModulesByObject(this.selectedCursus., token).subscribe(beroepstaken => {
-//       this.selectedCursus.beroepstaken = beroepstaken;
-//       console.log('selectedCursus.beroepstaken');
-//       console.log(this.selectedCursus.beroepstaken);
-//       this.loading = false;
-//     });
-//   });
-// }
-
-
-/*
-getRoles() {
-this.authService.maakTokenHeadervoorCurcon().then( token => {
-this.rolService.getRoles(token).subscribe(result => {
-this.rol = result;
-//this.loading = false;
-});
-});
+deleteUser(md: Object) {
+  this.authService.maakTokenHeadervoorCurcon().then( token => {
+    this.userService.deleteUser(this.onSelectedUser.id, token).subscribe(
+      result => {this.refreshUsers(); },
+      error => {this.refreshUsers(); }
+    );
+  });
 }
 
-getRoleByUser() {
-this.authService.maakTokenHeadervoorCurcon().then( token => {
-this.userService.getRoleByUser(user, token).subscribe(result => {
-this.rol = result;
-//this.loading = false;
-});
-});
-}
+refreshUsers() {
+	this.loading = true;
 
-getFunctionsByUser() {
-this.authService.maakTokenHeadervoorCurcon().then( token => {
-this.userService.getFunctionsByUser(token).subscribe(result => {
-this.rol = result;
-//this.loading = false;
-});
-});
-}
-*/
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+     	//console.log(token);
+
+     this.userService.Users(this.onSelectedUser, token).subscribe(users => {
+       this.selectedCursus.users = users;
+       console.log('onSelectedUser.users');
+       console.log(this.onSelectedUser.users);
+       this.loading = false;
+     });
+   });
+ }
 }
