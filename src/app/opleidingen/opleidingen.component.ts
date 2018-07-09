@@ -156,36 +156,27 @@ export class OpleidingenComponent implements OnInit {
 	}
 
 	onSelectOpleiding(opleiding : Object) {
-
-		console.log("onSelectOpleiding(opleiding:Object)");
 		this.onSelectedOpleiding.emit(opleiding);
 		this.selectedOpleiding = opleiding;
 		console.log(this.selectedOpleiding);
 		console.log(this.selectedOpleiding.eindBt);
 
 		this.authService.maakTokenHeadervoorCurcon().then( token => {
-      		//console.log(token);
-
 			this.beroepstakenService.getBeroepstakenByObject(this.selectedOpleiding.eindBT, token).subscribe(beroepstaken => {
 				this.selectedOpleiding.beroepstaken = [];
 				this.selectedOpleiding.beroepstaken = beroepstaken;
 				console.log(this.selectedOpleiding.beroepstaken);
 			});
 		});
-
-		console.log('this.selectedOpleiding.profiel');
 		console.log(this.selectedOpleiding.profiel);
 
 		this.authService.maakTokenHeadervoorCurcon().then( token => {
-      		//console.log(token);
-
 	        this.cohortenService.getCohortenByObject(this.selectedOpleiding['cohorten'], token).subscribe(cohorten => {
 	            this.cohorten= cohorten;
 	            this.selectedCohort = this.cohorten[0];
 				console.log("Start loading profiel");
 
 				this.authService.maakTokenHeadervoorCurcon().then( token => {
-      				//console.log(token);
 					this.leerplannenService.getLeerplannenProfiel(this.selectedCohort.id, token).subscribe(data => {
 						console.log("getCalculatedProfile data");
 						console.log(data);
@@ -198,12 +189,9 @@ export class OpleidingenComponent implements OnInit {
 						console.log(this.selectedOpleiding);
 						console.log("---- this.selectedCohort ----");
 						console.log(this.selectedCohort);
-
 								this.loading = false;
-					});
-				});
-
-
+							});
+						});
 	        });
 	    });
 	}
@@ -220,15 +208,24 @@ export class OpleidingenComponent implements OnInit {
 		this.updatedOpleiding.id=	this.selectedOpleiding.id;
 		console.log(this.updatedOpleiding);
 		this.authService.maakTokenHeadervoorCurcon().then( token => {
-      		//console.log(token);
-
 			this.opleidingenService.saveOpleiding(this.updatedOpleiding, token).subscribe(x => {
 				this.mode = 'view';
-				this.loading = false;
+				this.refreshOpleidingen();
 			});
 		});
 	}
-
+	
+refreshOpleidingen(){
+	this.authService.maakTokenHeadervoorCurcon().then( token => {
+		this.opleidingenService.getOpleidingen(token).subscribe(opleidingen => {
+				console.log(opleidingen);
+				this.opleidingen= opleidingen;
+				let refreshOpleiding=opleidingen.find(o=> o.id == this.selectedOpleiding.id);
+				this.onSelectOpleiding(refreshOpleiding);
+				this.loading = false;
+		});
+	});
+}
 	newOpleidingForm() {
 		this.opleidingForm = {};
 	}

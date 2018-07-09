@@ -75,7 +75,7 @@
 							<tab tab heading="Algemeen" id="tab1">
 								<form #opleidingForm="ngForm" novalidate>
 									<a href="javascript:void(0)" (click)="setMode('edit')" *ngIf="mode == 'view' && isVisibleOpleidingsprofiel_put">Bewerken</a>
-									<a href="javascript:void(0)"(click)="setMode('view')" *ngIf="mode == 'edit'">Annuleren</a>
+									<a href="javascript:void(0)"(click)="setMode('view'); refreshOpleidingen();" *ngIf="mode == 'edit'">Annuleren</a>
 									<a href="javascript:void(0)" (click)="saveOpleiding(opleidingForm)" *ngIf="mode == 'edit'">Opslaan</a>
 									<div class="form-group row">
 										<label for="naam" class="col-2 col-form-label">Naam</label>

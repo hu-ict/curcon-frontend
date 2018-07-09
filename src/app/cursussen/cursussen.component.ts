@@ -234,33 +234,6 @@ isVisibleToetsElement_delete:boolean;
     console.log(this.selectedCursus);
   }
 
-  // private refreshCursussen() {
-  //   this.loading = true;
-  //
-  //   this.authService.maakTokenHeadervoorCurcon().then( token => {
-  //     //console.log(token);
-  //
-  //     this.cursussenService.getCursussen(token).subscribe(cursussen => {
-  //       this.courses=cursussen;
-  //       this.loading = false;
-  //     },
-  //     error => console.log('Error: ', error),
-  //     () => {
-  //       this.loading = false;
-  //       console.log(this.selectedCursus);
-  //     });
-  //   });
-  // }
-
-  // this.authService.maakTokenHeadervoorCurcon().then( token => {
-  //   self.docenten= [];
-  //     this.cursussenService.updateCursus(this.selectedCursus.id, formValues, token).subscribe(data => {
-  //     this.docenten=docenten;
-  //     //console.log(docent.naam);
-  //     this.loading = false;
-  //   });
-  // })
-
   saveCursus(form: any) {
     this.loading = true;
     const formValues = form.value;
@@ -269,26 +242,21 @@ isVisibleToetsElement_delete:boolean;
 
       this.cursussenService.updateCursus(this.selectedCursus.id, formValues, token).subscribe(data => {
         this.mode = 'view';
-        this.cursussenService.getCursussenByObject(this.selectedCursus,token).subscribe(cursus => {
-          this.onSelect(cursus);
-          this.loading = false;
-          this.cursusModal.hide();
-        });
+        this.refreshCursussen();
       });
     });
   }
-  // saveCursus(form: any) {
-  //   this.loading = true;
-  //   const formValues = form.value;
-  //   this.cursussenService.updateCursus(this.selectedCursus.id, formValues).subscribe(data => {
-  //     this.mode = 'view';
-  //     this.cursussenService.getCursussenByObject(this.selectedCursus).subscribe(cursus => {
-  //       this.onSelect(cursus);
-  //       this.loading = false;
-  //       this.cursusModal.hide();
-  //     });
-  //   });
-  // }
+  refreshCursussen(){
+    this.authService.maakTokenHeadervoorCurcon().then( token => {
+      this.cursussenService.getCursussen(token).subscribe(cursussen => {
+          console.log(cursussen);
+          this.courses= cursussen;
+          let refreshCursus=cursussen.find(c=> c.id == this.selectedCursus.id);
+          this.onSelect(refreshCursus);
+          this.loading = false;
+      });
+    });
+  }
 
   addCursus() {
     this.loading = true;
@@ -299,14 +267,10 @@ isVisibleToetsElement_delete:boolean;
         this.mode = 'view';
         this.cursussenService.getCursussen(token).subscribe(cursussen => {
           this.courses=cursussen;
-          this.onSelect(this.courses[this.courses.length-1]);
+          //this.onSelect(this.courses[this.courses.length-1]);
             this.loading = false;
             this.cursusModal.hide();
-        });
-      //  this.cursussenService.getCursussenByObject(this.selectedCursus, token).subscribe(cursus => {
-
-    //  });
-
+          });
         });
     });
   }
