@@ -15,29 +15,27 @@ import {ModuleService} from '../services/module.service';
 })
 export class BUserComponent implements OnInit {
   @ViewChild('userModal') cursusModal: any;
-  allRoles: Array<any>;
-
   loading: boolean;
   naam: string;
   error: boolean;
-  //
   mode: string;
 
   userForm = <any>{};
-
-  //FIXME deze boolean zijn nog niet aan html gekoppeld+check
-  isVisibleUser_get : boolean;
-  isVisibleUser_post : boolean;
-  isVisibleUser_delete : boolean;
-
-  isVisibleRole_get : boolean;
-  isVisibleRole_post : boolean;
-  isVisibleRole_delete : boolean;
-  //Cursuscopy
   @Input() users: Array<any>;
   @Output() onSelectedUser = new EventEmitter<Object>();
-  //Allroles
   selectedUser = <any>{};
+
+  allRoles: Array<any>;
+
+
+    //FIXME deze boolean zijn nog niet aan html gekoppeld+check
+    isVisibleUser_get : boolean;
+    isVisibleUser_post : boolean;
+    isVisibleUser_delete : boolean;
+
+    isVisibleRole_get : boolean;
+    isVisibleRole_post : boolean;
+    isVisibleRole_delete : boolean;
 
   constructor(public authService: AuthService, private userService : UserService, private rolService : RolService, private moduleService : ModuleService, private functieService : FunctieService, private afAuth: AngularFireAuth) {
     //this.loading = true;
@@ -170,8 +168,7 @@ refreshRollen() {
 });
 }
 
-//TODO knop maken in html en dit testen.
-deleteUser(md: Object) {
+deleteUser() {
   this.authService.maakTokenHeadervoorCurcon().then( token => {
     this.userService.deleteUser(this.selectedUser.username, token).subscribe(
       result => {this.loadUsers(); },

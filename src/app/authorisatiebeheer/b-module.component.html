@@ -59,7 +59,7 @@
 										*ngIf="mode == 'edit'">Opslaan</a>
 
 									<div class="form-group row">
-										<label for="name" class="col-2 col-form-label">ModuleNaam</label>
+										<label for="name" class="col-2 col-form-label">Module Naam</label>
 										<div class="col-10">
 											<div class="col-form-label" *ngIf="mode == 'view'">{{selectedModule.name}}</div>
 									   <input *ngIf="mode == 'edit'" class="form-control" type="text"
@@ -141,7 +141,7 @@
 					</div>
 					<div class="form">
 						<div class="form-group row">
-							<label for="name" class="col-2 col-form-label">Modulenaam</label>
+							<label for="name" class="col-2 col-form-label">Module</label>
 							<div class="col-10">
 								<input class="form-control" type="text" id="name" name="name"
 									required [(ngModel)]="moduleForm.name">

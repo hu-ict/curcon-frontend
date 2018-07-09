@@ -15,38 +15,32 @@ import {ModuleService} from '../services/module.service';
 })
 
 export class BRolComponent implements OnInit {
-  	@ViewChild('roleModal') roleModal: any;
-  	//allModules: Array<any>;
-  	// rolesByUser: Array<any>;
-  	// functies: Array<any>;
-  	loading: boolean;
-  	naam: string;
-  	error: boolean;
-  	//
-  	mode: string;
+  @ViewChild('roleModal') roleModal: any;
+  loading: boolean;
+  naam: string;
+  error: boolean;
+  mode: string;
 
-  	roleForm = <any>{};
+  roleForm = <any>{};
+  @Input() roles: Array<any>;
+  @Output() onSelectedRole = new EventEmitter<Object>();
+  selectedRole = <any>{};
 
-  	//FIXME deze boolean zijn nog niet aan html gekoppeld+check
-  	isVisibleUser_get : boolean;
-  	isVisibleUser_post : boolean;
-  	isVisibleUser_delete : boolean;
+  @Input() modules: Array<any>;
+  @ViewChild('ModuleModal') moduleModal: any;
+  availableModules: Array<any>;
+  allModules: Array<any>;
+  moduleForm = <any>{};
 
-  	isVisibleRole_get : boolean;
-  	isVisibleRole_post : boolean;
-  	isVisibleRole_delete : boolean;
-  	//Cursuscopy
-  	@Input() roles: Array<any>;
-  	@Output() onSelectedRole = new EventEmitter<Object>();
-  	//AllModules
-  	selectedRole = <any>{};
+  //FIXME deze boolean zijn nog niet aan html gekoppeld+check
+  isVisibleUser_get : boolean;
+  isVisibleUser_post : boolean;
+  isVisibleUser_delete : boolean;
 
+  isVisibleRole_get : boolean;
+  isVisibleRole_post : boolean;
+  isVisibleRole_delete : boolean;
 
-	@Input() modules: Array<any>;
-  	@ViewChild('ModuleModal') moduleModal: any;
-  	availableModules: Array<any>;
-  	allModules: Array<any>;
-	moduleForm = <any>{};
 
   	constructor(public authService: AuthService, private userService : UserService, private rolService : RolService, private moduleService : ModuleService, private functieService : FunctieService, private afAuth: AngularFireAuth) {
     	//this.loading = true;
@@ -242,7 +236,6 @@ export class BRolComponent implements OnInit {
 	  	});
 	}
 
-  //TODO button hiervoor in Html+testen
 	deleteRole() {
 	  	this.authService.maakTokenHeadervoorCurcon().then( token => {
 	    	this.rolService.deleteRole(this.selectedRole.id, token).subscribe(

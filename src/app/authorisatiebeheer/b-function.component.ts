@@ -16,41 +16,30 @@ import {ModuleService} from '../services/module.service';
 })
 export class BFunctionComponent implements OnInit {
 	@ViewChild('functionModal') functionModal: any;
-  	// allRoles: Array<any>;
-  	// rolesByUser: Array<any>;
-  	// functies: Array<any>;
-  	loading: boolean;
-  	naam: string;
-  	error: boolean;
-  	//
-  	mode: string;
+	loading: boolean;
+	naam: string;
+	error: boolean;
+	mode: string;
 
-  	functieform = <any>{};
+	functieform = <any>{};
+	@Input() functions: Array<any>;
+	@Output() onSelectedFunction = new EventEmitter<Object>();
+	selectedFunction = <any>{};
 
-  	//FIXME deze boolean zijn nog niet aan html gekoppeld+check
-  	isVisibleFunction_get : boolean;
-  	isVisibleFunction_post : boolean;
-  	isVisibleFunction_delete : boolean;
-
-  	//Cursuscopy
-  	@Input() functions: Array<any>;
-  	@Output() onSelectedFunction = new EventEmitter<Object>();
-  	//Allroles
-  	selectedFunction = <any>{};
+	//FIXME deze boolean zijn nog niet aan html gekoppeld+check
+	isVisibleFunction_get : boolean;
+	isVisibleFunction_post : boolean;
+	isVisibleFunction_delete : boolean;
 
 
-	// @Input() modules: Array<any>;
-  // 	@ViewChild('ModuleModal') moduleModal: any;
-  // 	availableModules: Array<any>;
-  // 	allModules: Array<any>;
-	// moduleForm = <any>{};
 
-  	constructor(public authService: AuthService, private userService : UserService, private rolService : RolService, private moduleService : ModuleService, private functieService : FunctieService, private afAuth: AngularFireAuth) {
-    	//this.loading = true;
-    	this.afAuth.authState.subscribe((auth) => {
-    		this.loadButtons();
-    		this.loadFunctions();
-  		})
+
+		constructor(public authService: AuthService, private userService : UserService, private rolService : RolService, private moduleService : ModuleService, private functieService : FunctieService, private afAuth: AngularFireAuth) {
+			//this.loading = true;
+			this.afAuth.authState.subscribe((auth) => {
+			this.loadButtons();
+			this.loadFunctions();
+		})
 	}
 
   	ngOnInit() {
@@ -80,7 +69,7 @@ export class BFunctionComponent implements OnInit {
 	  	})
 	}
 
-	initializefunctieform(){
+	initializeFunctionform(){
   		this.functieform = {};
   		// this.refreshRollen();
 	}
@@ -155,7 +144,6 @@ export class BFunctionComponent implements OnInit {
 	  	});
 	}
 
-	//TODO button +test
 	deleteFunction() {
   		this.authService.maakTokenHeadervoorCurcon().then( token => {
     		this.functieService.deleteFunctie(this.selectedFunction.id, token).subscribe(

@@ -15,16 +15,21 @@ import {ModuleService} from '../services/module.service';
 })
 export class BModuleComponent implements OnInit {
   @ViewChild('moduleModal') moduleModal: any;
-  // allRoles: Array<any>;
-  // rolesByUser: Array<any>;
-  // functies: Array<any>;
   loading: boolean;
   naam: string;
   error: boolean;
-  //
   mode: string;
 
   moduleForm = <any>{};
+  @Input() modules: Array<any>;
+  @Output() onSelectedModule = new EventEmitter<Object>();
+  selectedModule = <any>{};
+  
+  @Input() functions: Array<any>;
+  @ViewChild('functieModal') functieModal: any;
+  availableFunctions: Array<any>;
+  allFunctions: Array<any>;
+  functionForm = <any>{};
 
   //FIXME deze boolean zijn nog niet aan html gekoppeld+check
   isVisibleUser_get : boolean;
@@ -34,17 +39,6 @@ export class BModuleComponent implements OnInit {
   isVisibleRole_get : boolean;
   isVisibleRole_post : boolean;
   isVisibleRole_delete : boolean;
-  //Cursuscopy
-  @Input() modules: Array<any>;
-  @Output() onSelectedModule = new EventEmitter<Object>();
-  selectedModule = <any>{};
-
-
-	@Input() functions: Array<any>;
-  @ViewChild('functieModal') functieModal: any;
-  availableFunctions: Array<any>;
-  allFunctions: Array<any>;
-	functionForm = <any>{};
 
   constructor(public authService: AuthService, private userService : UserService, private rolService : RolService, private moduleService : ModuleService, private functieService : FunctieService, private afAuth: AngularFireAuth) {
     //this.loading = true;
