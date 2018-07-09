@@ -15,7 +15,7 @@ import {ModuleService} from '../services/module.service';
   // styleUrls: ['./b-function.component.css']
 })
 export class BFunctionComponent implements OnInit {
-	@ViewChild('cursusModal') cursusModal: any;
+	@ViewChild('functionModal') functionModal: any;
   	// allRoles: Array<any>;
   	// rolesByUser: Array<any>;
   	// functies: Array<any>;
@@ -39,20 +39,17 @@ export class BFunctionComponent implements OnInit {
   	selectedFunction = <any>{};
 
 
-	@Input() modules: Array<any>;
-  	@ViewChild('ModuleModal') moduleModal: any;
-  	availableModules: Array<any>;
-  	allModules: Array<any>;
-	moduleForm = <any>{};
+	// @Input() modules: Array<any>;
+  // 	@ViewChild('ModuleModal') moduleModal: any;
+  // 	availableModules: Array<any>;
+  // 	allModules: Array<any>;
+	// moduleForm = <any>{};
 
   	constructor(public authService: AuthService, private userService : UserService, private rolService : RolService, private moduleService : ModuleService, private functieService : FunctieService, private afAuth: AngularFireAuth) {
     	//this.loading = true;
-    	this.modules = [];
-    	//
     	this.afAuth.authState.subscribe((auth) => {
     		this.loadButtons();
     		this.loadFunctions();
-    		//this.refreshModules();
   		})
 	}
 
@@ -87,45 +84,8 @@ export class BFunctionComponent implements OnInit {
   		this.userForm = {};
   		// this.refreshRollen();
 	}
-
-	initializeCursusForm() {
-  		console.log(this.selectedFunction);
-		this.modules = this.selectedFunction.moduleArr;
-    	this.loading = true;
-
-  		this.authService.maakTokenHeadervoorCurcon().then( token => {
-    		this.moduleForm = {};
-      		//console.log(this.modules);
-    		this.functieService.getFuncties(token).subscribe(data => {
-
-          		//changed
-          		this.availableModules=null;
-          		this.allModules=data;
-      			// End change
-
-          		let selectedFunction = this.functions[0];
-          		this.moduleForm = {module: selectedFunction};
-          		this.availableModules = this.allModules;
-
-          		console.log(this.modules);
-          		for (let m of this.modules) {
-              		this.availableModules = this.availableModules.filter((x) => x.id !== m.id);
-          		}
-
-          		var id = 0;
-          		if (this.availableModules.length > 0){
-              		id = this.availableModules[0].id;
-          		}
-
-          		this.moduleForm = {id: id};
-          		this.loading = false;
-    		});
-  		});
-	}
-
 	changeMode(mode) {
   		this.mode = mode;
-  		//this.refreshModules(); //NOTE Is dit nodig?
 	}
 
 	closeModal(modal) {
@@ -152,13 +112,13 @@ export class BFunctionComponent implements OnInit {
 
 	          		// this.onSelect(this.functions[this.functions.length-1]);
 	            	this.loading = false;
-	            	this.cursusModal.hide();
+	            	this.functionModal.hide();
 	          });
 	    	});
 	  	});
 	}
 
-	saveCursus(form: any) {
+	saveFunction(form: any) {
 	  	this.loading = true;
 	  	// const formValues = form.value;
 	  	this.authService.maakTokenHeadervoorCurcon().then( token => {
@@ -174,7 +134,7 @@ export class BFunctionComponent implements OnInit {
 	        	// 	console.log(functie);
 	        	// 	this.onSelect(functie);
 	        	// 	this.loading = false;
-	        	// 	this.cursusModal.hide();
+	        	// 	this.functionModal.hide();
 	      		// });
 	    	});
 	  	});
@@ -196,7 +156,7 @@ export class BFunctionComponent implements OnInit {
 	}
 
 	//TODO button +test
-	deleteFunctie(md: Object) {
+	deleteFunction(fu: Object) {
   		this.authService.maakTokenHeadervoorCurcon().then( token => {
     		this.functieService.deleteFunctie(this.selectedFunction.id, token).subscribe(
       			result => {this.loadFunctions(); },

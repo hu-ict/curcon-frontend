@@ -19,7 +19,7 @@
 					<h4 class="card-title mb-0">Modules</h4>
 					<br />
 					<button type="button" class="btn btn-info"
-						(click)="cursusModal.show(); initializeUserForm();">
+						(click)="moduleModal.show(); initializeModuleForm();">
 						<i class="fa fa-plus" aria-hidden="true"></i>
 					</button>
 				</div>
@@ -29,9 +29,9 @@
 							<div class="col-md-12">
 								<table class="table table-hover">
 									<tbody>
-										<tr *ngFor="let cursus of courses" (click)="onSelect(cursus)"
+										<tr *ngFor="let module of modules" (click)="onSelect(module)"
 											class="selectable">
-											<td colspan="1">{{ cursus.name }}
+											<td colspan="1">{{ module.name }}
 											</td>
 										</tr>
 									</tbody>
@@ -43,30 +43,30 @@
 			</div>
 		</div>
 		<div class="col-9 course">
-			<div *ngIf="selectedCursus" class="card">
+			<div *ngIf="selectedModule" class="card">
 				<div class="card-header">
-					<h4 class="card-title mb-0">{{selectedCursus.name}}</h4>
+					<h4 class="card-title mb-0">{{selectedModule.name}}</h4>
 				</div>
 				<div class="card-block">
 					<!-- Nav tabs -->
 					<tabset>
 							<tab heading="Module" id="tab1">
-								<form #editCourse="ngForm" novalidate>
+								<form #editModule="ngForm" novalidate>
 									<a href="javascript:void(0)" (click)="changeMode('edit')"
 										*ngIf="mode == 'view'">Bewerken</a> <a href="javascript:void(0)"
 										(click)="changeMode('view');" *ngIf="mode == 'edit'">Annuleren</a>
-									<a href="javascript:void(0)" (click)="saveCursus(editCourse)"
+									<a href="javascript:void(0)" (click)="saveModule(editModule)"
 										*ngIf="mode == 'edit'">Opslaan</a>
 
 									<div class="form-group row">
-										<label for="email" class="col-2 col-form-label">Module</label>
+										<label for="name" class="col-2 col-form-label">ModuleNaam</label>
 										<div class="col-10">
-											<div class="col-form-label" *ngIf="mode == 'view'">{{selectedCursus.name}}</div>
+											<div class="col-form-label" *ngIf="mode == 'view'">{{selectedModule.name}}</div>
 									   <input *ngIf="mode == 'edit'" class="form-control" type="text"
-												id="name" name="name" required [(ngModel)]="userForm.name">
+												id="name" name="name" required [(ngModel)]="moduleForm.name">
 										</div>
 									</div>
-									{{editCourse.value | json}}
+									{{editModule.value | json}}
 								</form>
 							</tab>
 							<tab heading="Functies" id="tab1">
@@ -81,11 +81,11 @@
 													</tr>
 												</thead>
 												<tbody>
-													<tr *ngFor="let md of selectedCursus.moduleArr">
+													<tr *ngFor="let fu of selectedModule.functionArr">
 														<td><a class="text-danger lead"
-															href="javascript:void(0)" (click)="deleteFunctionFromModule(md)"><i
+															href="javascript:void(0)" (click)="deleteFunctionFromModule(fu)"><i
 																class="fa fa-minus-circle" aria-hidden="true"></i></a></td>
-														<td>{{md.name}}</td>
+														<td>{{fu.name}}</td>
 													</tr>
 												</tbody>
 												<!-- preview content goes here-->
@@ -96,7 +96,7 @@
 										<div class="col-12">
 											<div class="btn-group pull-right" role="group" aria-label="...">
 												<button type="button" class="btn btn-info"
-													(click)="ModuleModal.show(); initializeCursusForm();">
+													(click)="functieModal.show(); initializeFunctionForm();">
 													<i class="fa fa-plus" aria-hidden="true"></i>
 												</button>
 											</div>
@@ -111,16 +111,16 @@
 	</div>
 </div>
 
-<div bsModal #cursusModal="bs-modal" class="addModal modal fade"
+<div bsModal #moduleModal="bs-modal" class="addModal modal fade"
 	tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 	aria-hidden="true">
 	<div class="modal-dialog modal-primary" role="document">
 		<div class="modal-content">
 			<form #f="ngForm">
 				<div class="modal-header">
-					<h4 class="modal-title">Nieuwe cursus</h4>
+					<h4 class="modal-title">Nieuwe Module</h4>
 					<button type="button" class="close"
-						(click)="closeModal(cursusModal)" aria-label="Close">
+						(click)="closeModal(moduleModal)" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
@@ -130,18 +130,18 @@
 					</div>
 					<div class="form">
 						<div class="form-group row">
-							<label for="email" class="col-2 col-form-label">Email</label>
+							<label for="name" class="col-2 col-form-label">Modulenaam</label>
 							<div class="col-10">
-								<input class="form-control" type="text" id="email" name="email"
-									required [(ngModel)]="userForm.email">
+								<input class="form-control" type="text" id="name" name="name"
+									required [(ngModel)]="moduleForm.name">
 							</div>
 						</div>
 					</div>
 				</div>
 				<div *ngIf="!loading" class="modal-footer">
 					<button type="button" class="btn btn-secondary"
-						(click)="cursusModal.hide()">Sluiten</button>
-					<button type="button" class="btn btn-primary" (click)="addCursus()">Toevoegen</button>
+						(click)="moduleModal.hide()">Sluiten</button>
+					<button type="button" class="btn btn-primary" (click)="addModule()">Toevoegen</button>
 				</div>
 			</form>
 		</div>
@@ -151,14 +151,14 @@
 </div>
 <!-- /.modal - -->
 
-<div bsModal #ModuleModal="bs-modal" class="modal fade" tabindex="-1"
+<div bsModal #functieModal="bs-modal" class="modal fade" tabindex="-1"
 	role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-primary" role="document">
 		<div class="modal-content">
-			<form name="#ModuleForm" novalidate>
+			<form name="#functionForm" novalidate>
 				<div class="modal-header">
 					<h4 class="modal-title">Modules</h4>
-					<button type="button" class="close" (click)="ModuleModal.hide()"
+					<button type="button" class="close" (click)="functieModal.hide()"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -170,19 +170,20 @@
 					<span *ngIf="error" class="text-danger">Selecteer een
 						functie!</span>
 					<div class="form-group">
-						<label for="modules">Modules</label> <select
+						<!--  TODO check deze label for= ook op andere plekken-->
+						<label for="functions">Functions</label> <select
 							class="form-control" id="function" name="id"
-							[(ngModel)]="moduleForm.id">
-							<option *ngFor="let a of availableModules" [ngValue]="a.id">{{a.name}}</option>
+							[(ngModel)]="functionForm.id">
+							<option *ngFor="let a of availableFunctions" [ngValue]="a.id">{{a.name}}</option>
 						</select>
 					</div>
-					<!-- <p>Form: {{ selectedCursus.value | json }}</p> -->
+					<!-- <p>Form: {{ selectedModule.value | json }}</p> -->
 				</div>
 				<div *ngIf="!loading" class="modal-footer">
 					<button type="button" class="btn btn-secondary"
-						(click)="moduleModal.hide()">Sluiten</button>
+						(click)="functieModal.hide()">Sluiten</button>
 					<button type="button" class="btn btn-primary"
-						(click)="addFunctionToModule(moduleForm)">Toevoegen</button>
+						(click)="addFunctionToModule(functionForm)">Toevoegen</button>
 				</div>
 			</form>
 		</div>

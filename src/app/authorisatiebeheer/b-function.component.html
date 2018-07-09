@@ -19,7 +19,7 @@
 					<h4 class="card-title mb-0">Functies</h4>
 					<br />
 					<button type="button" class="btn btn-info"
-						(click)="cursusModal.show(); initializeUserForm();">
+						(click)="functionModal.show(); initializeUserForm();">
 						<i class="fa fa-plus" aria-hidden="true"></i>
 					</button>
 				</div>
@@ -29,9 +29,9 @@
 							<div class="col-md-12">
 								<table class="table table-hover">
 									<tbody>
-										<tr *ngFor="let cursus of functions" (click)="onSelect(cursus)"
+										<tr *ngFor="let fu of functions" (click)="onSelect(fu)"
 											class="selectable">
-											<td colspan="1">{{ cursus.name }}
+											<td colspan="1">{{ fu.name }}
 											</td>
 										</tr>
 									</tbody>
@@ -51,11 +51,11 @@
 					<!-- Nav tabs -->
 					<tabset>
 						<tab heading="Functie" id="tab1">
-							<form #editCourse="ngForm" novalidate>
+							<form #editFunction="ngForm" novalidate>
 								<a href="javascript:void(0)" (click)="changeMode('edit')"
 									*ngIf="mode == 'view'">Bewerken</a> <a href="javascript:void(0)"
 									(click)="changeMode('view');" *ngIf="mode == 'edit'">Annuleren</a>
-								<a href="javascript:void(0)" (click)="saveCursus(editCourse)"
+								<a href="javascript:void(0)" (click)="saveFunction(editFunction)"
 									*ngIf="mode == 'edit'">Opslaan</a>
 
 								<div class="form-group row">
@@ -66,7 +66,7 @@
 											id="name" name="name" required [(ngModel)]="userForm.name">
 									</div>
 								</div>
-								{{editCourse.value | json}}
+								{{editFunction.value | json}}
 							</form>
 						</tab>
 					</tabset>
@@ -76,7 +76,7 @@
 	</div>
 </div>
 
-<div bsModal #cursusModal="bs-modal" class="addModal modal fade"
+<div bsModal #functionModal="bs-modal" class="addModal modal fade"
 	tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 	aria-hidden="true">
 	<div class="modal-dialog modal-primary" role="document">
@@ -85,7 +85,7 @@
 				<div class="modal-header">
 					<h4 class="modal-title">Nieuwe Functie</h4>
 					<button type="button" class="close"
-						(click)="closeModal(cursusModal)" aria-label="Close">
+						(click)="closeModal(functionModal)" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
@@ -105,8 +105,8 @@
 				</div>
 				<div *ngIf="!loading" class="modal-footer">
 					<button type="button" class="btn btn-secondary"
-						(click)="cursusModal.hide()">Sluiten</button>
-					<button type="button" class="btn btn-primary" (click)="addCursus()">Toevoegen</button>
+						(click)="functionModal.hide()">Sluiten</button>
+					<button type="button" class="btn btn-primary" (click)="addFunction()">Toevoegen</button>
 				</div>
 			</form>
 		</div>
@@ -115,41 +115,3 @@
 	<!-- /.modal-dialog - -->
 </div>
 <!-- /.modal - -->
-
-<div bsModal #ModuleModal="bs-modal" class="modal fade" tabindex="-1"
-	role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-primary" role="document">
-		<div class="modal-content">
-			<form name="#ModuleForm" novalidate>
-				<div class="modal-header">
-					<h4 class="modal-title">Modules</h4>
-					<button type="button" class="close" (click)="ModuleModal.hide()"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<div *ngIf="loading" align="center">
-						<br /> <img src="assets/img/ripple.svg" />
-					</div>
-					<span *ngIf="error" class="text-danger">Selecteer een
-						module!</span>
-					<div class="form-group">
-						<label for="modules">Modules</label> <select
-							class="form-control" id="modules" name="id"
-							[(ngModel)]="moduleForm.id">
-							<option *ngFor="let a of availableModules" [ngValue]="a.id">{{a.name}}</option>
-						</select>
-					</div>
-					<!-- <p>Form: {{ selectedCursus.value | json }}</p> -->
-				</div>
-				<div *ngIf="!loading" class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						(click)="moduleModal.hide()">Sluiten</button>
-					<button type="button" class="btn btn-primary"
-						(click)="addModuleToRol(moduleForm)">Toevoegen</button>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>

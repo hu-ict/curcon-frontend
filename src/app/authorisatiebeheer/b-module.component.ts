@@ -14,7 +14,7 @@ import {ModuleService} from '../services/module.service';
   // styleUrls: ['./b-module.component.css']
 })
 export class BModuleComponent implements OnInit {
-  @ViewChild('cursusModal') cursusModal: any;
+  @ViewChild('moduleModal') moduleModal: any;
   // allRoles: Array<any>;
   // rolesByUser: Array<any>;
   // functies: Array<any>;
@@ -24,7 +24,7 @@ export class BModuleComponent implements OnInit {
   //
   mode: string;
 
-  userForm = <any>{};
+  moduleForm = <any>{};
 
   //FIXME deze boolean zijn nog niet aan html gekoppeld+check
   isVisibleUser_get : boolean;
@@ -35,26 +35,25 @@ export class BModuleComponent implements OnInit {
   isVisibleRole_post : boolean;
   isVisibleRole_delete : boolean;
   //Cursuscopy
-  @Input() courses: Array<any>;
-  @Output() onSelectedCourse = new EventEmitter<Object>();
-  //Allroles
-  selectedCursus = <any>{};
+  @Input() modules: Array<any>;
+  @Output() onSelectedModule = new EventEmitter<Object>();
+  selectedModule = <any>{};
 
 
-	@Input() modules: Array<any>;
-  @ViewChild('ModuleModal') moduleModal: any;
-  availableModules: Array<any>;
-  allModules: Array<any>;
-	moduleForm = <any>{};
+	@Input() functions: Array<any>;
+  @ViewChild('functieModal') functieModal: any;
+  availableFunctions: Array<any>;
+  allFunctions: Array<any>;
+	functionForm = <any>{};
 
   constructor(public authService: AuthService, private userService : UserService, private rolService : RolService, private moduleService : ModuleService, private functieService : FunctieService, private afAuth: AngularFireAuth) {
     //this.loading = true;
-    this.modules = [];
+    this.functions = [];
     //
     this.afAuth.authState.subscribe((auth) => {
     this.loadButtons();
-    this.loadcursussen();
-    // this.refreshModules();
+    this.loadModules();
+    // this.refreshFunctions();
   })
 }
 
@@ -97,39 +96,38 @@ loadButtons() {
   })
 }
 
-initializeUserForm(){
-  this.userForm = {};
+initializeModuleForm(){
+  this.moduleForm = {};
   // this.refreshRollen();
 }
-initializeCursusForm() {
-  console.log(this.selectedCursus);
-this.modules = this.selectedCursus.moduleArr;
+initializeFunctionForm() {
+  console.log(this.selectedModule);
+this.functions = this.selectedModule.functionArr;
     this.loading = true;
-//<<<<<<< HEAD
   this.authService.maakTokenHeadervoorCurcon().then( token => {
-    this.moduleForm = {};
-      //console.log(this.modules);
+    this.functionForm = {};
+      //console.log(this.functions);
     this.functieService.getFuncties(token).subscribe(data => {
 
           //changed
-          this.availableModules=null;
-          this.allModules=data;
+          this.availableFunctions=null;
+          this.allFunctions=data;
       // End change
 
-          let selectedModule = this.modules[0];
-          this.moduleForm = {module: selectedModule};
-          this.availableModules = this.allModules;
+          let selectedModule = this.functions[0];
+          this.functionForm = {module: selectedModule};
+          this.availableFunctions = this.allFunctions;
 
-          console.log(this.modules);
-          for (let m of this.modules) {
-              this.availableModules = this.availableModules.filter((x) => x.id !== m.id);
+          console.log(this.functions);
+          for (let f of this.functions) {
+              this.availableFunctions = this.availableFunctions.filter((x) => x.id !== f.id);
           }
 
           var id = 0;
-          if (this.availableModules.length > 0){
-              id = this.availableModules[0].id;
+          if (this.availableFunctions.length > 0){
+              id = this.availableFunctions[0].id;
           }
-          this.moduleForm = {id: id};
+          this.functionForm = {id: id};
           this.loading = false;
     });
   });
@@ -138,66 +136,66 @@ this.modules = this.selectedCursus.moduleArr;
 
 changeMode(mode) {
   this.mode = mode;
-  this.refreshModules(); //NOTE Is dit nodig?
+  this.refreshFunctions(); //NOTE Is dit nodig?
 }
 closeModal(modal) {
   this.loading = false;
   modal.hide();
 }
-onSelect(cursus: Object) {
-  this.onSelectedCourse.emit(cursus);
-  this.selectedCursus = cursus;
-  this.userForm = cursus;
-  this.refreshModules();
-  console.log('onSelect(this.selectedCursus)');
-  console.log(this.selectedCursus);
+onSelect(module: Object) {
+  this.onSelectedModule.emit(module);
+  this.selectedModule = module;
+  this.moduleForm = module;
+  this.refreshFunctions();
+  console.log('onSelect(this.selectedModule)');
+  console.log(this.selectedModule);
 }
 
-addCursus() {
+addModule() {
   this.loading = true;
-  console.log(this.userForm);
+  console.log(this.moduleForm);
   this.authService.maakTokenHeadervoorCurcon().then( token => {
-      this.moduleService.addModule(this.userForm.email,token).subscribe(user => {
+      this.moduleService.addModule(this.moduleForm.name,token).subscribe(x => {
         this.mode = 'view';
-        this.moduleService.getModules(token).subscribe(cursussen => {
-          this.courses=cursussen;
+        this.moduleService.getModules(token).subscribe(modules => {
+          this.modules=modules;
 
-          // this.onSelect(this.courses[this.courses.length-1]);
+          // this.onSelect(this.modules[this.modules.length-1]);
             this.loading = false;
-            this.cursusModal.hide();
+            this.moduleModal.hide();
           });
     });
   });
 }
-saveCursus(form: any) {
+saveModule(form: any) {
   this.loading = true;
   // const formValues = form.value;
   this.authService.maakTokenHeadervoorCurcon().then( token => {
     //console.log(token);
     console.log(form.value);
-    this.moduleService.updateModule(this.selectedCursus.id, form.value, token).subscribe(data => {
+    this.moduleService.updateModule(this.selectedModule.id, form.value, token).subscribe(data => {
       this.mode = 'view';
-      this.loadcursussen();
-      this.moduleService.getModulesByObject(this.selectedCursus,token).subscribe(cursus => {
-        console.log(cursus);
-        this.onSelect(cursus);
+      this.loadModules();
+      this.moduleService.getModulesByObject(this.selectedModule,token).subscribe(module => {
+        console.log(module);
+        this.onSelect(module);
         this.loading = false;
-        // this.cursusModal.hide();
+        // this.moduleModal.hide();
       });
     });
   });
 }
 
-loadcursussen(){
+loadModules(){
   this.authService.maakTokenHeadervoorCurcon().then( token => {
     //console.log(token);
 
-    this.moduleService.getModules(token).subscribe(cursussen => {
-      console.log(cursussen);
-      this.courses= cursussen;
-      this.selectedCursus = this.courses[0];
-      this.userForm = this.courses[0];
-      this.refreshModules();
+    this.moduleService.getModules(token).subscribe(modules => {
+      console.log(modules);
+      this.modules= modules;
+      this.selectedModule = this.modules[0];
+      this.moduleForm = this.modules[0];
+      this.refreshFunctions();
     });
   });
 }
@@ -205,14 +203,14 @@ loadcursussen(){
 
 
 
-refreshModules() {
+refreshFunctions() {
   this.loading = true;
 
   this.authService.maakTokenHeadervoorCurcon().then( token => {
-    this.functieService.getFunctiesByObject(this.selectedCursus.functions, token).subscribe(functions => {
-      this.selectedCursus.moduleArr = functions;
-      console.log('selectedCursus.moduleArr');
-      console.log(this.selectedCursus.moduleArr);
+    this.functieService.getFunctiesByObject(this.selectedModule.functions, token).subscribe(functions => {
+      this.selectedModule.functionArr = functions;
+      console.log('selectedModule.functionArr');
+      console.log(this.selectedModule.functionArr);
       this.loading = false;
     });
   });
@@ -221,10 +219,10 @@ refreshModules() {
 addFunctionToModule(form: any) {
     this.loading = true;
 this.authService.maakTokenHeadervoorCurcon().then( token => {
-      this.moduleService.addFunctieToModule(this.selectedCursus.id, form, token).subscribe(data => {
-        this.moduleModal.hide();
+      this.moduleService.addFunctieToModule(this.selectedModule.id, form, token).subscribe(data => {
+        this.functieModal.hide();
           // this.cursusForm = data;
-          this.onSelect(this.selectedCursus);
+          this.onSelect(this.selectedModule);
 
           this.loading = false;
       });
@@ -234,18 +232,19 @@ this.authService.maakTokenHeadervoorCurcon().then( token => {
 //TODO button in html +testen
 deleteModule(md: Object) {
   this.authService.maakTokenHeadervoorCurcon().then( token => {
-    this.moduleService.deleteModule(this.selectedCursus.id, token).subscribe(
-      result => {this.refreshModules(); },
-      error => {this.refreshModules(); }
+    this.moduleService.deleteModule(this.selectedModule.id, token).subscribe(
+      //FIXME Refresh de module niet function
+      result => {this.refreshFunctions(); },
+      error => {this.refreshFunctions(); }
     );
   });
 }
 
 deleteFunctionFromModule(md: Object) {
   this.authService.maakTokenHeadervoorCurcon().then( token => {
-    this.moduleService.deleteFunctieFromModule(this.selectedCursus.id, md['id'], token).subscribe(
-      result => {this.refreshModules(); },
-      error => {this.refreshModules(); }
+    this.moduleService.deleteFunctieFromModule(this.selectedModule.id, md['id'], token).subscribe(
+      result => {this.refreshFunctions(); },
+      error => {this.refreshFunctions(); }
     );
   });
 }

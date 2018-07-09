@@ -59,8 +59,7 @@
 										*ngIf="mode == 'edit'">Opslaan</a>
 
 									<div class="form-group row">
-										<!-- TODO email verwijst naar id = name denk ik -->
-										<label for="email" class="col-2 col-form-label">Rol</label>
+										<label for="name" class="col-2 col-form-label">Rolnaam</label>
 										<div class="col-10">
 											<div class="col-form-label" *ngIf="mode == 'view'">{{selectedRole.name}}</div>
 									   <input *ngIf="mode == 'edit'" class="form-control" type="text"
@@ -131,7 +130,7 @@
 					</div>
 					<div class="form">
 						<div class="form-group row">
-							<label for="name" class="col-2 col-form-label">name</label>
+							<label for="name" class="col-2 col-form-label">Rolnaam</label>
 							<div class="col-10">
 								<input class="form-control" type="text" id="name" name="name"
 									required [(ngModel)]="roleForm.name">
