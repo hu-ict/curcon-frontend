@@ -14,10 +14,9 @@ import {ModuleService} from '../services/module.service';
   // styleUrls: ['./b-user.component.css']
 })
 export class BUserComponent implements OnInit {
-  @ViewChild('cursusModal') cursusModal: any;
+  @ViewChild('userModal') cursusModal: any;
   allRoles: Array<any>;
-  rolesByUser: Array<any>;
-  functies: Array<any>;
+
   loading: boolean;
   naam: string;
   error: boolean;
@@ -38,14 +37,14 @@ export class BUserComponent implements OnInit {
   @Input() users: Array<any>;
   @Output() onSelectedUser = new EventEmitter<Object>();
   //Allroles
-  selectedCursus = <any>{};
+  selectedUser = <any>{};
 
   constructor(public authService: AuthService, private userService : UserService, private rolService : RolService, private moduleService : ModuleService, private functieService : FunctieService, private afAuth: AngularFireAuth) {
     //this.loading = true;
     this.afAuth.authState.subscribe((auth) => {
     this.loadButtons();
     this.refreshRollen();
-    this.loadcursussen();
+    this.loadUsers();
     // this.refreshModules();
   })
 }
@@ -102,12 +101,12 @@ closeModal(modal) {
   modal.hide();
 }
 onSelect(user: Object) {
-  this.onSelectedCourse.emit(user);
-  this.selectedCursus = user;
+  this.onSelectedUser.emit(user);
+  this.selectedUser = user;
   this.userForm = user;
   // this.refreshModules();
-  console.log('onSelect(this.onSelectedUser)');
-  console.log(this.onSelectedUser);
+  console.log('onSelect(this.selectedUser)');
+  console.log(this.selectedUser);
 }
 
 addUser() {
@@ -117,7 +116,7 @@ addUser() {
       this.userService.addUser(this.userForm.email).subscribe(user => {
         this.mode = 'view';
         this.userService.getUsers(token).subscribe(users => {
-          this.courses=users;
+          this.users=users;
           // this.onSelect(this.users[this.users.length-1]);
             this.loading = false;
             this.cursusModal.hide();
@@ -131,10 +130,10 @@ saveUser(form: any) {
   this.authService.maakTokenHeadervoorCurcon().then( token => {
     //console.log(token);
     console.log(form.value.rol);
-    this.userService.updateRoleByUser(this.onSelectedUser.username, form.value, token).subscribe(data => {
+    this.userService.updateRoleByUser(this.selectedUser .username, form.value, token).subscribe(data => {
       this.mode = 'view';
       this.loadUsers();
-      this.userService.getUsersByObject(this.onSelectedUser,token).subscribe(user => {
+      this.userService.getUsersByObject(this.selectedUser,token).subscribe(user => {
         console.log(user);
         this.onSelect(user);
         this.loading = false;
@@ -150,14 +149,15 @@ loadUsers(){
 
     this.userService.getUsers(token).subscribe(users => {
       console.log(users);
-      this.courses= users;
-      this.onSelectedUser = this.users[0];
+      this.users= users;
+      this.selectedUser = this.users[0];
         this.userForm = this.users[0];
 
     });
   });
 }
 
+//wordt geladen bij het wijzigen van een user.
 refreshRollen() {
   this.loading = true;
   let self = this;
@@ -170,27 +170,14 @@ refreshRollen() {
 });
 }
 
+//TODO knop maken in html en dit testen.
 deleteUser(md: Object) {
   this.authService.maakTokenHeadervoorCurcon().then( token => {
-    this.userService.deleteUser(this.onSelectedUser.id, token).subscribe(
-      result => {this.refreshUsers(); },
-      error => {this.refreshUsers(); }
+    this.userService.deleteUser(this.selectedUser.username, token).subscribe(
+      result => {this.loadUsers(); },
+      error => {this.loadUsers(); }
     );
   });
 }
 
-refreshUsers() {
-	this.loading = true;
-
-    this.authService.maakTokenHeadervoorCurcon().then( token => {
-     	//console.log(token);
-
-     this.userService.Users(this.onSelectedUser, token).subscribe(users => {
-       this.selectedCursus.users = users;
-       console.log('onSelectedUser.users');
-       console.log(this.onSelectedUser.users);
-       this.loading = false;
-     });
-   });
- }
 }

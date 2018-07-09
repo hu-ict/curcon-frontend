@@ -15,9 +15,9 @@ import {ModuleService} from '../services/module.service';
 })
 export class BModuleComponent implements OnInit {
   @ViewChild('cursusModal') cursusModal: any;
-  allRoles: Array<any>;
-  rolesByUser: Array<any>;
-  functies: Array<any>;
+  // allRoles: Array<any>;
+  // rolesByUser: Array<any>;
+  // functies: Array<any>;
   loading: boolean;
   naam: string;
   error: boolean;
@@ -109,7 +109,7 @@ this.modules = this.selectedCursus.moduleArr;
   this.authService.maakTokenHeadervoorCurcon().then( token => {
     this.moduleForm = {};
       //console.log(this.modules);
-    this.moduleService.getModules(token).subscribe(data => {
+    this.functieService.getFuncties(token).subscribe(data => {
 
           //changed
           this.availableModules=null;
@@ -157,7 +157,7 @@ addCursus() {
   this.loading = true;
   console.log(this.userForm);
   this.authService.maakTokenHeadervoorCurcon().then( token => {
-      this.moduleService.addModule(this.userForm.module,token).subscribe(user => {
+      this.moduleService.addModule(this.userForm.email,token).subscribe(user => {
         this.mode = 'view';
         this.moduleService.getModules(token).subscribe(cursussen => {
           this.courses=cursussen;
@@ -182,7 +182,7 @@ saveCursus(form: any) {
         console.log(cursus);
         this.onSelect(cursus);
         this.loading = false;
-        this.cursusModal.hide();
+        // this.cursusModal.hide();
       });
     });
   });
@@ -209,8 +209,8 @@ refreshModules() {
   this.loading = true;
 
   this.authService.maakTokenHeadervoorCurcon().then( token => {
-    this.moduleService.getModulesByObject(this.selectedCursus.modules, token).subscribe(modules => {
-      this.selectedCursus.moduleArr = modules;
+    this.functieService.getFunctiesByObject(this.selectedCursus.functions, token).subscribe(functions => {
+      this.selectedCursus.moduleArr = functions;
       console.log('selectedCursus.moduleArr');
       console.log(this.selectedCursus.moduleArr);
       this.loading = false;
@@ -218,7 +218,7 @@ refreshModules() {
   });
 }
 
-addFunctieToModule(form: any) {
+addFunctionToModule(form: any) {
     this.loading = true;
 this.authService.maakTokenHeadervoorCurcon().then( token => {
       this.moduleService.addFunctieToModule(this.selectedCursus.id, form, token).subscribe(data => {
@@ -231,6 +231,7 @@ this.authService.maakTokenHeadervoorCurcon().then( token => {
   });
 }
 
+//TODO button in html +testen
 deleteModule(md: Object) {
   this.authService.maakTokenHeadervoorCurcon().then( token => {
     this.moduleService.deleteModule(this.selectedCursus.id, token).subscribe(
@@ -240,7 +241,7 @@ deleteModule(md: Object) {
   });
 }
 
-deleteFunctieFromModule(md: Object) {
+deleteFunctionFromModule(md: Object) {
   this.authService.maakTokenHeadervoorCurcon().then( token => {
     this.moduleService.deleteFunctieFromModule(this.selectedCursus.id, md['id'], token).subscribe(
       result => {this.refreshModules(); },

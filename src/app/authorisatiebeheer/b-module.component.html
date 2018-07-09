@@ -50,7 +50,7 @@
 				<div class="card-block">
 					<!-- Nav tabs -->
 					<tabset>
-							<tab heading="Modules" id="tab1">
+							<tab heading="Module" id="tab1">
 								<form #editCourse="ngForm" novalidate>
 									<a href="javascript:void(0)" (click)="changeMode('edit')"
 										*ngIf="mode == 'view'">Bewerken</a> <a href="javascript:void(0)"
@@ -83,7 +83,7 @@
 												<tbody>
 													<tr *ngFor="let md of selectedCursus.moduleArr">
 														<td><a class="text-danger lead"
-															href="javascript:void(0)" (click)="deleteBeroepstaak(md)"><i
+															href="javascript:void(0)" (click)="deleteFunctionFromModule(md)"><i
 																class="fa fa-minus-circle" aria-hidden="true"></i></a></td>
 														<td>{{md.name}}</td>
 													</tr>

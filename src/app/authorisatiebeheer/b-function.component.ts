@@ -16,9 +16,9 @@ import {ModuleService} from '../services/module.service';
 })
 export class BFunctionComponent implements OnInit {
 	@ViewChild('cursusModal') cursusModal: any;
-  	allRoles: Array<any>;
-  	rolesByUser: Array<any>;
-  	functies: Array<any>;
+  	// allRoles: Array<any>;
+  	// rolesByUser: Array<any>;
+  	// functies: Array<any>;
   	loading: boolean;
   	naam: string;
   	error: boolean;
@@ -59,7 +59,7 @@ export class BFunctionComponent implements OnInit {
   	ngOnInit() {
   		this.mode = 'view';
   	}
-  	
+
   	loadButtons() {
 	  	var email= this.afAuth.auth.currentUser.email;
 	  	this.authService.maakTokenHeadervoorCurcon().then( token => {
@@ -70,11 +70,11 @@ export class BFunctionComponent implements OnInit {
 		        if (functies.some(f=> f.name == "function_get")) {
 		          this.isVisibleFunction_get = true;
 		        }
-		
+
 		        if (functies.some(f=> f.name == "function_post")) {
 		          this.isVisibleFunction_post=true;
 		        }
-		
+
 		        if (functies.some(f=> f.name == "function_delete")) {
 		          this.isVisibleFunction_delete = true;
 		        }
@@ -82,12 +82,12 @@ export class BFunctionComponent implements OnInit {
 		    });
 	  	})
 	}
-	
+
 	initializeUserForm(){
   		this.userForm = {};
   		// this.refreshRollen();
 	}
-	
+
 	initializeCursusForm() {
   		console.log(this.selectedFunction);
 		this.modules = this.selectedFunction.moduleArr;
@@ -104,7 +104,7 @@ export class BFunctionComponent implements OnInit {
       			// End change
 
           		let selectedFunction = this.functions[0];
-          		this.moduleForm = {module: selectedModule};
+          		this.moduleForm = {module: selectedFunction};
           		this.availableModules = this.allModules;
 
           		console.log(this.modules);
@@ -116,7 +116,7 @@ export class BFunctionComponent implements OnInit {
           		if (this.availableModules.length > 0){
               		id = this.availableModules[0].id;
           		}
-          		
+
           		this.moduleForm = {id: id};
           		this.loading = false;
     		});
@@ -127,17 +127,16 @@ export class BFunctionComponent implements OnInit {
   		this.mode = mode;
   		//this.refreshModules(); //NOTE Is dit nodig?
 	}
-	
+
 	closeModal(modal) {
 	  	this.loading = false;
 	  	modal.hide();
 	}
 
-	onSelect(function: Object) {
-	  	this.onSelectedCourse.emit(function);
-	  	this.selectedCursus = function;
-	  	this.userForm = function;
-	  	this.refreshFuncties();
+	onSelect(functie: Object) {
+	  	this.onSelectedFunction.emit(functie);
+	  	this.selectedFunction = functie;
+	  	this.userForm = functie;
 	  	//console.log('onSelect(this.selectedFunction)');
 	  	//console.log(this.selectedFunction);
 	}
@@ -150,7 +149,7 @@ export class BFunctionComponent implements OnInit {
         		this.mode = 'view';
 	        	this.functieService.getFuncties(token).subscribe(functions => {
 	          		this.functions = functions;
-	
+
 	          		// this.onSelect(this.functions[this.functions.length-1]);
 	            	this.loading = false;
 	            	this.cursusModal.hide();
@@ -158,61 +157,50 @@ export class BFunctionComponent implements OnInit {
 	    	});
 	  	});
 	}
-	
-	saveDunction(form: any) {
+
+	saveCursus(form: any) {
 	  	this.loading = true;
 	  	// const formValues = form.value;
 	  	this.authService.maakTokenHeadervoorCurcon().then( token => {
 	    	//console.log(token);
 	    	console.log(form.value);
-	    	
+
 	    	this.functieService.updateFunctie(this.selectedFunction.id, form.value, token).subscribe(data => {
 	      		this.mode = 'view';
 	      		this.loadFunctions();
-	      		
-	      		this.functieService.getRolesByObject(this.selectedFunction.id, token).subscribe(function => {
-	        		console.log(function);
-	        		this.onSelect(function);
-	        		this.loading = false;
-	        		this.cursusModal.hide();
-	      		});
+
+						//FIXME
+	      		// this.functieService.getRolesByObject(this.selectedFunction.id, token).subscribe(functie => {
+	        	// 	console.log(functie);
+	        	// 	this.onSelect(functie);
+	        	// 	this.loading = false;
+	        	// 	this.cursusModal.hide();
+	      		// });
 	    	});
 	  	});
 	}
 
 	loadFunctions(){
+			this.loading = true;
 	  	this.authService.maakTokenHeadervoorCurcon().then( token => {
 	    	//console.log(token);
-	
+
 		    this.functieService.getFuncties(token).subscribe(functions => {
 		      	console.log(functions);
-		      	this.courses= functions;
+		      	this.functions= functions;
 		      	this.selectedFunction = this.functions[0];
 		      	this.userForm = this.functions[0];
-		      	//this.refreshModules();
-		    });
-	  	});
-	}
-
-	refreshFuncties() {
-	  	this.loading = true;
-	
-	  	this.authService.maakTokenHeadervoorCurcon().then( token => {
-		    this.functieService.getFunctiesByObject(this.selectedFunction.modules, token).subscribe(modules => {
-		      	this.selectedFunction.moduleArr = modules;
-		      	//console.log('selectedFunction.moduleArr');
-		      	//console.log(this.selectedFunction.moduleArr);
 		      	this.loading = false;
 		    });
 	  	});
 	}
 
-
+	//TODO button +test
 	deleteFunctie(md: Object) {
   		this.authService.maakTokenHeadervoorCurcon().then( token => {
     		this.functieService.deleteFunctie(this.selectedFunction.id, token).subscribe(
-      			result => {this.refreshFuncties(); },
-      			error => {this.refreshFuncties(); }
+      			result => {this.loadFunctions(); },
+      			error => {this.loadFunctions(); }
     		);
   		});
 	}

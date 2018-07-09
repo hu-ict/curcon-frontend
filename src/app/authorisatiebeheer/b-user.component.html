@@ -19,7 +19,7 @@
 					<h4 class="card-title mb-0">Users</h4>
 					<br />
 					<button type="button" class="btn btn-info"
-						(click)="cursusModal.show(); initializeUserForm();">
+						(click)="userModal.show(); initializeUserForm();">
 						<i class="fa fa-plus" aria-hidden="true"></i>
 					</button>
 				</div>
@@ -29,7 +29,7 @@
 							<div class="col-md-12">
 								<table class="table table-hover">
 									<tbody>
-										<tr *ngFor="let cursus of courses" (click)="user"
+										<tr *ngFor="let user of users" (click)="onSelect(user)"
 											class="selectable">
 											<td colspan="1">{{ user.username }}
 											</td>
@@ -43,19 +43,19 @@
 			</div>
 		</div>
 		<div class="col-9 course">
-			<div *ngIf="selectedCursus" class="card">
+			<div *ngIf="selectedUser" class="card">
 				<div class="card-header">
-					<h4 class="card-title mb-0">{{selectedCursus.username}}</h4>
+					<h4 class="card-title mb-0">{{selectedUser.username}}</h4>
 				</div>
 				<div class="card-block">
 					<!-- Nav tabs -->
 					<tabset>
 							<tab heading="Algemeen" id="tab1">
-								<form #editCourse="ngForm" novalidate>
+								<form #editUser="ngForm" novalidate>
 									<a href="javascript:void(0)" (click)="changeMode('edit')"
 										*ngIf="mode == 'view'">Bewerken</a> <a href="javascript:void(0)"
 										(click)="changeMode('view');" *ngIf="mode == 'edit'">Annuleren</a>
-									<a href="javascript:void(0)" (click)="saveCursus(editCourse)"
+									<a href="javascript:void(0)" (click)="saveUser(editUser)"
 										*ngIf="mode == 'edit'">Opslaan</a>
 
 									<div class="form-group row">
@@ -70,7 +70,7 @@
 									<div class="form-group row">
 										<label for="rol" class="col-2 col-form-label">Rol</label>
 										<div class="col-10">
-											<div class="col-form-label" *ngIf="mode == 'view'">{{selectedUser.role?.name}}</div>
+											<div class="col-form-label" *ngIf="mode == 'view'">{{selectedUser.role?.naam}}</div>
 											<select *ngIf="mode == 'edit'"
 												[ngModel]="userForm.role?.id" type="text"
 												class="form-control" id="rol" name="rol">
@@ -78,7 +78,7 @@
 											</select>
 										</div>
 									</div>
-									{{editCourse.value | json}}
+									{{editUser.value | json}}
 								</form>
 							</tab>
 			</tabset>
@@ -88,16 +88,16 @@
 	</div>
 </div>
 
-<div bsModal #cursusModal="bs-modal" class="addModal modal fade"
+<div bsModal #userModal="bs-modal" class="addModal modal fade"
 	tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 	aria-hidden="true">
 	<div class="modal-dialog modal-primary" role="document">
 		<div class="modal-content">
 			<form #f="ngForm">
 				<div class="modal-header">
-					<h4 class="modal-title">Nieuwe cursus</h4>
+					<h4 class="modal-title">Nieuwe user</h4>
 					<button type="button" class="close"
-						(click)="closeModal(cursusModal)" aria-label="Close">
+						(click)="closeModal(userModal)" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
@@ -117,7 +117,7 @@
 				</div>
 				<div *ngIf="!loading" class="modal-footer">
 					<button type="button" class="btn btn-secondary"
-						(click)="cursusModal.hide()">Sluiten</button>
+						(click)="userModal.hide()">Sluiten</button>
 					<button type="button" class="btn btn-primary" (click)="addUser()">Toevoegen</button>
 				</div>
 			</form>

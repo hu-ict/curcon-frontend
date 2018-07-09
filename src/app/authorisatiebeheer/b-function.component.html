@@ -29,7 +29,7 @@
 							<div class="col-md-12">
 								<table class="table table-hover">
 									<tbody>
-										<tr *ngFor="let cursus of courses" (click)="onSelect(cursus)"
+										<tr *ngFor="let cursus of functions" (click)="onSelect(cursus)"
 											class="selectable">
 											<td colspan="1">{{ cursus.name }}
 											</td>
@@ -43,14 +43,14 @@
 			</div>
 		</div>
 		<div class="col-9 course">
-			<div *ngIf="selectedCursus" class="card">
+			<div *ngIf="selectedFunction" class="card">
 				<div class="card-header">
-					<h4 class="card-title mb-0">{{selectedCursus.name}}</h4>
+					<h4 class="card-title mb-0">{{selectedFunction.name}}</h4>
 				</div>
 				<div class="card-block">
 					<!-- Nav tabs -->
 					<tabset>
-						<tab heading="Functies" id="tab1">
+						<tab heading="Functie" id="tab1">
 							<form #editCourse="ngForm" novalidate>
 								<a href="javascript:void(0)" (click)="changeMode('edit')"
 									*ngIf="mode == 'view'">Bewerken</a> <a href="javascript:void(0)"
@@ -61,7 +61,7 @@
 								<div class="form-group row">
 									<label for="email" class="col-2 col-form-label">Functie</label>
 									<div class="col-10">
-										<div class="col-form-label" *ngIf="mode == 'view'">{{selectedCursus.name}}</div>
+										<div class="col-form-label" *ngIf="mode == 'view'">{{selectedFunction.name}}</div>
 								   <input *ngIf="mode == 'edit'" class="form-control" type="text"
 											id="name" name="name" required [(ngModel)]="userForm.name">
 									</div>
