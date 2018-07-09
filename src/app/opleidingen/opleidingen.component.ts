@@ -218,8 +218,6 @@ refreshOpleidingen(){
 
 	addOpleiding() {
 		this.loading=true;
-		//FIXME hardcoded values weg en profiel selecteren na insert
-
 		//TODO code toevoegen in backend
 		//delete this.opleidingForm.code;
 		this.authService.maakTokenHeadervoorCurcon().then( token => {
