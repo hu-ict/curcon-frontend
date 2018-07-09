@@ -85,21 +85,20 @@ export class OpleidingenComponent implements OnInit {
 			this.allCursussen = [];
 			this.selectedButton = 1;
 			this.mode = 'view';
-			let self = this;
 			this.afAuth.authState.subscribe((auth) => {
 				this.authService.maakTokenHeadervoorCurcon().then( token => {
 					console.log(token);
 
-					self.opleidingenService.getOpleidingen(token).subscribe(opleidingen => {
-						self.opleidingen= opleidingen;
+					this.opleidingenService.getOpleidingen(token).subscribe(opleidingen => {
+						this.opleidingen= opleidingen;
 						console.log(this.opleidingen);
 						console.log(this.opleidingen[0]);
-						self.onSelectOpleiding(this.opleidingen[0]);
+						this.onSelectOpleiding(this.opleidingen[0]);
 						this.loadButtons();
 					},
 
 					() => {
-						self.loading = false;
+						this.loading = false;
 					});
 				});
 			})
@@ -159,24 +158,12 @@ export class OpleidingenComponent implements OnInit {
 		this.onSelectedOpleiding.emit(opleiding);
 		this.selectedOpleiding = opleiding;
 		console.log(this.selectedOpleiding);
-		console.log(this.selectedOpleiding.eindBt);
-
-		this.authService.maakTokenHeadervoorCurcon().then( token => {
-			this.beroepstakenService.getBeroepstakenByObject(this.selectedOpleiding.eindBT, token).subscribe(beroepstaken => {
-				this.selectedOpleiding.beroepstaken = [];
-				this.selectedOpleiding.beroepstaken = beroepstaken;
-				console.log(this.selectedOpleiding.beroepstaken);
-			});
-		});
-		console.log(this.selectedOpleiding.profiel);
 
 		this.authService.maakTokenHeadervoorCurcon().then( token => {
 	        this.cohortenService.getCohortenByObject(this.selectedOpleiding['cohorten'], token).subscribe(cohorten => {
 	            this.cohorten= cohorten;
 	            this.selectedCohort = this.cohorten[0];
-				console.log("Start loading profiel");
-
-				this.authService.maakTokenHeadervoorCurcon().then( token => {
+					console.log("Start loading profiel");
 					this.leerplannenService.getLeerplannenProfiel(this.selectedCohort.id, token).subscribe(data => {
 						console.log("getCalculatedProfile data");
 						console.log(data);
@@ -184,6 +171,7 @@ export class OpleidingenComponent implements OnInit {
 						console.log("this.selectedOpleiding");
 						console.log(this.selectedOpleiding);
 						this.refreshProfessionalskills();
+						this.refreshBeroepstaken();
 						this.refreshCursussen();
 						console.log("---- this.selectedOpleiding ----");
 						console.log(this.selectedOpleiding);
@@ -193,7 +181,6 @@ export class OpleidingenComponent implements OnInit {
 							});
 						});
 	        });
-	    });
 	}
 
 	changeTab(tabnr : number) {
@@ -214,7 +201,7 @@ export class OpleidingenComponent implements OnInit {
 			});
 		});
 	}
-	
+
 refreshOpleidingen(){
 	this.authService.maakTokenHeadervoorCurcon().then( token => {
 		this.opleidingenService.getOpleidingen(token).subscribe(opleidingen => {
@@ -222,7 +209,6 @@ refreshOpleidingen(){
 				this.opleidingen= opleidingen;
 				let refreshOpleiding=opleidingen.find(o=> o.id == this.selectedOpleiding.id);
 				this.onSelectOpleiding(refreshOpleiding);
-				this.loading = false;
 		});
 	});
 }
@@ -231,21 +217,34 @@ refreshOpleidingen(){
 	}
 
 	addOpleiding() {
+		this.loading=true;
 		//FIXME hardcoded values weg en profiel selecteren na insert
-		delete this.opleidingForm.code;
 
+		//TODO code toevoegen in backend
+		//delete this.opleidingForm.code;
 		this.authService.maakTokenHeadervoorCurcon().then( token => {
-      		//console.log(token);
-
 			this.opleidingenService.saveOpleiding(this.opleidingForm, token).subscribe(x => {
 				this.selectedCohort = {
 					jaar: "2018"
 				};
-				var opleidingId = 5;
-				this.cohortenService.saveCohort(opleidingId, this.selectedCohort, token);
 
-				this.opleidingen.push(this.opleidingForm);
-				this.onSelectOpleiding(this.opleidingForm);
+				this.opleidingenService.getOpleidingen( token).subscribe(opleidingen => {
+						this.opleidingen=opleidingen;
+						console.log(opleidingen);
+						//NOTE werkt alleen als het nieuwe object de laatste is(hoogste id)
+						//this.onSelectOpleiding(this.opleidingen[this.opleidingen.length-1]);
+						// this.loading = false;
+						// this.opleidingModal.hide();
+						let opleidingId = this.opleidingen[this.opleidingen.length-1].id;;
+						this.cohortenService.addCohort(opleidingId, this.selectedCohort, token).subscribe(x =>{
+							//Saved cohort
+							this.onSelectOpleiding(this.opleidingen[this.opleidingen.length-1]);
+						});
+
+
+				});
+				// this.opleidingen.push(this.opleidingForm);
+				//this.onSelectOpleiding(this.opleidingId);
 			});
 		});
 	}
@@ -284,15 +283,10 @@ refreshOpleidingen(){
 		});
 	}
 
-	loadBeroepstaken() {
-		  this.loading = true;
+	refreshBeroepstaken() {
 		this.authService.maakTokenHeadervoorCurcon().then( token => {
-      		//console.log(token);
-
 			this.beroepstakenService.getBeroepstakenByObject(this.selectedOpleiding.eindBT, token).subscribe(beroepstaken => {
-				this.selectedOpleiding.beroepstaken = [];
 				this.selectedOpleiding.beroepstaken = beroepstaken;
-				  this.loading = false;
 			});
 		});
 	}
@@ -307,7 +301,7 @@ refreshOpleidingen(){
 				this.beroepstakenForm.architectuurlaag, this.beroepstakenForm.niveau, token).subscribe(data => {
 					this.opleidingenService.addBeroepstakenToOpleiding(this.selectedOpleiding.id, data, token).subscribe(x => {
 						//this.beroepstaakModal.hide();
-						this.loadBeroepstaken();
+						this.refreshBeroepstaken();
 						this.loading = false;
 					});
 			});
@@ -318,8 +312,8 @@ refreshOpleidingen(){
 		this.authService.maakTokenHeadervoorCurcon().then( token => {
       		//console.log(token);
 			this.opleidingenService.deleteBeroepstaak(this.selectedOpleiding.id, bt['id'], token).subscribe(
-				result => { this.selectedOpleiding.beroepstaken = this.loadBeroepstaken(); },
-				error => { this.selectedOpleiding.beroepstaken = this.loadBeroepstaken(); }
+				result => { this.selectedOpleiding.beroepstaken = this.refreshBeroepstaken(); },
+				error => { this.selectedOpleiding.beroepstaken = this.refreshBeroepstaken(); }
 			);
 		});
 	}
@@ -330,8 +324,6 @@ refreshOpleidingen(){
 
 	refreshProfessionalskills() {
 		this.authService.maakTokenHeadervoorCurcon().then( token => {
-      		//console.log(token);
-
 			this.professionalskillService.getProfessionalskillsByObject(this.selectedOpleiding.eindPS, token).subscribe(professionalskills => {
 				this.selectedOpleiding.professionalskills = professionalskills;
 			});
@@ -356,8 +348,6 @@ refreshOpleidingen(){
 		this.loading = true;
 
 		this.authService.maakTokenHeadervoorCurcon().then( token => {
-      		//console.log(token);
-
 			this.professionalskillService.getProfessionalskillId(this.professionalskillForm.activiteit, this.professionalskillForm.niveau, token).subscribe(data => {
 				this.opleidingenService.addProfessionalskillToOpleiding(this.selectedOpleiding.id, data, token).subscribe(x => {
 					this.professionalskillModal.hide();
@@ -420,17 +410,13 @@ refreshOpleidingen(){
 
     addCursusToCohort(form: any) {
         this.loading = true;
-		// console.log(form)
-		// console.log("addCursusToCohort "+this.selectedCohort.id+" "+form)
 
 		this.authService.maakTokenHeadervoorCurcon().then( token => {
-      		//console.log(token);
 
 	        this.cohortenService.addCursusToCohort(this.selectedCohort.id, form, token).subscribe(data => {
 	            this.cursusModal.hide();
 				// this.cursusForm = data;
 	            this.onSelectOpleiding(this.selectedOpleiding);
-	            this.loading = false;
 	        });
 	    });
     }
@@ -438,43 +424,30 @@ refreshOpleidingen(){
     deleteCursusFromCohort(cursus: any) {
     	console.log("deleteCursusFromCohort "+this.selectedCohort.id)
     	console.log(cursus)
-
     	this.authService.maakTokenHeadervoorCurcon().then( token => {
-      		//console.log(token);
-
 	        this.cohortenService.deleteCursus(this.selectedCohort.id, cursus.id, token).subscribe(result => {
 	            this.onSelectOpleiding(this.selectedOpleiding);
-	        },
-	        error => { }
-	        );
+	        });
 	    });
     }
 
     initializeCursusForm() {
         this.loading = true;
-//<<<<<<< HEAD
 			this.authService.maakTokenHeadervoorCurcon().then( token => {
 	   		this.cursusForm = {};
 	        console.log('1 this.cursussen');
 	        console.log(this.cursussen);
 	    	this.cursussenService.getCursussen(token).subscribe(data => {
-	            console.log('2 data');
-	            console.log(data);
-							//changed
-							this.availableCursussen=null;
 	    				this.allCursussen=data;
-					// End change
-	            console.log('3 this.allCursussen');
-	            console.log(this.allCursussen);
+							console.log('2 allcursussen');
+							console.log(this.allCursussen);
 	    		let selectedCursus = this.cursussen[0];
 	    		this.cursusForm = {cursus: selectedCursus};
 	            this.availableCursussen = this.allCursussen;
-	            console.log('4 this.availableCursussen');
-	            console.log(this.availableCursussen);
 	            for (let c of this.cursussen) {
 	                this.availableCursussen = this.availableCursussen.filter((x) => x.id !== c.id);
 	            }
-	            console.log('this.availableCursussen');
+				      console.log('3 this.availableCursussen');
 	            console.log(this.availableCursussen);
 	            var id = 0;
 	            if (this.availableCursussen.length > 0){
@@ -488,39 +461,39 @@ refreshOpleidingen(){
     }
 
 onSelectCohort(coh: Object) {
-this.loading = true;
-this.authService.maakTokenHeadervoorCurcon().then( token => {
-this.cursussenService.getCursussenByObject(coh['cursussen'],token).subscribe(cur => {
-this.cursussen = cur;
-for(let index = 0; index < this.cursussen.length; index++) {
-this.beroepstakenService.getBeroepstakenByObject(this.cursussen[index].eindBT,token).subscribe(beroepstaken => {
-this.cursussen[index].beroepstaken = [];
-let btMatrix = this.generateMatrix();
+	this.loading = true;
+	this.authService.maakTokenHeadervoorCurcon().then( token => {
+	this.cursussenService.getCursussenByObject(coh['cursussen'],token).subscribe(cur => {
+	this.cursussen = cur;
+	for(let index = 0; index < this.cursussen.length; index++) {
+	this.beroepstakenService.getBeroepstakenByObject(this.cursussen[index].eindBT,token).subscribe(beroepstaken => {
+	this.cursussen[index].beroepstaken = [];
+	let btMatrix = this.generateMatrix();
 
-//console.log(beroepstaken);
-for(let btIndex = 0; btIndex < beroepstaken.length; btIndex++) {
-btMatrix[beroepstaken[btIndex].architectuurlaagId][beroepstaken[btIndex].activiteitId]
-= beroepstaken[btIndex];
-//
-btMatrix[beroepstaken[btIndex].architectuurlaagId][beroepstaken[btIndex].activiteitId]
-= beroepstaken[btIndex];
-this.cursussen[index].beroepstaken.push(beroepstaken[btIndex]);
-}
-this.cursussen[index].btMatrix = btMatrix;
-});
+	//console.log(beroepstaken);
+	for(let btIndex = 0; btIndex < beroepstaken.length; btIndex++) {
+	btMatrix[beroepstaken[btIndex].architectuurlaagId][beroepstaken[btIndex].activiteitId]
+	= beroepstaken[btIndex];
+	//
+	btMatrix[beroepstaken[btIndex].architectuurlaagId][beroepstaken[btIndex].activiteitId]
+	= beroepstaken[btIndex];
+	this.cursussen[index].beroepstaken.push(beroepstaken[btIndex]);
+	}
+	this.cursussen[index].btMatrix = btMatrix;
+	});
 
-this.professionalskillService.getProfessionalskillsByObject(this.cursussen[index].eindPS,token).subscribe(professionalskills => {
-this.cursussen[index].professionalskills = [];
-for(let j = 0; j < professionalskills.length; j++) {
-this.cursussen[index].professionalskills.push(professionalskills[j]);
-}
-});
+	this.professionalskillService.getProfessionalskillsByObject(this.cursussen[index].eindPS,token).subscribe(professionalskills => {
+	this.cursussen[index].professionalskills = [];
+	for(let j = 0; j < professionalskills.length; j++) {
+	this.cursussen[index].professionalskills.push(professionalskills[j]);
+	}
+	});
 
-}
-this.selectedCohort = coh;
-this.loading = false;
-});
-})
+	}
+	this.selectedCohort = coh;
+	this.loading = false;
+	});
+	})
 }
 
 	generateMatrix() {

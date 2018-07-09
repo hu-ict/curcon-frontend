@@ -267,7 +267,8 @@ isVisibleToetsElement_delete:boolean;
         this.mode = 'view';
         this.cursussenService.getCursussen(token).subscribe(cursussen => {
           this.courses=cursussen;
-          //this.onSelect(this.courses[this.courses.length-1]);
+          //NOTE werkt alleen als het nieuwe object de laatste is(hoogste id)
+           this.onSelect(this.courses[this.courses.length-1]);
             this.loading = false;
             this.cursusModal.hide();
           });

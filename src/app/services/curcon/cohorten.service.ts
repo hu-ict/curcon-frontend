@@ -27,8 +27,9 @@ export class CohortenService {
       .pipe( tap( res => console.log(res)) );
   }
 
-	saveCohort(opleidingId, cohort, headersIn: HttpHeaders) {
-		return this.http.post<curconnamespace.CurconNameSpace.CohortPostDto>(myGlobals.baseUrl+'opleidingen/' + opleidingId + '/cohorten', cohort, { headers: headersIn })
+
+	addCohort(opleidingId, cohort, headersIn: HttpHeaders) {
+		return this.http.post<curconnamespace.CurconNameSpace.CohortPostDto>(myGlobals.baseUrl+'opleidingsprofielen/' + opleidingId + '/cohorten', cohort, { headers: headersIn })
 			.pipe(catchError(this.handleError));
 
 	}
