@@ -27,15 +27,11 @@ export class BUserComponent implements OnInit {
 
   allRoles: Array<any>;
 
+  isVisibleUser_post : boolean;
+  isVisibleUser_delete : boolean;
 
-    //FIXME deze boolean zijn nog niet aan html gekoppeld+check
-    isVisibleUser_get : boolean;
-    isVisibleUser_post : boolean;
-    isVisibleUser_delete : boolean;
-
-    isVisibleRole_get : boolean;
-    isVisibleRole_post : boolean;
-    isVisibleRole_delete : boolean;
+  //wijzigt alleen de role;
+  isVisibleUser_put:boolean;
 
   constructor(public authService: AuthService, private userService : UserService, private rolService : RolService, private moduleService : ModuleService, private functieService : FunctieService, private afAuth: AngularFireAuth) {
     //this.loading = true;
@@ -43,7 +39,6 @@ export class BUserComponent implements OnInit {
     this.loadButtons();
     this.refreshRollen();
     this.loadUsers();
-    // this.refreshModules();
   })
 }
 
@@ -58,28 +53,14 @@ loadButtons() {
       if (functies == null) {
         console.log("je mag niets uitvoeren)");
       } else {
-        if (functies.some(f=> f.name == "user_get")) {
-          this.isVisibleUser_get = true;
-        }
-
         if (functies.some(f=> f.name == "user_post")) {
           this.isVisibleUser_post=true;
         }
-
         if (functies.some(f=> f.name == "user_delete")) {
           this.isVisibleUser_delete = true;
         }
-
-        if (functies.some(f=> f.name == "role_get")) {
-          this.isVisibleRole_get = true;
-        }
-
-        if (functies.some(f=> f.name == "role_post")) {
-          this.isVisibleRole_post = true;
-        }
-
-        if (functies.some(f=> f.name == "role_delete")) {
-          this.isVisibleRole_delete = true;
+        if (functies.some(f=> f.name == "user_put")) {
+          this.isVisibleUser_put=true;
         }
       }
     });

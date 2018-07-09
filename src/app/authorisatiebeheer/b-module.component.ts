@@ -31,14 +31,12 @@ export class BModuleComponent implements OnInit {
   allFunctions: Array<any>;
   functionForm = <any>{};
 
-  //FIXME deze boolean zijn nog niet aan html gekoppeld+check
-  isVisibleUser_get : boolean;
-  isVisibleUser_post : boolean;
-  isVisibleUser_delete : boolean;
+  isVisibleModuleFunction_post : boolean;
+  isVisibleModuleFunction_delete : boolean;
 
-  isVisibleRole_get : boolean;
-  isVisibleRole_post : boolean;
-  isVisibleRole_delete : boolean;
+  isVisibleModule_put : boolean;
+  isVisibleModule_post : boolean;
+  isVisibleModule_delete : boolean;
 
   constructor(public authService: AuthService, private userService : UserService, private rolService : RolService, private moduleService : ModuleService, private functieService : FunctieService, private afAuth: AngularFireAuth) {
     //this.loading = true;
@@ -47,7 +45,6 @@ export class BModuleComponent implements OnInit {
     this.afAuth.authState.subscribe((auth) => {
     this.loadButtons();
     this.loadModules();
-    // this.refreshFunctions();
   })
 }
 
@@ -62,29 +59,25 @@ loadButtons() {
       if (functies == null) {
         console.log("je mag niets uitvoeren)");
       } else {
-        if (functies.some(f=> f.name == "user_get")) {
-          this.isVisibleUser_get = true;
+        if (functies.some(f=> f.name == "modulefunction_post")) {
+          this.isVisibleModuleFunction_post = true;
+        }
+        if (functies.some(f=> f.name == "modulefunction_delete")) {
+          this.isVisibleModuleFunction_delete=true;
         }
 
-        if (functies.some(f=> f.name == "user_post")) {
-          this.isVisibleUser_post=true;
+        if (functies.some(f=> f.name == "module_put")) {
+          this.isVisibleModule_put = true;
         }
 
-        if (functies.some(f=> f.name == "user_delete")) {
-          this.isVisibleUser_delete = true;
+        if (functies.some(f=> f.name == "module_post")) {
+          this.isVisibleModule_post = true;
         }
 
-        if (functies.some(f=> f.name == "role_get")) {
-          this.isVisibleRole_get = true;
+        if (functies.some(f=> f.name == "module_delete")) {
+          this.isVisibleModule_delete = true;
         }
 
-        if (functies.some(f=> f.name == "role_post")) {
-          this.isVisibleRole_post = true;
-        }
-
-        if (functies.some(f=> f.name == "role_delete")) {
-          this.isVisibleRole_delete = true;
-        }
       }
     });
   })
@@ -102,11 +95,7 @@ this.functions = this.selectedModule.functionArr;
     this.functionForm = {};
       //console.log(this.functions);
     this.functieService.getFuncties(token).subscribe(data => {
-
-          //changed
-          this.availableFunctions=null;
           this.allFunctions=data;
-      // End change
 
           let selectedModule = this.functions[0];
           this.functionForm = {module: selectedModule};

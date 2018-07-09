@@ -32,15 +32,12 @@ export class BRolComponent implements OnInit {
   allModules: Array<any>;
   moduleForm = <any>{};
 
-  //FIXME deze boolean zijn nog niet aan html gekoppeld+check
-  isVisibleUser_get : boolean;
-  isVisibleUser_post : boolean;
-  isVisibleUser_delete : boolean;
+  isVisibleRoleModule_post : boolean;
+  isVisibleRoleModule_delete : boolean;
 
-  isVisibleRole_get : boolean;
+  isVisibleRole_put : boolean;
   isVisibleRole_post : boolean;
   isVisibleRole_delete : boolean;
-
 
   	constructor(public authService: AuthService, private userService : UserService, private rolService : RolService, private moduleService : ModuleService, private functieService : FunctieService, private afAuth: AngularFireAuth) {
     	//this.loading = true;
@@ -49,7 +46,6 @@ export class BRolComponent implements OnInit {
     	this.afAuth.authState.subscribe((auth) => {
     		this.loadButtons();
     		this.loadRoles();
-    		// this.refreshModules();
   		})
 	}
 
@@ -64,29 +60,25 @@ export class BRolComponent implements OnInit {
 	      		if (functies == null) {
 	        		console.log("je mag niets uitvoeren)");
 	      		} else {
-	        		if (functies.some(f=> f.name == "user_get")) {
-	          			this.isVisibleUser_get = true;
+	        		if (functies.some(f=> f.name == "rolemodule_post")) {
+	          			this.isVisibleRoleModule_post = true;
 	        		}
 
-        			if (functies.some(f=> f.name == "user_post")) {
-	          			this.isVisibleUser_post=true;
+        			if (functies.some(f=> f.name == "rolemodule_delete")) {
+	          			this.isVisibleRoleModule_delete=true;
 	        		}
 
-		        	if (functies.some(f=> f.name == "user_delete")) {
-		          		this.isVisibleUser_delete = true;
+		        	if (functies.some(f=> f.name == "role_put")) {
+		          		this.isVisibleRole_put = true;
 		        	}
 
-	        if (functies.some(f=> f.name == "role_get")) {
-	          this.isVisibleRole_get = true;
-	        }
+    	        if (functies.some(f=> f.name == "role_post")) {
+    	          this.isVisibleRole_post = true;
+    	        }
 
-	        if (functies.some(f=> f.name == "role_post")) {
-	          this.isVisibleRole_post = true;
-	        }
-
-	        if (functies.some(f=> f.name == "role_delete")) {
-	          this.isVisibleRole_delete = true;
-	        }
+    	        if (functies.some(f=> f.name == "role_delete")) {
+    	          this.isVisibleRole_delete = true;
+    	        }
 	      }
 	    });
 	  })
@@ -104,15 +96,8 @@ export class BRolComponent implements OnInit {
 
   		this.authService.maakTokenHeadervoorCurcon().then( token => {
    			this.moduleForm = {};
-      		//console.log(this.modules);
-
     		this.moduleService.getModules(token).subscribe(data => {
-
-          		//changed
-	         	this.availableModules=null;
 	          	this.allModules=data;
-      			// End change
-
           		let selectedModule = this.modules[0];
           		this.moduleForm = {module: selectedModule};
           		this.availableModules = this.allModules;
@@ -121,12 +106,10 @@ export class BRolComponent implements OnInit {
           		for (let m of this.modules) {
               		this.availableModules = this.availableModules.filter((x) => x.id !== m.id);
           		}
-
           		var id = 0;
           		if (this.availableModules.length > 0){
               		id = this.availableModules[0].id;
           		}
-
           		this.moduleForm = {id: id};
           		this.loading = false;
     		});

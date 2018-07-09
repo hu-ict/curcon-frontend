@@ -18,7 +18,7 @@
 				<div class="card-header">
 					<h4 class="card-title mb-0">Modules</h4>
 					<br />
-					<button type="button" class="btn btn-info"
+					<button type="button" class="btn btn-info" *ngIf="isVisibleModule_post"
 						(click)="moduleModal.show(); initializeModuleForm();">
 						<i class="fa fa-plus" aria-hidden="true"></i>
 					</button>
@@ -53,7 +53,7 @@
 							<tab heading="Module" id="tab1">
 								<form #editModule="ngForm" novalidate>
 									<a href="javascript:void(0)" (click)="changeMode('edit')"
-										*ngIf="mode == 'view'">Bewerken</a> <a href="javascript:void(0)"
+										*ngIf="mode == 'view' && isVisibleModule_put">Bewerken</a> <a href="javascript:void(0)"
 										(click)="changeMode('view'); refreshModules();" *ngIf="mode == 'edit'">Annuleren</a>
 									<a href="javascript:void(0)" (click)="saveModule(editModule)"
 										*ngIf="mode == 'edit'">Opslaan</a>
@@ -70,7 +70,7 @@
 									<div class="row">
 										<div class="col-12">
 											<div class="btn-group pull-right" role="group" aria-label="...">
-												<button type="button" class="btn btn-danger"
+												<button type="button" class="btn btn-danger" *ngIf="isVisibleModule_delete"
 													(click)="moduleDeleteModal.show()">
 													<i class="fa fa-minus" aria-hidden="true"></i>
 												</button>
@@ -93,7 +93,7 @@
 												</thead>
 												<tbody>
 													<tr *ngFor="let fu of selectedModule.functionArr">
-														<td><a class="text-danger lead"
+														<td><a class="text-danger lead" *ngIf="isVisibleModuleFunction_delete"
 															href="javascript:void(0)" (click)="deleteFunctionFromModule(fu)"><i
 																class="fa fa-minus-circle" aria-hidden="true"></i></a></td>
 														<td>{{fu.name}}</td>
@@ -106,7 +106,7 @@
 									<div class="row">
 										<div class="col-12">
 											<div class="btn-group pull-right" role="group" aria-label="...">
-												<button type="button" class="btn btn-info"
+												<button type="button" class="btn btn-info" *ngIf="isVisibleModuleFunction_post"
 													(click)="functieModal.show(); initializeFunctionForm();">
 													<i class="fa fa-plus" aria-hidden="true"></i>
 												</button>

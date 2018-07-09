@@ -18,7 +18,7 @@
 				<div class="card-header">
 					<h4 class="card-title mb-0">Rollen</h4>
 					<br />
-					<button type="button" class="btn btn-info"
+					<button type="button" class="btn btn-info" *ngIf="isVisibleRole_post"
 						(click)="roleModal.show(); initializeRoleForm();">
 						<i class="fa fa-plus" aria-hidden="true"></i>
 					</button>
@@ -53,7 +53,7 @@
 							<tab heading="Rol" id="tab1">
 								<form #editRole="ngForm" novalidate>
 									<a href="javascript:void(0)" (click)="changeMode('edit')"
-										*ngIf="mode == 'view'">Bewerken</a> <a href="javascript:void(0)"
+										*ngIf="mode == 'view' && isVisibleRole_put">Bewerken</a> <a href="javascript:void(0)"
 										(click)="changeMode('view'); refreshRoles();" *ngIf="mode == 'edit'">Annuleren</a>
 									<a href="javascript:void(0)" (click)="saveRole(editRole)"
 										*ngIf="mode == 'edit'">Opslaan</a>
@@ -70,7 +70,7 @@
 									<div class="row">
 										<div class="col-12">
 											<div class="btn-group pull-right" role="group" aria-label="...">
-												<button type="button" class="btn btn-danger"
+												<button type="button" class="btn btn-danger" *ngIf="isVisibleRole_delete"
 													(click)="roleDeleteModal.show()">
 													<i class="fa fa-minus" aria-hidden="true"></i>
 												</button>
@@ -94,7 +94,7 @@
 												</thead>
 												<tbody>
 													<tr *ngFor="let md of selectedRole.moduleArr">
-														<td><a class="text-danger lead"
+														<td><a class="text-danger lead" *ngIf="isVisibleRoleModule_delete"
 															href="javascript:void(0)" (click)="deleteModuleFromRole(md)"><i
 																class="fa fa-minus-circle" aria-hidden="true"></i></a></td>
 														<td>{{md.name}}</td>
@@ -107,7 +107,7 @@
 									<div class="row">
 										<div class="col-12">
 											<div class="btn-group pull-right" role="group" aria-label="...">
-												<button type="button" class="btn btn-info"
+												<button type="button" class="btn btn-info" *ngIf="isVisibleRoleModule_post"
 													(click)="ModuleModal.show(); initializeModuleForm();">
 													<i class="fa fa-plus" aria-hidden="true"></i>
 												</button>

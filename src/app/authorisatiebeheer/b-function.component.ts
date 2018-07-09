@@ -26,13 +26,9 @@ export class BFunctionComponent implements OnInit {
 	@Output() onSelectedFunction = new EventEmitter<Object>();
 	selectedFunction = <any>{};
 
-	//FIXME deze boolean zijn nog niet aan html gekoppeld+check
-	isVisibleFunction_get : boolean;
+	isVisibleFunction_put : boolean;
 	isVisibleFunction_post : boolean;
 	isVisibleFunction_delete : boolean;
-
-
-
 
 		constructor(public authService: AuthService, private userService : UserService, private rolService : RolService, private moduleService : ModuleService, private functieService : FunctieService, private afAuth: AngularFireAuth) {
 			//this.loading = true;
@@ -53,14 +49,12 @@ export class BFunctionComponent implements OnInit {
 		      if (functies == null) {
 		        console.log("je mag niets uitvoeren)");
 		      } else {
-		        if (functies.some(f=> f.name == "function_get")) {
-		          this.isVisibleFunction_get = true;
+		        if (functies.some(f=> f.name == "function_put")) {
+		          this.isVisibleFunction_put = true;
 		        }
-
 		        if (functies.some(f=> f.name == "function_post")) {
 		          this.isVisibleFunction_post=true;
 		        }
-
 		        if (functies.some(f=> f.name == "function_delete")) {
 		          this.isVisibleFunction_delete = true;
 		        }

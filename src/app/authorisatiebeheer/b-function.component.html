@@ -18,7 +18,7 @@
 				<div class="card-header">
 					<h4 class="card-title mb-0">Functies</h4>
 					<br />
-					<button type="button" class="btn btn-info"
+					<button type="button" class="btn btn-info" *ngIf="isVisibleFunction_post"
 						(click)="functionModal.show(); initializeFunctionform();">
 						<i class="fa fa-plus" aria-hidden="true"></i>
 					</button>
@@ -53,7 +53,7 @@
 						<tab heading="Functie" id="tab1">
 							<form #editFunction="ngForm" novalidate>
 								<a href="javascript:void(0)" (click)="changeMode('edit')"
-									*ngIf="mode == 'view'">Bewerken</a> <a href="javascript:void(0)"
+									*ngIf="mode == 'view'&& isVisibleFunction_put">Bewerken</a> <a href="javascript:void(0)"
 									(click)="changeMode('view'); refreshFunctions()" *ngIf="mode == 'edit'">Annuleren</a>
 								<a href="javascript:void(0)" (click)="saveFunction(editFunction)"
 									*ngIf="mode == 'edit'">Opslaan</a>
@@ -70,7 +70,7 @@
 								<div class="row">
 									<div class="col-12">
 										<div class="btn-group pull-right" role="group" aria-label="...">
-											<button type="button" class="btn btn-danger"
+											<button type="button" class="btn btn-danger" *ngIf="isVisibleFunction_delete"
 												(click)="functionDeleteModal.show()">
 												<i class="fa fa-minus" aria-hidden="true"></i>
 											</button>
