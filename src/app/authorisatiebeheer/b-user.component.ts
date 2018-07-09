@@ -130,7 +130,7 @@ saveUser(form: any) {
   this.authService.maakTokenHeadervoorCurcon().then( token => {
     //console.log(token);
     console.log(form.value.rol);
-    this.userService.updateRoleByUser(this.selectedUser .username, form.value, token).subscribe(data => {
+    this.userService.updateRoleByUser(this.selectedUser.username, form.value, token).subscribe(data => {
       this.mode = 'view';
       this.loadUsers();
       this.userService.getUsersByObject(this.selectedUser,token).subscribe(user => {

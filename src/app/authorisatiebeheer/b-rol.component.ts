@@ -243,12 +243,11 @@ export class BRolComponent implements OnInit {
 	}
 
   //TODO button hiervoor in Html+testen
-	deleteRole(md: Object) {
+	deleteRole() {
 	  	this.authService.maakTokenHeadervoorCurcon().then( token => {
 	    	this.rolService.deleteRole(this.selectedRole.id, token).subscribe(
-          //FIXME refreshROLLEN!
-		      	result => {this.refreshModules(); },
-		      	error => {this.refreshModules(); }
+		      	result => {this.loadRoles(); },
+		      	error => {this.loadRoles(); }
 		    );
 	  	});
 	}

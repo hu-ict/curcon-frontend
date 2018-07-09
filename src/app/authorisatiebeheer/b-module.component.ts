@@ -229,13 +229,11 @@ this.authService.maakTokenHeadervoorCurcon().then( token => {
   });
 }
 
-//TODO button in html +testen
-deleteModule(md: Object) {
+deleteModule() {
   this.authService.maakTokenHeadervoorCurcon().then( token => {
     this.moduleService.deleteModule(this.selectedModule.id, token).subscribe(
-      //FIXME Refresh de module niet function
-      result => {this.refreshFunctions(); },
-      error => {this.refreshFunctions(); }
+      result => {this.loadModules(); },
+      error => {this.loadModules(); }
     );
   });
 }

@@ -67,6 +67,18 @@
 										</div>
 									</div>
 									{{editRole.value | json}}
+									<div class="row">
+										<div class="col-12">
+											<div class="btn-group pull-right" role="group" aria-label="...">
+												<button type="button" class="btn btn-danger"
+													(click)="roleDeleteModal.show()">
+													<i class="fa fa-minus" aria-hidden="true"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+
+
 								</form>
 							</tab>
 							<tab heading="Modules" id="tab1">
@@ -171,7 +183,7 @@
 						module!</span>
 					<div class="form-group">
 						<label for="modules">Modules</label> <select
-							class="form-control" id="modules" name="id"
+							class="form-control" id="modules" name="modules"
 							[(ngModel)]="moduleForm.id">
 							<option *ngFor="let a of availableModules" [ngValue]="a.id">{{a.name}}</option>
 						</select>
@@ -188,3 +200,46 @@
 		</div>
 	</div>
 </div>
+
+<div bsModal #roleDeleteModal="bs-modal" class="addModal modal fade"
+	tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog modal-primary" role="document">
+		<div class="modal-content">
+			<form #f="ngForm">
+				<div class="modal-header">
+					<h4 class="modal-title">
+						<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>Verwijder role
+					</h4>
+					<button type="button" class="close"
+						(click)="closeModal(roleDeleteModal)" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div *ngIf="loading" align="center">
+						<br /> <img src="assets/img/ripple.svg" />
+					</div>
+					<div class="form">
+						<div class="form-group row">
+							<label for="name" class="col-2 col-form-label">role</label>
+							<div class="col-10">
+								<!-- <input class="form-control" type="text" id="name" name="name"
+									required [(ngModel)]="functieform.name"> -->
+										<div class="col-form-label">{{selectedRole.name}}</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div *ngIf="!loading" class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						(click)="roleDeleteModal.hide()">Sluiten</button>
+					<button type="button" class="btn btn-warning" (click)="deleteRole(); closeModal(roleDeleteModal)">Verwijderen</button>
+				</div>
+			</form>
+		</div>
+		<!-- /.modal-content - -->
+	</div>
+	<!-- /.modal-dialog - -->
+</div>
+<!-- /.modal - -->

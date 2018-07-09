@@ -79,6 +79,16 @@
 										</div>
 									</div>
 									{{editUser.value | json}}
+									<div class="row">
+										<div class="col-12">
+											<div class="btn-group pull-right" role="group" aria-label="...">
+												<button type="button" class="btn btn-danger"
+													(click)="userDeleteModal.show()">
+													<i class="fa fa-minus" aria-hidden="true"></i>
+												</button>
+											</div>
+										</div>
+									</div>
 								</form>
 							</tab>
 			</tabset>
@@ -119,6 +129,49 @@
 					<button type="button" class="btn btn-secondary"
 						(click)="userModal.hide()">Sluiten</button>
 					<button type="button" class="btn btn-primary" (click)="addUser()">Toevoegen</button>
+				</div>
+			</form>
+		</div>
+		<!-- /.modal-content - -->
+	</div>
+	<!-- /.modal-dialog - -->
+</div>
+<!-- /.modal - -->
+
+<div bsModal #userDeleteModal="bs-modal" class="addModal modal fade"
+	tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog modal-primary" role="document">
+		<div class="modal-content">
+			<form #f="ngForm">
+				<div class="modal-header">
+					<h4 class="modal-title">
+						<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>Verwijder User
+					</h4>
+					<button type="button" class="close"
+						(click)="closeModal(userDeleteModal)" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div *ngIf="loading" align="center">
+						<br /> <img src="assets/img/ripple.svg" />
+					</div>
+					<div class="form">
+						<div class="form-group row">
+							<label for="name" class="col-2 col-form-label">User</label>
+							<div class="col-10">
+								<!-- <input class="form-control" type="text" id="name" name="name"
+									required [(ngModel)]="functieform.name"> -->
+										<div class="col-form-label">{{selectedUser.username}}</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div *ngIf="!loading" class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						(click)="userDeleteModal.hide()">Sluiten</button>
+					<button type="button" class="btn btn-warning" (click)="deleteUser(); closeModal(userDeleteModal)">Verwijderen</button>
 				</div>
 			</form>
 		</div>

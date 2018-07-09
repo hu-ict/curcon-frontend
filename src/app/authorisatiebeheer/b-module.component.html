@@ -67,6 +67,17 @@
 										</div>
 									</div>
 									{{editModule.value | json}}
+									<div class="row">
+										<div class="col-12">
+											<div class="btn-group pull-right" role="group" aria-label="...">
+												<button type="button" class="btn btn-danger"
+													(click)="moduleDeleteModal.show()">
+													<i class="fa fa-minus" aria-hidden="true"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+
 								</form>
 							</tab>
 							<tab heading="Functies" id="tab1">
@@ -170,9 +181,8 @@
 					<span *ngIf="error" class="text-danger">Selecteer een
 						functie!</span>
 					<div class="form-group">
-						<!--  TODO check deze label for= ook op andere plekken-->
-						<label for="functions">Functions</label> <select
-							class="form-control" id="function" name="id"
+						<label for="function">Functions</label> <select
+							class="form-control" id="function" name="function"
 							[(ngModel)]="functionForm.id">
 							<option *ngFor="let a of availableFunctions" [ngValue]="a.id">{{a.name}}</option>
 						</select>
@@ -189,3 +199,46 @@
 		</div>
 	</div>
 </div>
+
+<div bsModal #moduleDeleteModal="bs-modal" class="addModal modal fade"
+	tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog modal-primary" role="document">
+		<div class="modal-content">
+			<form #f="ngForm">
+				<div class="modal-header">
+					<h4 class="modal-title">
+						<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>Verwijder Module
+					</h4>
+					<button type="button" class="close"
+						(click)="closeModal(moduleDeleteModal)" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div *ngIf="loading" align="center">
+						<br /> <img src="assets/img/ripple.svg" />
+					</div>
+					<div class="form">
+						<div class="form-group row">
+							<label for="name" class="col-2 col-form-label">Module</label>
+							<div class="col-10">
+								<!-- <input class="form-control" type="text" id="name" name="name"
+									required [(ngModel)]="functieform.name"> -->
+										<div class="col-form-label">{{selectedModule.name}}</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div *ngIf="!loading" class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						(click)="moduleDeleteModal.hide()">Sluiten</button>
+					<button type="button" class="btn btn-warning" (click)="deleteModule(); closeModal(moduleDeleteModal)">Verwijderen</button>
+				</div>
+			</form>
+		</div>
+		<!-- /.modal-content - -->
+	</div>
+	<!-- /.modal-dialog - -->
+</div>
+<!-- /.modal - -->

@@ -25,7 +25,7 @@ export class BFunctionComponent implements OnInit {
   	//
   	mode: string;
 
-  	userForm = <any>{};
+  	functieform = <any>{};
 
   	//FIXME deze boolean zijn nog niet aan html gekoppeld+check
   	isVisibleFunction_get : boolean;
@@ -80,8 +80,8 @@ export class BFunctionComponent implements OnInit {
 	  	})
 	}
 
-	initializeUserForm(){
-  		this.userForm = {};
+	initializefunctieform(){
+  		this.functieform = {};
   		// this.refreshRollen();
 	}
 	changeMode(mode) {
@@ -96,16 +96,16 @@ export class BFunctionComponent implements OnInit {
 	onSelect(functie: Object) {
 	  	this.onSelectedFunction.emit(functie);
 	  	this.selectedFunction = functie;
-	  	this.userForm = functie;
+	  	this.functieform = functie;
 	  	//console.log('onSelect(this.selectedFunction)');
 	  	//console.log(this.selectedFunction);
 	}
 
 	addFunction() {
 	  	this.loading = true;
-	  	console.log(this.userForm);
+	  	console.log(this.functieform);
 	  	this.authService.maakTokenHeadervoorCurcon().then( token => {
-	      	this.functieService.addFunctie(this.userForm.email,token).subscribe(user => {
+	      	this.functieService.addFunctie(this.functieform.name,token).subscribe(x => {
         		this.mode = 'view';
 	        	this.functieService.getFuncties(token).subscribe(functions => {
 	          		this.functions = functions;
@@ -149,14 +149,14 @@ export class BFunctionComponent implements OnInit {
 		      	console.log(functions);
 		      	this.functions= functions;
 		      	this.selectedFunction = this.functions[0];
-		      	this.userForm = this.functions[0];
+		      	this.functieform = this.functions[0];
 		      	this.loading = false;
 		    });
 	  	});
 	}
 
 	//TODO button +test
-	deleteFunction(fu: Object) {
+	deleteFunction() {
   		this.authService.maakTokenHeadervoorCurcon().then( token => {
     		this.functieService.deleteFunctie(this.selectedFunction.id, token).subscribe(
       			result => {this.loadFunctions(); },
