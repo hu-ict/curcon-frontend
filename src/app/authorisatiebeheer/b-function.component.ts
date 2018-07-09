@@ -98,7 +98,6 @@ export class BFunctionComponent implements OnInit {
         		this.mode = 'view';
 	        	this.functieService.getFuncties(token).subscribe(functions => {
 	          		this.functions = functions;
-
 	          		// this.onSelect(this.functions[this.functions.length-1]);
 	            	this.loading = false;
 	            	this.functionModal.hide();
@@ -116,15 +115,7 @@ export class BFunctionComponent implements OnInit {
 
 	    	this.functieService.updateFunctie(this.selectedFunction.id, form.value, token).subscribe(data => {
 	      		this.mode = 'view';
-	      		this.loadFunctions();
-
-						//FIXME
-	      		// this.functieService.getRolesByObject(this.selectedFunction.id, token).subscribe(functie => {
-	        	// 	console.log(functie);
-	        	// 	this.onSelect(functie);
-	        	// 	this.loading = false;
-	        	// 	this.functionModal.hide();
-	      		// });
+	      		this.refreshFunctions();
 	    	});
 	  	});
 	}
@@ -132,8 +123,6 @@ export class BFunctionComponent implements OnInit {
 	loadFunctions(){
 			this.loading = true;
 	  	this.authService.maakTokenHeadervoorCurcon().then( token => {
-	    	//console.log(token);
-
 		    this.functieService.getFuncties(token).subscribe(functions => {
 		      	console.log(functions);
 		      	this.functions= functions;
@@ -143,6 +132,22 @@ export class BFunctionComponent implements OnInit {
 		    });
 	  	});
 	}
+	refreshFunctions(){
+			this.loading = true;
+			this.authService.maakTokenHeadervoorCurcon().then( token => {
+				this.functieService.getFuncties(token).subscribe(functions => {
+						console.log(functions);
+						this.functions= functions;
+						this.loading = false;
+
+						let refreshFunction=functions.find(f=> f.id == this.selectedFunction.id);
+
+						this.onSelect(refreshFunction);
+						this.loading = false;
+				});
+			});
+	}
+
 
 	deleteFunction() {
   		this.authService.maakTokenHeadervoorCurcon().then( token => {

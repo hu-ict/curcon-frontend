@@ -24,7 +24,7 @@ export class BModuleComponent implements OnInit {
   @Input() modules: Array<any>;
   @Output() onSelectedModule = new EventEmitter<Object>();
   selectedModule = <any>{};
-  
+
   @Input() functions: Array<any>;
   @ViewChild('functieModal') functieModal: any;
   availableFunctions: Array<any>;
@@ -169,13 +169,7 @@ saveModule(form: any) {
     console.log(form.value);
     this.moduleService.updateModule(this.selectedModule.id, form.value, token).subscribe(data => {
       this.mode = 'view';
-      this.loadModules();
-      this.moduleService.getModulesByObject(this.selectedModule,token).subscribe(module => {
-        console.log(module);
-        this.onSelect(module);
-        this.loading = false;
-        // this.moduleModal.hide();
-      });
+      this.refreshModules();
     });
   });
 }
@@ -194,7 +188,18 @@ loadModules(){
   });
 }
 
+refreshModules(){
+  this.authService.maakTokenHeadervoorCurcon().then( token => {
+    this.moduleService.getModules(token).subscribe(modules => {
+      console.log(modules);
+      this.modules= modules;
+      let refreshModule=modules.find(m=> m.id == this.selectedModule.id);
 
+      this.onSelect(refreshModule);
+      this.loading = false;
+    });
+  });
+}
 
 
 refreshFunctions() {

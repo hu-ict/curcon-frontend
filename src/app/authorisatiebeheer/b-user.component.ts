@@ -130,13 +130,7 @@ saveUser(form: any) {
     console.log(form.value.rol);
     this.userService.updateRoleByUser(this.selectedUser.username, form.value, token).subscribe(data => {
       this.mode = 'view';
-      this.loadUsers();
-      this.userService.getUsersByObject(this.selectedUser,token).subscribe(user => {
-        console.log(user);
-        this.onSelect(user);
-        this.loading = false;
-        this.cursusModal.hide();
-      });
+      this.refreshusers();
     });
   });
 }
@@ -151,6 +145,19 @@ loadUsers(){
       this.selectedUser = this.users[0];
         this.userForm = this.users[0];
 
+    });
+  });
+}
+
+refreshusers(){
+  this.authService.maakTokenHeadervoorCurcon().then( token => {
+    this.userService.getUsers(token).subscribe(users => {
+      console.log(users);
+      this.users= users;
+      let refreshUser=users.find(u=> u.username == this.selectedUser.username);
+
+      this.onSelect(refreshUser);
+      this.loading = false;
     });
   });
 }

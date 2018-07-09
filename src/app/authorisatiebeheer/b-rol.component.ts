@@ -179,23 +179,13 @@ export class BRolComponent implements OnInit {
 
 	    	this.rolService.updateRole(this.selectedRole.id, form.value, token).subscribe(data => {
 	      		this.mode = 'view';
-	      		this.loadRoles();
-            //TODO //FIXME loadroles select[0] terwijl je die niet wilt dit
-            // ook bij alle andere dingen user,module,function
-	      		this.rolService.getRolesByObject(this.selectedRole,token).subscribe(role => {
-	        		console.log(role);
-	        		this.onSelect(role);
-	        		this.loading = false;
-	        		// this.roleModal.hide();
-	      		});
+	      		this.refreshRoles();
 	    	});
 	  	});
 	}
 
 	loadRoles() {
 	  	this.authService.maakTokenHeadervoorCurcon().then( token => {
-	    	//console.log(token);
-
 		    this.rolService.getRoles(token).subscribe(roles => {
 		      	console.log(roles);
 		      	this.roles= roles;
@@ -206,7 +196,18 @@ export class BRolComponent implements OnInit {
 	  	});
 	}
 
+  refreshRoles() {
+	  	this.authService.maakTokenHeadervoorCurcon().then( token => {
+		    this.rolService.getRoles(token).subscribe(roles => {
+		      	console.log(roles);
+		      	this.roles= roles;
+            let refreshRol=roles.find(r=> r.id == this.selectedRole.id);
 
+            this.onSelect(refreshRol);
+            this.loading = false;
+		    });
+	  	});
+	}
 
 
 	refreshModules() {

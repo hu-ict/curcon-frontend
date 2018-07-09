@@ -54,7 +54,7 @@
 								<form #editModule="ngForm" novalidate>
 									<a href="javascript:void(0)" (click)="changeMode('edit')"
 										*ngIf="mode == 'view'">Bewerken</a> <a href="javascript:void(0)"
-										(click)="changeMode('view');" *ngIf="mode == 'edit'">Annuleren</a>
+										(click)="changeMode('view'); refreshModules();" *ngIf="mode == 'edit'">Annuleren</a>
 									<a href="javascript:void(0)" (click)="saveModule(editModule)"
 										*ngIf="mode == 'edit'">Opslaan</a>
 
