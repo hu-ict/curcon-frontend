@@ -1,4 +1,4 @@
-export namespace AuthNameSpace{
+export namespace AuthNameSpace {
 
   export class HRefDto {
     href: string;
