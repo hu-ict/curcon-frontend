@@ -17,11 +17,6 @@ import { BreadcrumbsComponent } from './shared/breadcrumb.component';
 import { NAV_DROPDOWN_DIRECTIVES } from './shared/nav-dropdown.directive';
 import { SimpleLayoutComponent } from './layouts/simple-layout.component';
 
-import { UsersComponent } from './users/users.component';
-import { RollenComponent } from './rollen/rollen.component';
-import { RolmodulesComponent } from './rolmodules/rolmodules.component';
-import { ModulesComponent } from './modules/modules.component';
-import { FunctiesComponent } from './functies/functies.component';
 import { LoginsComponent } from './logins/logins.component';
 //import { DocentenComponent } from './docenten/docenten.component';
 
@@ -88,11 +83,6 @@ import {BtCalculatedModule} from './bt-calculated/bt-calculated.module';
 @NgModule({
   declarations: [
     AppComponent,
-    UsersComponent,
-    RollenComponent,
-    RolmodulesComponent,
-    ModulesComponent,
-    FunctiesComponent,
     LoginsComponent,
 //    DocentenComponent,
     HomeComponent,

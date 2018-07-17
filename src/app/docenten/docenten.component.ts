@@ -21,6 +21,7 @@ export class DocentenComponent implements OnInit {
   docentId: number;
   isVisiblePut:boolean;
   isVisiblePost:boolean;
+  error: boolean; // TO DO: Temporary field
 
   constructor(private docentenService: DocentenService,private functieService:FunctieService, private authService:AuthService,private afAuth: AngularFireAuth) {
     this.loading = true;

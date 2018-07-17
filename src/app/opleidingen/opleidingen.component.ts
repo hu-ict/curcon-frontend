@@ -26,6 +26,9 @@ import {FunctieService} from '../services/functie.service';
 })
 
 export class OpleidingenComponent implements OnInit {
+	error: boolean; // TO DO: Temporary field
+	
+	
 	opleidingen: Array<any>;
 	@Input() cursussen: Array<any>;
 	@Output() onSelectedOpleiding = new EventEmitter<Object>();
