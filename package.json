@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ng run sec-curcon:build --aot=true --target=production --source-map=true" 
+    "postinstall": "ng run sec-curcon:build --aot --target=production --base-href=/"
   },
   "private": true,
   "dependencies": {
