@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
-import { DropdownModule } from 'ng2-bootstrap/dropdown';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 
-import { OrganisatiesService } from '../services/organisaties.service';
+import { OrganisatiesService } from '../services/curcon/organisaties.service';
 import { OrganisatiesRoutingModule } from './organisaties-routing.module';
 import { OrganisatiesComponent } from './organisaties.component';
 import {CommonModule} from '@angular/common';
@@ -14,10 +14,10 @@ import {HttpModule} from '@angular/http';
     OrganisatiesRoutingModule,
     ChartsModule,
     HttpModule,
-    DropdownModule,
+    BsDropdownModule,
     CommonModule
   ],
-  declarations: [ OrganisatiesComponent ],
-  providers: [OrganisatiesService]
+  declarations: [ OrganisatiesComponent ]//,
+  //providers: [OrganisatiesService]
 })
 export class OrganisatiesModule { }

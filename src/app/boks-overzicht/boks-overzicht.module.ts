@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
-import { DropdownModule } from 'ng2-bootstrap/dropdown';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 import { CommonModule } from '@angular/common';
 import { TablesComponent } from '../components/tables.component';
 
 // Modal Component
-import { ModalModule } from 'ng2-bootstrap/modal';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { ModalsComponent } from '../components/modals.component';
 
 // Tabs Component
-import { TabsModule } from 'ng2-bootstrap/tabs';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TabsComponent } from '../components/tabs.component';
 
-import {TooltipModule} from 'ng2-bootstrap';
-import {Tooltip} from "ngx-tooltip";
+import {TooltipModule} from 'ngx-bootstrap';
+import {NgbTooltipConfig} from '@ng-bootstrap/ng-bootstrap';
 
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
@@ -25,20 +25,18 @@ import {BoksOverzichtComponent} from '../boks-overzicht/boks-overzicht.component
 	imports: [
 		ChartsModule,
 		HttpModule,
-		DropdownModule,
+		BsDropdownModule,
 		FormsModule,
 		CommonModule,
 		TabsModule,
 		TooltipModule,
 		ModalModule.forRoot()
 		],
-	declarations: [ 
+	declarations: [
 		BoksOverzichtComponent
 	],
-	exports: [ 
-		BoksOverzichtComponent 
+	exports: [
+		BoksOverzichtComponent
 	],
-	providers: [
-	]
 })
 export class BoksOverzichtModule { }

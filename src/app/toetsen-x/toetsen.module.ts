@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
-import { DropdownModule } from 'ng2-bootstrap/dropdown';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
-
-import { ToetsenService } from './toetsen.service';
+import { ToetsenService } from '../services/curcon/toetsen.service';
 import { ToetsenRoutingModule } from './toetsen-routing.module';
 import { ToetsenComponent } from './toetsen.component';
 import {CommonModule} from '@angular/common';
@@ -14,7 +13,7 @@ import {HttpModule} from '@angular/http';
     ToetsenRoutingModule,
     ChartsModule,
     HttpModule,
-    DropdownModule,
+    BsDropdownModule,
     CommonModule
   ],
   declarations: [ ToetsenComponent ],

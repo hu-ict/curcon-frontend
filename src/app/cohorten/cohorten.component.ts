@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { Router } from '@angular/router';
-import {CohortenService} from '../services/cohorten.service';
+import {CohortenService} from '../services/curcon/cohorten.service';
 
 @Component({
   templateUrl: 'cohorten.component.html',

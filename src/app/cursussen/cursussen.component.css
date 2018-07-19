@@ -1,0 +1,7 @@
+.selectable:hover {
+	cursor: pointer;
+}
+
+.table-label {
+	width: 10%;
+}

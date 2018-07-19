@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { Router } from '@angular/router';
-import {OrganisatiesService} from '../services/organisaties.service';
+import {OrganisatiesService} from '../services/curcon/organisaties.service';
 
 @Component({
   templateUrl: 'organisaties.component.html',

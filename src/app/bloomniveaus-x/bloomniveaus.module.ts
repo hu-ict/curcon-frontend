@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
-import { DropdownModule } from 'ng2-bootstrap/dropdown';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 
-import { BloomniveausService } from '../services/bloomniveaus.service';
+import { BloomniveausService } from '../services/curcon/bloomniveaus.service';
 import { BloomniveausRoutingModule } from './bloomniveaus-routing.module';
 import { BloomniveausComponent } from './bloomniveaus.component';
 import {CommonModule} from '@angular/common';
@@ -14,7 +14,7 @@ import {HttpModule} from '@angular/http';
     BloomniveausRoutingModule,
     ChartsModule,
     HttpModule,
-    DropdownModule,
+    BsDropdownModule,
     CommonModule
   ],
   declarations: [ BloomniveausComponent ],

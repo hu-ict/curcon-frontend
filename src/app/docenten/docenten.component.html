@@ -8,7 +8,7 @@
 	width: 10%;
 }
 </style>
-<div class="animated fadeIn">
+<div class="container">
 	<div class="row">
 	</div>
 	<div class="row">
@@ -20,8 +20,8 @@
 				<div class="card-block">
 					<div class="row">
 						<div class="col-md-12 docenten">
-							<template tabHeading> <i class="icon-calculator"></i>
-							Docenten</template>
+							<ng-template tabDirective><i class="icon-calculator"></i>
+							Docenten</ng-template>
 							<table class="table table-condensed">
 								<thead>
 									<tr>
@@ -32,7 +32,7 @@
 								<tbody>
 									<tr *ngFor="let d of docenten | orderBy: 'naam'">
 										<td style="width: 1%;"><a href="javascript:void(0)"
-											(click)="docentModal.show(); getDocent(d)"><i
+										(click)="docentModal.show(); getDocent(d)"><i *ngIf="isVisiblePut"
 												class="fa fa-pencil-square" aria-hidden="true"
 												style="font-size: 20px;"></i></a></td>
 										<td>{{d.naam}}</td>
@@ -40,8 +40,8 @@
 								</tbody>
 							</table>
 							<div class="btn-group pull-right" role="group" aria-label="...">
-								<button type="button" class="btn btn-info"
-									(click)="docentModal.show(); initializeDocentForm();">
+								<button *ngIf="isVisiblePost" type="button" class="btn btn-info"
+									(click)="docentModal.show(); initializeDocentForm()">
 									<i class="fa fa-plus" aria-hidden="true"></i>
 								</button>
 							</div>

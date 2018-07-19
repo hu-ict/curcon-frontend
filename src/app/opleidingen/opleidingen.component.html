@@ -1,25 +1,11 @@
-
-<style>
-.selectable:hover {
-	cursor: pointer;
-}
-
-.table-label {
-	width: 10%;
-}
-</style>
-
-<div class="animated fadeIn">
-	<div *ngIf="loading" align="center" class="page-loading">
-		<img src="assets/img/ripple.svg" />
-	</div>
+<div class="container">
 	<div class="row">
 		<div class="col-3">
 			<div class="card">
 				<div class="card-header">
 					<h4 class="card-title mb-0">Opleidingsprofielen</h4>
 					<br />
-					<button type="button" class="btn btn-info"
+					<button type="button"  class="btn btn-info" *ngIf="isVisibleOrganisatieOpleidingsprofiel_post"
 						(click)="opleidingModal.show(); newOpleidingForm();">
 						<i class="fa fa-plus" aria-hidden="true"></i>
 					</button>
@@ -49,190 +35,184 @@
 					<h4 class="card-title mb-0">{{selectedOpleiding.naam}}</h4>
 				</div>
 				<div class="card-block">
-					<tabset> <tab> <template tabHeading> <i
-						class="icon-list"></i> Overzicht</template>
-					<div class="col-12 leerplannen">
-						<div class="row cursus">
-							<div class="col-12">
-								<div class="overzicht">
-									<div class="samenvatting">
-										<div class="titel">Gegeven profiel</div>
-										<span class="code">TCIF-VIBAC-14</span>
-										<h5 class="naam">{{selectedOpleiding.naam}}</h5>
-										<h6 class="ects">240 EC</h6>
+					<tabset>
+						<tab heading="Overzicht" id="tab1">
+							<div class="col-12 leerplannen">
+								<div class="row cursus">
+									<div class="col-12">
+										<div class="overzicht">
+											<div class="samenvatting">
+												<div class="titel">Gegeven profiel</div>
+												<!--FIXME code wordt niet opgeslagen in de db op dit moment  -->
+												<span class="code">TCIF-VIBAC-14</span>
+												<h5 class="naam">{{selectedOpleiding.naam}}</h5>
+												<h6 class="ects">240 EC</h6>
+											</div>
+										</div>
+										<bt-matrix [beroepstaken]="selectedOpleiding.beroepstaken"></bt-matrix>
+										<ps-overzicht [professionalskills]="selectedOpleiding.professionalskills"></ps-overzicht>
 									</div>
 								</div>
-								<bt-matrix [beroepstaken]="selectedOpleiding.beroepstaken"></bt-matrix>
-								<ps-overzicht
-									[professionalskills]="selectedOpleiding.professionalskills"></ps-overzicht>
-							</div>
-						</div>
-						<div class="row cursus">
-							<div class="col-12">
-								<div class="overzicht">
-									<div class="samenvatting">
-										<div class="titel">Berekend profiel</div>
-										<span class="code">TCIF-VIBAC-14s</span>
-										<h5 class="naam">{{selectedOpleiding.profiel?.naam}}</h5>
-										<h6 class="ects">{{selectedOpleiding.profiel?.ects}} EC</h6>
-									</div>
-								</div>
-								<ng-container *ngIf="selectedOpleiding.profiel != undefined">
-								<bt-calculated [profiel]="selectedOpleiding.profiel.conformiteitBeroepsTaken"></bt-calculated>
-								</ng-container>
-								<ng-container *ngIf="selectedOpleiding.profiel == undefined">
-								selectedOpleiding.profiel == undefined
-								</ng-container>
-
-							</div>
-						</div>
-					</div>
-
-					</tab> <tab> <template tabHeading> <i class="icon-list"></i>
-					Algemeen</template>
-					<form #opleidingForm="ngForm" novalidate>
-						<a href="javascript:void(0)" (click)="setMode('edit')"
-							*ngIf="mode == 'view'">Bewerken</a> <a href="javascript:void(0)"
-							(click)="setMode('view')" *ngIf="mode == 'edit'">Annuleren</a> <a
-							href="javascript:void(0)" (click)="saveOpleiding(opleidingForm)"
-							*ngIf="mode == 'edit'">Opslaan</a>
-						<div class="form-group row">
-							<label for="naam" class="col-2 col-form-label">Naam</label>
-							<div class="col-10">
-								<div class="col-form-label" *ngIf="mode == 'view'">{{selectedOpleiding.naam}}</div>
-								<input *ngIf="mode == 'edit'" class="form-control" type="text"
-									id="naam" name="naam" required
-									[(ngModel)]="selectedOpleiding.naam">
-							</div>
-						</div>
-						{{opleidingForm.value | json}}
-					</form>
-					</tab> <tab> <template tabHeading> <i
-						class="icon-grid"></i> Beroepstaken</template>
-					<div class="col-12">
-						<div class="row">
-							<div class="table-responsive">
-								<table class="table preview-table">
-									<thead>
-										<tr>
-											<th></th>
-											<th>Architectuur laag</th>
-											<th>Activiteit</th>
-											<th>Niveau</th>
-											<th>Omschrijving</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr *ngFor="let bt of selectedOpleiding.beroepstaken">
-											<td><a class="text-danger lead"
-												href="javascript:void(0)" (click)="deleteBeroepstaak(bt)"><i
-													class="fa fa-minus-circle" aria-hidden="true"></i></a></td>
-											<td>{{bt.architectuurlaag}}</td>
-											<td>{{bt.activiteit}}</td>
-											<td>{{bt.niveau}}</td>
-											<td>{{bt.omschrijving}}</td>
-										</tr>
-									</tbody>
-									<!-- preview content goes here-->
-								</table>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-12">
-								<div class="btn-group pull-right" role="group" aria-label="...">
-									<button type="button" class="btn btn-info"
-										(click)="beroepstaakModal.show(); getBeroepstaakTypes();">
-										<i class="fa fa-plus" aria-hidden="true"></i>
-									</button>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					</tab> <tab> <template tabHeading> <i
-						class="icon-badge"></i> Professional skills</template>
-					<div class="col-12">
-						<div class="row">
-							<div class="table-responsive">
-								<table class="table preview-table">
-									<thead>
-										<tr>
-											<th></th>
-											<th>Code</th>
-											<th>Beschrijving</th>
-											<th>Niveau</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr *ngFor="let ps of selectedOpleiding.professionalskills">
-											<td><a class="text-danger lead"
-												href="javascript:void(0)"
-												(click)="deleteProfessionalskill(ps)"><i
-													class="fa fa-minus-circle" aria-hidden="true"></i></a></td>
-											<td>{{ps.code}}</td>
-											<td>{{ps.beschrijving}}</td>
-											<td>{{ps.niveau}}</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-12">
-								<div class="btn-group pull-right" role="group" aria-label="...">
-									<button type="button" class="btn btn-info"
-										(click)="ProfessionalskillModal.show(); getProfessionalskillTypes();">
-										<i class="fa fa-plus" aria-hidden="true"></i>
-									</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					</tab> <tab> <template tabHeading> <i
-						class="icon-layers"></i> Toetsprogramma</template>
-					<div class="col-12 leerplannen">
-						<div *ngIf="selectedCohort != undefined">
-							<div class="row">
-								<div class="col-12">
-									<div class="btn-group pull-right" role="group" aria-label="...">
-										<button type="button" class="btn btn-info"
-											(click)="cursusModal.show(); initializeCursusForm();">
-											<i class="fa fa-plus" aria-hidden="true"></i>
-										</button>
-									</div>
-								</div>
-							</div>
-							<div class="col-12">
-								<h3>Cursussen</h3>
-								<br />
-								<div *ngFor="let c of cursussen | orderBy: 'periode' ">
-									<div class="row cursus">
-										<div class="col-12">
-											<div class="overzicht">
-												<div class="samenvatting">
-													<span class="code"><a
-														[routerLink]="['/cursussen', c.code]">{{c.code}}</a></span>
-													<h5 class="naam">{{c.naam}}</h5>
-													<h6 class="ects">{{c.europeanCredits}} EC</h6>
-													<a class="text-danger lead" href="javascript:void(0)"
-														(click)="deleteCursusFromCohort(c)"><i
-														class="fa fa-minus-circle" aria-hidden="true"></i></a>
+								<div class="row cursus">
+									<div class="col-12">
+										<div class="overzicht">
+											<div class="samenvatting">
+												<div class="titel">Berekend profiel</div>
+													<span class="code">TCIF-VIBAC-14s</span>
+													<h5 class="naam">{{selectedOpleiding.profiel?.naam}}</h5>
+													<h6 class="ects">{{selectedOpleiding.profiel?.ects}} EC</h6>
 												</div>
 											</div>
-											<bt-matrix [beroepstaken]="c.beroepstaken"></bt-matrix>
-											<ps-overzicht [professionalskills]="c.professionalskills"></ps-overzicht>
-											<boks-overzicht [boks]="c.professionalskills"></boks-overzicht>
+											<ng-container *ngIf="selectedOpleiding.profiel != undefined">
+												<bt-calculated [profiel]="selectedOpleiding.profiel.conformiteitBeroepsTaken"></bt-calculated>
+							<!-- <ps-overzicht [professionalskills]="selectedOpleiding.profiel.eindPS"></ps-overzicht> -->
+											</ng-container>
+											<ng-container *ngIf="selectedOpleiding.profiel == undefined">
+												selectedOpleiding.profiel == undefined
+											</ng-container>
 										</div>
 									</div>
 								</div>
-							</div>
-						</div>
+							</tab>
+							<tab tab heading="Algemeen" id="tab1">
+								<form #opleidingForm="ngForm" novalidate>
+									<a href="javascript:void(0)" (click)="setMode('edit')" *ngIf="mode == 'view' && isVisibleOpleidingsprofiel_put">Bewerken</a>
+									<a href="javascript:void(0)"(click)="setMode('view'); refreshOpleidingen();" *ngIf="mode == 'edit'">Annuleren</a>
+									<a href="javascript:void(0)" (click)="saveOpleiding(opleidingForm)" *ngIf="mode == 'edit'">Opslaan</a>
+									<div class="form-group row">
+										<label for="naam" class="col-2 col-form-label">Naam</label>
+										<div class="col-10">
+											<div class="col-form-label" *ngIf="mode == 'view'">{{selectedOpleiding.naam}}</div>
+											<input *ngIf="mode == 'edit'" class="form-control" type="text" id="naam" name="naam" required [(ngModel)]="selectedOpleiding.naam">
+										</div>
+									</div>
+									{{opleidingForm.value | json}}
+								</form>
+							</tab>
+							<tab heading="Beroeptstaken" id="tab1">
+								<div class="col-12">
+									<div class="row">
+										<div class="table-responsive">
+											<table class="table preview-table">
+												<thead>
+													<tr>
+														<th></th>
+														<th>Architectuur laag</th>
+														<th>Activiteit</th>
+														<th>Niveau</th>
+														<th>Omschrijving</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr *ngFor="let bt of selectedOpleiding.beroepstaken">
+														<td><a class="text-danger lead" *ngIf="isVisibleOpleidingsprofielBeroepstaak_delete"
+															href="javascript:void(0)" (click)="deleteBeroepstaak(bt)"><i
+																class="fa fa-minus-circle" aria-hidden="true"></i></a></td>
+														<td>{{bt.architectuurlaag}}</td>
+														<td>{{bt.activiteit}}</td>
+														<td>{{bt.niveau}}</td>
+														<td>{{bt.omschrijving}}</td>
+													</tr>
+												</tbody>
+												<!-- preview content goes here-->
+											</table>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-12">
+											<div class="btn-group pull-right" role="group" aria-label="...">
+												<button type="button" class="btn btn-info" *ngIf="isVisibleOpleidingsprofielBeroepstaak_post" id="createbutton" (click)="beroepstaakModal.show(); getBeroepstaakTypes();">
+													<i class="fa fa-plus" aria-hidden="true"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</tab>
+							<tab heading="Professional Skills" id="tab1">
+								<div class="col-12">
+									<div class="row">
+										<div class="table-responsive">
+											<table class="table preview-table">
+												<thead>
+													<tr>
+														<th></th>
+														<th>Code</th>
+														<th>Beschrijving</th>
+														<th>Niveau</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr *ngFor="let ps of selectedOpleiding.professionalskills">
+														<td><a class="text-danger lead"
+															href="javascript:void(0)" *ngIf="isVisibleOpleidingsprofielProfessional_delete"
+															(click)="deleteProfessionalskill(ps)"><i
+																class="fa fa-minus-circle" aria-hidden="true"></i></a></td>
+														<td>{{ps.code}}</td>
+														<td>{{ps.beschrijving}}</td>
+														<td>{{ps.niveau}}</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-12">
+											<div class="btn-group pull-right" role="group" aria-label="...">
+												<button type="button" class="btn btn-info" id="createbutton"  *ngIf="isVisibleOpleidingsprofielProfessional_post"
+													(click)="ProfessionalskillModal.show(); getProfessionalskillTypes();">
+													<i class="fa fa-plus" aria-hidden="true"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</tab>
+							<tab heading="Toetsprogramma" id="tab1">
+								<div class="col-12 leerplannen">
+									<div *ngIf="selectedCohort != undefined">
+										<div class="row">
+											<div class="col-12">
+												<div class="btn-group pull-right" role="group" aria-label="...">
+													<button type="button" class="btn btn-info" id="createbutton" *ngIf="isVisibleCohortCursus_post"
+														(click)="cursusModal.show(); initializeCursusForm();">
+														<i class="fa fa-plus" aria-hidden="true"></i>
+													</button>
+												</div>
+											</div>
+										</div>
+										<div class="col-12">
+											<h3>Cursussen</h3>
+											<br />
+											<div *ngFor="let c of cursussen | orderBy: 'periode' ">
+												<div class="row cursus">
+													<div class="col-12">
+														<div class="overzicht">
+															<div class="samenvatting">
+																<span class="code"><a
+																	[routerLink]="['/cursussen', c.code]">{{c.code}}</a></span>
+																<h5 class="naam">{{c.naam}}</h5>
+																<h6 class="ects">{{c.europeanCredits}} EC</h6>
+																<a class="text-danger lead" href="javascript:void(0)"  *ngIf="isVisibleCohortCursus_delete"
+																	(click)="deleteCursusFromCohort(c)"><i
+																	class="fa fa-minus-circle" aria-hidden="true"></i></a>
+															</div>
+														</div>
+														<bt-matrix [beroepstaken]="c.beroepstaken"></bt-matrix>
+														<ps-overzicht [professionalskills]="c.professionalskills"></ps-overzicht>
+														<boks-overzicht [boks]="c.professionalskills"></boks-overzicht>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</tab>
+						</tabset>
 					</div>
-					</tab></tabset>
 				</div>
 			</div>
 		</div>
-	</div>
 </div>
 
 <div bsModal #OpleidingModal="bs-modal" class="addModal modal fade"
@@ -256,10 +236,10 @@
 
 						<div class="form-group row">
 							<label for="naam" class="col-2 col-form-label">Code</label>
-							<div class="col-10">
+							<!-- <div class="col-10">
 								<input class="form-control" type="text" id="code" name="code"
 									required [(ngModel)]="opleidingForm.code">
-							</div>
+							</div> -->
 						</div>
 						<div class="form-group row">
 							<label for="naam" class="col-2 col-form-label">Naam</label>
@@ -274,7 +254,7 @@
 				</div>
 				<div *ngIf="!loading" class="modal-footer">
 					<button type="button" class="btn btn-secondary"
-						(click)="opleidngModal.hide()">Sluiten</button>
+						(click)="opleidingModal.hide()">Sluiten</button>
 					<button type="button" class="btn btn-primary"
 						(click)="addOpleiding(); opleidingModal.hide()">Toevoegen</button>
 				</div>
@@ -441,11 +421,5 @@
 				</div>
 			</form>
 		</div>
-		<!-- /.modal-content -->
 	</div>
-	<!-- /.modal-dialog -->
 </div>
-<!-- /.modal -->
-
-
-

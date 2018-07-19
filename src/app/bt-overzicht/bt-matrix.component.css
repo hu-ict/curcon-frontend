@@ -1,0 +1,69 @@
+.hbo-i-cell {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #deebf7;
+  margin: 1px;
+  width: 15px;
+  height: 15px;
+  float: left;
+  position: relative;
+  display: inline;
+  text-align: center;
+}
+.hbo-i-layer {
+  display: table;
+  width: 110px;
+}
+.ps-layer {
+  display: table;
+  height: 83px;
+  padding-right: 10px
+}
+
+.hbo-i-layer > .label-top {
+  height: 15px;
+  width: 15px;
+  font-size: 10px;
+  font-weight: normal;
+}
+
+.hbo-i-layer > .label-left {
+  height: 15px;
+  width: 15px;
+  font-size: 10px;
+  font-weight: normal;
+}
+
+.hbo-i-layer > .niveau-1 {
+  background: #daeef3;
+}
+
+.hbo-i-layer > .niveau-2 {
+  background: #92cddc;
+}
+
+.hbo-i-layer > .niveau-3 {
+  background: #366092
+}
+
+.hbo-i-layer > .conform-1 {
+  background: #ee3300;
+}
+.hbo-i-layer > .conform-2 {
+  background: #ff8000;
+}
+.hbo-i-layer > .conform-3 {
+  background: #ffff00
+}
+.hbo-i-layer > .conform-4 {
+  background: #669900
+}
+.hbo-i-layer > .conform-5 {
+  background: #bf40bf
+}
+
+.top-layer > .hbo-i-cell{
+  height: 15px;
+  font-size: 10px;
+  font-weight: normal;
+}

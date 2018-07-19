@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
-import { DropdownModule } from 'ng2-bootstrap/dropdown';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 import { DocentenService } from '../services/docenten.service';
 import { DocentenRoutingModule } from './docenten-routing.module';
 import { DocentenComponent } from './docenten.component';
-import { OrganisatiesService } from '../services/organisaties.service';
-import { CursussenService } from '../services/cursussen.service';
+import { OrganisatiesService } from '../services/curcon/organisaties.service';
+import { CursussenService } from '../services/curcon/cursussen.service';
 import { CommonModule} from '@angular/common';
 import { HttpModule} from '@angular/http';
-import { Ng2OrderModule } from 'ng2-order-pipe';
+import { OrderModule } from 'ngx-order-pipe';
 
 // Modal Component
-import { ModalModule } from 'ng2-bootstrap/modal';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { ModalsComponent } from '../components/modals.component';
 
 import {FormsModule} from '@angular/forms';
@@ -24,9 +24,9 @@ import { DocentComponent } from '../test/docent.component';
     FormsModule,
     ChartsModule,
     HttpModule,
-    DropdownModule,
+    BsDropdownModule,
     CommonModule,
-    Ng2OrderModule,
+    OrderModule,
     ModalModule.forRoot()
   ],
   declarations: [ DocentenComponent,

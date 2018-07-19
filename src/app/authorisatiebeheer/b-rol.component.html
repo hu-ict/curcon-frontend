@@ -1,0 +1,245 @@
+<style>
+.selectable:hover {
+	cursor: pointer;
+}
+
+.table-label {
+	width: 10%;
+}
+</style>
+
+<div class="container">
+	<div *ngIf="loading" align="center" class="page-loading">
+		<img src="assets/img/ripple.svg" />
+	</div>
+	<div class="row">
+		<div class="col-3">
+			<div class="card">
+				<div class="card-header">
+					<h4 class="card-title mb-0">Rollen</h4>
+					<br />
+					<button type="button" class="btn btn-info" *ngIf="isVisibleRole_post"
+						(click)="roleModal.show(); initializeRoleForm();">
+						<i class="fa fa-plus" aria-hidden="true"></i>
+					</button>
+				</div>
+				<div class="card-block">
+					<div class="course-wrapper">
+						<div class="row">
+							<div class="col-md-12">
+								<table class="table table-hover">
+									<tbody>
+										<tr *ngFor="let rol of roles" (click)="onSelect(rol)"
+											class="selectable">
+											<td colspan="1">{{ rol.name }}
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-9 course">
+			<div *ngIf="selectedRole" class="card">
+				<div class="card-header">
+					<h4 class="card-title mb-0">{{selectedRole.name}}</h4>
+				</div>
+				<div class="card-block">
+					<!-- Nav tabs -->
+					<tabset>
+							<tab heading="Rol" id="tab1">
+								<form #editRole="ngForm" novalidate>
+									<a href="javascript:void(0)" (click)="changeMode('edit')"
+										*ngIf="mode == 'view' && isVisibleRole_put">Bewerken</a> <a href="javascript:void(0)"
+										(click)="changeMode('view'); refreshRoles();" *ngIf="mode == 'edit'">Annuleren</a>
+									<a href="javascript:void(0)" (click)="saveRole(editRole)"
+										*ngIf="mode == 'edit'">Opslaan</a>
+
+									<div class="form-group row">
+										<label for="name" class="col-2 col-form-label">Rolnaam</label>
+										<div class="col-10">
+											<div class="col-form-label" *ngIf="mode == 'view'">{{selectedRole.name}}</div>
+									   <input *ngIf="mode == 'edit'" class="form-control" type="text"
+												id="name" name="name" required [(ngModel)]="roleForm.name">
+										</div>
+									</div>
+									{{editRole.value | json}}
+									<div class="row">
+										<div class="col-12">
+											<div class="btn-group pull-right" role="group" aria-label="...">
+												<button type="button" class="btn btn-danger" *ngIf="isVisibleRole_delete"
+													(click)="roleDeleteModal.show()">
+													<i class="fa fa-minus" aria-hidden="true"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+
+
+								</form>
+							</tab>
+							<tab heading="Modules" id="tab1">
+								<div class="col-12">
+									<div class="row">
+										<div class="table-responsive">
+											<table class="table preview-table">
+												<thead>
+													<tr>
+														<th></th>
+														<th>Naam</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr *ngFor="let md of selectedRole.moduleArr">
+														<td><a class="text-danger lead" *ngIf="isVisibleRoleModule_delete"
+															href="javascript:void(0)" (click)="deleteModuleFromRole(md)"><i
+																class="fa fa-minus-circle" aria-hidden="true"></i></a></td>
+														<td>{{md.name}}</td>
+													</tr>
+												</tbody>
+												<!-- preview content goes here-->
+											</table>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-12">
+											<div class="btn-group pull-right" role="group" aria-label="...">
+												<button type="button" class="btn btn-info" *ngIf="isVisibleRoleModule_post"
+													(click)="ModuleModal.show(); initializeModuleForm();">
+													<i class="fa fa-plus" aria-hidden="true"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</tab>
+					</tabset>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div bsModal #roleModal="bs-modal" class="addModal modal fade"
+	tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog modal-primary" role="document">
+		<div class="modal-content">
+			<form #f="ngForm">
+				<div class="modal-header">
+					<h4 class="modal-title">Nieuwe role</h4>
+					<button type="button" class="close"
+						(click)="closeModal(roleModal)" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div *ngIf="loading" align="center">
+						<br /> <img src="assets/img/ripple.svg" />
+					</div>
+					<div class="form">
+						<div class="form-group row">
+							<label for="name" class="col-2 col-form-label">Rolnaam</label>
+							<div class="col-10">
+								<input class="form-control" type="text" id="name" name="name"
+									required [(ngModel)]="roleForm.name">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div *ngIf="!loading" class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						(click)="roleModal.hide()">Sluiten</button>
+					<button type="button" class="btn btn-primary" (click)="addRole()">Toevoegen</button>
+				</div>
+			</form>
+		</div>
+		<!-- /.modal-content - -->
+	</div>
+	<!-- /.modal-dialog - -->
+</div>
+<!-- /.modal - -->
+
+<div bsModal #ModuleModal="bs-modal" class="modal fade" tabindex="-1"
+	role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-primary" role="document">
+		<div class="modal-content">
+			<form name="#ModuleForm" novalidate>
+				<div class="modal-header">
+					<h4 class="modal-title">Modules</h4>
+					<button type="button" class="close" (click)="ModuleModal.hide()"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div *ngIf="loading" align="center">
+						<br /> <img src="assets/img/ripple.svg" />
+					</div>
+					<span *ngIf="error" class="text-danger">Selecteer een
+						module!</span>
+					<div class="form-group">
+						<label for="modules">Modules</label> <select
+							class="form-control" id="modules" name="modules"
+							[(ngModel)]="moduleForm.id">
+							<option *ngFor="let a of availableModules" [ngValue]="a.id">{{a.name}}</option>
+						</select>
+					</div>
+					<!-- <p>Form: {{ selectedRole.value | json }}</p> -->
+				</div>
+				<div *ngIf="!loading" class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						(click)="moduleModal.hide()">Sluiten</button>
+					<button type="button" class="btn btn-primary"
+						(click)="addModuleToRol(moduleForm)">Toevoegen</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div bsModal #roleDeleteModal="bs-modal" class="addModal modal fade"
+	tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog modal-primary" role="document">
+		<div class="modal-content">
+			<form #f="ngForm">
+				<div class="modal-header">
+					<h4 class="modal-title">
+						<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>Verwijder role
+					</h4>
+					<button type="button" class="close"
+						(click)="closeModal(roleDeleteModal)" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div *ngIf="loading" align="center">
+						<br /> <img src="assets/img/ripple.svg" />
+					</div>
+					<div class="form">
+						<div class="form-group row">
+							<label for="name" class="col-2 col-form-label">role</label>
+							<div class="col-10">
+								<!-- <input class="form-control" type="text" id="name" name="name"
+									required [(ngModel)]="functieform.name"> -->
+										<div class="col-form-label">{{selectedRole.name}}</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div *ngIf="!loading" class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						(click)="roleDeleteModal.hide()">Sluiten</button>
+					<button type="button" class="btn btn-warning" (click)="deleteRole(); closeModal(roleDeleteModal)">Verwijderen</button>
+				</div>
+			</form>
+		</div>
+		<!-- /.modal-content - -->
+	</div>
+	<!-- /.modal-dialog - -->
+</div>
+<!-- /.modal - -->
