@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { OrderModule } from 'ngx-order-pipe';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { OrderByPipe } from './orderby.pipe';
 
 import { CommonModule } from '@angular/common';
 import { TablesComponent } from '../components/tables.component';
@@ -53,7 +54,11 @@ import { OpleidingenRoutingModule } from './opleidingen-routing.module';
 	    ModalModule.forRoot()
 	],
 	declarations: [
-		OpleidingenComponent
+		OpleidingenComponent,
+		OrderByPipe
+	],
+	exports: [
+		OrderByPipe
 	],
 	providers: [ 
 		LeerplannenService, 

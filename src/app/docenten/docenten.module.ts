@@ -10,6 +10,7 @@ import { CursussenService } from '../services/curcon/cursussen.service';
 import { CommonModule} from '@angular/common';
 import { HttpModule} from '@angular/http';
 import { OrderModule } from 'ngx-order-pipe';
+import { OrderByPipe } from './orderby.pipe';
 
 // Modal Component
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -30,7 +31,8 @@ import { DocentComponent } from '../test/docent.component';
     ModalModule.forRoot()
   ],
   declarations: [ DocentenComponent,
-    DocentComponent ],
+    DocentComponent, OrderByPipe ],
+  exports: [OrderByPipe],
   providers: [ DocentenService, OrganisatiesService, CursussenService ]
 })
 export class DocentenModule { }
