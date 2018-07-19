@@ -6,7 +6,7 @@ import * as myGlobals from '../globals';
 @Injectable()
 export class MillerNiveausService {
   constructor(private http: Http) {
-    // console.log('MillerNiveausService Initialized...');
+    console.log('MillerNiveausService Initialized...');
   }
 
   getMillerNiveaus() {

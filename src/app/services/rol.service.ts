@@ -14,7 +14,7 @@ export class RolService {
   ) {}
 
   private log(message:string): void{
-    // console.log( "rolService armeluisdebugger: " + message);
+    console.log( "rolService armeluisdebugger: " + message);
   }
   getRole(id,headersIn :HttpHeaders){
     return this.http.get<AuthNameSpace.Rol>(myGlobals.baseUrl+'roles/'+id,{headers: headersIn})
@@ -24,9 +24,9 @@ export class RolService {
     return this.http.get<AuthNameSpace.Rol[]>(myGlobals.baseUrl + 'roles',{headers: headersIn})
   }
   getRolesByObject(obj,headersIn :HttpHeaders) {
-    // console.log(obj.href);
+    console.log(obj.href);
     return this.http.get<AuthNameSpace.Rol[]>(obj.href,{headers: headersIn})
-      .pipe( tap( res => // console.log(res)) );
+      
   }
 
   //Creert een nieuwe Role
@@ -35,7 +35,7 @@ export class RolService {
     // let newUser:AuthNameSpace.UserPostDto = new AuthNameSpace.UserPostDto ;
     let newRole: any= {}; //Object;
     newRole.name=role;
-    // console.log(newRole);
+    console.log(newRole);
 
     headersIn.append("Access Control Allow Origin", "*");
     return this.http.post<AuthNameSpace.RolPostDto>( myGlobals.baseUrl+'roles/', newRole,{headers: headersIn})

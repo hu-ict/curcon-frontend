@@ -12,7 +12,7 @@ import * as myGlobals from '../../globals';
 @Injectable()
 export class BloomniveausService {
   constructor(private http: HttpClient) {
-    // console.log('BloomniveausService Initialized...');
+    console.log('BloomniveausService Initialized...');
   }
 
   getBloomniveaus(headersIn :HttpHeaders) {
@@ -21,7 +21,6 @@ export class BloomniveausService {
     };
 
     return this.http.get<curconnamespace.CurconNameSpace.BloomNiveauDto[]>(myGlobals.baseUrl+'bloomniveaus/', requestOptions)
-      .pipe( tap( res => // console.log(res)) );
   }
 
   getBloomniveausByObject(obj, headersIn :HttpHeaders) {
@@ -30,7 +29,6 @@ export class BloomniveausService {
     };
 
     return this.http.get<curconnamespace.CurconNameSpace.BloomNiveauDto[]>(obj.href, requestOptions)
-      .pipe( tap( res => // console.log(res)) );
   }
 
 }

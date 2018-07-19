@@ -9,7 +9,7 @@ export class OrganisatiesService {
 	options: RequestOptions;
 
 	constructor(private http: Http) {
-		// console.log('OrganisatieService Initialized...');
+		console.log('OrganisatieService Initialized...');
 		this.headers = new Headers({ 'Content-Type': 'application/json' });
 		this.headers.append('Access-Control-Allow-Origin', '*');
 		this.options = new RequestOptions({ headers: this.headers });

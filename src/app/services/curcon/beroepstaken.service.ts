@@ -15,7 +15,7 @@ export class BeroepstakenService {
   ////options: RequestOptions
 
   constructor(private http: HttpClient) {
-    // console.log('BeroepstakenService Initialized...');
+    console.log('BeroepstakenService Initialized...');
     this.headers = new HttpHeaders();
     this.headers.append('Content-Type', 'text/plain');
     this.headers.append('server','Apache-Coyote/1.1');
@@ -31,7 +31,7 @@ export class BeroepstakenService {
 
     return this.http.get<curconnamespace.CurconNameSpace.BeroepsTaakDto[]>(myGlobals.baseUrl+'beroepstaken/', requestOptions)
     .pipe(
-      tap(beroepstaak => // console.log(beroepstaak))
+      tap(beroepstaak => console.log(beroepstaak))
       ,
       catchError(ErrorService.prototype.handleError<curconnamespace.CurconNameSpace.BeroepsTaakDto[]>("getBeroepstaken naam={beroesptaak.omschrijving}"))
     )
@@ -45,7 +45,7 @@ export class BeroepstakenService {
     };
 
     return this.http.get<curconnamespace.CurconNameSpace.BeroepsTaakDto[]>(myGlobals.baseUrl+'beroepstaken/types', requestOptions)
-      .pipe(tap(beroepstaak => // console.log(beroepstaak)) ,
+      .pipe(tap(beroepstaak => console.log(beroepstaak)) ,
         catchError(ErrorService.prototype.handleError<curconnamespace.CurconNameSpace.BeroepsTaakDto[]>("getBeroepstaken naam={beroesptaak.omschrijving}"))
       )
   }
@@ -54,7 +54,7 @@ export class BeroepstakenService {
     let requestOptions = {
       headers : headersIn,
     };
-    // console.log("Beroepstaken object"+obj);
+    console.log("Beroepstaken object"+obj);
     return this.http.get<curconnamespace.CurconNameSpace.BeroepsTaakDto[]>
     (obj.href, requestOptions);
   }
@@ -79,7 +79,7 @@ export class BeroepstakenService {
     return this.http.get<curconnamespace.CurconNameSpace.BeroepsTaakDto>
     (myGlobals.baseUrl+'beroepstaken/activiteiten/' + actid + '/architectuurlagen/' + archid + '/niveaus/' + niv, requestOptions)
       .pipe(
-        tap(beroepstaak => // console.log(beroepstaak))
+        tap(beroepstaak => console.log(beroepstaak))
         ,
         catchError(ErrorService.prototype.handleError<curconnamespace.CurconNameSpace.BeroepsTaakDto>
           ("getBeroepstaken naam={beroesptaak.omschrijving}"))

@@ -8,7 +8,7 @@ import * as myGlobals from '../globals';
 @Injectable()
 export class RollenService {
 	constructor(private http: Http) {
-		// console.log('RollenService Initialized...');
+		console.log('RollenService Initialized...');
 	}
 
 	// getRolById(id) {

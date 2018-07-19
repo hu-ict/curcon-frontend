@@ -11,7 +11,7 @@ export class CursussenService {
 	organisationId: any;
 
 constructor(private http: Http) {
-	// console.log('Cursussen Service Initialized...');
+	console.log('Cursussen Service Initialized...');
 	this.headers = new Headers({ 'Content-Type': 'application/json' });
 	this.headers.append('Access-Control-Allow-Origin', '*');
 //	this.headers.append('Access-Control-Expose-Headers', 'content-disposition');
@@ -21,7 +21,7 @@ constructor(private http: Http) {
 
 getCursussen() {
 	var url = myGlobals.baseUrl+'organisaties/' + this.organisationId.id + '/cursussen';
-	// console.log("url "+url)
+	console.log("url "+url)
 	return this.http.get(url, this.options).map(res => res.json());
 }
 
@@ -31,7 +31,7 @@ getDataByHref(href) {
 }
 
 getCursussenByObject(obj) {
-	// console.log(obj.href);
+	console.log(obj.href);
 	return this.http.get(obj.href, this.options)
 	.map(res => res.json());
 }
@@ -55,8 +55,8 @@ saveLeerdoel(cursusId, leerdoel) {
 	} else {
 		var leerdoelId = leerdoel.id;
 		delete leerdoel.id;
-		// console.log("leerdoelId "+leerdoelId);
-		// console.log("leerdoel "+leerdoel);
+		console.log("leerdoelId "+leerdoelId);
+		console.log("leerdoel "+leerdoel);
 		return this.http.put(myGlobals.baseUrl+'leerdoelen/' + leerdoelId, leerdoel)
 		.catch(this.handleError);
 	}
@@ -115,8 +115,8 @@ addCursus(cursus) {
 	let url = myGlobals.baseUrl+'organisaties/' + this.organisationId.id + '/cursussen';
 //	return this.http.post(url, cursus, this.options).flatMap(
 //		(res:Response) => {
-//			// console.log("headers");
-//			// console.log(res.headers);
+//			console.log("headers");
+//			console.log(res.headers);
 //			return res;
 //		}
 //	).map(

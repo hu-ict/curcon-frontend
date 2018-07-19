@@ -10,12 +10,12 @@ export class ToetsProgrammaService {
     options: RequestOptions;
 
     constructor(private http: Http){
-        // console.log('ToetsProgrammaService Initialized...')
+        console.log('ToetsProgrammaService Initialized...')
     }
     getCalculatedProfile(cohortId) {
-        // console.log('ToetsProgrammaService.getCalculatedProfile called...')
+        console.log('ToetsProgrammaService.getCalculatedProfile called...')
 		var url = myGlobals.baseUrl+'toetsprogrammas/' + cohortId + '/profiel';
-		// console.log("url "+url)
+		console.log("url "+url)
         return this.http.get(url)
             .map(res => res.json());
     }

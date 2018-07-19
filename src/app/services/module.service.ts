@@ -12,7 +12,7 @@ export class ModuleService {
   constructor( private http: HttpClient) {}
 
   private log(message:string): void{
-    // console.log( "moduleService armeluisdebugger: " + message);
+    console.log( "moduleService armeluisdebugger: " + message);
   }
   getModule(id,headersIn :HttpHeaders){
     return this.http.get<AuthNameSpace.Rol>(myGlobals.baseUrl+'modules/'+id,{headers: headersIn})
@@ -22,9 +22,9 @@ export class ModuleService {
     return this.http.get<AuthNameSpace.Module[]>(myGlobals.baseUrl + 'modules',{headers: headersIn})
   }
   getModulesByObject(obj,headersIn :HttpHeaders) {
-    // console.log(obj.href);
+    console.log(obj.href);
     return this.http.get<AuthNameSpace.Module[]>(obj.href,{headers: headersIn})
-      .pipe( tap( res => // console.log(res)) );
+      
   }
 
   //Creert een nieuwe Module
@@ -32,7 +32,7 @@ export class ModuleService {
   {
     let newModule: any= {}; //Object;
     newModule.name=module;
-    // console.log(newModule);
+    console.log(newModule);
 
   	headersIn.append("Access Control Allow Origin", "*");
   	return this.http.post<AuthNameSpace.ModulePostDto>( myGlobals.baseUrl+'modules/', newModule,{headers: headersIn})

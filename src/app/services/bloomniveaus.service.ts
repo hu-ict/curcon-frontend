@@ -6,7 +6,7 @@ import * as myGlobals from '../globals';
 @Injectable()
 export class BloomniveausService {
   constructor(private http: Http) {
-    // console.log('BloomniveausService Initialized...');
+    console.log('BloomniveausService Initialized...');
   }
 
   getBloomniveaus() {

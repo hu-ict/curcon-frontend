@@ -6,7 +6,7 @@ import * as myGlobals from '../globals';
 @Injectable()
 export class LeerdoelenService {
   constructor(private http: Http) {
-    // console.log('LeerdoelenService Initialized...');
+    console.log('LeerdoelenService Initialized...');
   }
 
   getLeerdoelen() {
@@ -15,7 +15,7 @@ export class LeerdoelenService {
   }
 
   getLeerdoelenByObject(obj) {
-    // console.log(obj.href);
+    console.log(obj.href);
     return this.http.get(obj.href)
       .map(res => res.json());
   }

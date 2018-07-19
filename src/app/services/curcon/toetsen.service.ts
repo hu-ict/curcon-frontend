@@ -14,7 +14,7 @@ import * as myGlobals from '../../globals';
 export class ToetsenService {
   headers: Headers;
   constructor(private http: HttpClient) {
-    // console.log('ToetsenService Initialized...');
+    console.log('ToetsenService Initialized...');
   }
 //TODO kloppen de dto namen?
 
@@ -24,12 +24,12 @@ export class ToetsenService {
     };
     let url =`${myGlobals.baseUrl+"toetsen/"}`;
     return this.http.get<curconnamespace.CurconNameSpace.ToetsMatrijsToetsElementDto[]>(url, requestOptions)
-      .pipe( tap( res => // console.log(res)) );
+      
   }
 
   getToetsenByObject(obj, headersIn: HttpHeaders) {
     return this.http.get<curconnamespace.CurconNameSpace.ToetsElementPutDto[]>(obj.href, {headers: headersIn})
-      .pipe( tap( res => // console.log(res)) );
+      
   }
 
   getOsisrisResultaatTypes(headersIn: HttpHeaders) {
@@ -38,12 +38,12 @@ export class ToetsenService {
     };
     let url =`${myGlobals.baseUrl+"osirisresultaattypen/"}`;
     return this.http.get<curconnamespace.CurconNameSpace.ToetsMatrijsToetsDto[]>(url, requestOptions)
-      .pipe( tap( res => // console.log(res)) );
+      
   }
 
   getDataByHref(href) {
     return this.http.get<curconnamespace.CurconNameSpace.ToetsMatrijsToetsDto>(href)
-      .pipe( tap( res => // console.log(res)) );
+      
   }
 
 	saveBeoordelingsElement( toetsId, element,headersIn :HttpHeaders) {
@@ -52,9 +52,9 @@ export class ToetsenService {
     };
     // requestOptions.headers.append( 'Content-Type', 'application/json' );
     // requestOptions.headers.append('Access-Control-Allow-Origin', '*');
-    // console.log();
-    // console.log(element);
-    // console.log(element.id);
+    console.log();
+    console.log(element);
+    console.log(element.id);
 		if (element.id == null) {
       let url =`${myGlobals.baseUrl+"toetsen/"+ toetsId + "/beoordelingselementen"}`;
 			return this.http.post<curconnamespace.CurconNameSpace.BeoordelingsElementPostDto>(url, element, requestOptions)
