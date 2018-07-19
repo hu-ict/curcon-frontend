@@ -90,12 +90,12 @@ export class OpleidingenComponent implements OnInit {
 			this.mode = 'view';
 			this.afAuth.authState.subscribe((auth) => {
 				this.authService.maakTokenHeadervoorCurcon().then( token => {
-					console.log(token);
+					// console.log(token);
 
 					this.opleidingenService.getOpleidingen(token).subscribe(opleidingen => {
 						this.opleidingen= opleidingen;
-						console.log(this.opleidingen);
-						console.log(this.opleidingen[0]);
+						// console.log(this.opleidingen);
+						// console.log(this.opleidingen[0]);
 						this.onSelectOpleiding(this.opleidingen[0]);
 						this.loadButtons();
 					},
@@ -120,7 +120,7 @@ export class OpleidingenComponent implements OnInit {
 	      	this.functieService.getFunctiesByUser(email).subscribe(functies => {
 
 		        if (functies == null) {
-								console.log("je mag niks:)");
+								// console.log("je mag niks:)");
 		        } else {
 							if (functies.some(f=> f.name == "organisatieopleidingsprofiel_post")) {
 								 this.isVisibleOrganisatieOpleidingsprofiel_post=true;
@@ -160,26 +160,26 @@ export class OpleidingenComponent implements OnInit {
 	onSelectOpleiding(opleiding : Object) {
 		this.onSelectedOpleiding.emit(opleiding);
 		this.selectedOpleiding = opleiding;
-		console.log(this.selectedOpleiding);
+		// console.log(this.selectedOpleiding);
 
 		this.authService.maakTokenHeadervoorCurcon().then( token => {
 	        this.cohortenService.getCohortenByObject(this.selectedOpleiding['cohorten'], token).subscribe(cohorten => {
 	            this.cohorten= cohorten;
 	            this.selectedCohort = this.cohorten[0];
-					console.log("Start loading profiel");
+					// console.log("Start loading profiel");
 					this.leerplannenService.getLeerplannenProfiel(this.selectedCohort.id, token).subscribe(data => {
-						console.log("getCalculatedProfile data");
-						console.log(data);
+						// console.log("getCalculatedProfile data");
+						// console.log(data);
 						this.selectedOpleiding.profiel = data;
-						console.log("this.selectedOpleiding");
-						console.log(this.selectedOpleiding);
+						// console.log("this.selectedOpleiding");
+						// console.log(this.selectedOpleiding);
 						this.refreshProfessionalskills();
 						this.refreshBeroepstaken();
 						this.refreshCursussen();
-						console.log("---- this.selectedOpleiding ----");
-						console.log(this.selectedOpleiding);
-						console.log("---- this.selectedCohort ----");
-						console.log(this.selectedCohort);
+						// console.log("---- this.selectedOpleiding ----");
+						// console.log(this.selectedOpleiding);
+						// console.log("---- this.selectedCohort ----");
+						// console.log(this.selectedCohort);
 								this.loading = false;
 							});
 						});
@@ -194,9 +194,9 @@ export class OpleidingenComponent implements OnInit {
 		this.loading = true;
 
   	this.updatedOpleiding = form.value;
-		console.log(this.updatedOpleiding);
+		// console.log(this.updatedOpleiding);
 		this.updatedOpleiding.id=	this.selectedOpleiding.id;
-		console.log(this.updatedOpleiding);
+		// console.log(this.updatedOpleiding);
 		this.authService.maakTokenHeadervoorCurcon().then( token => {
 			this.opleidingenService.saveOpleiding(this.updatedOpleiding, token).subscribe(x => {
 				this.mode = 'view';
@@ -208,7 +208,7 @@ export class OpleidingenComponent implements OnInit {
 refreshOpleidingen(){
 	this.authService.maakTokenHeadervoorCurcon().then( token => {
 		this.opleidingenService.getOpleidingen(token).subscribe(opleidingen => {
-				console.log(opleidingen);
+				// console.log(opleidingen);
 				this.opleidingen= opleidingen;
 				let refreshOpleiding=opleidingen.find(o=> o.id == this.selectedOpleiding.id);
 				this.onSelectOpleiding(refreshOpleiding);
@@ -231,7 +231,7 @@ refreshOpleidingen(){
 
 				this.opleidingenService.getOpleidingen( token).subscribe(opleidingen => {
 						this.opleidingen=opleidingen;
-						console.log(opleidingen);
+						// console.log(opleidingen);
 						//NOTE werkt alleen als het nieuwe object de laatste is(hoogste id)
 						//this.onSelectOpleiding(this.opleidingen[this.opleidingen.length-1]);
 						// this.loading = false;
@@ -258,7 +258,7 @@ refreshOpleidingen(){
 		this.loading = true;
 
 		this.authService.maakTokenHeadervoorCurcon().then( token => {
-      		//console.log(token);
+      		//// console.log(token);
 
 			this.beroepstakenService.getBeroepstaakTypes(token).subscribe(result => {
 				this.beroepstakenTypes = result;
@@ -272,7 +272,7 @@ refreshOpleidingen(){
 		this.loading = true;
 
 		this.authService.maakTokenHeadervoorCurcon().then( token => {
-      		//console.log(token);
+      		//// console.log(token);
 
 			this.beroepstakenService.getBeroepstaken(token).subscribe(result => {
 				this.allBeroepstaken = result;
@@ -296,7 +296,7 @@ refreshOpleidingen(){
 		this.loading = true;
 
 		this.authService.maakTokenHeadervoorCurcon().then( token => {
-      		//console.log(token);
+      		//// console.log(token);
 
 			this.beroepstakenService.getBeroepstaakId(this.beroepstakenForm.activiteit,
 				this.beroepstakenForm.architectuurlaag, this.beroepstakenForm.niveau, token).subscribe(data => {
@@ -311,7 +311,7 @@ refreshOpleidingen(){
 
 	deleteBeroepstaak(bt: Object) {
 		this.authService.maakTokenHeadervoorCurcon().then( token => {
-      		//console.log(token);
+      		//// console.log(token);
 			this.opleidingenService.deleteBeroepstaak(this.selectedOpleiding.id, bt['id'], token).subscribe(
 				result => { this.selectedOpleiding.beroepstaken = this.refreshBeroepstaken(); },
 				error => { this.selectedOpleiding.beroepstaken = this.refreshBeroepstaken(); }
@@ -335,7 +335,7 @@ refreshOpleidingen(){
 		this.loading = true;
 
 		this.authService.maakTokenHeadervoorCurcon().then( token => {
-      		//console.log(token);
+      		//// console.log(token);
 
 			this.professionalskillService.getProfessionalskillsTypes(token).subscribe(result => {
 				this.professionalskillsTypes = result;
@@ -361,7 +361,7 @@ refreshOpleidingen(){
 
 	deleteProfessionalskill(ps: Object) {
 		this.authService.maakTokenHeadervoorCurcon().then( token => {
-      		//console.log(token);
+      		//// console.log(token);
 
 			this.opleidingenService.deleteProfessionalskill(this.selectedOpleiding.id, ps['id'], token).subscribe(
 				result => { this.refreshProfessionalskills(); },
@@ -371,26 +371,26 @@ refreshOpleidingen(){
 	}
 
 	refreshCursussen() {
-		console.log("refreshCursussen")
-		console.log(this.selectedCohort)
+		// console.log("refreshCursussen")
+		// console.log(this.selectedCohort)
 
 		//this.authService.maakTokenHeadervoorCurcon().then( token => {
-      		//console.log(token);
+      		//// console.log(token);
 	this.authService.maakTokenHeadervoorCurcon().then( token =>
 
 			this.cursussenService.getCursussenByObject(this.selectedCohort.cursussen, token).subscribe(cursussen => {
 				this.cursussen= cursussen;;
-				console.log(this.cursussen);
+				// console.log(this.cursussen);
 				for(let c of this.cursussen) {
 
-      					//console.log(token);
+      					//// console.log(token);
 
 						this.beroepstakenService.getBeroepstakenByObject(c.eindBT, token).subscribe(beroepstaken => {
 							c.beroepstaken = [];
 							c.beroepstaken = beroepstaken;
 
 						//	this.authService.maakTokenHeadervoorCurcon().then( token => {
-      							//console.log(token);
+      							//// console.log(token);
 								this.professionalskillService.getProfessionalskillsByObject(c.eindPS, token).subscribe(professionalskills => {
 									c.professionalskills = [];
 									c.professionalskills = professionalskills;
@@ -423,8 +423,8 @@ refreshOpleidingen(){
     }
 
     deleteCursusFromCohort(cursus: any) {
-    	console.log("deleteCursusFromCohort "+this.selectedCohort.id)
-    	console.log(cursus)
+    	// console.log("deleteCursusFromCohort "+this.selectedCohort.id)
+    	// console.log(cursus)
     	this.authService.maakTokenHeadervoorCurcon().then( token => {
 	        this.cohortenService.deleteCursus(this.selectedCohort.id, cursus.id, token).subscribe(result => {
 	            this.onSelectOpleiding(this.selectedOpleiding);
@@ -436,20 +436,20 @@ refreshOpleidingen(){
         this.loading = true;
 			this.authService.maakTokenHeadervoorCurcon().then( token => {
 	   		this.cursusForm = {};
-	        console.log('1 this.cursussen');
-	        console.log(this.cursussen);
+	        // console.log('1 this.cursussen');
+	        // console.log(this.cursussen);
 	    	this.cursussenService.getCursussen(token).subscribe(data => {
 	    				this.allCursussen=data;
-							console.log('2 allcursussen');
-							console.log(this.allCursussen);
+							// console.log('2 allcursussen');
+							// console.log(this.allCursussen);
 	    		let selectedCursus = this.cursussen[0];
 	    		this.cursusForm = {cursus: selectedCursus};
 	            this.availableCursussen = this.allCursussen;
 	            for (let c of this.cursussen) {
 	                this.availableCursussen = this.availableCursussen.filter((x) => x.id !== c.id);
 	            }
-				      console.log('3 this.availableCursussen');
-	            console.log(this.availableCursussen);
+				      // console.log('3 this.availableCursussen');
+	            // console.log(this.availableCursussen);
 	            var id = 0;
 	            if (this.availableCursussen.length > 0){
 	                id = this.availableCursussen[0].id;
@@ -471,7 +471,7 @@ onSelectCohort(coh: Object) {
 	this.cursussen[index].beroepstaken = [];
 	let btMatrix = this.generateMatrix();
 
-	//console.log(beroepstaken);
+	//// console.log(beroepstaken);
 	for(let btIndex = 0; btIndex < beroepstaken.length; btIndex++) {
 	btMatrix[beroepstaken[btIndex].architectuurlaagId][beroepstaken[btIndex].activiteitId]
 	= beroepstaken[btIndex];

@@ -14,7 +14,7 @@ export class CursussenService {
 	organisationId: any;
 
 constructor(private http: HttpClient) {
-	console.log('Cursussen Service Initialized...');
+	// console.log('Cursussen Service Initialized...');
 //	this.headers.append('Access-Control-Expose-Headers', 'content-disposition');
 	this.organisationId = JSON.parse(localStorage.getItem('selectedOrganisatie'));
 }
@@ -22,21 +22,21 @@ constructor(private http: HttpClient) {
 getCursussen(headersIn:HttpHeaders) {
 		headersIn.append('Access-Control-Allow-Origin', '*');
 	var url = myGlobals.baseUrl+'organisaties/' + this.organisationId.id + '/cursussen';
-	console.log("url "+url)
-	return this.http.get<curconnamespace.CurconNameSpace.CursusLeerplanSchemaDto[]>(url,{headers: headersIn}).pipe( tap( res => console.log(res)) );
+	// console.log("url "+url)
+	return this.http.get<curconnamespace.CurconNameSpace.CursusLeerplanSchemaDto[]>(url,{headers: headersIn}).pipe( tap( res => // console.log(res)) );
 }
 
 getDataByHref(href, headersIn:HttpHeaders) {
 	headersIn.append("Access Control Allow Origin", "*");
 	return this.http.get<curconnamespace.CurconNameSpace.CursusLeerplanSchemaDto>(href,{headers: headersIn})
-	.pipe( tap( res => console.log(res)) );
+	.pipe( tap( res => // console.log(res)) );
 }
 
 getCursussenByObject(obj, headersIn:HttpHeaders) {
 	headersIn.append("Access Control Allow Origin", "*");
-	console.log(obj.href);
+	// console.log(obj.href);
 	return this.http.get<curconnamespace.CurconNameSpace.CursusLeerplanSchemaDto[]>(obj.href,{headers: headersIn})
-	.pipe( tap( res => console.log(res)) );
+	.pipe( tap( res => // console.log(res)) );
 }
 
 
@@ -62,8 +62,8 @@ saveLeerdoel(cursusId, leerdoel, headersIn:HttpHeaders) {
 	} else {
 		var leerdoelId = leerdoel.id;
 		delete leerdoel.id;
-		console.log("leerdoelId "+leerdoelId);
-		console.log("leerdoel "+leerdoel);
+		// console.log("leerdoelId "+leerdoelId);
+		// console.log("leerdoel "+leerdoel);
 		return this.http.put<curconnamespace.CurconNameSpace.LeerdoelPostDto>(myGlobals.baseUrl+'leerdoelen/' + leerdoelId, leerdoel,{headers: headersIn}
 )
 		.pipe(/* catchError werkt niet met een header erbij */
@@ -141,8 +141,8 @@ addCursus(cursus, headersIn:HttpHeaders )
 	let url = myGlobals.baseUrl+'organisaties/' + this.organisationId.id + '/cursussen';
 //	return this.http.post<curconnamespace.CurconNameSpace.CursusPostDto>(url, cursus,).flatMap(
 //		(res:Response) => {
-//			console.log("headers");
-//			console.log(res.headers);
+//			// console.log("headers");
+//			// console.log(res.headers);
 //			return res;
 //		}
 //	).map(
@@ -150,9 +150,9 @@ addCursus(cursus, headersIn:HttpHeaders )
 //			res.json();
 //		}
 //	).pipe(/* catchError werkt niet met een header erbij */);
-console.log(cursus+"prepostrequest");
+// console.log(cursus+"prepostrequest");
 	return this.http.post<curconnamespace.CurconNameSpace.CursusPostDto>(url, cursus,{headers: headersIn}).pipe(
-		tap(cursus => console.log("Gepost?"+cursus)),
+		tap(cursus => // console.log("Gepost?"+cursus)),
     /* catchError werkt niet met een header erbij */
 
   )

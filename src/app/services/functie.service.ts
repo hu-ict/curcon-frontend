@@ -14,7 +14,7 @@ export class FunctieService {
   ) {}
 
   private log(message:string): void{
-    console.log( "functieService armeluisdebugger: " + message);
+    // console.log( "functieService armeluisdebugger: " + message);
   }
 //FIXME er is een hoop overbodige code nu uitgecomment, gebruik getfunctiesByObject voor module/rol,etc als je functies ophaalt/service aanroept
   getFunctie(id,headersIn :HttpHeaders){
@@ -23,13 +23,13 @@ export class FunctieService {
 
   getFuncties(headersIn :HttpHeaders) {
     return this.http.get<AuthNameSpace.Functie[]>(myGlobals.baseUrl+'functions/',{headers: headersIn})
-      .pipe( tap( res => console.log(res)) );
+      .pipe( tap( res => // console.log(res)) );
   }
 
   getFunctiesByObject(obj,headersIn :HttpHeaders) {
-    console.log(obj.href);
+    // console.log(obj.href);
     return this.http.get<AuthNameSpace.Functie[]>(obj.href,{headers: headersIn})
-      .pipe( tap( res => console.log(res)) );
+      .pipe( tap( res => // console.log(res)) );
   }
 
 //WARNING Creert een nieuwe functie, deze staan hardcoded in de front en backend
@@ -38,7 +38,7 @@ export class FunctieService {
 
     let newFunctie: any= {}; //Object;
     newFunctie.name=functie;
-    console.log(newFunctie);
+    // console.log(newFunctie);
 
 
   	headersIn.append("Access Control Allow Origin", "*");

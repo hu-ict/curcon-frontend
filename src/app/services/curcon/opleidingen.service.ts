@@ -17,7 +17,7 @@ export class OpleidingenService {
 	organisation: any;
 
 	constructor(private http: HttpClient) {
-		console.log('OpleidingenService Initialized...');
+		// console.log('OpleidingenService Initialized...');
 		// this.headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 		// this.headers.append('Access-Control-Allow-Origin', '*');
 		//this.options = new RequestOptions({ headers: this.headers });
@@ -31,8 +31,8 @@ export class OpleidingenService {
 requestOptions.headers.append( 'Content-Type', 'application/json' );
 requestOptions.headers.append('Access-Control-Allow-Origin', '*');
 		var url = myGlobals.baseUrl+'organisaties/' + this.organisation.id + '/opleidingsprofielen';
-		console.log(url);
-		return this.http.get<curconnamespace.CurconNameSpace.OpleidingsProfielDto[]>(url,requestOptions).pipe( tap( res => console.log(res)) );
+		// console.log(url);
+		return this.http.get<curconnamespace.CurconNameSpace.OpleidingsProfielDto[]>(url,requestOptions).pipe( tap( res => // console.log(res)) );
 	}
 
 	getDataByHref(href,headersIn: HttpHeaders) {
@@ -42,7 +42,7 @@ requestOptions.headers.append('Access-Control-Allow-Origin', '*');
 requestOptions.headers.append( 'Content-Type', 'application/json' );
 requestOptions.headers.append('Access-Control-Allow-Origin', '*');
 		return this.http.get<curconnamespace.CurconNameSpace.OpleidingsProfielDto>(href,requestOptions)
-			.pipe( tap( res => console.log(res)) );
+			.pipe( tap( res => // console.log(res)) );
 	}
 
 	getOpleidingByObject(obj, headersIn: HttpHeaders) {
@@ -51,7 +51,7 @@ requestOptions.headers.append('Access-Control-Allow-Origin', '*');
 };
 requestOptions.headers.append( 'Content-Type', 'application/json' );
 requestOptions.headers.append('Access-Control-Allow-Origin', '*');
-		return this.http.get<curconnamespace.CurconNameSpace.OpleidingsProfielDto[]>(obj.href,requestOptions).pipe( tap( res => console.log(res)) );
+		return this.http.get<curconnamespace.CurconNameSpace.OpleidingsProfielDto[]>(obj.href,requestOptions).pipe( tap( res => // console.log(res)) );
 	}
 
 	saveOpleiding(opleiding, headersIn: HttpHeaders) {
@@ -63,10 +63,10 @@ requestOptions.headers.append('Access-Control-Allow-Origin', '*');
 		if (opleiding.id == null) {
 			return this.http.post<curconnamespace.CurconNameSpace.OpleidingsProfielPostDto>(myGlobals.baseUrl+'organisaties/' + this.organisation.id + '/opleidingsprofielen', opleiding, requestOptions)
 //				.subscribe(data => {
-//					console.log(data.headers.get<curconnamespace.CurconNameSpace.>('content-location'));
+//					// console.log(data.headers.get<curconnamespace.CurconNameSpace.>('content-location'));
 //				});
 				.pipe(
-        tap(res => console.log(res+"OPleidingsprofielgepost"))
+        tap(res => // console.log(res+"OPleidingsprofielgepost"))
         ,catchError(this.handleError));
 		} else {
       var opleidingId = opleiding.id;

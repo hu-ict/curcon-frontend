@@ -20,7 +20,7 @@ export class FullLayoutComponent implements OnInit {
   username :string;
   initialized:boolean;
   public toggled(open: boolean): void {
-    console.log('Dropdown is now: ', open);
+    // console.log('Dropdown is now: ', open);
   }
 
   public toggleDropdown($event: MouseEvent): void {
@@ -46,17 +46,16 @@ export class FullLayoutComponent implements OnInit {
     private router: Router) {
       this.allOrganisaties = [];
       this.afAuth.authState.subscribe((auth) => {
-        console.log("WARNING update state"+auth.email);
         if (this.afAuth.auth.currentUser== null){
           //Gebruiker is niet ingelogd
           this.router.navigate(['logins']);
         }
         else{
           this.userService.getUser(this.afAuth.auth.currentUser.email).subscribe(user=>{
-            console.log(user);
+            // console.log(user);
             if (user==null){
               //Gebruiker logt voor de eerse keer in
-              console.log("Eerste keer dat je Inlogt met dit account");
+              // console.log("Eerste keer dat je Inlogt met dit account");
               this.initialized=true;
               this.userService.addUser(this.afAuth.auth.currentUser.email).subscribe(user =>{
                 this.initializefurther();
@@ -75,7 +74,7 @@ export class FullLayoutComponent implements OnInit {
 
     logout(){
       this.authService.signOut();
-      console.log("uitgelogd");
+      // console.log("uitgelogd");
     }
 
 
@@ -86,14 +85,14 @@ export class FullLayoutComponent implements OnInit {
           this.allOrganisaties=organisaties;
           if(localStorage.getItem('selectedOrganisatie') == null)
           localStorage.setItem('selectedOrganisatie', JSON.stringify(this.allOrganisaties[0]));
-          console.log(this.allOrganisaties);
+          // console.log(this.allOrganisaties);
 
           this.selectedOrganisatie = JSON.parse(localStorage.getItem('selectedOrganisatie')).naam;
         });
 
         this.userService.getRoleByUser(this.afAuth.auth.currentUser.email,token).subscribe(rol => {
-          console.log(rol);
-          console.log("Dit is je rolname"+rol.name);
+          // console.log(rol);
+          // console.log("Dit is je rolname"+rol.name);
 
           //hardcoded admin?
           if(rol.name =="admin" ||rol.name == "developer")

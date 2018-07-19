@@ -9,22 +9,22 @@ import * as curconnamespace from '../../model/curconnamespace';
 export class CohortenService {
 
   constructor(private http: HttpClient) {
-    console.log('CohortenService Initialized...');
+    // console.log('CohortenService Initialized...');
   }
 
   getCohorten(headersIn: HttpHeaders) {
     return this.http.get<curconnamespace.CurconNameSpace.CohortDto[]>(myGlobals.baseUrl+'cohorten/', { headers: headersIn })
-      .pipe( tap( res => console.log(res)) );
+      .pipe( tap( res => // console.log(res)) );
   }
 
   getCohortenByObject(obj, headersIn: HttpHeaders) {
     return this.http.get<curconnamespace.CurconNameSpace.CohortDto[]>(obj.href, { headers: headersIn })
-      .pipe( tap( res => console.log(res)) );
+      .pipe( tap( res => // console.log(res)) );
   }
 
   getDataByHref(href, headersIn: HttpHeaders) {
     return this.http.get<curconnamespace.CurconNameSpace.CohortDto>(href, { headers: headersIn })
-      .pipe( tap( res => console.log(res)) );
+      .pipe( tap( res => // console.log(res)) );
   }
 
 

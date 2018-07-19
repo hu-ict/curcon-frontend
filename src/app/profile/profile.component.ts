@@ -20,7 +20,7 @@ photo:string;
   constructor(private afAuth: AngularFireAuth,private authService:AuthService,private userService:UserService) {
     //Loading=true
     this.afAuth.authState.subscribe((auth) => {
-      console.log("authstate updated//user changed");
+      // console.log("authstate updated//user changed");
       this.loadProfile();
     })
    }

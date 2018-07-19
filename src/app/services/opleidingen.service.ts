@@ -11,7 +11,7 @@ export class OpleidingenService {
 	organisation: any;
   	
 	constructor(private http: Http) {
-		console.log('OpleidingenService Initialized...');
+		// console.log('OpleidingenService Initialized...');
 		this.headers = new Headers({ 'Content-Type': 'application/json' });
 		this.headers.append('Access-Control-Allow-Origin', '*');
 		this.options = new RequestOptions({ headers: this.headers });
@@ -20,7 +20,7 @@ export class OpleidingenService {
 
 	getOpleidingen() {
 		var url = myGlobals.baseUrl+'organisaties/' + this.organisation.id + '/opleidingsprofielen';
-		console.log(url);
+		// console.log(url);
 		return this.http.get(url, this.options).map(res => res.json());
 	}
 
@@ -37,12 +37,12 @@ export class OpleidingenService {
 		if (opleiding.id == null) {
 			return this.http.post(myGlobals.baseUrl+'organisaties/' + this.organisation.id + '/opleidingsprofielen', opleiding)
 //				.subscribe(data => {
-//					console.log(data.headers.get('content-location'));
+//					// console.log(data.headers.get('content-location'));
 //				});
 				.catch(this.handleError);	
 		} else {
 			var url = myGlobals.baseUrl+'opleidingsprofielen/'+ opleidingId;
-			console.log(url);
+			// console.log(url);
 			var opleidingId = opleiding.id;
 			delete opleiding.id;
 			return this.http.put(url, opleiding)

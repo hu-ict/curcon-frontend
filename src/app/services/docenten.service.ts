@@ -16,11 +16,11 @@ export class DocentenService {
     organisationId: any;
 
     private log(message:string): void{
-      console.log( "docentenService armeluisdebugger: " + message);
+      // console.log( "docentenService armeluisdebugger: " + message);
     }
 
     constructor(private http: HttpClient) {
-        console.log('DocentenService Initialized...');
+        // console.log('DocentenService Initialized...');
       localStorage.setItem("selectedOrganisatie",JSON.stringify({"id": "1"}));
       this.organisationId = JSON.parse(localStorage.getItem('selectedOrganisatie'));
     }
@@ -42,7 +42,7 @@ let requestOptions = {
 };
       //let headers = this.generateHeader();//TODO: uitzoeken of een mediator in de frontend van pas komt om auth headers op te vragen en te geven
       let url = `${myGlobals.baseUrl + "docenten/1/"}`;
-      console.log("Ingetdoccenten");
+      // console.log("Ingetdoccenten");
       return this.http.get<Docent>(url, requestOptions  // {
   //    headers: headersIn
 //    }
@@ -58,7 +58,7 @@ let requestOptions = {
 };
       //let headers = this.generateHeader();//TODO: uitzoeken of een mediator in de frontend van pas komt om auth headers op te vragen en te geven
       let url = `${myGlobals.baseUrl + "organisaties/1/docenten"}`;
-      console.log("Ingetdoccenten");
+      // console.log("Ingetdoccenten");
       return this.http.get<Docent[]>(url, requestOptions)  // {
   //    headers: headersIn
 //    }
@@ -76,7 +76,7 @@ let requestOptions = {
 // };
 //      //let headers = this.generateHeader();//TODO: uitzoeken of een mediator in de frontend van pas komt om auth headers op te vragen en te geven
 //      let url = `${myGlobals.baseUrl + "docenten/1/"}`;
-//      console.log("Ingetdoccenten");
+//      // console.log("Ingetdoccenten");
 //      return this.http.get<Docent>(url, requestOptions
 // )    .pipe(
 //           tap(docenten => this.log(`fetched docenten id=${Docent.name}`), ), //["id"]}`), ),

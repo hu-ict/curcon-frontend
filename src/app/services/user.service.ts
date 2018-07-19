@@ -11,10 +11,10 @@ import * as myGlobals from '../globals';
 @Injectable()
 export class UserService {
   constructor(private http: HttpClient) {
-    console.log('UserService Initialized...');
+    // console.log('UserService Initialized...');
   }
   private log(message:string): void{
-    console.log( "userService armeluisdebugger: " + message);
+    // console.log( "userService armeluisdebugger: " + message);
   }
 
  //Haalt user op Om te kijken of user al bestaat. Mag iedereen
@@ -27,16 +27,16 @@ export class UserService {
   }
   getUsersByObject(obj, headersIn:HttpHeaders) {
   	headersIn.append("Access Control Allow Origin", "*");
-  	console.log(obj.href);
+  	// console.log(obj.href);
   	return this.http.get<AuthNameSpace.User[]>(obj.href,{headers: headersIn})
-  	.pipe( tap( res => console.log(res)) );
+  	.pipe( tap( res => // console.log(res)) );
   }
 
 //Creert een nieuwe user
 //NOTE dit mag iedereen doen als hij voor het eerst inlogt!
 addUser(username)
 
-{  console.log("Posting user+"+username);
+{  // console.log("Posting user+"+username);
   	let newUser:AuthNameSpace.UserPostDto = new AuthNameSpace.UserPostDto ;
     newUser.username=username;
   return this.http.post( myGlobals.baseUrl+'users/', newUser)

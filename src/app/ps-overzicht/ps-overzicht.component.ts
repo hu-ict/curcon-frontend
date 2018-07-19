@@ -9,9 +9,9 @@ export class PsOverzichtComponent {
 	 
 	@Input()
 	set professionalskills(professionalskills: Array<any>) {
-		console.log("SET this._professionalskills");
+		// console.log("SET this._professionalskills");
 		this._professionalskills = professionalskills;
-		console.log(this._professionalskills);
+		// console.log(this._professionalskills);
 	}
 
 	get professionalskills(): Array<any> {return this._professionalskills;}

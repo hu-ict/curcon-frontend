@@ -6,7 +6,7 @@ import * as myGlobals from '../globals';
 @Injectable()
 export class ToetsmatrijzenService {
   constructor(private http: Http) {
-    console.log('ToetsmatrijzenService Initialized...');
+    // console.log('ToetsmatrijzenService Initialized...');
   }
 
   getToetsmatrijzen() {

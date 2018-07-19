@@ -13,7 +13,7 @@ import * as myGlobals from '../../globals';
 export class ProfessionalskillsService {
 	//headers: HttpHeaders;
 	constructor(private http: HttpClient) {
-		console.log('ProfessionalskillsService Initialized...');
+		// console.log('ProfessionalskillsService Initialized...');
 		//this.headers = new HttpHeaders();
 
 	}
@@ -27,7 +27,7 @@ export class ProfessionalskillsService {
 	headers: headersIn,
 };
 		return this.http.get<curconnamespace.CurconNameSpace.ProfessionalSkillDto[]>(myGlobals.baseUrl+'professionalskills/', requestOptions)
-		.pipe( tap( res => console.log(res)) );
+		.pipe( tap( res => // console.log(res)) );
 	}
 
 	getProfessionalskillsByObject(obj, headersIn: HttpHeaders) {
@@ -35,7 +35,7 @@ export class ProfessionalskillsService {
 	headers: headersIn,
 };
 		return this.http.get<curconnamespace.CurconNameSpace.ProfessionalSkillDto[]>(obj.href, requestOptions)
-		.pipe( tap( res => console.log(res)) );
+		.pipe( tap( res => // console.log(res)) );
 	}
 
 	getProfessionalskillsTypes(headersIn: HttpHeaders) {
@@ -43,7 +43,7 @@ export class ProfessionalskillsService {
 	headers: headersIn,
 };
 		return this.http.get<curconnamespace.CurconNameSpace.ProfessionalSkillTypesDto[]>(myGlobals.baseUrl+'professionalskills/types', requestOptions)
-		.pipe( tap( res => console.log(res)) );
+		.pipe( tap( res => // console.log(res)) );
 	}
 
 
@@ -52,7 +52,7 @@ export class ProfessionalskillsService {
 	headers: headersIn,
 };
 		return this.http.get<curconnamespace.CurconNameSpace.ProfessionalSkillDto>(myGlobals.baseUrl+'professionalskills/skill/' + skillid + '/niveaus/' + niv, requestOptions)
-		.pipe( tap( res => console.log(res)) );
+		.pipe( tap( res => // console.log(res)) );
 	}
 
 	// tokenButtonPrint(){

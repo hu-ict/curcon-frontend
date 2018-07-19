@@ -12,7 +12,7 @@ import * as myGlobals from '../../globals';
 @Injectable()
 export class LeerdoelenService {
   constructor(private http: HttpClient) {
-    console.log('LeerdoelenService Initialized...');
+    // console.log('LeerdoelenService Initialized...');
   }
 
   getLeerdoelen(headersIn :HttpHeaders ) {
@@ -21,17 +21,17 @@ export class LeerdoelenService {
 };
     return this.http.get<curconnamespace.CurconNameSpace.LeerdoelOverzichtDto[]>(myGlobals.baseUrl+'leerdoelen/'
  ,requestOptions)
-      .pipe( tap( res => console.log(res)) );
+      .pipe( tap( res => // console.log(res)) );
   }
 
   getLeerdoelenByObject(obj,headersIn :HttpHeaders) {
     let requestOptions = {
     headers: headersIn,
   };
-    console.log(obj.href);
+    // console.log(obj.href);
     return this.http.get<curconnamespace.CurconNameSpace.LeerdoelOverzichtDto[]>(obj.href
  ,requestOptions)
-      .pipe( tap( res => console.log(res)) );
+      .pipe( tap( res => // console.log(res)) );
   }
 
  //  getDataByHref(href,headersIn :HttpHeaders ) {
@@ -40,6 +40,6 @@ export class LeerdoelenService {
  //  };
  //    return this.http.get<curconnamespace.CurconNameSpace.LeerdoelOverzichtDto>(href
  // ,requestOptions)
- //      .pipe( tap( res => console.log(res)) );
+ //      .pipe( tap( res => // console.log(res)) );
  //  }
 }

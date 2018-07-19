@@ -57,7 +57,7 @@ loadButtons() {
   this.authService.maakTokenHeadervoorCurcon().then( token => {
     this.functieService.getFunctiesByUser(email).subscribe(functies => {
       if (functies == null) {
-        console.log("je mag niets uitvoeren)");
+        // console.log("je mag niets uitvoeren)");
       } else {
         if (functies.some(f=> f.name == "modulefunction_post")) {
           this.isVisibleModuleFunction_post = true;
@@ -88,12 +88,12 @@ initializeModuleForm(){
   // this.refreshRollen();
 }
 initializeFunctionForm() {
-  console.log(this.selectedModule);
+  // console.log(this.selectedModule);
 this.functions = this.selectedModule.functionArr;
     this.loading = true;
   this.authService.maakTokenHeadervoorCurcon().then( token => {
     this.functionForm = {};
-      //console.log(this.functions);
+      //// console.log(this.functions);
     this.functieService.getFuncties(token).subscribe(data => {
           this.allFunctions=data;
 
@@ -101,7 +101,7 @@ this.functions = this.selectedModule.functionArr;
           this.functionForm = {module: selectedModule};
           this.availableFunctions = this.allFunctions;
 
-          console.log(this.functions);
+          // console.log(this.functions);
           for (let f of this.functions) {
               this.availableFunctions = this.availableFunctions.filter((x) => x.id !== f.id);
           }
@@ -130,13 +130,13 @@ onSelect(module: Object) {
   this.selectedModule = module;
   this.moduleForm = module;
   this.refreshFunctions();
-  console.log('onSelect(this.selectedModule)');
-  console.log(this.selectedModule);
+  // console.log('onSelect(this.selectedModule)');
+  // console.log(this.selectedModule);
 }
 
 addModule() {
   this.loading = true;
-  console.log(this.moduleForm);
+  // console.log(this.moduleForm);
   this.authService.maakTokenHeadervoorCurcon().then( token => {
       this.moduleService.addModule(this.moduleForm.name,token).subscribe(x => {
         this.mode = 'view';
@@ -154,8 +154,8 @@ saveModule(form: any) {
   this.loading = true;
   // const formValues = form.value;
   this.authService.maakTokenHeadervoorCurcon().then( token => {
-    //console.log(token);
-    console.log(form.value);
+    //// console.log(token);
+    // console.log(form.value);
     this.moduleService.updateModule(this.selectedModule.id, form.value, token).subscribe(data => {
       this.mode = 'view';
       this.refreshModules();
@@ -165,10 +165,10 @@ saveModule(form: any) {
 
 loadModules(){
   this.authService.maakTokenHeadervoorCurcon().then( token => {
-    //console.log(token);
+    //// console.log(token);
 
     this.moduleService.getModules(token).subscribe(modules => {
-      console.log(modules);
+      // console.log(modules);
       this.modules= modules;
       this.selectedModule = this.modules[0];
       this.moduleForm = this.modules[0];
@@ -180,7 +180,7 @@ loadModules(){
 refreshModules(){
   this.authService.maakTokenHeadervoorCurcon().then( token => {
     this.moduleService.getModules(token).subscribe(modules => {
-      console.log(modules);
+      // console.log(modules);
       this.modules= modules;
       let refreshModule=modules.find(m=> m.id == this.selectedModule.id);
 
@@ -197,8 +197,8 @@ refreshFunctions() {
   this.authService.maakTokenHeadervoorCurcon().then( token => {
     this.functieService.getFunctiesByObject(this.selectedModule.functions, token).subscribe(functions => {
       this.selectedModule.functionArr = functions;
-      console.log('selectedModule.functionArr');
-      console.log(this.selectedModule.functionArr);
+      // console.log('selectedModule.functionArr');
+      // console.log(this.selectedModule.functionArr);
       this.loading = false;
     });
   });

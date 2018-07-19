@@ -18,7 +18,7 @@ export class OrganisatiesService {
 
 	constructor(private http: HttpClient) {
     //TODO Deze headers ook gebruiker en meegeven
-		console.log('OrganisatieService Initialized...');
+		// console.log('OrganisatieService Initialized...');
 		this.headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 		this.headers.append('Access-Control-Allow-Origin', '*');
 		//this.options = new RequestOptions({ headers: this.headers });
@@ -30,7 +30,7 @@ export class OrganisatiesService {
   };    requestOptions.headers.append( 'Content-Type', 'application/json' );
       requestOptions.headers.append('Access-Control-Allow-Origin', '*');
     return this.http.get<curconnamespace.CurconNameSpace.OrganisatieDto[]>(myGlobals.baseUrl+'organisaties/',requestOptions)
-      .pipe( tap( res => console.log(res)) );
+      .pipe( tap( res => // console.log(res)) );
   }
 
   getOrganisatieById(id,headersIn :HttpHeaders ): Observable<curconnamespace.CurconNameSpace.OrganisatieDto> {
@@ -39,7 +39,7 @@ export class OrganisatiesService {
 };    requestOptions.headers.append( 'Content-Type', 'application/json' );
     requestOptions.headers.append('Access-Control-Allow-Origin', '*');
     return this.http.get<curconnamespace.CurconNameSpace.OrganisatieDto>(myGlobals.baseUrl+'organisaties/' + id,requestOptions)
-      .pipe( tap( res => console.log(res)) );
+      .pipe( tap( res => // console.log(res)) );
   }
 
   getOrganisatieByObject(obj,headersIn :HttpHeaders ): Observable<curconnamespace.CurconNameSpace.OrganisatieDto> {
@@ -49,7 +49,7 @@ export class OrganisatiesService {
     requestOptions.headers.append( 'Content-Type', 'application/json' );
     requestOptions.headers.append('Access-Control-Allow-Origin', '*');
     return this.http.get<curconnamespace.CurconNameSpace.OrganisatieDto>(obj.href,requestOptions)
-      .pipe( tap( res => console.log(res)) );
+      .pipe( tap( res => // console.log(res)) );
   }
 
   getDataByHref(href,headersIn :HttpHeaders ) {
@@ -58,6 +58,6 @@ export class OrganisatiesService {
 };    requestOptions.headers.append( 'Content-Type', 'application/json' );
     requestOptions.headers.append('Access-Control-Allow-Origin', '*');
     return this.http.get<curconnamespace.CurconNameSpace.OrganisatieDto>(href, { headers : this.headers })
-      .pipe( tap( res => console.log(res)) );
+      .pipe( tap( res => // console.log(res)) );
   }
 }

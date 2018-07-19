@@ -25,7 +25,7 @@ export class BloomniveausComponent implements OnInit {
     this.onSelectedCourse.emit(cour);
     this.currentCourse = cour;
     this.selectedButton = 1;
-    console.log(this.currentCourse);
+    // console.log(this.currentCourse);
   }
 
   changeTab(tabnr : number) {

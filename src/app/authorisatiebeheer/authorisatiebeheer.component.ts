@@ -19,13 +19,13 @@ export class AuthorisatiebeheerComponent implements OnInit {
     private router: Router) {
 
       this.afAuth.authState.subscribe((auth) => {
-        console.log("WARNING update state"+auth.email);
+        // console.log("WARNING update state"+auth.email);
         this.userService.getUser(this.afAuth.auth.currentUser.email).subscribe(user=>{
-          console.log(user);
+          // console.log(user);
           this.authService.maakTokenHeadervoorCurcon().then( token => {
             this.userService.getRoleByUser(this.afAuth.auth.currentUser.email,token).subscribe(rol => {
-              console.log(rol);
-              console.log("Dit is je rolname"+rol.name);
+              // console.log(rol);
+              // console.log("Dit is je rolname"+rol.name);
 
               //hardcoded admin?
               if(rol.name !="admin" && rol.name != "developer")

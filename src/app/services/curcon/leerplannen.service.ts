@@ -15,7 +15,7 @@ export class LeerplannenService {
     //options: RequestOptions;
 
     constructor(private http: HttpClient){
-        console.log('LeerplanService Initialized...')
+        // console.log('LeerplanService Initialized...')
     }
 
     getLeerplannen(headersIn :HttpHeaders) {
@@ -24,7 +24,7 @@ export class LeerplannenService {
 };
 
         return this.http.get<curconnamespace.CurconNameSpace.LeerplanSchemaDto[]>(myGlobals.baseUrl+'leerplannen/' ,requestOptions)
-            .pipe( tap( res => console.log(res)) );
+            .pipe( tap( res => // console.log(res)) );
     }
 
     getLeerplannenProfiel(cohortId,headersIn :HttpHeaders) {
@@ -33,7 +33,7 @@ export class LeerplannenService {
 };
 
         return this.http.get<curconnamespace.CurconNameSpace.LeerplanSchemaDto[]>(myGlobals.baseUrl+'leerplanschemas/' + cohortId + '/profiel' ,requestOptions)
-            .pipe( tap( res => console.log(res)) );
+            .pipe( tap( res => // console.log(res)) );
     }
 
     getDataByHref(href,headersIn :HttpHeaders) {
@@ -42,7 +42,7 @@ export class LeerplannenService {
 };
 
         return this.http.get<curconnamespace.CurconNameSpace.LeerplanSchemaDto>(href ,requestOptions)
-            .pipe( tap( res => console.log(res)) );
+            .pipe( tap( res => // console.log(res)) );
     }
 
     private handleError(error: any) {

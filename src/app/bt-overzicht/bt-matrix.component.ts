@@ -10,9 +10,9 @@ export class BtMatrixComponent {
 	 
 	@Input()
 	set beroepstaken(beroepstaken: Array<any>) {
-		console.log("SET this._beroepstaken");
+		// console.log("SET this._beroepstaken");
 		this._beroepstaken = beroepstaken;
-		console.log(this._beroepstaken);
+		// console.log(this._beroepstaken);
 		this.matrix = this.generateMatrix("-");
 		if (this._beroepstaken != null){ 
 			for (let bt of this._beroepstaken) {
@@ -30,8 +30,8 @@ export class BtMatrixComponent {
 				this.matrix[bt.architectuurlaagId][bt.activiteitId] = bt;
 			}
 		}
-		console.log('this.matrix');
-		console.log(this.matrix);
+		// console.log('this.matrix');
+		// console.log(this.matrix);
 	}
 	
 

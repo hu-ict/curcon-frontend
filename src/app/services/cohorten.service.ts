@@ -7,7 +7,7 @@ import * as myGlobals from '../globals';
 @Injectable()
 export class CohortenService {
   constructor(private http: Http) {
-    console.log('CohortenService Initialized...');
+    // console.log('CohortenService Initialized...');
   }
 
   getCohorten() {

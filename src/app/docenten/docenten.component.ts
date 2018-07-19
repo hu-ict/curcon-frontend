@@ -26,7 +26,7 @@ export class DocentenComponent implements OnInit {
   constructor(private docentenService: DocentenService,private functieService:FunctieService, private authService:AuthService,private afAuth: AngularFireAuth) {
     this.loading = true;
     this.afAuth.authState.subscribe((auth) => {
-      console.log("authstate updated//user changed");
+      // console.log("authstate updated//user changed");
       this.refreshDocenten();
       this.loadButtons();
     })
@@ -42,14 +42,14 @@ export class DocentenComponent implements OnInit {
     this.authService.maakTokenHeadervoorCurcon().then( token => {
       this.functieService.getFunctiesByUser( email ).subscribe(functies => {
         if (functies ==null){
-          console.log("Je mag niks");
+          // console.log("Je mag niks");
         }else{
           if (functies.some(f=> f.name == "docent_put")){
-            console.log(" toegang voor wijzigen");
+            // console.log(" toegang voor wijzigen");
             this.isVisiblePut=true;
           }
           if (functies.some(f=> f.name == "organisatiedocent_post")){
-                console.log(" toegang voor aanmaken");
+                // console.log(" toegang voor aanmaken");
                 this.isVisiblePost=true;
           }
         }
@@ -67,7 +67,7 @@ export class DocentenComponent implements OnInit {
   saveDocent() {
     this.loading = true; 
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      console.log(token);
+      // console.log(token);
       this.docentenService.saveDocent(this.docentId, this.docentForm,token).subscribe(docent => {
         this.refreshDocenten();
         this.docentModal.hide();
@@ -87,7 +87,7 @@ refreshDocenten() {
     self.docenten= [];
     this.docentenService.getDocenten( token ).subscribe(docenten => {
       this.docenten=docenten;
-      //console.log(docent.naam);
+      //// console.log(docent.naam);
       this.loading = false;
     });
   })

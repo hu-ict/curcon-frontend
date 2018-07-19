@@ -12,7 +12,7 @@ import * as myGlobals from '../../globals';
 @Injectable()
 export class MillerNiveausService {
   constructor(private http: HttpClient) {
-    console.log('MillerNiveausService Initialized...');
+    // console.log('MillerNiveausService Initialized...');
   }
 
   getMillerNiveaus(headersIn :HttpHeaders) {
@@ -21,7 +21,7 @@ export class MillerNiveausService {
     };
 
     return this.http.get<curconnamespace.CurconNameSpace.MillerNiveauDto[]>(myGlobals.baseUrl+'millerniveaus/', requestOptions)
-      .pipe( tap(res => console.log(res)));
+      .pipe( tap(res => // console.log(res)));
   }
 
   getMillerNiveausByObject(obj, headersIn :HttpHeaders) {
@@ -30,7 +30,7 @@ export class MillerNiveausService {
     };
 
     return this.http.get<curconnamespace.CurconNameSpace.MillerNiveauDto[]>(obj.href, requestOptions)
-      .pipe( tap( res => console.log(res)) );
+      .pipe( tap( res => // console.log(res)) );
   }
 
 }

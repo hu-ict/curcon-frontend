@@ -25,7 +25,7 @@ export class BeroepstakenService {
   options: RequestOptions;
 
   constructor(private http: Http) {
-    console.log('BeroepstakenService Initialized...');
+    // console.log('BeroepstakenService Initialized...');
     this.headers = new Headers({ 'Content-Type': 'text/plain', 'server': 'Apache-Coyote/1.1'
     });
     this.options = new RequestOptions({ headers: this.headers });

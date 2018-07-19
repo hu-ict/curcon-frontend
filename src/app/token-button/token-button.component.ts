@@ -22,11 +22,11 @@ export class TokenButtonComponent implements OnInit {
       let self = this;
       this.authService.maakTokenHeadervoorCurcon().then(function(headers){
         self.docenten= [];
-        console.log("Outputtokenbutton"+headers);
-        //const observer = {next: x => console.log('Observer got a next value: ' + x) };
+        // console.log("Outputtokenbutton"+headers);
+        //const observer = {next: x => // console.log('Observer got a next value: ' + x) };
         //Na het ophalen van de headers via  promise geef ze door
         self.docentenService.getDocent(headers).subscribe(docent => {
-          console.log('Observer got a next value: ' + docent)
+          // console.log('Observer got a next value: ' + docent)
           //TODO Nu alleen nog deze value in de lijst krijgen
           if (docent !=null){
               self.docenten.push(docent)
@@ -38,7 +38,7 @@ export class TokenButtonComponent implements OnInit {
 
       )
 
-        //console.log(self.docenten.naam+"dit is nu in het lijstje");
+        //// console.log(self.docenten.naam+"dit is nu in het lijstje");
     });
 
 

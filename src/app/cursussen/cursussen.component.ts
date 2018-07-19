@@ -97,7 +97,7 @@ isVisibleToetsElement_delete:boolean;
               private afAuth: AngularFireAuth) {
     this.loading = true;
     this.afAuth.authState.subscribe((auth) => {
-      console.log("authstate updated//user changed");
+      // console.log("authstate updated//user changed");
       this.refreshDocenten();
       this.loadButtons();
     })
@@ -114,27 +114,27 @@ isVisibleToetsElement_delete:boolean;
     this.toetsMatrijsArray = Array.apply(null, Array(10));
 
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      //console.log(token);
+      //// console.log(token);
 
       this.cursussenService.getCursussen(token).subscribe(cursussen => {
         this.courses= cursussen;
         this.selectedCursus = this.courses[0];
-        console.log(  this.selectedCursus);
+        // console.log(  this.selectedCursus);
         this.cursusForm = this.courses[0];
         this.refreshAll();
       },
-      error => console.log('Error: ', error),
+      error => // console.log('Error: ', error),
       () => {
         this.loading = false;
       });
 
       this.authService.maakTokenHeadervoorCurcon().then( token => {
-        //console.log(token);
+        //// console.log(token);
 
         this.millerNiveausService.getMillerNiveaus(token).subscribe(millerNiveaus => {
           this.allMillerNiveaus = millerNiveaus;
         },
-        error => console.log('Error: ', error),
+        error => // console.log('Error: ', error),
         () => {
           this.loading = false;
         });
@@ -156,7 +156,7 @@ isVisibleToetsElement_delete:boolean;
           this.functieService.getFunctiesByUser(email).subscribe(functies => {
               //TODO createbutton weghalen die altijd visible is vervangen door NgIF
             if (functies == null) {
-              console.log("je mag niks:)");
+              // console.log("je mag niks:)");
             } else {
                 if (functies.some(f=> f.name == "organisatiecursus_post")) {
                    this.isVisibleOrganisatieCursus_post=true;
@@ -230,15 +230,15 @@ isVisibleToetsElement_delete:boolean;
     this.selectedCursus = cursus;
     this.cursusForm = cursus;
     this.refreshAll();
-    console.log('onSelect(this.selectedCursus)');
-    console.log(this.selectedCursus);
+    // console.log('onSelect(this.selectedCursus)');
+    // console.log(this.selectedCursus);
   }
 
   saveCursus(form: any) {
     this.loading = true;
     const formValues = form.value;
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      //console.log(token);
+      //// console.log(token);
 
       this.cursussenService.updateCursus(this.selectedCursus.id, formValues, token).subscribe(data => {
         this.mode = 'view';
@@ -249,7 +249,7 @@ isVisibleToetsElement_delete:boolean;
   refreshCursussen(){
     this.authService.maakTokenHeadervoorCurcon().then( token => {
       this.cursussenService.getCursussen(token).subscribe(cursussen => {
-          console.log(cursussen);
+          // console.log(cursussen);
           this.courses= cursussen;
           let refreshCursus=cursussen.find(c=> c.id == this.selectedCursus.id);
           this.onSelect(refreshCursus);
@@ -260,7 +260,7 @@ isVisibleToetsElement_delete:boolean;
 
   addCursus() {
     this.loading = true;
-    console.log(this.cursusForm);
+    // console.log(this.cursusForm);
 
     this.authService.maakTokenHeadervoorCurcon().then(token => {
       this.cursussenService.addCursus(this.cursusForm, token).subscribe(data => {
@@ -286,7 +286,7 @@ isVisibleToetsElement_delete:boolean;
   // ******************
   deleteProfessionalskill(ps: Object) {
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      console.log(token);
+      // console.log(token);
 
       this.cursussenService.deleteProfessionalskill(this.selectedCursus.id, ps['id'], token).subscribe(
         result => {this.refreshProfessionalskills();},
@@ -297,7 +297,7 @@ isVisibleToetsElement_delete:boolean;
 
   deleteBeoordelingsElement(el) {
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      //console.log(token);
+      //// console.log(token);
 
       this.toetsenService.deleteBeoordelingselement(el['id'], token).subscribe(
         result => {this.refreshToetsen(); this.refreshToetsMatrijzen(); },
@@ -310,7 +310,7 @@ isVisibleToetsElement_delete:boolean;
     this.loading = true;
 
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      //console.log(token);
+      //// console.log(token);
 
       this.professionalskillService.getProfessionalskillsTypes(token).subscribe(result => {
         this.professionalskillsTypes = result;
@@ -331,7 +331,7 @@ isVisibleToetsElement_delete:boolean;
     this.loading = true;
 
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      //console.log(token);
+      //// console.log(token);
 
       this.professionalskillService.getProfessionalskills(token).subscribe(results => {
         this.allProfessionalskills=results;
@@ -346,7 +346,7 @@ isVisibleToetsElement_delete:boolean;
   addProfessionalskill() {
     this.loading = true;
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      //console.log(token);
+      //// console.log(token);
 
       this.professionalskillService.getProfessionalskillId(this.professionalskillForm.activiteit, this.professionalskillForm.niveau, token).subscribe(data => {
         this.cursussenService.addProfessionalskillToCursus(this.selectedCursus.id, data, token).subscribe(x => {
@@ -390,12 +390,12 @@ isVisibleToetsElement_delete:boolean;
   addBeroepstaak() {
     this.loading = true;
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      //console.log(token);
+      //// console.log(token);
 
       this.beroepstaakService.getBeroepstaakId(this.beroepstakenForm.activiteit, this.beroepstakenForm.architectuurlaag,
         this.beroepstakenForm.niveau, token).subscribe(data => {
           this.authService.maakTokenHeadervoorCurcon().then( token => {
-            //console.log(token);
+            //// console.log(token);
             this.cursussenService.addBeroepstakenToCursus(this.selectedCursus.id, data, token).subscribe(x => {
               this.beroepstaakModal.hide();
               this.refreshBeroepstaken();
@@ -419,7 +419,7 @@ isVisibleToetsElement_delete:boolean;
     this.loading = true;
 
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      //console.log(token);
+      //// console.log(token);
 
       this.beroepstaakService.getBeroepstaakTypes(token).subscribe(result => {
         this.beroepstakenTypes = result;
@@ -433,7 +433,7 @@ isVisibleToetsElement_delete:boolean;
     this.loading = true;
 
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      //console.log(token);
+      //// console.log(token);
 
       this.beroepstaakService.getBeroepstaken(token).subscribe(result => {
         this.allBeroepstaken = result;
@@ -454,7 +454,7 @@ isVisibleToetsElement_delete:boolean;
     this.leerdoelForm = {};
 
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      //console.log(token);
+      //// console.log(token);
 
       this.bloomniveauService.getBloomniveaus(token).subscribe(data => {
         this.allBloomniveaus=data;
@@ -479,15 +479,15 @@ isVisibleToetsElement_delete:boolean;
   }
 
   initializeLeerdoelModal(leerdoel) {
-    console.log('leerdoel');
-    console.log(leerdoel);
-    console.log('this.selectedCursus.professionalskills');
-    console.log(this.selectedCursus.professionalskills);
+    // console.log('leerdoel');
+    // console.log(leerdoel);
+    // console.log('this.selectedCursus.professionalskills');
+    // console.log(this.selectedCursus.professionalskills);
     this.leerdoelModal.show();
     this.loading = true;
     if (this.allBloomniveaus == null) {
       this.authService.maakTokenHeadervoorCurcon().then( token => {
-        //console.log(token);
+        //// console.log(token);
 
         this.bloomniveauService.getBloomniveaus(token).subscribe(bloomniveaus => {
           this.allBloomniveaus=bloomniveaus;
@@ -502,8 +502,8 @@ isVisibleToetsElement_delete:boolean;
       gewicht: leerdoel.gewicht,
       omschrijving: leerdoel.omschrijving
     };
-    console.log('leerdoelForm');
-    console.log(this.leerdoelForm);
+    // console.log('leerdoelForm');
+    // console.log(this.leerdoelForm);
     this.loading = false;
   }
 
@@ -511,7 +511,7 @@ isVisibleToetsElement_delete:boolean;
     this.loading = true;
 
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      //console.log(token);
+      //// console.log(token);
 
       this.cursussenService.saveLeerdoel(this.selectedCursus.id, this.leerdoelForm, token).subscribe(x => {
         this.refreshLeerdoelen();
@@ -523,7 +523,7 @@ isVisibleToetsElement_delete:boolean;
 
   deleteLeerdoel(ld: Object) {
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      //console.log(token);
+      //// console.log(token);
 
       this.cursussenService.deleteLeerdoel(ld['id'], token).subscribe(
         result => {this.refreshLeerdoelen(); this.refreshToetsMatrijzen(); },
@@ -538,7 +538,7 @@ isVisibleToetsElement_delete:boolean;
   // 	******************
 
   newToetsForm() {
-    console.log('newToetsForm()');
+    // console.log('newToetsForm()');
     this.toetsForm = {
       naam: '',
       millerNiveau: this.allMillerNiveaus[0].id,
@@ -548,8 +548,8 @@ isVisibleToetsElement_delete:boolean;
   }
 
   editToetsForm(toets) {
-    console.log('editToetsForm(toets)');
-    console.log(toets);
+    // console.log('editToetsForm(toets)');
+    // console.log(toets);
     this.toetsForm = {
       id: toets.id,
       naam: toets.naam,
@@ -560,7 +560,7 @@ isVisibleToetsElement_delete:boolean;
 
   saveToets() {
     this.loading = true;
-    console.log(this.toetsForm);
+    // console.log(this.toetsForm);
     this.authService.maakTokenHeadervoorCurcon().then( token => {
       this.cursussenService.saveToets(this.selectedCursus.id, this.toetsForm, token).subscribe(x => {
         this.refreshToetsen();
@@ -573,7 +573,7 @@ isVisibleToetsElement_delete:boolean;
 
   deleteToets(to: Object) {
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      //console.log(token);
+      //// console.log(token);
 
       this.cursussenService.deleteToets(to['id'], token).subscribe(
         result => {this.refreshToetsen(); this.refreshToetsMatrijzen(); },
@@ -583,7 +583,7 @@ isVisibleToetsElement_delete:boolean;
   }
 
   initializeBeoordelingselementModal(beoordelingselement) {
-    console.log(beoordelingselement);
+    // console.log(beoordelingselement);
     this.beoordelingselementModal.show();
     this.loading = true;
     this.beoordelingselementForm = {
@@ -597,10 +597,10 @@ isVisibleToetsElement_delete:boolean;
 
   saveBeoordelingselement(element) {
     this.loading = true;
-    console.log(element);
+    // console.log(element);
 
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      //console.log(token);
+      //// console.log(token);
 
       this.toetsenService.saveBeoordelingsElement(this.toetsEdit.id, element, token).subscribe(data => {
         this.refreshToetsen();
@@ -626,12 +626,12 @@ isVisibleToetsElement_delete:boolean;
   addCell(item) {
     if (item != null) {
       this.toetsMatrijsAdd = item;
-      console.log('addCell - this.toetsMatrijsAdd');
-      console.log(this.toetsMatrijsAdd);
+      // console.log('addCell - this.toetsMatrijsAdd');
+      // console.log(this.toetsMatrijsAdd);
       this.toetsMatrijsAddForm = {};
       this.toetsMatrijsAddForm.beoordelingsElement = item.beoordelingselement;
-      console.log('addCell - this.toetsMatrijsAddForm');
-      console.log(this.toetsMatrijsAddForm);
+      // console.log('addCell - this.toetsMatrijsAddForm');
+      // console.log(this.toetsMatrijsAddForm);
     }
     this.toetsMatrijsEdit = 0;
 
@@ -639,10 +639,10 @@ isVisibleToetsElement_delete:boolean;
 
   editToetsElement() {
     this.loading = true;
-    console.log(this.toetsMatrijsAdd);
-    console.log(this.toetsMatrijsAddForm);
+    // console.log(this.toetsMatrijsAdd);
+    // console.log(this.toetsMatrijsAddForm);
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      //console.log(token);
+      //// console.log(token);
       this.cursussenService.editToetsElement(this.toetsMatrijsEdit, this.toetsMatrijsEditForm, token).subscribe(x => {
         this.refreshToetsMatrijzen();
         this.toetsMatrijsEdit = 0;
@@ -654,10 +654,10 @@ isVisibleToetsElement_delete:boolean;
   addToetsElement() {
     this.loading = true;
     this.toetsMatrijsAddForm.beoordelingsElement = this.toetsMatrijsAdd.beoordelingselement.id;
-    console.log('addToetsElement - this.toetsMatrijsAdd');
-    console.log(this.toetsMatrijsAdd);
-    console.log('this.toetsMatrijsAddForm');
-    console.log(this.toetsMatrijsAddForm);
+    // console.log('addToetsElement - this.toetsMatrijsAdd');
+    // console.log(this.toetsMatrijsAdd);
+    // console.log('this.toetsMatrijsAddForm');
+    // console.log(this.toetsMatrijsAddForm);
 
     this.authService.maakTokenHeadervoorCurcon().then( token => {
       this.cursussenService.addToetsElement(this.toetsMatrijsAdd.leerdoel.id, this.toetsMatrijsAddForm, token).subscribe(x => {
@@ -704,12 +704,12 @@ isVisibleToetsElement_delete:boolean;
     this.loading = true;
 
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      //console.log(token);
+      //// console.log(token);
 
       this.beroepstaakService.getBeroepstakenByObject(this.selectedCursus.eindBT, token).subscribe(beroepstaken => {
         this.selectedCursus.beroepstaken = beroepstaken;
-        console.log('selectedCursus.beroepstaken');
-        console.log(this.selectedCursus.beroepstaken);
+        // console.log('selectedCursus.beroepstaken');
+        // console.log(this.selectedCursus.beroepstaken);
         this.loading = false;
       });
     });
@@ -719,7 +719,7 @@ isVisibleToetsElement_delete:boolean;
     this.loading = true;
 
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      //console.log(token);
+      //// console.log(token);
 
       this.professionalskillService.getProfessionalskillsByObject(this.selectedCursus.eindPS, token).subscribe(professionalskills => {
         this.selectedCursus.professionalskills = professionalskills;
@@ -733,7 +733,7 @@ isVisibleToetsElement_delete:boolean;
     this.loading = true;
 
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      //console.log(token);
+      //// console.log(token);
 
       this.leerdoelenService.getLeerdoelenByObject(this.selectedCursus.leerdoelen, token).subscribe(leerdoelen => {
         this.selectedCursus.leerdoelenLijst = leerdoelen;
@@ -747,7 +747,7 @@ isVisibleToetsElement_delete:boolean;
     this.loading = true;
 
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      //console.log(token);
+      //// console.log(token);
 
       this.toetsenService.getToetsenByObject(this.selectedCursus.toetsen, token).subscribe(toetsen => {
         this.selectedCursus.toetsenLijst = toetsen;
@@ -760,26 +760,26 @@ isVisibleToetsElement_delete:boolean;
     this.loading = true;
 
     this.authService.maakTokenHeadervoorCurcon().then( token => {
-      //console.log(token);
+      //// console.log(token);
 
       this.toetsmatrijzenService.getToetsmatrijzenById(this.selectedCursus.id, token).subscribe(toetsmatrijs => {
-        console.log('refreshToetsMatrijzen toetsmatrijs');
-        console.log(toetsmatrijs);
+        // console.log('refreshToetsMatrijzen toetsmatrijs');
+        // console.log(toetsmatrijs);
         if (this.toetsMatrijsArray !== undefined) {
           while (this.toetsMatrijsArray.length > 0) {
             this.toetsMatrijsArray.splice(0, 1);
-            console.log(this.toetsMatrijsArray.length);
-            console.log('toetsMatrijsArray.length');
+            // console.log(this.toetsMatrijsArray.length);
+            // console.log('toetsMatrijsArray.length');
           }
         }
         let toetsIndex = 0;
         for (let toets of toetsmatrijs.toetsen) {
-          console.log(toets);
+          // console.log(toets);
           this.toetsMatrijsArray[toetsIndex] = this.buildToetsMatrijs(toets, toetsmatrijs.leerdoelen);
           toetsIndex++;
         }
-        console.log('this.toetsMatrijsArray');
-        console.log(this.toetsMatrijsArray);
+        // console.log('this.toetsMatrijsArray');
+        // console.log(this.toetsMatrijsArray);
         this.loading = false;
       });
     });
@@ -806,10 +806,10 @@ isVisibleToetsElement_delete:boolean;
       totalRows = leerdoelen.length;
       toetsMatrijs.totaalGewichtLeerdoelArray = Array.apply(null, Array(leerdoelen.length));
     }
-    console.log('toetsMatrijs.beoordelingselementArray');
-    console.log(toetsMatrijs.beoordelingselementArray);
-    console.log('Total rows:' + totalRows);
-    console.log('Total cols:' + totalCols);
+    // console.log('toetsMatrijs.beoordelingselementArray');
+    // console.log(toetsMatrijs.beoordelingselementArray);
+    // console.log('Total rows:' + totalRows);
+    // console.log('Total cols:' + totalCols);
 
     // grid aanmaken
     toetsMatrijs.grid = Array.apply(null, null);
@@ -817,7 +817,7 @@ isVisibleToetsElement_delete:boolean;
     for (let i = 0; i < grid.length; i++) {
       grid[i] = Array.apply(null, Array(totalCols));
     }
-    console.log('Grid aangemaakt');
+    // console.log('Grid aangemaakt');
     for (let row = 0; row < leerdoelen.length; row++) {
       toetsMatrijs.totaalGewichtLeerdoelArray[row] = 0;
       for (let col = 0; col < totalCols; col++) {
@@ -840,13 +840,13 @@ isVisibleToetsElement_delete:boolean;
               leerdoelen[row].toetsElementen[p].gewicht;
           }
         }
-        console.log('grid[row][col]');
-        console.log(grid[row][col]);
+        // console.log('grid[row][col]');
+        // console.log(grid[row][col]);
       }
     }
     toetsMatrijs.grid = grid;
-    console.log('toetsMatrijs');
-    console.log(toetsMatrijs);
+    // console.log('toetsMatrijs');
+    // console.log(toetsMatrijs);
     return toetsMatrijs;
   }
 
@@ -857,7 +857,7 @@ isVisibleToetsElement_delete:boolean;
     this.refreshLeerdoelen();
     this.refreshToetsen();
     this.refreshToetsMatrijzen();
-    console.log(this.selectedCursus);
+    // console.log(this.selectedCursus);
   }
 
   closeModal(modal) {

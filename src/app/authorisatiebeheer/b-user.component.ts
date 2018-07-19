@@ -51,7 +51,7 @@ loadButtons() {
   this.authService.maakTokenHeadervoorCurcon().then( token => {
     this.functieService.getFunctiesByUser(email).subscribe(functies => {
       if (functies == null) {
-        console.log("je mag niets uitvoeren)");
+        // console.log("je mag niets uitvoeren)");
       } else {
         if (functies.some(f=> f.name == "user_post")) {
           this.isVisibleUser_post=true;
@@ -84,13 +84,13 @@ onSelect(user: Object) {
   this.selectedUser = user;
   this.userForm = user;
   // this.refreshModules();
-  console.log('onSelect(this.selectedUser)');
-  console.log(this.selectedUser);
+  // console.log('onSelect(this.selectedUser)');
+  // console.log(this.selectedUser);
 }
 
 addUser() {
   this.loading = true;
-  console.log(this.userForm);
+  // console.log(this.userForm);
   this.authService.maakTokenHeadervoorCurcon().then( token => {
       this.userService.addUser(this.userForm.email).subscribe(user => {
         this.mode = 'view';
@@ -107,8 +107,8 @@ saveUser(form: any) {
   this.loading = true;
   // const formValues = form.value;
   this.authService.maakTokenHeadervoorCurcon().then( token => {
-    //console.log(token);
-    console.log(form.value.rol);
+    //// console.log(token);
+    // console.log(form.value.rol);
     this.userService.updateRoleByUser(this.selectedUser.username, form.value, token).subscribe(data => {
       this.mode = 'view';
       this.refreshusers();
@@ -118,10 +118,10 @@ saveUser(form: any) {
 
 loadUsers(){
   this.authService.maakTokenHeadervoorCurcon().then( token => {
-    //console.log(token);
+    //// console.log(token);
 
     this.userService.getUsers(token).subscribe(users => {
-      console.log(users);
+      // console.log(users);
       this.users= users;
       this.selectedUser = this.users[0];
         this.userForm = this.users[0];
@@ -133,7 +133,7 @@ loadUsers(){
 refreshusers(){
   this.authService.maakTokenHeadervoorCurcon().then( token => {
     this.userService.getUsers(token).subscribe(users => {
-      console.log(users);
+      // console.log(users);
       this.users= users;
       let refreshUser=users.find(u=> u.username == this.selectedUser.username);
 

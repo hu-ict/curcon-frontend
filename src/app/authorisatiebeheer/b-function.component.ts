@@ -47,7 +47,7 @@ export class BFunctionComponent implements OnInit {
 	  	this.authService.maakTokenHeadervoorCurcon().then( token => {
 		    this.functieService.getFunctiesByUser(email).subscribe(functies => {
 		      if (functies == null) {
-		        console.log("je mag niets uitvoeren)");
+		        // console.log("je mag niets uitvoeren)");
 		      } else {
 		        if (functies.some(f=> f.name == "function_put")) {
 		          this.isVisibleFunction_put = true;
@@ -80,13 +80,13 @@ export class BFunctionComponent implements OnInit {
 	  	this.onSelectedFunction.emit(functie);
 	  	this.selectedFunction = functie;
 	  	this.functieform = functie;
-	  	//console.log('onSelect(this.selectedFunction)');
-	  	//console.log(this.selectedFunction);
+	  	//// console.log('onSelect(this.selectedFunction)');
+	  	//// console.log(this.selectedFunction);
 	}
 
 	addFunction() {
 	  	this.loading = true;
-	  	console.log(this.functieform);
+	  	// console.log(this.functieform);
 	  	this.authService.maakTokenHeadervoorCurcon().then( token => {
 	      	this.functieService.addFunctie(this.functieform.name,token).subscribe(x => {
         		this.mode = 'view';
@@ -104,8 +104,8 @@ export class BFunctionComponent implements OnInit {
 	  	this.loading = true;
 	  	// const formValues = form.value;
 	  	this.authService.maakTokenHeadervoorCurcon().then( token => {
-	    	//console.log(token);
-	    	console.log(form.value);
+	    	//// console.log(token);
+	    	// console.log(form.value);
 
 	    	this.functieService.updateFunctie(this.selectedFunction.id, form.value, token).subscribe(data => {
 	      		this.mode = 'view';
@@ -118,7 +118,7 @@ export class BFunctionComponent implements OnInit {
 			this.loading = true;
 	  	this.authService.maakTokenHeadervoorCurcon().then( token => {
 		    this.functieService.getFuncties(token).subscribe(functions => {
-		      	console.log(functions);
+		      	// console.log(functions);
 		      	this.functions= functions;
 		      	this.selectedFunction = this.functions[0];
 		      	this.functieform = this.functions[0];
@@ -130,7 +130,7 @@ export class BFunctionComponent implements OnInit {
 			this.loading = true;
 			this.authService.maakTokenHeadervoorCurcon().then( token => {
 				this.functieService.getFuncties(token).subscribe(functions => {
-						console.log(functions);
+						// console.log(functions);
 						this.functions= functions;
 						this.loading = false;
 

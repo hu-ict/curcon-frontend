@@ -58,7 +58,7 @@ export class BRolComponent implements OnInit {
 	  	this.authService.maakTokenHeadervoorCurcon().then( token => {
 	    	this.functieService.getFunctiesByUser(email).subscribe(functies => {
 	      		if (functies == null) {
-	        		console.log("je mag niets uitvoeren)");
+	        		// console.log("je mag niets uitvoeren)");
 	      		} else {
 	        		if (functies.some(f=> f.name == "rolemodule_post")) {
 	          			this.isVisibleRoleModule_post = true;
@@ -90,7 +90,7 @@ export class BRolComponent implements OnInit {
 	}
 
 	initializeModuleForm() {
-  		console.log(this.selectedRole);
+  		// console.log(this.selectedRole);
 		this.modules = this.selectedRole.moduleArr;
     	this.loading = true;
 
@@ -102,7 +102,7 @@ export class BRolComponent implements OnInit {
           		this.moduleForm = {module: selectedModule};
           		this.availableModules = this.allModules;
 
-          		console.log(this.modules);
+          		// console.log(this.modules);
           		for (let m of this.modules) {
               		this.availableModules = this.availableModules.filter((x) => x.id !== m.id);
           		}
@@ -131,13 +131,13 @@ export class BRolComponent implements OnInit {
 	  	this.selectedRole = rol;
 	  	this.roleForm = rol;
 	  	this.refreshModules();
-	  	//console.log('onSelect(this.selectedCursus)');
-	  	//console.log(this.selectedCursus);
+	  	//// console.log('onSelect(this.selectedCursus)');
+	  	//// console.log(this.selectedCursus);
 	}
 
 	addRole() {
 	  	this.loading = true;
-	  	console.log(this.roleForm);
+	  	// console.log(this.roleForm);
 	  	this.authService.maakTokenHeadervoorCurcon().then( token => {
 	  		this.rolService.addRole(this.roleForm.name,token).subscribe(x => {
 	        	this.mode = 'view';
@@ -157,8 +157,8 @@ export class BRolComponent implements OnInit {
 	  	// const formValues = form.value;
 
 	  	this.authService.maakTokenHeadervoorCurcon().then( token => {
-	    	//console.log(token);
-	    	console.log(form.value);
+	    	//// console.log(token);
+	    	// console.log(form.value);
 
 	    	this.rolService.updateRole(this.selectedRole.id, form.value, token).subscribe(data => {
 	      		this.mode = 'view';
@@ -170,7 +170,7 @@ export class BRolComponent implements OnInit {
 	loadRoles() {
 	  	this.authService.maakTokenHeadervoorCurcon().then( token => {
 		    this.rolService.getRoles(token).subscribe(roles => {
-		      	console.log(roles);
+		      	// console.log(roles);
 		      	this.roles= roles;
 		      	this.selectedRole = this.roles[0];
 		      	this.roleForm = this.roles[0];
@@ -182,7 +182,7 @@ export class BRolComponent implements OnInit {
   refreshRoles() {
 	  	this.authService.maakTokenHeadervoorCurcon().then( token => {
 		    this.rolService.getRoles(token).subscribe(roles => {
-		      	console.log(roles);
+		      	// console.log(roles);
 		      	this.roles= roles;
             let refreshRol=roles.find(r=> r.id == this.selectedRole.id);
 
@@ -199,8 +199,8 @@ export class BRolComponent implements OnInit {
 	  	this.authService.maakTokenHeadervoorCurcon().then( token => {
 		    this.moduleService.getModulesByObject(this.selectedRole.modules, token).subscribe(modules => {
 		      	this.selectedRole.moduleArr = modules;
-		      	console.log('selectedRole.moduleArr');
-		      	console.log(this.selectedRole.moduleArr);
+		      	// console.log('selectedRole.moduleArr');
+		      	// console.log(this.selectedRole.moduleArr);
 		      	this.loading = false;
 		    });
 	  	});
@@ -230,7 +230,7 @@ export class BRolComponent implements OnInit {
 	}
 
 	deleteModuleFromRole(md: Object) {
-    console.log(md);
+    // console.log(md);
 	 	this.authService.maakTokenHeadervoorCurcon().then( token => {
 	    	this.rolService.deleteModuleFromRole(this.selectedRole.id, md['id'], token).subscribe(
 	      		result => {this.refreshModules(); },

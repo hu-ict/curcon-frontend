@@ -26,7 +26,7 @@ export class AuthService {
     private router:Router,
   ) {
     this.afAuth.authState.subscribe((auth) => {
-      console.log("authstate updated//user changed");
+      // console.log("authstate updated//user changed");
     //  this.authState = auth;
   })
   }
@@ -35,11 +35,11 @@ export class AuthService {
   // }
   maakTokenHeadervoorCurcon(){
 //  var headers=null;
-console.log(this.afAuth.auth.currentUser.email+"huidige user");
-console.log(this.afAuth.auth.currentUser.metadata.creationTime+"huidige user");
-console.log(this.afAuth.auth.currentUser.metadata.lastSignInTime+"huidige user");
+// console.log(this.afAuth.auth.currentUser.email+"huidige user");
+// console.log(this.afAuth.auth.currentUser.metadata.creationTime+"huidige user");
+// console.log(this.afAuth.auth.currentUser.metadata.lastSignInTime+"huidige user");
 var headersPromise=  this.afAuth.auth.currentUser.getIdToken().then(function(token){
-    //console.log(value); ==Token
+    //// console.log(value); ==Token
     let headers =
    new HttpHeaders({
         "Content-Type": 'application/json',
@@ -63,7 +63,7 @@ return headers;//Answer of 2nd promise
       // .then((credential) =>  {
       //     this.authState = credential.user
       // })
-      // .catch(error => console.log(error));
+      // .catch(error => // console.log(error));
   }
 
   // test(){

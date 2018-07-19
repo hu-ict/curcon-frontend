@@ -10,7 +10,7 @@ export class LeerplannenService {
     options: RequestOptions;
 
     constructor(private http: Http){
-        console.log('LeerplanService Initialized...')
+        // console.log('LeerplanService Initialized...')
     }
 
     getLeerplannen() {
