@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { Router } from '@angular/router';
-import {CohortenService} from '../services/cohorten.service';
+import {CohortenService} from '../services/curcon/cohorten.service';
 
 @Component({
   templateUrl: 'cohorten.component.html',
@@ -25,7 +25,7 @@ export class CohortenComponent implements OnInit {
     this.onSelectedCourse.emit(cour);
     this.currentCourse = cour;
     this.selectedButton = 1;
-    console.log(this.currentCourse);
+    // console.log(this.currentCourse);
   }
 
   changeTab(tabnr : number) {

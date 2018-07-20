@@ -1,34 +1,37 @@
 import { NgModule } from '@angular/core';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
-import { DropdownModule } from 'ng2-bootstrap/dropdown';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 import { CursussenComponent } from './cursussen.component';
-import { CursussenService } from '../services/cursussen.service';
+import { CursussenService } from '../services/curcon/cursussen.service';
 import { CursussenRoutingModule } from './cursussen-routing.module';
 import { CommonModule } from '@angular/common';
 import { TablesComponent } from '../components/tables.component';
 
+// Ngb
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 // Modal Component
-import { ModalModule } from 'ng2-bootstrap/modal';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { ModalsComponent } from '../components/modals.component';
 
 // Tabs Component
-import { TabsModule } from 'ng2-bootstrap/tabs';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TabsComponent } from '../components/tabs.component';
 
-import {TooltipModule} from 'ng2-bootstrap';
-import {Tooltip} from "ngx-tooltip";
+import {TooltipModule} from 'ngx-bootstrap';
+import {NgbTooltipConfig} from '@ng-bootstrap/ng-bootstrap';
 
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
-import {BeroepstakenService} from '../services/beroepstaken.service';
-import {ProfessionalskillsService} from '../services/professionalskills.service';
-import {LeerdoelenService} from '../services/leerdoelen.service';
-import {ToetsenService} from '../services/toetsen.service';
-import {ToetsmatrijzenService} from '../services/toetsmatrijzen.service';
-import {BloomniveausService} from '../services/bloomniveaus.service';
-import {MillerNiveausService} from '../services/millerniveaus.service';
+import {BeroepstakenService} from '../services/curcon/beroepstaken.service';
+import {ProfessionalskillsService} from '../services/curcon/professionalskills.service';
+import {LeerdoelenService} from '../services/curcon/leerdoelen.service';
+import {ToetsenService} from '../services/curcon/toetsen.service';
+import {ToetsmatrijzenService} from '../services/curcon/toetsmatrijzen.service';
+import {BloomniveausService} from '../services/curcon/bloomniveaus.service';
+import {MillerNiveausService} from '../services/curcon/millerniveaus.service';
 import {DocentenService} from "../services/docenten.service";
 import {BtMatrixModule} from '../bt-overzicht/bt-matrix.module';
 import {PsOverzichtModule} from '../ps-overzicht/ps-overzicht.module';
@@ -40,28 +43,30 @@ import {PsOverzichtModule} from '../ps-overzicht/ps-overzicht.module';
 		CursussenRoutingModule,
 		ChartsModule,
 		HttpModule,
-		DropdownModule,
+		BsDropdownModule,
 		FormsModule,
 		CommonModule,
 		TabsModule,
-		ModalModule.forRoot()
+		ModalModule.forRoot(),
+		NgbModule.forRoot(),
 		],
-	declarations: [ 
+	declarations: [
 		CursussenComponent,
-//		TabsComponent, 
-//		TablesComponent, 
+//		TabsComponent,
+//		TablesComponent,
 //		ModalsComponent
 	],
 	providers: [
-		CursussenService, 
-		DocentenService, 
-		BeroepstakenService, 
-		ProfessionalskillsService, 
-		LeerdoelenService, 
-		ToetsenService, 
-		ToetsmatrijzenService, 
+		CursussenService,
+		DocentenService,
+		BeroepstakenService,
+		ProfessionalskillsService,
+		LeerdoelenService,
+		ToetsenService,
+		ToetsmatrijzenService,
 		BloomniveausService,
 		MillerNiveausService
+
 	]
 })
 export class CursussenModule { }

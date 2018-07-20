@@ -1,0 +1,189 @@
+[33mcommit a56f13023d3d85ac321da32d7f3908d6d41771f2[m
+Author: Janhub <jan.dekkers@student.hu.nl>
+Date:   Mon Jun 18 15:23:44 2018 +0200
+
+    bs docenten werkt nog wel
+
+[33mcommit 65ef864403315b8e28274ceb57293ba91f4f3602[m
+Merge: 332b1a0 6a507b5
+Author: Janhub <jan.dekkers@student.hu.nl>
+Date:   Mon Jun 18 00:13:31 2018 +0200
+
+    provider merge conflict opgelost
+
+[33mcommit 332b1a03ec0b38f705a12fb6f8d4b2ed48b6d396[m
+Author: Janhub <jan.dekkers@student.hu.nl>
+Date:   Sun Jun 17 23:57:52 2018 +0200
+
+    vergeten (verkorte HASH:) 4525188
+
+[33mcommit 45251882561d4d6ff4be308e426a4b189e19927c[m
+Author: Janhub <jan.dekkers@student.hu.nl>
+Date:   Sun Jun 17 23:51:09 2018 +0200
+
+    dev-versie curcon ng6
+
+[33mcommit 6a507b5f04ba370ae7c6c206e5ee020df15ff3dc[m
+Author: Martinj98 <martin.dejongh@student.hu.nl>
+Date:   Sun Jun 17 22:54:35 2018 +0200
+
+    werkende getdocent
+
+[33mcommit 3afe495064b79f37acc5cc50556afebc609a6e49[m
+Author: Martinj98 <martin.dejongh@student.hu.nl>
+Date:   Sat Jun 16 20:55:07 2018 +0200
+
+    fix Firebaseuser= null
+
+[33mcommit 2f3f78104e440c99d78d02faf1fd1efff32a0f18[m
+Author: Martinj98 <martin.dejongh@student.hu.nl>
+Date:   Sat Jun 16 19:54:35 2018 +0200
+
+    docentService header werkt
+
+[33mcommit f5b832c96532816c5f0b2617c43080cd0b2677a8[m
+Author: Martinj98 <martin.dejongh@student.hu.nl>
+Date:   Fri Jun 15 15:13:50 2018 +0200
+
+    tokenvalue
+
+[33mcommit 669228510871096ca4ec721b14c80cf6f5108c73[m
+Merge: f032c84 585b5fd
+Author: RedouanBuu <redouan.bouzid@student.hu.nl>
+Date:   Thu Jun 14 21:30:07 2018 +0200
+
+    Merge branch 'master' of https://github.com/SupaHotFiya-Security/sec-curcon
+
+[33mcommit f032c84133a408b7029973d015ccc1a38c49dd69[m
+Author: RedouanBuu <redouan.bouzid@student.hu.nl>
+Date:   Thu Jun 14 21:29:58 2018 +0200
+
+    Authorisatiebeheer front-end toegevoegd
+
+[33mcommit 585b5fd10836fc5a40c56adb7f1c306466c871d0[m
+Merge: c74fc0e c6475fb
+Author: Janhub <jan.dekkers@student.hu.nl>
+Date:   Thu Jun 14 21:00:38 2018 +0200
+
+    merge conflict opgelost
+
+[33mcommit c74fc0ee27a7eb91e6de475ee775b424d21cf38a[m
+Author: Janhub <jan.dekkers@student.hu.nl>
+Date:   Thu Jun 14 19:47:05 2018 +0200
+
+    lokale aanpassingen van 13-6-18-23:30 bewaren
+
+[33mcommit 9832d87c0938c6f6203bd8217e9219aec670b5bd[m
+Author: Janhub <jan.dekkers@student.hu.nl>
+Date:   Thu Jun 14 19:01:07 2018 +0200
+
+    merge conflict 14-6-18-19:01
+
+[33mcommit c6475fbd8c470071549eb3d183c471544872ee93[m
+Author: RedouanBuu <redouan.bouzid@student.hu.nl>
+Date:   Thu Jun 14 16:58:00 2018 +0200
+
+    error comment toegevoegd
+
+[33mcommit 697274545159fceb38cbfaaac70960e35c25d5bc[m
+Author: RedouanBuu <redouan.bouzid@student.hu.nl>
+Date:   Thu Jun 14 16:56:03 2018 +0200
+
+    app-routing en bootstrap login toegevoegd
+
+[33mcommit ff4873ce210e9afb80b3de08dd40c150f341bdce[m
+Merge: d693ab5 e5092c2
+Author: RedouanBuu <redouan.bouzid@student.hu.nl>
+Date:   Thu Jun 14 14:13:26 2018 +0200
+
+    Mergeconflict opgelost
+
+[33mcommit d693ab576016ea8aad73774152889a38486252ed[m
+Author: RedouanBuu <redouan.bouzid@student.hu.nl>
+Date:   Thu Jun 14 14:02:36 2018 +0200
+
+    Wijziging doorgevoerd
+
+[33mcommit e5092c25db6aa4e1e7ef0057523eed34c6078677[m
+Merge: 16fcada b205d2d
+Author: Janhub <jan.dekkers@student.hu.nl>
+Date:   Thu Jun 14 13:43:28 2018 +0200
+
+    merge gelukt?
+
+[33mcommit 16fcadac6167023757d9ef0d653a9d276f6a4642[m
+Author: Janhub <jan.dekkers@student.hu.nl>
+Date:   Thu Jun 14 13:39:35 2018 +0200
+
+    angular firebase
+
+[33mcommit 00540703fd69b23857de95024e60d0f919d00f9c[m
+Author: Janhub <jan.dekkers@student.hu.nl>
+Date:   Thu Jun 14 13:26:36 2018 +0200
+
+    lokale commit derp
+
+[33mcommit b205d2d87f409db990d058cdd0b257fee781ec99[m
+Author: RedouanBuu <redouan.bouzid@student.hu.nl>
+Date:   Thu Jun 14 11:45:08 2018 +0200
+
+    Loginscherm aangepast
+
+[33mcommit c4a54bd6a4e1ac2721844da2a5cf812b4eaf5ad1[m
+Author: Janhub <jan.dekkers@student.hu.nl>
+Date:   Thu Jun 14 11:24:21 2018 +0200
+
+    Update environment.ts
+    
+    api keys voortaan net meer op github zetten
+
+[33mcommit 76c921086031a4440b52bf365e7f1a93c9898b4c[m
+Author: Janhub <jan.dekkers@student.hu.nl>
+Date:   Thu Jun 14 11:22:26 2018 +0200
+
+    delete package.lock.json
+
+[33mcommit eb959757e377cae7c8422df14b9cd22d7b21ec66[m
+Author: RedouanBuu <redouan.bouzid@student.hu.nl>
+Date:   Thu Jun 14 11:17:56 2018 +0200
+
+    Loginscherm gemaakt
+
+[33mcommit a41af765a38a073826245c11711df4da73fa7fa6[m
+Author: Janhub <jan.dekkers@student.hu.nl>
+Date:   Wed Jun 13 16:18:43 2018 +0200
+
+    development: firebase modules toegevoegd
+
+[33mcommit 58be106539d9eec3ef47ca2ed781d366dfa00ffa[m
+Author: Janhub <jan.dekkers@student.hu.nl>
+Date:   Wed Jun 13 11:56:39 2018 +0200
+
+    alle doget functies werken nu
+
+[33mcommit 13b6bd21a81ac187039034493b24c93889864285[m
+Merge: 0d533a2 62e9263
+Author: Janhub <jan.dekkers@student.hu.nl>
+Date:   Wed Jun 13 01:57:32 2018 +0200
+
+    wtf is vi?
+
+[33mcommit 0d533a2c944ea41d98d80fe513f35757721528e8[m
+Author: Janhub <jan.dekkers@student.hu.nl>
+Date:   Wed Jun 13 01:45:02 2018 +0200
+
+    fuck jullie allemaal
+
+[33mcommit 62e9263569878511980410536f1c81a480f5d3b8[m
+Author: Janhub <jan.dekkers@student.hu.nl>
+Date:   Tue Jun 12 02:09:08 2018 +0200
+
+    Delete package-lock.json
+    
+    oh shit
+
+[33mcommit 799f64c5d54159229e3383ec89531ac25c9b606f[m
+Author: Janhub <jan.dekkers@student.hu.nl>
+Date:   Tue Jun 12 02:06:39 2018 +0200
+
+    first commit

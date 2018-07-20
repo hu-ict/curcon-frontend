@@ -10,9 +10,9 @@ export class BtCalculatedComponent {
 
    @Input()
    set profiel(profiel: Array<any>) {
-      console.log('SET this._profiel');
+      // console.log('SET this._profiel');
       this._profiel = profiel;
-      console.log(this._profiel);
+      // console.log(this._profiel);
       this.matrix = this.generateMatrix('-');
       if (this._profiel != null) {
          for (let bt of this._profiel) {
@@ -26,15 +26,15 @@ export class BtCalculatedComponent {
    }
 
 	ngOnInit(): void {
-	console.log('Start of bt_calculated.component');
+	// console.log('Start of bt_calculated.component');
 		this.matrix = this.generateMatrix('x');
 		if (this._profiel != null){ 
 			for (let bt of this._profiel) {
 				this.matrix[bt.beroepsTaak.architectuurlaagId][bt.beroepsTaak.activiteitId] = bt;
 			}
 		}
-		console.log('this.matrix');
-		console.log(this.matrix);
+		// console.log('this.matrix');
+		// console.log(this.matrix);
 	}
 	
 

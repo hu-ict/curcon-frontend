@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { Router } from '@angular/router';
-import {OrganisatiesService} from '../services/organisaties.service';
+import {OrganisatiesService} from '../services/curcon/organisaties.service';
 
 @Component({
   templateUrl: 'organisaties.component.html',
@@ -25,7 +25,7 @@ export class OrganisatiesComponent implements OnInit {
     this.onSelectedCourse.emit(cour);
     this.currentCourse = cour;
     this.selectedButton = 1;
-    console.log(this.currentCourse);
+    // console.log(this.currentCourse);
   }
 
   changeTab(tabnr : number) {

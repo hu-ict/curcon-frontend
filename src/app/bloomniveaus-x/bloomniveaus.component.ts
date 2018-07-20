@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { Router } from '@angular/router';
-import {BloomniveausService} from '../services/bloomniveaus.service';
+import {BloomniveausService} from '../services/curcon/bloomniveaus.service';
 
 @Component({
   templateUrl: 'bloomniveaus.component.html',
@@ -25,7 +25,7 @@ export class BloomniveausComponent implements OnInit {
     this.onSelectedCourse.emit(cour);
     this.currentCourse = cour;
     this.selectedButton = 1;
-    console.log(this.currentCourse);
+    // console.log(this.currentCourse);
   }
 
   changeTab(tabnr : number) {

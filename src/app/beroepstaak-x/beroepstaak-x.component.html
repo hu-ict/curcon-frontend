@@ -1,0 +1,62 @@
+<!-- 
+<div bsModal class="addModal modal fade"
+	tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog modal-primary" role="document">
+		<div class="modal-content">
+			<form #f="ngForm">
+				<div class="modal-header">
+					<h4 class="modal-title">Beroepstaken</h4>
+					<button type="button" class="close"
+						(click)="closeModal(beroepstaakModal)" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div *ngIf="loading" align="center">
+						<br /> <img src="assets/img/ripple.svg" />
+					</div>
+					<span *ngIf="error" class="text-danger">U heeft geen
+						beroepstaak geselecteerd</span>
+					<div class="form">
+						<div class="form-group">
+							<label for="architectuurlaag">Architectuur laag:</label> <select
+								class="form-control" id="architectuurlaag"
+								name="architectuurlaag"
+								[(ngModel)]="beroepstakenForm.architectuurlaag">
+								<option *ngFor="let a of beroepstakenTypes.architectuurLagen"
+									[ngValue]="a.id">{{a.naam}}</option>
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label for="activiteit">Activiteit:</label> <select
+								class="form-control" id="activiteit" name="activiteit"
+								[(ngModel)]="beroepstakenForm.activiteit">
+								<option *ngFor="let a of beroepstakenTypes.activiteiten"
+									[ngValue]="a.id">{{a.naam}}</option>
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label for="niveau">Niveau:</label> <select class="form-control"
+								id="niveau" name="niveau" [(ngModel)]="beroepstakenForm.niveau">
+								<option *ngFor="let a of beroepstakenTypes.niveaus"
+									[ngValue]="a">{{a}}</option>
+							</select>
+						</div>
+						{{beroepstakenForm | json}}
+
+					</div>
+				</div>
+				<div *ngIf="!loading" class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						(click)="BeroepstaakModal.hide()">Sluiten</button>
+					<button type="button" class="btn btn-primary"
+						(click)="addBeroepstaak()">Toevoegen</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+-->

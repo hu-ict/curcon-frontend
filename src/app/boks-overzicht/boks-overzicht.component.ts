@@ -9,9 +9,9 @@ export class BoksOverzichtComponent {
 	 
 	@Input()
 	set boks(boks: Array<any>) {
-		console.log("SET this._boks");
+		// console.log("SET this._boks");
 		this._boks = boks;
-		console.log(this._boks);
+		// console.log(this._boks);
 	}
 
 	get boks(): Array<any> {return this._boks;}
